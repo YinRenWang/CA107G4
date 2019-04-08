@@ -2,7 +2,7 @@ package com.administrator.model;
 
 public class AdministratorVO implements java.io.Serializable{
 	private String admId;
-	private String admPsw;
+	private String admPsw;    
 	private Integer admStatus;
 	
 	public AdministratorVO() {
