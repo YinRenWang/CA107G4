@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class AdministratorJDBCDAO implements AdministratorDAO_interface{
-		static AdministratorJDBCDAO dao=new AdministratorJDBCDAO();
+	    
 		String driver = "oracle.jdbc.driver.OracleDriver";
 		String url = "jdbc:oracle:thin:@localhost:1521:XE";
 		String userid = "WESHARE";
@@ -21,6 +21,9 @@ public class AdministratorJDBCDAO implements AdministratorDAO_interface{
 		//修改
 		private static final String UPDATE = "UPDATE Administrator set admPsw=?, admStatus=? where admId = ?";
 
+		//刪除
+		private static final String DELETE = "DELETE FROM Administrator where admId = ?";
+		
 		//查詢
 		private static final String GET_ALL_STMT = "SELECT admId , admPsw, admStatus FROM Administrator";
 		private static final String GET_ONE_STMT = "SELECT admId , admPsw, admStatus FROM Administrator where admId = ?";
@@ -239,7 +242,56 @@ public class AdministratorJDBCDAO implements AdministratorDAO_interface{
 	
 		
 	}
+	
+	@Override
+	public void delete(String admId) {
+		
+
+		Connection con = null;
+		PreparedStatement pstmt = null;
+
+		try {
+
+			Class.forName(driver);
+			con = DriverManager.getConnection(url, userid, passwd);
+			pstmt = con.prepareStatement(DELETE);
+
+			pstmt.setString(1,admId);
+
+			pstmt.executeUpdate();
+			System.out.println("已刪除一筆資料");
+
+			// Handle any driver errors
+		} catch (ClassNotFoundException e) {
+			throw new RuntimeException("Couldn't load database driver. "
+					+ e.getMessage());
+			// Handle any SQL errors
+		} catch (SQLException se) {
+			throw new RuntimeException("A database error occured. "
+					+ se.getMessage());
+			// Clean up JDBC resources
+		} finally {
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
+		}
+
+		
+	}
+	
 	public static void main(String[] args) {
+		AdministratorJDBCDAO dao=new AdministratorJDBCDAO();
 
 		// 新增
 //		AdministratorVO admin1 = new AdministratorVO();
@@ -254,6 +306,9 @@ public class AdministratorJDBCDAO implements AdministratorDAO_interface{
 //		admin2.setAdmStatus(1);
 //		admin2.setAdmId("root2");
 //		dao.update(admin2);
+		
+		//刪除
+//		dao.delete("founder");
 
 		// 查詢單一
 //		AdministratorVO admin3= dao.findByPrimaryKey("root");
@@ -263,14 +318,16 @@ public class AdministratorJDBCDAO implements AdministratorDAO_interface{
 //		System.out.println("---------------------");
 
 //		// 查詢全部
-//		List<AdministratorVO> list = dao.getAll();
-//		for (AdministratorVO administratorVO : list) {
-//			System.out.println(administratorVO.getAdmId() + ",");
-//			System.out.println(administratorVO.getAdmPsw() + ",");
-//			System.out.println(administratorVO.getAdmStatus()+ ",");
-//			System.out.println();
-//		}
+		List<AdministratorVO> list = dao.getAll();
+		for (AdministratorVO administratorVO : list) {
+			System.out.println(administratorVO.getAdmId() + ",");
+			System.out.println(administratorVO.getAdmPsw() + ",");
+			System.out.println(administratorVO.getAdmStatus()+ ",");
+			System.out.println();
+		}
 	
 	}
+
+
 
 }

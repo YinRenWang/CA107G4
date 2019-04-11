@@ -15,7 +15,6 @@ import java.util.List;
 import com.administrator.model.AdministratorVO;
 
 public class AdvertisementJDBCDAO implements AdvertisementDAO_interface {
-	static AdvertisementJDBCDAO dao=new AdvertisementJDBCDAO();
 	String driver = "oracle.jdbc.driver.OracleDriver";
 	String url = "jdbc:oracle:thin:@localhost:1521:XE";
 	String userid = "WESHARE";
@@ -28,7 +27,10 @@ public class AdvertisementJDBCDAO implements AdvertisementDAO_interface {
 			
 	//修改
 	private static final String UPDATE = "UPDATE  Advertisement set adStatus=?, adImg=? where adId = ?";
-			
+	
+	//刪除
+	private static final String DELETE = "DELETE FROM Advertisement where adId = ?";
+	
 	//查詢
 	private static final String GET_ALL_STMT = "SELECT * FROM  Advertisement";
 	private static final String GET_ONE_STMT = "SELECT * FROM  Advertisement where adId = ?";
@@ -283,7 +285,54 @@ public class AdvertisementJDBCDAO implements AdvertisementDAO_interface {
 				return baos.toByteArray();
 			}
 
+			
+			@Override
+			public void delete(String adId) {
+				Connection con = null;
+				PreparedStatement pstmt = null;
+
+				try {
+
+					Class.forName(driver);
+					con = DriverManager.getConnection(url, userid, passwd);
+					pstmt = con.prepareStatement(DELETE);
+
+					pstmt.setString(1,adId);
+
+					pstmt.executeUpdate();
+					System.out.println("已刪除一筆資料");
+
+					// Handle any driver errors
+				} catch (ClassNotFoundException e) {
+					throw new RuntimeException("Couldn't load database driver. "
+							+ e.getMessage());
+					// Handle any SQL errors
+				} catch (SQLException se) {
+					throw new RuntimeException("A database error occured. "
+							+ se.getMessage());
+					// Clean up JDBC resources
+				} finally {
+					if (pstmt != null) {
+						try {
+							pstmt.close();
+						} catch (SQLException se) {
+							se.printStackTrace(System.err);
+						}
+					}
+					if (con != null) {
+						try {
+							con.close();
+						} catch (Exception e) {
+							e.printStackTrace(System.err);
+						}
+					}
+				}
+				
+			}			
+			
 	public static void main(String[] args) {
+		AdvertisementJDBCDAO dao=new AdvertisementJDBCDAO();
+		
 		// 新增
 //		try {
 //		img=dao.getPictureByteArray("images/Java.png");
@@ -311,6 +360,10 @@ public class AdvertisementJDBCDAO implements AdvertisementDAO_interface {
 //		adVO2.setAdImg(img);
 //		adVO2.setAdId("AD00001");
 //		dao.update(adVO2);
+		
+		//刪除
+		dao.delete("AD00001");
+		
 		// 查詢單一
 //		AdvertisementVO adVO3 = dao.findByPrimaryKey("AD00001");
 //		System.out.print(adVO3.getAdId() + ",");
@@ -322,18 +375,20 @@ public class AdvertisementJDBCDAO implements AdvertisementDAO_interface {
 //		System.out.println("-----------------------------------------");
 		
 //		// 查詢全部
-		List<AdvertisementVO> list = dao.getAll();
-		for (AdvertisementVO adVO4 : list) {
-			System.out.print(adVO4.getAdId() + ",");
-			System.out.print(adVO4.getInscId()+ ",");
-			System.out.print(adVO4.getAdStatus() + ",");
-			System.out.print(adVO4.getAdMFD() + ",");
-			System.out.print(adVO4.getAdEXP() + ",");
-			System.out.println(adVO4.getAdImg() + ",");
-			System.out.println();
-		}
-		
+//		List<AdvertisementVO> list = dao.getAll();
+//		for (AdvertisementVO adVO4 : list) {
+//			System.out.print(adVO4.getAdId() + ",");
+//			System.out.print(adVO4.getInscId()+ ",");
+//			System.out.print(adVO4.getAdStatus() + ",");
+//			System.out.print(adVO4.getAdMFD() + ",");
+//			System.out.print(adVO4.getAdEXP() + ",");
+//			System.out.println(adVO4.getAdImg() + ",");
+//			System.out.println();
+//		}
+//		
 
 	}
+
+
 
 }

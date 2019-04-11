@@ -5,7 +5,8 @@ import java.sql.Timestamp ;
 public class InsCourseTimeVO implements java.io.Serializable  {
 	private String inscTimeId;
 	private String inscId;
-	private Timestamp inscTime;            
+	private Timestamp inscMFD;
+	private Timestamp inscEXP;
 
 	public InsCourseTimeVO() {
 
@@ -27,14 +28,20 @@ public class InsCourseTimeVO implements java.io.Serializable  {
 		this.inscId = inscId;
 	}
 
-	public Timestamp getInscTime() {
-		return inscTime;
+	public Timestamp getInscMFD() {
+		return inscMFD;
 	}
 
-	public void setInscTime(Timestamp inscTime) {
-		this.inscTime = inscTime;
+	public void setInscMFD(Timestamp inscMFD) {
+		this.inscMFD = inscMFD;
 	}
-	
-	
+
+	public Timestamp getInscEXP() {
+		return inscEXP;
+	}
+
+	public void setInscEXP(Timestamp inscEXP) {
+		this.inscEXP = inscEXP;
+	}
 
 }

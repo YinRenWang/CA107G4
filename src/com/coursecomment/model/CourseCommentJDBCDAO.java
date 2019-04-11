@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class CourseCommentJDBCDAO implements CourseCommentDAO_interface {
-	static CourseCommentJDBCDAO dao=new CourseCommentJDBCDAO();
+
 	String driver = "oracle.jdbc.driver.OracleDriver";
 	String url = "jdbc:oracle:thin:@localhost:1521:XE";
 	String userid = "WESHARE";
@@ -20,6 +20,9 @@ public class CourseCommentJDBCDAO implements CourseCommentDAO_interface {
 	
 	//刪除
 	private static final String DELETE = "DELETE FROM COURSECOMMENT where ccId= ? ";
+	
+	//修改
+	private static final String UPDATE = "UPDATE COURSECOMMENT set ccContent=? where ccId = ?";
 	
 	//查詢全部
 	private static final String GET_ALL_STMT = "SELECT * FROM COURSECOMMENT";
@@ -71,6 +74,54 @@ public class CourseCommentJDBCDAO implements CourseCommentDAO_interface {
 		
 
 	}
+	
+	@Override
+	public void update(CourseCommentVO courseCommentVO) {
+		Connection con = null;
+		PreparedStatement pstmt = null;
+
+		try {
+
+			Class.forName(driver);
+			con = DriverManager.getConnection(url, userid, passwd);
+			pstmt = con.prepareStatement(UPDATE);
+
+			pstmt.setString(1, courseCommentVO.getCcContent());
+			pstmt.setString(2,courseCommentVO.getCcId());
+			
+
+
+			pstmt.executeUpdate();
+			System.out.println("已修改一筆資料");
+
+			// Handle any driver errors
+		} catch (ClassNotFoundException e) {
+			throw new RuntimeException("Couldn't load database driver. "
+					+ e.getMessage());
+			// Handle any SQL errors
+		} catch (SQLException se) {
+			throw new RuntimeException("A database error occured. "
+					+ se.getMessage());
+			// Clean up JDBC resources
+		} finally {
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
+		}
+		
+	}
+	
 
 	@Override
 	public void delete(String ccId) {
@@ -238,8 +289,13 @@ public class CourseCommentJDBCDAO implements CourseCommentDAO_interface {
 		}
 		return list;
 	}
+	
+	
 
 	public static void main(String[] args) {
+		
+		CourseCommentJDBCDAO dao=new CourseCommentJDBCDAO();
+		
 		// 新增
 //		CourseCommentVO courseCommentVO1 = new CourseCommentVO();
 //		courseCommentVO1.setMemId("weshare04");
@@ -247,33 +303,39 @@ public class CourseCommentJDBCDAO implements CourseCommentDAO_interface {
 //		courseCommentVO1.setCcContent("有附教材嗎？謝謝");
 //		dao.insert(courseCommentVO1);
 		
+		// 更新
+		CourseCommentVO courseCommentVO2 = new CourseCommentVO();
+		courseCommentVO2.setCcId("CC00003");
+		courseCommentVO2.setCcContent("8888");
+		dao.update(courseCommentVO2);
+		
 		// 刪除
 //		dao.delete("CC00004");
 		
 
 		// 查詢複合式查詢
-		List<CourseCommentVO> list = dao.findByPrimaryKey("IC00002");
-		for (CourseCommentVO courseCommentVO3 : list) {
-			System.out.println(courseCommentVO3.getCcId()+ ",");
-			System.out.println(courseCommentVO3.getMemId()+ ",");
-			System.out.println(courseCommentVO3.getInscId()+ ",");
-			System.out.println(courseCommentVO3.getCcContent()+ ",");
-			System.out.println("---------------------");
-
-//		// 查詢全部
-//		List<CourseCommentVO> list = dao.getAll();
+//		List<CourseCommentVO> list = dao.findByPrimaryKey("IC00002");
 //		for (CourseCommentVO courseCommentVO3 : list) {
 //			System.out.println(courseCommentVO3.getCcId()+ ",");
 //			System.out.println(courseCommentVO3.getMemId()+ ",");
 //			System.out.println(courseCommentVO3.getInscId()+ ",");
 //			System.out.println(courseCommentVO3.getCcContent()+ ",");
 //			System.out.println("---------------------");
-		}
-		
-		
-		
 
+//		// 查詢全部
+//		List<CourseCommentVO> list = dao.getAll();
+//		for (CourseCommentVO courseCommentVO4 : list) {
+//			System.out.println(courseCommentVO4.getCcId()+ ",");
+//			System.out.println(courseCommentVO4.getMemId()+ ",");
+//			System.out.println(courseCommentVO4.getInscId()+ ",");
+//			System.out.println(courseCommentVO4.getCcContent()+ ",");
+//			System.out.println("---------------------");
+//		}
+		
+		
+		
 	}
+	
 
 	
 
@@ -284,3 +346,5 @@ public class CourseCommentJDBCDAO implements CourseCommentDAO_interface {
 
 
 }
+
+	

@@ -12,7 +12,7 @@ import com.administrator.model.AdministratorVO;
 
 
 public class CouponJDBCDAO implements CouponDAO_interface {
-	static CouponJDBCDAO dao=new CouponJDBCDAO();
+
 	String driver = "oracle.jdbc.driver.OracleDriver";
 	String url = "jdbc:oracle:thin:@localhost:1521:XE";
 	String userid = "WESHARE";
@@ -23,7 +23,10 @@ public class CouponJDBCDAO implements CouponDAO_interface {
 			
 	//修改
 	private static final String UPDATE = "UPDATE Coupon set couponBalance=?, couponEXP=? , couponStatus=? where couponId = ?";
-			
+	
+	//刪除
+	private static final String DELETE = "DELETE FROM Coupon where couponId = ?";
+	
 	//查詢
 	private static final String GET_ALL_STMT = "SELECT * FROM Coupon";
 	private static final String GET_ONE_STMT = "SELECT * FROM Coupon where couponId = ?";
@@ -255,8 +258,55 @@ public class CouponJDBCDAO implements CouponDAO_interface {
 		return list;
 	
 	}
+	
+	@Override
+	public void delete(String couponId) {
+		Connection con = null;
+		PreparedStatement pstmt = null;
+
+		try {
+
+			Class.forName(driver);
+			con = DriverManager.getConnection(url, userid, passwd);
+			pstmt = con.prepareStatement(DELETE);
+
+			pstmt.setString(1,couponId);
+
+			pstmt.executeUpdate();
+			System.out.println("已刪除一筆資料");
+
+			// Handle any driver errors
+		} catch (ClassNotFoundException e) {
+			throw new RuntimeException("Couldn't load database driver. "
+					+ e.getMessage());
+			// Handle any SQL errors
+		} catch (SQLException se) {
+			throw new RuntimeException("A database error occured. "
+					+ se.getMessage());
+			// Clean up JDBC resources
+		} finally {
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
+		}
+		
+	}
+
 
 	public static void main(String[] args) {
+		
+		CouponJDBCDAO dao=new CouponJDBCDAO();
 		// 新增
 //		CouponVO couponVO1 = new CouponVO();
 //		couponVO1.setCouponId("50MONEYOFF");
@@ -277,6 +327,9 @@ public class CouponJDBCDAO implements CouponDAO_interface {
 //		couponVO2.setCouponId("50MONEYOFF");
 //		dao.update(couponVO2);
 		
+		//刪除
+//		dao.delete("FIRSTORDER500");
+		
 		// 查詢單一
 //		CouponVO couponVO3 = dao.findByPrimaryKey("FIRSTORDER500");
 //		System.out.print(couponVO3.getCouponId()+ ",");
@@ -289,21 +342,22 @@ public class CouponJDBCDAO implements CouponDAO_interface {
 //		System.out.println("---------------------------------------------");
 		
 		// 查詢全部
-		List<CouponVO> list = dao.getAll();
-		for (CouponVO couponVO4 : list) {
-			System.out.print(couponVO4.getCouponId()+ ",");
-			System.out.print(couponVO4.getCouponName()+ ",");
-			System.out.print(couponVO4.getCouponDollar()+ ",");
-			System.out.print(couponVO4.getCouponBalance()+ ",");
-			System.out.print(couponVO4.getCouponMFD()+ ",");
-			System.out.print(couponVO4.getCouponEXP()+ ",");
-			System.out.println(couponVO4.getCouponStatus()+ ",");
-			System.out.println("---------------------------------------------");
-		}
+//		List<CouponVO> list = dao.getAll();
+//		for (CouponVO couponVO4 : list) {
+//			System.out.print(couponVO4.getCouponId()+ ",");
+//			System.out.print(couponVO4.getCouponName()+ ",");
+//			System.out.print(couponVO4.getCouponDollar()+ ",");
+//			System.out.print(couponVO4.getCouponBalance()+ ",");
+//			System.out.print(couponVO4.getCouponMFD()+ ",");
+//			System.out.print(couponVO4.getCouponEXP()+ ",");
+//			System.out.println(couponVO4.getCouponStatus()+ ",");
+//			System.out.println("---------------------------------------------");
+//		}
 		
 		
 	
 
 	}
+
 
 }

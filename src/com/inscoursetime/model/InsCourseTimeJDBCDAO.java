@@ -16,10 +16,10 @@ public class InsCourseTimeJDBCDAO implements InsCourseTimeDAO_interface {
 	String passwd = "123456";
 	
 	//新增
-	private static final String INSERT_STMT = "Insert into InsCourseTime values (('TT'||LPAD(to_char(InsCourseTime_seq.NEXTVAL), 5, '0')),?,?)";
+	private static final String INSERT_STMT = "Insert into InsCourseTime values (('TT'||LPAD(to_char(InsCourseTime_seq.NEXTVAL), 5, '0')),?,?,?)";
 	
 	//修改
-	private static final String UPDATE = "UPDATE InsCourseTime set inscTime=? where inscTimeId = ?";
+	private static final String UPDATE = "UPDATE InsCourseTime set inscMFD=?,inscEXP=? where inscTimeId = ?";
 
 	//刪除
 	private static final String DELETE = "DELETE FROM InsCourseTime where inscTimeId = ?";
@@ -39,7 +39,8 @@ public class InsCourseTimeJDBCDAO implements InsCourseTimeDAO_interface {
 			con = DriverManager.getConnection(url, userid, passwd);
 			pstmt = con.prepareStatement(INSERT_STMT);
 			pstmt.setString(1,insCourseTimeVO.getInscId());
-			pstmt.setTimestamp(2, insCourseTimeVO.getInscTime());
+			pstmt.setTimestamp(2, insCourseTimeVO.getInscMFD());
+			pstmt.setTimestamp(3, insCourseTimeVO.getInscEXP());
 
 			pstmt.executeUpdate();
 			System.out.println("已新增一筆資料");
@@ -83,8 +84,9 @@ public class InsCourseTimeJDBCDAO implements InsCourseTimeDAO_interface {
 			Class.forName(driver);
 			con = DriverManager.getConnection(url, userid, passwd);
 			pstmt = con.prepareStatement(UPDATE);
-			pstmt.setTimestamp(1, insCourseTimeVO.getInscTime());
-			pstmt.setString(2, insCourseTimeVO.getInscTimeId());
+			pstmt.setTimestamp(1, insCourseTimeVO.getInscMFD());
+			pstmt.setTimestamp(2, insCourseTimeVO.getInscEXP());
+			pstmt.setString(3, insCourseTimeVO.getInscTimeId());
 			pstmt.executeUpdate();
 			System.out.println("已修改一筆資料");
 
@@ -183,7 +185,8 @@ public class InsCourseTimeJDBCDAO implements InsCourseTimeDAO_interface {
 				insCourseTimeVO = new InsCourseTimeVO();
 				insCourseTimeVO.setInscTimeId(rs.getString("inscTimeId"));
 				insCourseTimeVO.setInscId(rs.getString("inscId"));
-				insCourseTimeVO.setInscTime(rs.getTimestamp("inscTime"));
+				insCourseTimeVO.setInscMFD(rs.getTimestamp("inscMFD"));
+				insCourseTimeVO.setInscEXP(rs.getTimestamp("inscEXP"));
 			}
 
 			// Handle any driver errors
@@ -243,7 +246,8 @@ public class InsCourseTimeJDBCDAO implements InsCourseTimeDAO_interface {
 				insCourseTimeVO = new InsCourseTimeVO();
 				insCourseTimeVO.setInscTimeId(rs.getString("inscTimeId"));
 				insCourseTimeVO.setInscId(rs.getString("inscId"));
-				insCourseTimeVO.setInscTime(rs.getTimestamp("inscTime"));
+				insCourseTimeVO.setInscMFD(rs.getTimestamp("inscMFD"));
+				insCourseTimeVO.setInscEXP(rs.getTimestamp("inscEXP"));
 				list.add(insCourseTimeVO); // Store the row in the list
 			}
 
@@ -285,34 +289,38 @@ public class InsCourseTimeJDBCDAO implements InsCourseTimeDAO_interface {
 	public static void main(String[] args) {
 		// 新增
 //		InsCourseTimeVO insCourseTimeVO1 = new InsCourseTimeVO();
-//		insCourseTimeVO1.setInscId("IC00001");
-//		insCourseTimeVO1.setInscTime(java.sql.Timestamp.valueOf("2019-03-24 12:30:00"));
+//		insCourseTimeVO1.setInscId("IC00002");
+//		insCourseTimeVO1.setInscMFD(java.sql.Timestamp.valueOf("2019-04-22 16:00:00"));
+//		insCourseTimeVO1.setInscEXP(java.sql.Timestamp.valueOf("2019-04-22 17:00:00"));
 //		dao.insert(insCourseTimeVO1);
 		
 		// 修改
 //		InsCourseTimeVO insCourseTimeVO2 = new InsCourseTimeVO();
-//		insCourseTimeVO2.setInscTime(java.sql.Timestamp.valueOf("2019-02-28 20:00:00"));
+//		insCourseTimeVO2.setInscMFD(java.sql.Timestamp.valueOf("2019-04-22 14:00:00"));
+//		insCourseTimeVO2.setInscEXP(java.sql.Timestamp.valueOf("2019-04-22 16:00:00"));
 //		insCourseTimeVO2.setInscTimeId("TT00006");
 //		dao.update(insCourseTimeVO2);
-		
+//		
 		// 刪除
-//		dao.delete("TT00006");
+//		dao.delete("TT00007");
 		
-		// 查詢
+		// 查詢單筆
 //		InsCourseTimeVO insCourseTimeVO3 = dao.findByPrimaryKey("TT00001");
 //		System.out.print(insCourseTimeVO3.getInscTimeId() + ",");
 //		System.out.print(insCourseTimeVO3.getInscId() + ",");
-//		System.out.println(insCourseTimeVO3.getInscTimeId() + ",");
+//		System.out.print(insCourseTimeVO3.getInscMFD() + ",");
+//		System.out.println(insCourseTimeVO3.getInscEXP() + ",");
 //		System.out.println("---------------------");
 		
-		// 查詢
-		List<InsCourseTimeVO> list = dao.getAll();
-		for (InsCourseTimeVO insCourseTimeVO4 : list) {
-			System.out.print(insCourseTimeVO4.getInscTimeId() + ",");
-			System.out.print(insCourseTimeVO4.getInscId() + ",");
-			System.out.println(insCourseTimeVO4.getInscTimeId() + ",");
-			System.out.println("---------------------");
-		}
+		// 查詢全部
+//		List<InsCourseTimeVO> list = dao.getAll();
+//		for (InsCourseTimeVO insCourseTimeVO4 : list) {
+//			System.out.print(insCourseTimeVO4.getInscTimeId() + ",");
+//			System.out.print(insCourseTimeVO4.getInscId() + ",");
+//			System.out.print(insCourseTimeVO4.getInscMFD() + ",");
+//			System.out.println(insCourseTimeVO4.getInscEXP() + ",");
+//			System.out.println("---------------------");
+//		}
 
 	}
 
