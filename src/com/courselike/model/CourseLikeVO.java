@@ -22,4 +22,7 @@ public class CourseLikeVO implements java.io.Serializable  {
 		this.inscId = inscId;
 	}
 
+	
+	
+
 }

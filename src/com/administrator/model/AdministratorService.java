@@ -1,5 +1,7 @@
 package com.administrator.model;
 
+import java.util.List;
+
 public class AdministratorService {
 	
 	private AdministratorDAO_interface dao;
@@ -27,6 +29,14 @@ public class AdministratorService {
 		administratorVO.setAdmStatus(admStatus);
 		dao.update(administratorVO);
 		return administratorVO;
+	}
+	
+	public AdministratorVO getOneAdministrator(String admId) {
+		return dao.findByPrimaryKey(admId);
+	}
+
+	public List<AdministratorVO> getAll() {
+		return dao.getAll();
 	}
 	
 	

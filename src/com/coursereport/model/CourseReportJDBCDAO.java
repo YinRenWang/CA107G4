@@ -30,6 +30,9 @@ public class CourseReportJDBCDAO implements CourseReportDAO_interface {
 	//查詢狀態
 	private static final String GET_ALL_STATUS = "SELECT * FROM CourseReport WHERE crStatus=?";
 	
+	//查詢單筆
+	private static final String GET_ONE_STMT = "SELECT * FROM CourseReport WHERE crId=?";
+	
 	//複合式查詢
 	private static final String CASE_WHEN_STMT = "SELECT * FROM CourseReport where (case when crId=? then 1 else 0 end+ case when memId=? then 1 else 0 end+ case when inscId=? then 1 else 0 end)>=1";
 
@@ -124,10 +127,14 @@ public class CourseReportJDBCDAO implements CourseReportDAO_interface {
 	
 
 	}
+	@Override
+	public CourseReportVO findByPrimaryKey(String crId) {
 
+		return null;
+	}
 	
 	@Override
-	public List<CourseReportVO> findByPrimaryKey(String xxxId) {
+	public List<CourseReportVO> findByKey(String xxxId){
 		List<CourseReportVO> list = new ArrayList<CourseReportVO>();
 		CourseReportVO courseReportVO = null;
 		Connection con = null;
@@ -310,6 +317,9 @@ public class CourseReportJDBCDAO implements CourseReportDAO_interface {
 		return list;
 	
 	}
+	
+
+
 
 	public static void main(String[] args) {
 		// 新增
@@ -362,6 +372,8 @@ public class CourseReportJDBCDAO implements CourseReportDAO_interface {
 		
 
 	}
+
+
 
 
 

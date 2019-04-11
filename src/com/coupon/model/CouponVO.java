@@ -3,72 +3,75 @@ package com.coupon.model;
 import java.sql.Date;
 
 public class CouponVO implements java.io.Serializable {
-	private String CouponId;
-	private String CouponName;
-	private Integer CouponDollar;
-	private Integer CouponBalance;
-	private Date CouponMFD;
-	private Date CouponEXP;
-	private Integer CouponStatus;
+	private String couponId;
+	private String couponName;
+	private Integer couponDollar;
+	private Integer couponBalance;
+	private Date couponMFD;
+	private Date couponEXP;
+	private Integer couponStatus;
 	
+
 	public CouponVO() {
+
 	}
 
 	public String getCouponId() {
-		return CouponId;
+		return couponId;
 	}
 
 	public void setCouponId(String couponId) {
-		CouponId = couponId;
+		this.couponId = couponId;
 	}
 
 	public String getCouponName() {
-		return CouponName;
+		return couponName;
 	}
 
 	public void setCouponName(String couponName) {
-		CouponName = couponName;
+		this.couponName = couponName;
 	}
 
 	public Integer getCouponDollar() {
-		return CouponDollar;
+		return couponDollar;
 	}
 
 	public void setCouponDollar(Integer couponDollar) {
-		CouponDollar = couponDollar;
+		this.couponDollar = couponDollar;
 	}
 
 	public Integer getCouponBalance() {
-		return CouponBalance;
+		return couponBalance;
 	}
 
 	public void setCouponBalance(Integer couponBalance) {
-		CouponBalance = couponBalance;
+		this.couponBalance = couponBalance;
 	}
 
 	public Date getCouponMFD() {
-		return CouponMFD;
+		return couponMFD;
 	}
 
 	public void setCouponMFD(Date couponMFD) {
-		CouponMFD = couponMFD;
+		this.couponMFD = couponMFD;
 	}
 
 	public Date getCouponEXP() {
-		return CouponEXP;
+		return couponEXP;
 	}
 
 	public void setCouponEXP(Date couponEXP) {
-		CouponEXP = couponEXP;
+		this.couponEXP = couponEXP;
 	}
 
 	public Integer getCouponStatus() {
-		return CouponStatus;
+		return couponStatus;
 	}
 
 	public void setCouponStatus(Integer couponStatus) {
-		CouponStatus = couponStatus;
+		this.couponStatus = couponStatus;
 	}
+
 	
 
 }

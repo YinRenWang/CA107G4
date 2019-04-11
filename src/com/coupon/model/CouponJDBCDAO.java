@@ -22,7 +22,7 @@ public class CouponJDBCDAO implements CouponDAO_interface {
 	private static final String INSERT_STMT = "INSERT INTO Coupon VALUES (?,?,?,?,?,?,?)";
 			
 	//修改
-	private static final String UPDATE = "UPDATE Coupon set couponBalance=?, couponEXP=? , couponStatus=? where couponId = ?";
+	private static final String UPDATE = "UPDATE Coupon set couponDollar,couponBalance=?, couponEXP=? , couponStatus=? where couponId = ?";
 	
 	//刪除
 	private static final String DELETE = "DELETE FROM Coupon where couponId = ?";
@@ -93,10 +93,11 @@ public class CouponJDBCDAO implements CouponDAO_interface {
 			Class.forName(driver);
 			con = DriverManager.getConnection(url, userid, passwd);
 			pstmt = con.prepareStatement(UPDATE);
-			pstmt.setInt(1,couponVO.getCouponBalance());
-			pstmt.setDate(2, couponVO.getCouponEXP());
-			pstmt.setInt(3, couponVO.getCouponStatus());
-			pstmt.setString(4, couponVO.getCouponId());
+			pstmt.setInt(1, couponVO.getCouponDollar());
+			pstmt.setInt(2,couponVO.getCouponBalance());
+			pstmt.setDate(3, couponVO.getCouponEXP());
+			pstmt.setInt(4, couponVO.getCouponStatus());
+			pstmt.setString(5, couponVO.getCouponId());
 			
 			pstmt.executeUpdate();
 			System.out.println("已修改一筆資料");

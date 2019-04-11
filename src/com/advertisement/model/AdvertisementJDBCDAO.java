@@ -26,7 +26,7 @@ public class AdvertisementJDBCDAO implements AdvertisementDAO_interface {
 	private static final String INSERT_STMT = "INSERT INTO  Advertisement (adId,inscId,adStatus,adMFD,adEXP,adImg) VALUES (('AD'||LPAD(to_char(Advertisement_seq.NEXTVAL), 5, '0')),?,?,?,?,?)";
 			
 	//修改
-	private static final String UPDATE = "UPDATE  Advertisement set adStatus=?, adImg=? where adId = ?";
+	private static final String UPDATE = "UPDATE  Advertisement set adStatus=?,adEXP=?,adImg=? where adId = ?";
 	
 	//刪除
 	private static final String DELETE = "DELETE FROM Advertisement where adId = ?";
@@ -94,8 +94,9 @@ public class AdvertisementJDBCDAO implements AdvertisementDAO_interface {
 			con = DriverManager.getConnection(url, userid, passwd);
 			pstmt = con.prepareStatement(UPDATE);
 			pstmt.setInt(1, advertisementVO.getAdStatus());
-			pstmt.setBytes(2, advertisementVO.getAdImg());
-			pstmt.setString(3,advertisementVO.getAdId());
+			pstmt.setDate(2,advertisementVO.getAdEXP());
+			pstmt.setBytes(3, advertisementVO.getAdImg());
+			pstmt.setString(4,advertisementVO.getAdId());
 
 			pstmt.executeUpdate();
 			System.out.println("已修改一筆資料");
@@ -349,20 +350,21 @@ public class AdvertisementJDBCDAO implements AdvertisementDAO_interface {
 //		dao.insert(adVO1);
 		
 		// 修改
-//		AdvertisementVO adVO2 = new AdvertisementVO();
-//		try {
-//		img=dao.getPictureByteArray("images/Java.png");
-//		} catch (IOException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
-//		adVO2.setAdStatus(0);
-//		adVO2.setAdImg(img);
-//		adVO2.setAdId("AD00001");
-//		dao.update(adVO2);
+		AdvertisementVO adVO2 = new AdvertisementVO();
+		try {
+		img=dao.getPictureByteArray("/images/carosel_1.jpg");
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		adVO2.setAdStatus(0);
+		adVO2.setAdEXP(java.sql.Date.valueOf("2019-04-30"));
+		adVO2.setAdImg(img);
+		adVO2.setAdId("AD00001");
+		dao.update(adVO2);
 		
 		//刪除
-		dao.delete("AD00001");
+//		dao.delete("AD00001");
 		
 		// 查詢單一
 //		AdvertisementVO adVO3 = dao.findByPrimaryKey("AD00001");

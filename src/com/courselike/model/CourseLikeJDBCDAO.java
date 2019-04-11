@@ -26,7 +26,8 @@ public class CourseLikeJDBCDAO implements CourseLikeDAO_interface {
 	
 	//查詢
 	private static final String GET_ALL_STMT = "SELECT * FROM CourseLike";
-	private static final String GET_ONE_STMT = "SELECT * FROM CourseLike where memId = ?";
+	private static final String GET_ONE_MEMID = "SELECT * FROM CourseLike where memId = ?";
+	private static final String GET_ONE_STMT = "SELECT * FROM CourseLike where memId = ? and inscId = ? ";
 	
 
 	public CourseLikeJDBCDAO() {
@@ -126,7 +127,7 @@ public class CourseLikeJDBCDAO implements CourseLikeDAO_interface {
 	}
 
 	@Override
-	public CourseLikeVO findByPrimaryKey(String memId) {
+	public CourseLikeVO findByPrimaryKey(String memId,String inscId) {
 		CourseLikeVO courseLikeVO = null;
 		Connection con = null;
 		PreparedStatement pstmt = null;
@@ -139,6 +140,7 @@ public class CourseLikeJDBCDAO implements CourseLikeDAO_interface {
 			pstmt = con.prepareStatement(GET_ONE_STMT);
 
 			pstmt.setString(1, memId);
+			pstmt.setString(2, inscId);
 
 			rs = pstmt.executeQuery();
 
@@ -242,6 +244,68 @@ public class CourseLikeJDBCDAO implements CourseLikeDAO_interface {
 		}
 		return list;
 	}
+	
+	
+	@Override
+	public List<CourseLikeVO> findByMemId(String memId) {
+		List<CourseLikeVO> list = new ArrayList<CourseLikeVO>();
+		CourseLikeVO courseLikeVO = null;
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+
+		try {
+
+			Class.forName(driver);
+			con = DriverManager.getConnection(url, userid, passwd);
+			pstmt = con.prepareStatement(GET_ONE_MEMID);
+
+			pstmt.setString(1, memId);
+
+			rs = pstmt.executeQuery();
+
+			while (rs.next()) {
+				// empVO 也稱為 Domain objects
+				courseLikeVO = new CourseLikeVO();
+				courseLikeVO.setMemId(rs.getString("memId"));
+				courseLikeVO.setInscId(rs.getString("inscId"));
+				list.add(courseLikeVO); // Store the row in the list
+			}
+
+			// Handle any driver errors
+		} catch (ClassNotFoundException e) {
+			throw new RuntimeException("Couldn't load database driver. "
+					+ e.getMessage());
+			// Handle any SQL errors
+		} catch (SQLException se) {
+			throw new RuntimeException("A database error occured. "
+					+ se.getMessage());
+			// Clean up JDBC resources
+		} finally {
+			if (rs != null) {
+				try {
+					rs.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
+		}
+		return list;
+	}
 
 	public static void main(String[] args) {
 		// 新增
@@ -251,22 +315,32 @@ public class CourseLikeJDBCDAO implements CourseLikeDAO_interface {
 //		dao.insert(courseLikeVO1);
 		
 		//刪除
-//		dao.delete("weshare04","IC00002");
+//		dao.delete("weshare04","IC00001");
 		
 		// 查詢
-//		CourseLikeVO courseLikeVO2 = dao.findByPrimaryKey("weshare02");
+//		CourseLikeVO courseLikeVO2 = dao.findByPrimaryKey("weshare02","IC00001");
 //		System.out.print(courseLikeVO2.getMemId() + ",");
 //		System.out.print(courseLikeVO2.getInscId() + ",");
 //		System.out.println("---------------------");
 		
 		// 查詢
-		List<CourseLikeVO> list = dao.getAll();
-		for (CourseLikeVO courseLikeVO3 : list) {
-			System.out.print(courseLikeVO3.getMemId() + ",");
-			System.out.print(courseLikeVO3.getInscId() + ",");
+		List<CourseLikeVO> list = dao.findByMemId("weshare03");
+		for (CourseLikeVO courseLikeVO4 : list) {
+			System.out.print(courseLikeVO4.getMemId() + ",");
+			System.out.print(courseLikeVO4.getInscId() + ",");
 			System.out.println("---------------------");
 		}
+		
+		// 查詢
+//		List<CourseLikeVO> list = dao.getAll();
+//		for (CourseLikeVO courseLikeVO4 : list) {
+//			System.out.print(courseLikeVO4.getMemId() + ",");
+//			System.out.print(courseLikeVO4.getInscId() + ",");
+//			System.out.println("---------------------");
+//		}
 
 	}
+
+
 
 }

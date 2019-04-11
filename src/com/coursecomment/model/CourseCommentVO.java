@@ -42,4 +42,7 @@ public class CourseCommentVO implements java.io.Serializable {
 		this.ccContent = ccContent;
 	}
 
+	
+	
+
 }

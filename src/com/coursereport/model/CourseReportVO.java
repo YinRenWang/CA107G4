@@ -50,4 +50,8 @@ public class CourseReportVO implements java.io.Serializable {
 		this.crStatus = crStatus;
 	}
 
+
+	
+	
+
 }
