@@ -181,5 +181,7 @@ public class MemberVO  implements java.io.Serializable {
 	}
 
 
+
+
 	
 }
