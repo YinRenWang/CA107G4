@@ -40,4 +40,9 @@ public class MemberCouponVO implements java.io.Serializable {
 	
 	}
 
+
+	
+	
+	
+
 }
