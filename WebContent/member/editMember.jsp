@@ -192,7 +192,9 @@ section>form>div {
 				<div class="ui-image">
 					
 					<!-- User Image -->
-<img src="value="${memberVO.memImage}" alt="Profile Picture" class="img-responsive"  name="memImage" width="120" height="120">
+<img src="<%=request.getContextPath()%>/member/DBGifReader.do?memId=${memberVO.memId}" alt="Profile Picture" 
+class="img-responsive"  name="memImage" width="120" height="120">
+
 				</div>
 			</div>
 			<!-- Head Ends -->

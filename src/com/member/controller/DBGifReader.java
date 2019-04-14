@@ -14,12 +14,13 @@ public class DBGifReader extends HttpServlet {
 	String passwd = "123456";
 	private static final String INSERT_STMT = "SELECT memImage FROM member WHERE memId=?";
 
-	Connection con = null;
-	PreparedStatement pstmt = null;
-	ResultSet rs = null;
+	Connection con;
 
 	public void doGet(HttpServletRequest req, HttpServletResponse res)
 			throws ServletException, IOException {
+		
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
 
 		res.setContentType("image/gif");
 		ServletOutputStream out = res.getOutputStream();
