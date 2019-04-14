@@ -12,8 +12,11 @@ public class DBGifReader extends HttpServlet {
 	String url = "jdbc:oracle:thin:@localhost:49161:XE";
 	String userid = "WESHARE";
 	String passwd = "123456";
+	private static final String INSERT_STMT = "SELECT memImage FROM member WHERE memId=?";
 
-	Connection con;
+	Connection con = null;
+	PreparedStatement pstmt = null;
+	ResultSet rs = null;
 
 	public void doGet(HttpServletRequest req, HttpServletResponse res)
 			throws ServletException, IOException {
@@ -22,9 +25,10 @@ public class DBGifReader extends HttpServlet {
 		ServletOutputStream out = res.getOutputStream();
 
 		try {
-			Statement stmt = con.createStatement();
-			ResultSet rs = stmt.executeQuery(
-				"SELECT memImage FROM member WHERE memId="+ req.getParameter("memId"));
+			pstmt = con.prepareStatement(INSERT_STMT);
+			pstmt.setString(1,req.getParameter("memId"));
+			rs = pstmt.executeQuery();
+	
 
 			if (rs.next()) {
 				BufferedInputStream in = new BufferedInputStream(rs.getBinaryStream("memImage"));
@@ -38,7 +42,7 @@ public class DBGifReader extends HttpServlet {
 				res.sendError(HttpServletResponse.SC_NOT_FOUND);
 			}
 			rs.close();
-			stmt.close();
+			pstmt.close();
 		} catch (Exception e) {
 			System.out.println(e);
 		}
