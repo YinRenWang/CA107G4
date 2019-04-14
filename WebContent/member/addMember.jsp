@@ -98,7 +98,7 @@
 		</c:if>
 
 
-<FORM method="get" action="member.do" class="form-horizontal" name="form1" id="form1" enctype="multipart/form-data">
+<FORM method="post" action="member.do" class="form-horizontal" name="form1" id="form1" enctype="multipart/form-data">
 
 			<div class="container">
 				<div class="row">
@@ -189,10 +189,11 @@
 								class="text-danger">*</span></label>
 							<div class="col-md-8 col-sm-9">
 								<label> <input name="memSex" type="radio" value="0"
-									checked> 男生
-								</label>     <label> <input name="memSex" type="radio" value="1">
-									${memberVO.memSex} 女生
+									> 男生
+								</label><label> <input name="memSex" type="radio" value="1">
+									女生
 								</label>
+								
 							</div>
 
 
@@ -284,8 +285,8 @@
 									function Magic() {
 										document.getElementById("memId").value = "weshare08";
 										document.getElementById("memEmail").value = "weshare@gmail.com";
-										document.getElementById("memPsw").value = "~Zxe444726";
-										document.getElementById("memPswHint").value = "~Zxe54782";
+										document.getElementById("memPsw").value = "~Orz9354272";
+										document.getElementById("memPswHint").value = "~Orz9w1272";
 										document.getElementById("memName").value = "大衛海鮮";
 										document.getElementById("memIdCard").value = "A181313047";
 										document.getElementById("memBirth").value = "2018-05-23";

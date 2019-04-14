@@ -3,16 +3,20 @@ package com.member.controller;
 import com.member.model.*;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.*;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.Part;
 
 @WebServlet("/MemberServlet")
+@MultipartConfig(fileSizeThreshold = 1024 * 1024, maxFileSize = 5 * 1024 * 1024, maxRequestSize = 5 * 5 * 1024 * 1024)
 public class MemberServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
@@ -103,7 +107,7 @@ public class MemberServlet extends HttpServlet {
 			// send the ErrorPage view.
 			req.setAttribute("errorMsgs", errorMsgs);
 
-			try {
+//			try {
 				/*********************** 1.接收請求參數 - 輸入格式的錯誤處理 *************************/
 				String memId = req.getParameter("memId");
 				String memIdReg = "^[(\u4e00-\u9fa5)(a-zA-Z0-9_)]{8,12}$";
@@ -161,6 +165,9 @@ public class MemberServlet extends HttpServlet {
 				}
 
 				Integer memSex = new Integer(req.getParameter("memSex").trim());
+				if (memSex == null) {
+					errorMsgs.add("請勾選性別");
+				} 
 
 				String memPhone = req.getParameter("memPhone");
 				String memPhoneReg = "^09[0-9]{8}$";
@@ -177,8 +184,15 @@ public class MemberServlet extends HttpServlet {
 				} else if (!memAdd.trim().matches(memAddReg)) { // 以下練習正則(規)表示式(regular-expression)
 					errorMsgs.add("地址: 請輸入正確格式");
 				}
-
-				byte[] memImage = null;
+				
+				
+				
+				Part part = req.getPart("memImage");
+				InputStream in = part.getInputStream();
+				byte[] memImgae = new byte[in.available()];
+				in.read(memImgae);
+				in.close();
+				
 				Integer memBalance = 0;
 				Integer memBlock = 0;
 				Integer memStatus = 0;
@@ -190,7 +204,7 @@ public class MemberServlet extends HttpServlet {
 				memberVO.setMemPswHint(memPswHint);
 				memberVO.setMemName(memName);
 				memberVO.setMemSex(memSex);
-				memberVO.setMemImage(memImage);
+				memberVO.setMemImage(memImgae);
 				memberVO.setMemEmail(memEmail);
 				memberVO.setMemPhone(memPhone);
 				memberVO.setMemBirth(memBirth);
@@ -234,7 +248,7 @@ public class MemberServlet extends HttpServlet {
 				}
 
 				/*************************** 3.開始新增資料 ***************************************/
-				memberVO = memSvc.regMember(memId, memIdCard, memPsw, memPswHint, memName, memSex, memImage, memEmail,
+				memberVO = memSvc.regMember(memId, memIdCard, memPsw, memPswHint, memName, memSex, memImgae, memEmail,
 						memPhone, memBirth, memAdd, memBalance, memBlock, memStatus);
 
 				/*************************** 4.新增完成,準備轉交(Send the Success view) ***********/
@@ -243,11 +257,11 @@ public class MemberServlet extends HttpServlet {
 				RequestDispatcher successView = req.getRequestDispatcher(url); // 成功轉交 loginSuccess.jsp
 				successView.forward(req, res);
 				/*************************** 其他可能的錯誤處理 **********************************/
-			} catch (Exception e) {
-				errorMsgs.add(e.getMessage());
-				RequestDispatcher failureView = req.getRequestDispatcher("/member/addMember.jsp");
-				failureView.forward(req, res);
-			}
+//			} catch (Exception e) {
+//				errorMsgs.add(e.getMessage());
+//				RequestDispatcher failureView = req.getRequestDispatcher("/member/addMember.jsp");
+//				failureView.forward(req, res);
+//			}
 
 		}
 
