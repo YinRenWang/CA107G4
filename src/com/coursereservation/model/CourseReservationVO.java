@@ -152,4 +152,12 @@ public class CourseReservationVO {
 	
 	}
 
+	public CourseReservationVO(String crvId, Date crvDate, String teacherId, String memId, String inscId, String teamId,
+			Integer crvStatus, Integer classStatus, Integer tranStatus, Timestamp crvMFD, Timestamp crvEXP,
+			String crvLoc, Integer crvTotalTime, Integer crvTotalPrice, Double crvScore, String crvRate) {
+
+	}
+	
+	
+
 }

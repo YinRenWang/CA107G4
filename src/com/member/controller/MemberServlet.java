@@ -39,13 +39,6 @@ public class MemberServlet extends HttpServlet {
 				if (memId == null || (memId.trim()).length() == 0) {
 					errorMsgs.add("請輸入帳號");
 				}
-				// Send the use back to the form, if there were errors
-				if (!errorMsgs.isEmpty()) {
-					RequestDispatcher failureView = req.getRequestDispatcher("/member/loginMember.jsp");
-					failureView.forward(req, res);
-					return;// 程式中斷
-				}
-
 				String memPsw = req.getParameter("memPsw");
 				if (memPsw == null || (memPsw.trim()).length() == 0) {
 					errorMsgs.add("請輸入密碼");
@@ -66,6 +59,16 @@ public class MemberServlet extends HttpServlet {
 				try {
 					if (!memPsw.equals(memberVO.getMemPsw())) {
 						errorMsgs.add("錯誤的密碼");
+						
+						// Send the use back to the form, if there were errors
+						if (!errorMsgs.isEmpty()) {
+							memberVO.setMemPsw("");//帳號保留,密碼清空
+							req.setAttribute("memberVO", memberVO); // 含有輸入格式錯誤的empVO物件,也存入req
+							RequestDispatcher failureView = req
+									.getRequestDispatcher("/member/loginMember.jsp");
+							failureView.forward(req, res);
+							return;
+						}
 					}
 				} catch (NullPointerException npe) {
 					RequestDispatcher failureView = req.getRequestDispatcher("/member/loginMember.jsp");

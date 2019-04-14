@@ -44,4 +44,10 @@ public class InsCourseTimeVO implements java.io.Serializable  {
 		this.inscEXP = inscEXP;
 	}
 
+	public InsCourseTimeVO(String inscTimeId, String inscId, Timestamp inscMFD, Timestamp inscEXP) {
+	
+	}
+	
+	
+
 }

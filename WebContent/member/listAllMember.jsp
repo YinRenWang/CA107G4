@@ -11,7 +11,7 @@
     List<MemberVO> list = memberSvc.getAll();
     pageContext.setAttribute("list",list);
 %>
-
+<jsp:useBean id="courseSvc" scope="page" class="com.course.model.CourseService" />
 <html>
 <head>
 <title>所有會員資料 - listAllMember.jsp</title>
@@ -97,8 +97,6 @@
 		
 	</tr>
 	<%@ include file="page1.file" %> 
-
-
 	<c:forEach var="memberVO" items="${list}" begin="<%=pageIndex%>" end="<%=pageIndex+rowsPerPage-1%>">
 		
 		<tr>
@@ -109,8 +107,22 @@
 			<td>${memberVO.memPhone}</td>
 			<td>${memberVO.memAdd}</td>
 			<td>${memberVO.memBirth}</td>
-			<td>${memberVO.memSkill}</td>
-			<td>${memberVO.memWantSkill}</td>
+<td>
+<c:forEach var="courseVO" items="${courseSvc.getAll()}">
+<c:if test="${memberVO.memSkill==courseVO.courseId}"> 
+	       ${courseVO.courseName}
+ </c:if>
+</c:forEach>
+</td>
+			
+<td>
+<c:forEach var="courseVO" items="${courseSvc.getAll()}">
+<c:if test="${memberVO.memWantSkill==courseVO.courseId}"> 
+	       ${courseVO.courseName}
+ </c:if>
+</c:forEach>
+</td>
+			
 			<td>${memberVO.memPair}</td>
 			<td>${memberVO.memPsw}</td>
 			<td>${memberVO.memPswHint}</td>

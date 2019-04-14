@@ -4,6 +4,7 @@
 
 <%
 	MemberVO memberVO = (MemberVO) request.getAttribute("memberVO");
+	
 %>
 
 
