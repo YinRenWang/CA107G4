@@ -25,5 +25,19 @@
 		<servlet-name>MemberServlet</servlet-name>
 		<url-pattern>/member/member.do</url-pattern>
 	</servlet-mapping>
+	
+	
+	
+	 <servlet>
+    <servlet-name>DBGifReader</servlet-name>
+    <servlet-class>com.member.controller.DBGifReader</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>DBGifReader</servlet-name>
+    <url-pattern>/member/DBGifReader.do</url-pattern>
+  </servlet-mapping>
+	
+	
+		
 
 </web-app>

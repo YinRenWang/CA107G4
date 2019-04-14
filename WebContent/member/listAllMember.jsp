@@ -127,7 +127,7 @@
 			<td>${memberVO.memPsw}</td>
 			<td>${memberVO.memPswHint}</td>
 			<td>${memberVO.memSex}</td>
-			<td>${memberVO.memImage}</td>
+			<td><img src="<%=request.getContextPath()%>/member/DBGifReader.do?memId=${memberVO.memId}" width="226" height="225"></td>
 			<td>${memberVO.memText}</td>
 			<td>${memberVO.memBank}</td>
 			<td>${memberVO.memBalance}</td>
