@@ -20,13 +20,13 @@ import javax.servlet.http.Part;
 public class MemberServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
-	protected void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
-
-		doGet(req, res);
-	}
-
 	protected void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
 
+		doPost(req, res);
+	}
+
+	protected void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
+		res.setContentType("UTF-8");
 		req.setCharacterEncoding("UTF-8");
 		String action = req.getParameter("action");
 
@@ -102,7 +102,7 @@ public class MemberServlet extends HttpServlet {
 
 		if ("insert".equals(action)) { // 來自addMember.jsp的請求
 
-			List<String> errorMsgs = new <String>LinkedList();
+			List<String> errorMsgs = new LinkedList<String>();
 			// Store this set in the request scope, in case we need to
 			// send the ErrorPage view.
 			req.setAttribute("errorMsgs", errorMsgs);
@@ -110,7 +110,7 @@ public class MemberServlet extends HttpServlet {
 			try {
 				/*********************** 1.接收請求參數 - 輸入格式的錯誤處理 *************************/
 				String memId = req.getParameter("memId");
-				String memIdReg = "^[(\u4e00-\u9fa5)(a-zA-Z0-9_)]{8,12}$";
+				String memIdReg = "^[(a-zA-Z0-9_)]{6,12}$";
 				if (memId == null || memId.trim().length() == 0) {
 					errorMsgs.add("會員帳號：請勿空白");
 				} else if (!memId.trim().matches(memIdReg)) { // 以下練習正則(規)表示式(regular-expression)
@@ -126,11 +126,11 @@ public class MemberServlet extends HttpServlet {
 				}
 
 				String memPsw = req.getParameter("memPsw");
-				String memPswReg = "^(?=.*[^a-zA-Z0-9])(?=.*[A-Z])(?=.*[a-z])(?=.*\\d).{6,}$";
+				String memPswReg ="^[(a-zA-Z0-9_)]{6,12}$";
 				if (memPsw == null || memPsw.trim().length() == 0) {
 					errorMsgs.add("會員密碼：請勿空白");
 				} else if (!memPsw.trim().matches(memPswReg)) { // 以下練習正則(規)表示式(regular-expression)
-					errorMsgs.add("會員密碼：請輸入6 位數以上，並且至少包含大寫字母、小寫字母、數字、符號各一");
+					errorMsgs.add("會員密碼：請輸入6 位數以上，開頭必須為英文不得有中文");
 				}
 
 				String memPswHint = req.getParameter("memPswHint");
@@ -154,7 +154,7 @@ public class MemberServlet extends HttpServlet {
 					errorMsgs.add("身分證字號：請勿空白");
 				} else if (!memIdCard.trim().matches(memIdCardReg)) { // 以下練習正則(規)表示式(regular-expression)
 					errorMsgs.add("身分證字號: 請輸入正確格式");
-				}
+				} 
 
 				java.sql.Date memBirth = null;
 				try {
@@ -164,10 +164,8 @@ public class MemberServlet extends HttpServlet {
 					errorMsgs.add("請輸入日期!");
 				}
 
-				Integer memSex = new Integer(req.getParameter("memSex").trim());
-				if (memSex == null) {
-					errorMsgs.add("請勾選性別");
-				} 
+				Integer memSex = new Integer(req.getParameter("memSex"));
+				
 
 				String memPhone = req.getParameter("memPhone");
 				String memPhoneReg = "^09[0-9]{8}$";
@@ -184,9 +182,7 @@ public class MemberServlet extends HttpServlet {
 				} else if (!memAdd.trim().matches(memAddReg)) { // 以下練習正則(規)表示式(regular-expression)
 					errorMsgs.add("地址: 請輸入正確格式");
 				}
-				
-				
-				
+
 				Part part = req.getPart("memImage");
 				InputStream in = part.getInputStream();
 				byte[] memImage = new byte[in.available()];
@@ -235,13 +231,14 @@ public class MemberServlet extends HttpServlet {
 						}
 
 					} catch (NullPointerException npe) {
+						req.setAttribute("memberVO", memberVO); // 含有輸入格式錯誤的member物件,也存入req
 						RequestDispatcher failureView = req.getRequestDispatcher("/member/addMember.jsp");
 						failureView.forward(req, res);
 						return;
 					}
 				} // Send the use back to the form, if there were errors
 				if (!errorMsgs.isEmpty()) {
-					req.setAttribute("memberVO", memberVO); // 含有輸入格式錯誤的empVO物件,也存入req
+					req.setAttribute("memberVO", memberVO); // 含有輸入格式錯誤的member物件,也存入req
 					RequestDispatcher failureView = req.getRequestDispatcher("/member/addMember.jsp");
 					failureView.forward(req, res);
 					return;
@@ -296,7 +293,7 @@ public class MemberServlet extends HttpServlet {
 
 		if ("update".equals(action)) { // 來自editMember.jsp的請求
 
-			List<String> errorMsgs = new <String>LinkedList();
+			List<String> errorMsgs = new LinkedList<String>();
 			// Store this set in the request scope, in case we need to
 			// send the ErrorPage view.
 			req.setAttribute("errorMsgs", errorMsgs);
@@ -304,7 +301,7 @@ public class MemberServlet extends HttpServlet {
 
 			try {
 				/*********************** 1.接收請求參數 - 輸入格式的錯誤處理 *************************/
-				MemberVO memberVO = new MemberVO();
+				
 				byte []memImage=null;
 				String memId = new String(req.getParameter("memId"));
 
@@ -324,11 +321,11 @@ public class MemberServlet extends HttpServlet {
 			
 
 				String memPsw = req.getParameter("memPsw");
-				String memPswReg = "^(?=.*[^a-zA-Z0-9])(?=.*[A-Z])(?=.*[a-z])(?=.*\\d).{6,}$";
+				String memPswReg ="^[(a-zA-Z0-9_)]{8,12}$";
 				if (memPsw == null || memPsw.trim().length() == 0) {
 					errorMsgs.add("會員密碼：請勿空白");
 				} else if (!memPsw.trim().matches(memPswReg)) { // 以下練習正則(規)表示式(regular-expression)
-					errorMsgs.add("會員密碼：請輸入6 位數以上，並且至少包含大寫字母、小寫字母、數字、符號各一");
+					errorMsgs.add("會員密碼：請輸入6 位數以上，開頭必須為英文不得有中文");
 				}
 
 				String memText = req.getParameter("memText");
@@ -338,9 +335,8 @@ public class MemberServlet extends HttpServlet {
 				String memPhone = req.getParameter("memPhone");
 
 				Part part = req.getPart("memImage");
-				
-				System.out.println(part.getSize());
 
+				MemberVO memberVO = new MemberVO();	
 				if (part.getSize()!=0) {
 					InputStream in = part.getInputStream();
 					memImage = new byte[in.available()];
@@ -372,10 +368,8 @@ public class MemberServlet extends HttpServlet {
 				MemberService memSvc = new MemberService();
 				if(part.getSize()!=0) {
 					memSvc.editMember(memId, memSkill, memWantSkill, memPsw, memImage, memAdd, memText, memBank);
-					System.out.println("1");
 				}else {
 					memSvc.editNoImgMember(memId, memSkill, memWantSkill, memPsw, memAdd, memText, memBank);
-					System.out.println("2");
 				}
 
 				/*************************** 4.新增完成,準備轉交(Send the Success view) ***********/

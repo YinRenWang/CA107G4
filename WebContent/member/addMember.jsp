@@ -88,14 +88,23 @@
 			<h1 class="hader-title" style="text-align: center; color: white;">建立您的
 				WeShare&nbsp;帳戶</h1>
 		</div>
+		
+
 		<c:if test="${not empty errorMsgs}">
+		<div class="alert alert-danger" role="alert">
 			<h4 style="color: red; text-align: center;">請修正以下錯誤:</h4>
 			<ul>
 				<c:forEach var="message" items="${errorMsgs}">
 					<li style="color: red; text-align: center;">${message}</li>
 				</c:forEach>
 			</ul>
+			</div>		
 		</c:if>
+
+		
+
+
+
 
 
 <FORM method="post" action="member.do" class="form-horizontal" name="form1" id="form1" enctype="multipart/form-data">
@@ -189,7 +198,7 @@
 								class="text-danger">*</span></label>
 							<div class="col-md-8 col-sm-9">
 								<label> <input name="memSex" type="radio" value="0"
-									> 男生
+									checked > 男生
 								</label><label> <input name="memSex" type="radio" value="1">
 									女生
 								</label>
@@ -285,14 +294,13 @@
 									function Magic() {
 										document.getElementById("memId").value = "weshare08";
 										document.getElementById("memEmail").value = "weshare@gmail.com";
-										document.getElementById("memPsw").value = "~Orz9354272";
-										document.getElementById("memPswHint").value = "~Orz9w1272";
+										document.getElementById("memPsw").value = "a123456";
+										document.getElementById("memPswHint").value = "a987654";
 										document.getElementById("memName").value = "大衛海鮮";
 										document.getElementById("memIdCard").value = "A181313047";
 										document.getElementById("memBirth").value = "2018-05-23";
 										document.getElementById("memPhone").value = "0970548704";
 										document.getElementById("memAdd").value = "桃園市中壢區中大路300號";
-
 									}
 								</script>
 
@@ -327,11 +335,23 @@
 												.getElementById("address").value;
 										memAdd = city + town + address;
 										document.getElementById("memAdd").value = memAdd;
+										
+										if(document.getElementById("cbox1").checked==false){
+										    alert("請勾選同意");
+										}
 									}
+									
+							
 								</script>
+								
+								
 								<input type="hidden" name="action" value="insert"> <input
 									id="signUp" name="submit" type="submit" value="註冊"
 									onmousedown="Send()" class="btn btn-primary">
+									
+								<script>
+							
+								</script>
 
 							</div>
 
