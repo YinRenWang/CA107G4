@@ -1,10 +1,10 @@
-package writeBLOB;
+package com.member.model;
 
 import java.sql.*;
 import java.io.*;
 
 
-class memberPhotoWrite {
+public class MemberBlob {
 
 	static {
 		try {
@@ -18,17 +18,18 @@ class memberPhotoWrite {
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		String driver = "oracle.jdbc.driver.OracleDriver";
-//		String url = "jdbc:oracle:thin:@localhost:1521:XE";
-		String url = "jdbc:oracle:thin:@localhost:49161:XE";
+		String url = "jdbc:oracle:thin:@localhost:1521:XE";
+//		String url = "jdbc:oracle:thin:@localhost:49161:XE";
 		String userid = "WESHARE";
 		String passwd = "123456";
-		int    count  = 6;
-		String picName[] = { "01.jpg", "02.jpg", "03.jpg", "04.jpg", "05.jpg", "06.jpg" };
+		int    count  = 4;
+		String picName[] = { "01.jpg", "02.jpg", "03.jpg", "04.jpg" };
+		String memId[] = {"weshare01","weshare02","weshare03","weshare04"};
 	
 		try {
 			con = DriverManager.getConnection(url, userid, passwd);
 			for (int i = 1; i <= count; i++) {
-				File pic = new File("/images/blob/", picName[i-1]);
+				File pic = new File("C:\\CA107_WebApp\\eclipse_WTP_Workspace\\CA107G4\\WebContent\\images\\blob", picName[i-1]);
 				// 相對路徑- picFrom
 				// 絕對路徑- 譬如:
 				// File pic = new File("x:\\aa\\bb\\picFrom", picName);
@@ -42,7 +43,7 @@ class memberPhotoWrite {
 				System.out.println("Update the database... "+i);
 				pstmt = con.prepareStatement("UPDATE member set memImage=? where memId = ?");
 				pstmt.setBinaryStream(1, fin, (int) flen);
-				pstmt.setInt(2, i);
+				pstmt.setString(2, memId[i-1]);
 
 				
 				// void pstmt.setBinaryStream(int parameterIndex, InputStream x,

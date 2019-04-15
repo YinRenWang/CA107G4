@@ -133,9 +133,10 @@
 			<td>${memberVO.memBalance}</td>
 			<td>${memberVO.memBlock}</td>
 			<td>${memberVO.memStatus}</td>
-	
+			
 			<td>
 			  <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/member/member.do" style="margin-bottom: 0px;">
+			      
 			      <input type="hidden" name="memId"  value="${memberVO.memId}">
 			     <input type="hidden" name="action"	value="getOne_For_Update">
 			      <input type="submit" value="н╫зя">

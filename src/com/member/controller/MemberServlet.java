@@ -16,7 +16,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.Part;
 
 @WebServlet("/MemberServlet")
-@MultipartConfig(fileSizeThreshold = 1024 * 1024, maxFileSize = 5 * 1024 * 1024, maxRequestSize = 5 * 5 * 1024 * 1024)
+@MultipartConfig(fileSizeThreshold = 1024 * 1024, maxFileSize = 5 * 1024 * 1024*1024, maxRequestSize = 5 * 5 * 1024 * 1024*1024)
 public class MemberServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
@@ -107,7 +107,7 @@ public class MemberServlet extends HttpServlet {
 			// send the ErrorPage view.
 			req.setAttribute("errorMsgs", errorMsgs);
 
-//			try {
+			try {
 				/*********************** 1.接收請求參數 - 輸入格式的錯誤處理 *************************/
 				String memId = req.getParameter("memId");
 				String memIdReg = "^[(\u4e00-\u9fa5)(a-zA-Z0-9_)]{8,12}$";
@@ -189,8 +189,8 @@ public class MemberServlet extends HttpServlet {
 				
 				Part part = req.getPart("memImage");
 				InputStream in = part.getInputStream();
-				byte[] memImgae = new byte[in.available()];
-				in.read(memImgae);
+				byte[] memImage = new byte[in.available()];
+				in.read(memImage);
 				in.close();
 				
 				Integer memBalance = 0;
@@ -204,7 +204,7 @@ public class MemberServlet extends HttpServlet {
 				memberVO.setMemPswHint(memPswHint);
 				memberVO.setMemName(memName);
 				memberVO.setMemSex(memSex);
-				memberVO.setMemImage(memImgae);
+				memberVO.setMemImage(memImage);
 				memberVO.setMemEmail(memEmail);
 				memberVO.setMemPhone(memPhone);
 				memberVO.setMemBirth(memBirth);
@@ -248,7 +248,7 @@ public class MemberServlet extends HttpServlet {
 				}
 
 				/*************************** 3.開始新增資料 ***************************************/
-				memberVO = memSvc.regMember(memId, memIdCard, memPsw, memPswHint, memName, memSex, memImgae, memEmail,
+				memberVO = memSvc.regMember(memId, memIdCard, memPsw, memPswHint, memName, memSex, memImage, memEmail,
 						memPhone, memBirth, memAdd, memBalance, memBlock, memStatus);
 
 				/*************************** 4.新增完成,準備轉交(Send the Success view) ***********/
@@ -257,11 +257,11 @@ public class MemberServlet extends HttpServlet {
 				RequestDispatcher successView = req.getRequestDispatcher(url); // 成功轉交 loginSuccess.jsp
 				successView.forward(req, res);
 				/*************************** 其他可能的錯誤處理 **********************************/
-//			} catch (Exception e) {
-//				errorMsgs.add(e.getMessage());
-//				RequestDispatcher failureView = req.getRequestDispatcher("/member/addMember.jsp");
-//				failureView.forward(req, res);
-//			}
+			} catch (Exception e) {
+				errorMsgs.add(e.getMessage());
+				RequestDispatcher failureView = req.getRequestDispatcher("/member/addMember.jsp");
+				failureView.forward(req, res);
+			}
 
 		}
 
@@ -300,9 +300,12 @@ public class MemberServlet extends HttpServlet {
 			// Store this set in the request scope, in case we need to
 			// send the ErrorPage view.
 			req.setAttribute("errorMsgs", errorMsgs);
+			
 
-//			try {
+			try {
 				/*********************** 1.接收請求參數 - 輸入格式的錯誤處理 *************************/
+				MemberVO memberVO = new MemberVO();
+				byte []memImage=null;
 				String memId = new String(req.getParameter("memId"));
 
 				String memAdd = req.getParameter("memAdd");
@@ -334,19 +337,29 @@ public class MemberServlet extends HttpServlet {
 				String memEmail = req.getParameter("memEmail");
 				String memPhone = req.getParameter("memPhone");
 
-				byte[] memImage = null;
+				Part part = req.getPart("memImage");
+				
+				System.out.println(part.getSize());
 
-				MemberVO memberVO = new MemberVO();
-				memberVO.setMemImage(memImage);
-				memberVO.setMemPsw(memPsw);
-				memberVO.setMemId(memId);
-				memberVO.setMemAdd(memAdd);
-				memberVO.setMemText(memText);
-				memberVO.setMemBank(memBank);
-				memberVO.setMemSkill(memSkill);
-				memberVO.setMemWantSkill(memWantSkill);
-				memberVO.setMemEmail(memEmail);
-				memberVO.setMemPhone(memPhone);
+				if (part.getSize()!=0) {
+					InputStream in = part.getInputStream();
+					memImage = new byte[in.available()];
+					in.read(memImage);
+					in.close();
+					memberVO.setMemImage(memImage);
+				}
+					memberVO.setMemPsw(memPsw);
+					memberVO.setMemId(memId);
+					memberVO.setMemAdd(memAdd);
+					memberVO.setMemText(memText);
+					memberVO.setMemBank(memBank);
+					memberVO.setMemSkill(memSkill);
+					memberVO.setMemWantSkill(memWantSkill);
+					memberVO.setMemEmail(memEmail);
+					memberVO.setMemPhone(memPhone);
+				
+				
+
 				// Send the use back to the form, if there were errors
 				if (!errorMsgs.isEmpty()) {
 					req.setAttribute("memberVO", memberVO); // 含有輸入格式錯誤的empVO物件,也存入req
@@ -357,7 +370,13 @@ public class MemberServlet extends HttpServlet {
 
 				/*************************** 2.開始修改資料 ***************************************/
 				MemberService memSvc = new MemberService();
-				memSvc.editMember(memId, memSkill, memWantSkill, memPsw, memImage, memAdd, memText, memBank);
+				if(part.getSize()!=0) {
+					memSvc.editMember(memId, memSkill, memWantSkill, memPsw, memImage, memAdd, memText, memBank);
+					System.out.println("1");
+				}else {
+					memSvc.editNoImgMember(memId, memSkill, memWantSkill, memPsw, memAdd, memText, memBank);
+					System.out.println("2");
+				}
 
 				/*************************** 4.新增完成,準備轉交(Send the Success view) ***********/
 				req.setAttribute("memberVO", memberVO); // 資料庫取出的memberVO物件,存入req
@@ -365,12 +384,12 @@ public class MemberServlet extends HttpServlet {
 				RequestDispatcher successView = req.getRequestDispatcher(url); // 成功轉交 loginSuccess.jsp
 				successView.forward(req, res);
 				/*************************** 其他可能的錯誤處理 **********************************/
-//			} catch (Exception e) {
-//				errorMsgs.add(e.getMessage());
-//				RequestDispatcher failureView = req.getRequestDispatcher("/member/editMember.jsp");
-//				failureView.forward(req, res);
-//
-//			}
+			} catch (Exception e) {
+				errorMsgs.add(e.getMessage());
+				RequestDispatcher failureView = req.getRequestDispatcher("/member/editMember.jsp");
+				failureView.forward(req, res);
+
+			}
 
 		}
 

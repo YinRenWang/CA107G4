@@ -173,7 +173,7 @@ section>form>div {
 			</ul>
 		</c:if>
 
-<FORM method="get" action="member.do" class="form-horizontal" name="form1" id="form1" enctype="multipart/form-data">	
+<FORM method="post" action="member.do" class="form-horizontal" name="form1" id="form1" enctype="multipart/form-data">	
 	<div class="start">
 		<!-- UI - X Starts -->
 		<div class="ui-67">
@@ -185,7 +185,8 @@ section>form>div {
 					<!-- Name -->
 					<h3 id="name-header" >${memberVO.memName}</h3>
 					<!-- Designation -->
-					<h4>編輯個人資料</h4>
+					<h4>個人資料</h4>
+					
 
 				</div>
 				<!-- Image -->
@@ -206,6 +207,8 @@ class="img-responsive"  name="memImage" width="120" height="120">
 
 					<div class="col-sm-8 col-md-8 col-lg-8 col-lg-offset-2 acc-col">
 						<section>
+						<h3>修改頭貼</h3>
+						<input type="file" name="memImage" value="${memberVO.memImage}" />
 							<h3>聯絡資訊</h3>
 					
 								<div class="row">
@@ -288,15 +291,24 @@ class="img-responsive"  name="memImage" width="120" height="120">
 									
 									<div class="col-sm-6">
 										<label for="inputEmail3" class="control-label">擅長的課程</label>
+							<jsp:useBean id="courseSvc" scope="page" class="com.course.model.CourseService" />			
 										<div class="">
-											<input type="text" class="form-control" id="Skill" name="memSkill" value="${memberVO.memSkill}">
+											<select class="form-control" id="Skill" name="memSkill" >
+											<c:forEach var="courseVO" items="${courseSvc.all}">
+										<option value="${courseVO.courseId}" ${(memberVO.memSkill==courseVO.courseId)?'selected':'' } >${courseVO.courseName}
+											</c:forEach>
+											</select>
 										</div>
 									</div>
 									
 									<div class="col-sm-6">
 										<label for="inputEmail3" class="control-label">想學課程</label>
-										<div class="">
-											<input type="text" class="form-control" id="wantSkill" name="memWantSkill" value="${memberVO.memWantSkill}">
+											<div class="">
+											<select class="form-control" id="memWantSkill" name="memWantSkill" >
+											<c:forEach var="courseVO" items="${courseSvc.all}">
+										<option value="${courseVO.courseId}" ${(memberVO.memWantSkill==courseVO.courseId)?'selected':'' } >${courseVO.courseName}
+											</c:forEach>
+											</select>
 										</div>
 									</div>
 										

@@ -123,6 +123,23 @@ public class MemberService {
 		return memberVO;
 	}
 	
+	public MemberVO editNoImgMember(String memId, String memSkill, String memWantSkill, String memPsw,
+			String memAdd, String memText, String memBank) {
+		
+		MemberVO memberVO = new MemberVO(); 
+		
+		memberVO.setMemPsw(memPsw);
+		memberVO.setMemAdd(memAdd);
+		memberVO.setMemText(memText);
+		memberVO.setMemBank(memBank);
+		memberVO.setMemSkill(memSkill);
+		memberVO.setMemWantSkill(memWantSkill);
+		memberVO.setMemId(memId);
+		dao.editNoMember(memberVO);
+		
+		return memberVO;
+	}
+	
     public MemberVO getOneMember(String memberId) {
     	return dao.findByPrimaryKey(memberId);
     }

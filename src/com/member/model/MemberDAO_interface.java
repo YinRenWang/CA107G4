@@ -9,6 +9,7 @@ public interface MemberDAO_interface {
 	  public void update(MemberVO memberVO);
 	  public void registered(MemberVO memberVO);
 	  public void editMember(MemberVO memberVO);
+	  public void editNoMember(MemberVO memberVO);
       public MemberVO findByPrimaryKey(String memberId);
       public List<MemberVO> getAll();
       //萬用複合查詢(傳入參數型態Map)(回傳 List)

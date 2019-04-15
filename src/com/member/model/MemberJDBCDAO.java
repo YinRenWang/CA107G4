@@ -8,8 +8,8 @@ import java.util.*;
 public class MemberJDBCDAO implements MemberDAO_interface {
 	
 	String driver = "oracle.jdbc.driver.OracleDriver";
-//	String url = "jdbc:oracle:thin:@localhost:1521:XE";
-	String url = "jdbc:oracle:thin:@localhost:49161:XE";
+	String url = "jdbc:oracle:thin:@localhost:1521:XE";
+//	String url = "jdbc:oracle:thin:@localhost:49161:XE";
 	String userid = "WESHARE";
 	String passwd = "123456";
 	
@@ -26,13 +26,12 @@ public class MemberJDBCDAO implements MemberDAO_interface {
 		"SELECT * FROM Member  order by memId";
 	private static final String GET_ONE_STMT = 
 		"SELECT * FROM Member where memId = ?";
-	private static final String GET_LOGIN_STMT = 
-			"SELECT * FROM Member where memId = ? and memPsw =?";
 	private static final String UPDATE = 
 			"UPDATE Member set memPsw=?,memImage=?,memAdd=? ,memText=?, memBank=? ,memBalance=?,memBlock=?,memStatus=?,memSkill=?, memWantSkill=?,memPair=? where  memId =? ";
 	private static final String EDIT_MEMBER_STMT = 
 			"UPDATE Member set memPsw=?,memImage=?,memAdd=? ,memText=?, memBank=?,memSkill=?, memWantSkill=? where  memId =? ";
-	
+	private static final String NOIMG_MEMBER_STMT = 
+			"UPDATE Member set memPsw=?,memAdd=? ,memText=?, memBank=?,memSkill=?, memWantSkill=? where  memId =? ";
 	@Override
 	public void insert(MemberVO memberVO) {
 		Connection con = null;
@@ -243,13 +242,6 @@ public class MemberJDBCDAO implements MemberDAO_interface {
 				memberVO.setMemName(rs.getString("memName"));
 				memberVO.setMemSex(rs.getInt("memSex"));
 				memberVO.setMemImage(rs.getBytes("memImage"));
-				try {
-					memberVO.setMemImage(new byte[rs.getBinaryStream("memImage").available()]);
-				} catch (IOException e) {
-					e.printStackTrace();
-				} catch(NullPointerException e) {
-					e.printStackTrace();
-				}
 				memberVO.setMemEmail(rs.getString("memEmail"));
 				memberVO.setMemPhone(rs.getString("memPhone"));
 				memberVO.setMemBirth(rs.getDate("memBirth"));
@@ -404,6 +396,56 @@ public class MemberJDBCDAO implements MemberDAO_interface {
 			pstmt.setString(6,memberVO.getMemSkill());
 			pstmt.setString(7,memberVO.getMemWantSkill());
 			pstmt.setString(8, memberVO.getMemId());
+
+			pstmt.executeUpdate();
+			System.out.println("已修改一筆資料");
+
+			// Handle any driver errors
+		} catch (ClassNotFoundException e) {
+			throw new RuntimeException("Couldn't load database driver. "
+					+ e.getMessage());
+			// Handle any SQL errors
+		} catch (SQLException se) {
+			throw new RuntimeException("A database error occured. "
+					+ se.getMessage());
+			// Clean up JDBC resources
+		} finally {
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
+		}
+		
+	}
+	
+	@Override
+	public void editNoMember(MemberVO memberVO) {
+		Connection con = null;
+		PreparedStatement pstmt = null;
+
+		try {
+
+			Class.forName(driver);
+			con = DriverManager.getConnection(url, userid, passwd);
+			pstmt = con.prepareStatement(NOIMG_MEMBER_STMT);
+			
+			pstmt.setString(1,memberVO.getMemPsw());
+			pstmt.setString(2,memberVO.getMemAdd());
+			pstmt.setString(3,memberVO.getMemText());
+			pstmt.setString(4,memberVO.getMemBank());
+			pstmt.setString(5,memberVO.getMemSkill());
+			pstmt.setString(6,memberVO.getMemWantSkill());
+			pstmt.setString(7, memberVO.getMemId());
 
 			pstmt.executeUpdate();
 			System.out.println("已修改一筆資料");
