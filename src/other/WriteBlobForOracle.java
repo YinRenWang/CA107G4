@@ -1,10 +1,10 @@
-package com.member.model;
+package other;
 
 import java.sql.*;
 import java.io.*;
 
 
-public class MemberBlob {
+public class WriteBlobForOracle {
 
 	static {
 		try {
@@ -18,7 +18,10 @@ public class MemberBlob {
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		String driver = "oracle.jdbc.driver.OracleDriver";
+//Windows用	
 		String url = "jdbc:oracle:thin:@localhost:1521:XE";
+		
+//Mac用
 //		String url = "jdbc:oracle:thin:@localhost:49161:XE";
 		String userid = "WESHARE";
 		String passwd = "123456";
@@ -29,10 +32,15 @@ public class MemberBlob {
 		try {
 			con = DriverManager.getConnection(url, userid, passwd);
 			for (int i = 1; i <= count; i++) {
-//				File pic = new File("/Users/yinren/Desktop/images/blob/", picName[i-1]);
+
 				// 相對路徑- picFrom
 				// 絕對路徑- 譬如:
- 				File pic = new File("C:/CA107_WebApp/eclipse_WTP_Workspace/CA107G4/WebContent/images/blob/", picName[i-1]);
+				
+//Mac用
+//				File pic = new File("/Users/yinren/Desktop/images/blob/", picName[i-1]);
+				
+//Window用 		
+				File pic = new File("C:/CA107_WebApp/eclipse_WTP_Workspace/CA107G4/WebContent/images/blob/", picName[i-1]);
 				long flen = pic.length();
 				String fileName = pic.getName();
 				int dotPos = fileName.indexOf('.');
