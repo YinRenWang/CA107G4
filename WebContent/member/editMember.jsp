@@ -242,7 +242,7 @@ class="img-responsive"  name="memImage" width="120" height="120">
 									<div class="col-sm-12">
 										<label for="inputPassword3" class="control-label">確認密碼:</label>
 										<div class="">
-											<input type="password" class="form-control"  value=""
+											<input type="password" class="form-control"  value="${memberVO.memPsw}"
 												id="memPswDouble">
 										</div>
 									</div>

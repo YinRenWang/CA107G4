@@ -277,6 +277,8 @@ justify-content:center;
 
 
 
+
+
 <c:forEach var="teacherVO" items="${teacherSvc.getAll()}">
 <c:if test="${teacherVO.teacherId==insCourseVO.teacherId}"> 
 	      地點&nbsp;<b class="text-secondary"> ${insCourseVO.inscLoc}</b>

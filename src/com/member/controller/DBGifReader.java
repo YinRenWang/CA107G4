@@ -8,8 +8,8 @@ import javax.servlet.http.*;
 public class DBGifReader extends HttpServlet {
 	
 	String driver = "oracle.jdbc.driver.OracleDriver";
-//	String url = "jdbc:oracle:thin:@localhost:1521:XE";
-	String url = "jdbc:oracle:thin:@localhost:49161:XE";
+	String url = "jdbc:oracle:thin:@localhost:1521:XE";
+//	String url = "jdbc:oracle:thin:@localhost:49161:XE";
 	String userid = "WESHARE";
 	String passwd = "123456";
 	private static final String INSERT_STMT = "SELECT memImage FROM member WHERE memId=?";

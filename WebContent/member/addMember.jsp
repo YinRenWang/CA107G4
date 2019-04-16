@@ -77,9 +77,6 @@
 		
 
 
-
-
-
 <FORM method="post" action="member.do" class="form-horizontal" name="form1" id="form1" enctype="multipart/form-data">
 
 			<div class="container">

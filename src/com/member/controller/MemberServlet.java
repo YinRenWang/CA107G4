@@ -2,6 +2,8 @@ package com.member.controller;
 
 import com.member.model.*;
 
+import other.Check;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.*;
@@ -101,7 +103,7 @@ public class MemberServlet extends HttpServlet {
 		}
 
 		if ("insert".equals(action)) { // 來自addMember.jsp的請求
-
+			
 			List<String> errorMsgs = new LinkedList<String>();
 			// Store this set in the request scope, in case we need to
 			// send the ErrorPage view.
@@ -116,6 +118,14 @@ public class MemberServlet extends HttpServlet {
 				} else if (!memId.trim().matches(memIdReg)) { // 以下練習正則(規)表示式(regular-expression)
 					errorMsgs.add("會員帳號：請以半形輸入，6-12個英、數字組合");
 				}
+				// Send the use back to the form, if there were errors
+				if (!errorMsgs.isEmpty()) {
+					RequestDispatcher failureView = req
+							.getRequestDispatcher("/select_page.jsp");
+					failureView.forward(req, res);
+					return;//程式中斷
+				}
+				
 
 				String memEmail = req.getParameter("memEmail");
 				String memEmailReg = "^[a-z0-9A-Z]+[- | a-z0-9A-Z . _]+@([a-z0-9A-Z]+(-[a-z0-9A-Z]+)?\\.)+[a-z]{2,}$";
@@ -124,6 +134,14 @@ public class MemberServlet extends HttpServlet {
 				} else if (!memEmail.trim().matches(memEmailReg)) { // 以下練習正則(規)表示式(regular-expression)
 					errorMsgs.add("電子郵件：請輸入有效的手機號碼或電子郵件");
 				}
+				// Send the use back to the form, if there were errors
+				if (!errorMsgs.isEmpty()) {
+					RequestDispatcher failureView = req
+							.getRequestDispatcher("/select_page.jsp");
+					failureView.forward(req, res);
+					return;//程式中斷
+				}
+				
 
 				String memPsw = req.getParameter("memPsw");
 				String memPswReg ="^[(a-zA-Z0-9_)]{6,12}$";
@@ -131,14 +149,32 @@ public class MemberServlet extends HttpServlet {
 					errorMsgs.add("會員密碼：請勿空白");
 				} else if (!memPsw.trim().matches(memPswReg)) { // 以下練習正則(規)表示式(regular-expression)
 					errorMsgs.add("會員密碼：請輸入6 位數以上，開頭必須為英文不得有中文");
+					memPsw="";
 				}
+				// Send the use back to the form, if there were errors
+				if (!errorMsgs.isEmpty()) {
+					RequestDispatcher failureView = req
+							.getRequestDispatcher("/select_page.jsp");
+					failureView.forward(req, res);
+					return;//程式中斷
+				}
+				
 
 				String memPswHint = req.getParameter("memPswHint");
 				if (memPswHint == null || memPswHint.trim().length() == 0) {
 					errorMsgs.add("會員提示：請勿空白");
 				} else if (memPswHint.trim().equals(memPsw)) { // 以下練習正則(規)表示式(regular-expression)
 					errorMsgs.add("會員提示：請勿與密碼相同");
+					memPswHint="";
 				}
+				// Send the use back to the form, if there were errors
+				if (!errorMsgs.isEmpty()) {
+					RequestDispatcher failureView = req
+							.getRequestDispatcher("/select_page.jsp");
+					failureView.forward(req, res);
+					return;//程式中斷
+				}
+				
 
 				String memName = req.getParameter("memName");
 				String memNameReg = "^[(\u4e00-\u9fa5)(a-zA-Z)]{2,10}$";
@@ -147,24 +183,51 @@ public class MemberServlet extends HttpServlet {
 				} else if (!memName.trim().matches(memNameReg)) { // 以下練習正則(規)表示式(regular-expression)
 					errorMsgs.add("姓名: 只能是中、英文字母 , 且長度必需在2到10之間");
 				}
+				// Send the use back to the form, if there were errors
+				if (!errorMsgs.isEmpty()) {
+					RequestDispatcher failureView = req
+							.getRequestDispatcher("/select_page.jsp");
+					failureView.forward(req, res);
+					return;//程式中斷
+				}
+				
 
-				String memIdCard = req.getParameter("memIdCard");
+				String memIdCard = req.getParameter("memIdCard").toUpperCase();
 				String memIdCardReg = "^[A-Z]{1}[0-9]{9}$";
 				if (memIdCard == null || memIdCard.trim().length() == 0) {
 					errorMsgs.add("身分證字號：請勿空白");
 				} else if (!memIdCard.trim().matches(memIdCardReg)) { // 以下練習正則(規)表示式(regular-expression)
-					errorMsgs.add("身分證字號: 請輸入正確格式");
+					errorMsgs.add("身分證字號: 請輸入中華民國國民身分證");
+				} else if (!Check.checkId(memIdCard)) {
+					errorMsgs.add("身分證字號: 非正確格式");
 				} 
+				// Send the use back to the form, if there were errors
+				if (!errorMsgs.isEmpty()) {
+					RequestDispatcher failureView = req
+							.getRequestDispatcher("/select_page.jsp");
+					failureView.forward(req, res);
+					return;//程式中斷
+				}
+				
 
 				java.sql.Date memBirth = null;
 				try {
 					memBirth = java.sql.Date.valueOf(req.getParameter("memBirth").trim());
 				} catch (IllegalArgumentException e) {
 					memBirth = new java.sql.Date(System.currentTimeMillis());
-					errorMsgs.add("請輸入日期!");
+					errorMsgs.add("會員生日：請輸入日期!");
 				}
+				// Send the use back to the form, if there were errors
+				if (!errorMsgs.isEmpty()) {
+					RequestDispatcher failureView = req
+							.getRequestDispatcher("/select_page.jsp");
+					failureView.forward(req, res);
+					return;//程式中斷
+				}
+				
 
 				Integer memSex = new Integer(req.getParameter("memSex"));
+				
 				
 
 				String memPhone = req.getParameter("memPhone");
@@ -174,6 +237,14 @@ public class MemberServlet extends HttpServlet {
 				} else if (!memPhone.trim().matches(memPhoneReg)) { // 以下練習正則(規)表示式(regular-expression)
 					errorMsgs.add("電話號碼：請輸入正確格式");
 				}
+				// Send the use back to the form, if there were errors
+				if (!errorMsgs.isEmpty()) {
+					RequestDispatcher failureView = req
+							.getRequestDispatcher("/select_page.jsp");
+					failureView.forward(req, res);
+					return;//程式中斷
+				}
+				
 
 				String memAdd = req.getParameter("memAdd");
 				String memAddReg = "^[(\u4e00-\u9fa5)(0-9)]{6,50}$";
@@ -182,6 +253,14 @@ public class MemberServlet extends HttpServlet {
 				} else if (!memAdd.trim().matches(memAddReg)) { // 以下練習正則(規)表示式(regular-expression)
 					errorMsgs.add("地址: 請輸入正確格式");
 				}
+				// Send the use back to the form, if there were errors
+				if (!errorMsgs.isEmpty()) {
+					RequestDispatcher failureView = req
+							.getRequestDispatcher("/select_page.jsp");
+					failureView.forward(req, res);
+					return;//程式中斷
+				}
+				
 
 				Part part = req.getPart("memImage");
 				InputStream in = part.getInputStream();
@@ -208,6 +287,14 @@ public class MemberServlet extends HttpServlet {
 				memberVO.setMemBalance(memBalance);
 				memberVO.setMemBlock(memBlock);
 				memberVO.setMemStatus(memStatus);
+				
+				// Send the use back to the form, if there were errors
+				if (!errorMsgs.isEmpty()) {
+					req.setAttribute("memberVO", memberVO); // 含有輸入格式錯誤的member物件,也存入req
+					RequestDispatcher failureView = req.getRequestDispatcher("/member/addMember.jsp");
+					failureView.forward(req, res);
+					return;
+				}
 
 				/*************************** 2.開始查詢資料 *****************************************/
 				MemberService memSvc = new MemberService();
@@ -219,15 +306,27 @@ public class MemberServlet extends HttpServlet {
 
 						if (memId.equals(memberVO.getMemId())) {
 							errorMsgs.add("此帳號已註冊過");
+							memberVO.setMemId(null);
+							memberVO.setMemPsw(null);
+							memberVO.setMemPswHint(null);
 						}
 						if (memEmail.equals(memberVO.getMemEmail())) {
 							errorMsgs.add("此信箱已註冊過");
+							memberVO.setMemId(null);
+							memberVO.setMemPsw(null);
+							memberVO.setMemPswHint(null);
 						}
 						if (memIdCard.equals(memberVO.getMemIdCard())) {
-							errorMsgs.add("此身分證已註冊過");
+							errorMsgs.add("此身分證字號已註冊過");
+							memberVO.setMemId(null);
+							memberVO.setMemPsw(null);
+							memberVO.setMemPswHint(null);
 						}
 						if (memPhone.equals(memberVO.getMemPhone())) {
 							errorMsgs.add("此手機號碼已註冊過");
+							memberVO.setMemId(null);
+							memberVO.setMemPsw(null);
+							memberVO.setMemPswHint(null);
 						}
 
 					} catch (NullPointerException npe) {
@@ -236,7 +335,8 @@ public class MemberServlet extends HttpServlet {
 						failureView.forward(req, res);
 						return;
 					}
-				} // Send the use back to the form, if there were errors
+				} 
+				// Send the use back to the form, if there were errors
 				if (!errorMsgs.isEmpty()) {
 					req.setAttribute("memberVO", memberVO); // 含有輸入格式錯誤的member物件,也存入req
 					RequestDispatcher failureView = req.getRequestDispatcher("/member/addMember.jsp");
@@ -321,12 +421,21 @@ public class MemberServlet extends HttpServlet {
 			
 
 				String memPsw = req.getParameter("memPsw");
-				String memPswReg ="^[(a-zA-Z0-9_)]{8,12}$";
+				String memPswReg ="^[(a-zA-Z0-9_)]{6,12}$";
 				if (memPsw == null || memPsw.trim().length() == 0) {
 					errorMsgs.add("會員密碼：請勿空白");
 				} else if (!memPsw.trim().matches(memPswReg)) { // 以下練習正則(規)表示式(regular-expression)
 					errorMsgs.add("會員密碼：請輸入6 位數以上，開頭必須為英文不得有中文");
 				}
+				
+				
+				String memPswDouble =req.getParameter("memPswDouble");
+				if(memPswDouble!=null ||memPsw.trim().length() != 0) {
+					
+				}else if(memPsw!=memPswDouble) {
+					errorMsgs.add("確認密碼：請確認與密碼相同!!");
+				}
+				
 
 				String memText = req.getParameter("memText");
 				String memSkill = req.getParameter("memSkill");

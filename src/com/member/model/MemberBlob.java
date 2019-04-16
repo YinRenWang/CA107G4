@@ -18,8 +18,8 @@ public class MemberBlob {
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		String driver = "oracle.jdbc.driver.OracleDriver";
-//		String url = "jdbc:oracle:thin:@localhost:1521:XE";
-		String url = "jdbc:oracle:thin:@localhost:49161:XE";
+		String url = "jdbc:oracle:thin:@localhost:1521:XE";
+//		String url = "jdbc:oracle:thin:@localhost:49161:XE";
 		String userid = "WESHARE";
 		String passwd = "123456";
 		int    count  = 6;
@@ -29,10 +29,10 @@ public class MemberBlob {
 		try {
 			con = DriverManager.getConnection(url, userid, passwd);
 			for (int i = 1; i <= count; i++) {
-				File pic = new File("/Users/yinren/Desktop/images/blob/", picName[i-1]);
+//				File pic = new File("/Users/yinren/Desktop/images/blob/", picName[i-1]);
 				// 相對路徑- picFrom
 				// 絕對路徑- 譬如:
-				// File pic = new File("x:\\aa\\bb\\picFrom", picName);
+ 				File pic = new File("C:/CA107_WebApp/eclipse_WTP_Workspace/CA107G4/WebContent/images/blob/", picName[i-1]);
 				long flen = pic.length();
 				String fileName = pic.getName();
 				int dotPos = fileName.indexOf('.');

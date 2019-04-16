@@ -59,7 +59,7 @@
 <table id="table-1">
 	<tr><td>
 		 <h3>所有會員資料 - listAllMember.jsp</h3>
-		 <h4><a href="http://localhost:8081/CA107G4/index.html"><img src="http://localhost:8081/CA107G4/images/icon/logo.png" width="120" height="120" border="0">回首頁</a></h4>
+		 <h4><a href="http://localhost:8081/CA107G4/"><img src="http://localhost:8081/CA107G4/images/icon/logo.png" width="120" height="120" border="0">回首頁</a></h4>
 	</td></tr>
 </table>
 
