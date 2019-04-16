@@ -36,7 +36,7 @@ public class InsCourseServlet extends HttpServlet {
 		if ("getOne_For_Display".equals(action)) {
 			List<String> errorMsgs = new LinkedList<String>();
 			req.setAttribute("errorMsgs", errorMsgs);
-			System.out.println("到武一游");
+
 			try {
 				String inscId = req.getParameter("inscId");
 				if (inscId == null || (inscId.trim()).length() == 0) {

@@ -1,7 +1,7 @@
 package com.inscourse.model;
 
 import java.util.List;
-
+import java.util.Map;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -305,6 +305,12 @@ public class InsCourseDAO implements InsCourseDAO_interface {
 
 		
 	}
+	@Override
+	public List<InsCourseVO> getAll(Map<String, String[]> map) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	
 
 	@Override
 	public List<InsCourseVO> findByCourse(String courseId) {
@@ -367,6 +373,8 @@ public class InsCourseDAO implements InsCourseDAO_interface {
 		}
 		return list;
 	}
+
+
 	
 	
 }

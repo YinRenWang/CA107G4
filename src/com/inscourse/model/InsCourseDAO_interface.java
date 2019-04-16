@@ -1,6 +1,8 @@
 package com.inscourse.model;
 
 import java.util.List;
+import java.util.Map;
+
 
 public interface InsCourseDAO_interface {
 	public void insert(InsCourseVO insCourseVO);
@@ -10,4 +12,6 @@ public interface InsCourseDAO_interface {
 	public List<InsCourseVO> getAll();
 	public void updateStatus(InsCourseVO insCourseVO);
 	public List<InsCourseVO> findByCourse(String courseId);
+    //萬用複合查詢(傳入參數型態Map)(回傳 List)
+    public List<InsCourseVO> getAll(Map<String, String[]> map); 
 }

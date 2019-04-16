@@ -170,11 +170,11 @@ ul, ol {
     width: 100%;
     border-radius: calc(.25rem - 1px);
 }
-	.header{
+.header{
 		width: 100%;
 		box-sizing: border-box;
 		ma
-	}
+}
 
 
 
@@ -229,10 +229,10 @@ ul, ol {
           <input class="form-control" type="text" placeholder="請輸入上課地點">
         </div>
       </div>
-      <div class="col-2">
+        <div class="col-2">
         <div class="d-flex justify-content-around" id="df3">
-          <select class="form-control">
-            <option>選擇課程類型</option>
+          <select class="form-control" name=insctype >
+            <option  value="" disabled selected >選擇課程類型</option>
             <option>個人課程</option>
             <option>團體課程</option>
           </select>

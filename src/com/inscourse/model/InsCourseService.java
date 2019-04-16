@@ -1,6 +1,7 @@
 package com.inscourse.model;
 
 import java.util.List;
+import java.util.Map;
 
 public class InsCourseService {
 	private InsCourseDAO_interface dao;
@@ -60,6 +61,10 @@ public class InsCourseService {
 	}
 	public List<InsCourseVO> findByCourse(String courseId){
 		return dao.findByCourse(courseId);
+	}
+	
+	public List<InsCourseVO> getAll(Map<String, String[]> map) {
+		return dao.getAll(map);
 	}
 
 }
