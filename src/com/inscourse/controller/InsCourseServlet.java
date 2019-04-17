@@ -16,7 +16,7 @@ import com.course.model.CourseVO;
 import com.inscourse.model.InsCourseService;
 import com.inscourse.model.InsCourseVO;
 
-//@WebServlet("/insCourse/insCourse.do")
+@WebServlet("/InsCourseServlet")
 public class InsCourseServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
@@ -234,7 +234,7 @@ public class InsCourseServlet extends HttpServlet {
 
 				if (!errorMsgs.isEmpty()) {
 					req.setAttribute("insCourseVO", insCourseVO);
-					RequestDispatcher failureView = req.getRequestDispatcher("/inscourse/update_insCourse_input.jsp");
+					RequestDispatcher failureView = req.getRequestDispatcher("/Inscourse/update_insCourse_input.jsp");
 					failureView.forward(req, res);
 					return;
 				}
@@ -249,7 +249,7 @@ public class InsCourseServlet extends HttpServlet {
 
 			} catch (Exception e) {
 				errorMsgs.add(e.getMessage());
-				RequestDispatcher failureView = req.getRequestDispatcher("/inscourse/addInsCourse.jsp");
+				RequestDispatcher failureView = req.getRequestDispatcher("/Inscourse/addInsCourse.jsp");
 				failureView.forward(req, res);
 			}
 		}
@@ -264,21 +264,21 @@ public class InsCourseServlet extends HttpServlet {
 				InsCourseService insCourseSvc = new InsCourseService();
 				InsCourseVO insCourseVO = insCourseSvc.findOneById(inscId);
 				if (insCourseVO == null) {
-					errorMsgs.add("查無課程");
+					errorMsgs.add("查無資料");
 				}
 				if (!errorMsgs.isEmpty()) {
-					RequestDispatcher failureView = req.getRequestDispatcher("/inscourse/searchAllInsCourse.jsp.jsp");
+					RequestDispatcher failureView = req.getRequestDispatcher("/Inscourse/select_page.jsp");
 					failureView.forward(req, res);
 				}
 
 				req.setAttribute("insCourseVO", insCourseVO);
-				String url = "/Inscourse/courseDetails.jsp";
+				String url = "/Inscourse/listOneInsCourse.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url);
 				successView.forward(req, res);
 
 			} catch (Exception e) {
 				errorMsgs.add("無法取得資料:" + e.getMessage());
-				RequestDispatcher failureView = req.getRequestDispatcher("/inscourse/searchAllInsCourse.jsp.jsp");
+				RequestDispatcher failureView = req.getRequestDispatcher("/Inscourse/select_page.jsp");
 				failureView.forward(req, res);
 			}
 		}

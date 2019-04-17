@@ -316,7 +316,7 @@ justify-content:center;
 			     <input type="hidden" name="inscCourser"      value="${insCourseVO.inscCourser}">
 			     <input type="hidden" name="requestURL"	value="<%=request.getServletPath()%>"><!--送出本網頁的路徑給Controller-->
 			     <input type="hidden" name="whichPage"	value="<%=whichPage%>">               <!--送出當前是第幾頁給Controller-->
-			     <input type="hidden" name="action"	    value="findValuebyId"></FORM>
+			     <input type="hidden" name="action"	    value="getOne_For_Update"></FORM>
 
 
 </span></li>

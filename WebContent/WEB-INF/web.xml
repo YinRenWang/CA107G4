@@ -16,7 +16,8 @@
 		<welcome-file>default.htm</welcome-file>
 		<welcome-file>default.jsp</welcome-file>
 	</welcome-file-list>
-
+	
+<!-- Member -->
 	<servlet>
 		<servlet-name>MemberServlet</servlet-name>
 		<servlet-class>com.member.controller.MemberServlet</servlet-class>
@@ -26,17 +27,6 @@
 		<url-pattern>/member/member.do</url-pattern>
 	</servlet-mapping>
 	
-		<servlet>
-		<servlet-name>InsCourseServlet</servlet-name>
-		<servlet-class>com.inscourse.controller.InsCourseServlet</servlet-class>
-	</servlet>
-	<servlet-mapping>
-		<servlet-name>InsCourseServlet</servlet-name>
-		<url-pattern>/insCourse/insCourse.do</url-pattern>
-	</servlet-mapping>
-	
-	
-	
 	 <servlet>
     <servlet-name>DBGifReader</servlet-name>
     <servlet-class>com.member.controller.DBGifReader</servlet-class>
@@ -45,6 +35,19 @@
     <servlet-name>DBGifReader</servlet-name>
     <url-pattern>/member/DBGifReader.do</url-pattern>
   </servlet-mapping>
+  
+  <!-- Member -->
+	<servlet>
+		<servlet-name>InsCourseServlet</servlet-name>
+		<servlet-class>com.inscourse.controller.MemberServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>InsCourseServlet</servlet-name>
+		<url-pattern>/inscourse/inscourse.do</url-pattern>
+	</servlet-mapping>
+  
+  
+  
 	
 	
 		
