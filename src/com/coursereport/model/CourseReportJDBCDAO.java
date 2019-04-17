@@ -34,7 +34,7 @@ public class CourseReportJDBCDAO implements CourseReportDAO_interface {
 	private static final String GET_ONE_STMT = "SELECT * FROM CourseReport WHERE crId=?";
 	
 	//複合式查詢
-	private static final String CASE_WHEN_STMT = "SELECT * FROM CourseReport where (case when crId=? then 1 else 0 end+ case when memId=? then 1 else 0 end+ case when inscId=? then 1 else 0 end)>=1";
+	private static final String CASE_WHEN_STMT = "SELECT * FROM CourseReport where (case when crId=? then 1 else 0 end+ case when inscId=? then 1 else 0 end+ case when inscId=? then 1 else 0 end)>=1";
 
 	@Override
 	public void insert(CourseReportVO courseReportVO) {

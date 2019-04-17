@@ -15,6 +15,8 @@ import javax.servlet.http.HttpServletResponse;
 import com.course.model.CourseVO;
 import com.inscourse.model.InsCourseService;
 import com.inscourse.model.InsCourseVO;
+import com.inscoursetime.model.InsCourseTimeService;
+import com.inscoursetime.model.InsCourseTimeVO;
 
 @WebServlet("/InsCourseServlet")
 public class InsCourseServlet extends HttpServlet {
@@ -27,7 +29,7 @@ public class InsCourseServlet extends HttpServlet {
 
 	protected void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
 
-		req.setCharacterEncoding("UTF-8");
+		req.setCharacterEncoding("UTF-8"); 
 		res.setContentType("text/plain; charset=UTF-8");
 		PrintWriter out = res.getWriter();
 
@@ -103,7 +105,7 @@ public class InsCourseServlet extends HttpServlet {
 		}
 
 		if ("update".equals(action)) {
-
+				
 			List<String> errorMsgs = new LinkedList<String>();
 
 			req.setAttribute("errorMsgs", errorMsgs);
@@ -178,7 +180,7 @@ public class InsCourseServlet extends HttpServlet {
 				RequestDispatcher failureView = req.getRequestDispatcher("/Inscourse/update_InsCourse_input.jsp");
 				failureView.forward(req, res);
 			}
-		}
+		} 
 
 		if ("insert".equals(action)) {
 
@@ -253,10 +255,10 @@ public class InsCourseServlet extends HttpServlet {
 				failureView.forward(req, res);
 			}
 		}
-		
+
 		if ("findValuebyId".equals(action)) {
 			List<String> errorMsgs = new LinkedList<String>();
-	
+
 
 			try {
 				String inscId = req.getParameter("inscId");
@@ -267,23 +269,54 @@ public class InsCourseServlet extends HttpServlet {
 					errorMsgs.add("查無資料");
 				}
 				if (!errorMsgs.isEmpty()) {
-					RequestDispatcher failureView = req.getRequestDispatcher("/Inscourse/select_page.jsp");
+					RequestDispatcher failureView = req.getRequestDispatcher("/inscourse/insCourseDetails.jsp");
 					failureView.forward(req, res);
+					return;
 				}
 
 				req.setAttribute("insCourseVO", insCourseVO);
-				String url = "/Inscourse/listOneInsCourse.jsp";
+				String url = "/inscourse/insCourseDetails.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url);
 				successView.forward(req, res);
 
 			} catch (Exception e) {
 				errorMsgs.add("無法取得資料:" + e.getMessage());
-				RequestDispatcher failureView = req.getRequestDispatcher("/Inscourse/select_page.jsp");
+				RequestDispatcher failureView = req.getRequestDispatcher("/inscourse/insCourseDetails.jsp");
 				failureView.forward(req, res);
 			}
 		}
 
 
+		if ("Update_ClenderDate".equals(action)) {
+			List<String> errorMsgs = new LinkedList<String>();
+			req.setAttribute("erroMsgs", errorMsgs);
+			
+			try {
+			String inscId = req.getParameter("inscId");	
+			
+			java.sql.Date clcikdate = null;
+			clcikdate = java.sql.Date.valueOf(req.getParameter("clcikdate").trim());
+			System.out.println(clcikdate);
+			InsCourseTimeService insCourseTimeService = new InsCourseTimeService();
+			List<InsCourseTimeVO> list =insCourseTimeService.findByKey(inscId);
+			
+			
+			InsCourseService insCourseSvc = new InsCourseService();
+			InsCourseVO insCourseVO = insCourseSvc.findOneById(inscId);
+
+
+			req.setAttribute("insCourseVO", insCourseVO);
+			String url = "/Inscourse/insCourseDetails.jsp";
+			RequestDispatcher successView = req.getRequestDispatcher(url);
+			successView.forward(req, res);
+			
+			} catch (Exception e) {
+				errorMsgs.add("無法取得要修改的資料:" + e.getMessage());
+				RequestDispatcher failureView = req
+						.getRequestDispatcher("/emp/listAllEmp.jsp");
+				failureView.forward(req, res);
+			}
+		}
 		
 		
 		

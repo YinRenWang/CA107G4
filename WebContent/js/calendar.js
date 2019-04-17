@@ -2,7 +2,7 @@
 $(function () {
 
   $('#calendar').calendar({
-    ifSwitch: true, // 是否切换月份
+    ifSwitch: false, // 是否切换月份
     hoverDate: true, // hover是否显示当天信息
     backToday: true // 是否返回当天
   });
@@ -82,7 +82,6 @@ $(function () {
         // allDay: 得到当前列表显示的所有天数
         var allDay = new Date(year, month - 1, i + 1 - firstDay.getDay());
         var allDay_str = returnDateStr(allDay);
-
         $(this).text(allDay.getDate()).attr('id', allDay_str);
 
         if (returnDateStr(new Date()) === allDay_str) {
@@ -97,8 +96,8 @@ $(function () {
 
     renderDOM: function () { // 渲染DOM
       this.$calendar_title = $('<div class="calendar-title"></div>');
-      this.$calendar_week = $('<ul class="calendar-week"></ul>');
-      this.$calendar_date = $('<ul class="calendar-date" id="calendarxxx"></ul>');
+      this.$calendar_week = $('<ul class="calendar-week" ></ul>');
+      this.$calendar_date = $('<ul class="calendar-date" value="calendarxxx"></ul>');
       this.$calendar_today = $('<div class="calendar-today"></div>');
 
 
@@ -108,7 +107,7 @@ $(function () {
                         '<span class="arrow-prev"><</span>'+
                         '<span class="arrow-next">></span>'+
                       '</div>';
-      var _weekStr = '<li class="item">日</li>'+
+      var _weekStr = '<li class="item>日</li>'+
                       '<li class="item">一</li>'+
                       '<li class="item">二</li>'+
                       '<li class="item">三</li>'+
@@ -233,3 +232,8 @@ $(function () {
   };
 
 })(jQuery, window, document);
+
+
+
+
+

@@ -36,17 +36,17 @@
     <url-pattern>/member/DBGifReader.do</url-pattern>
   </servlet-mapping>
   
-  <!-- Member -->
+
 	<servlet>
 		<servlet-name>InsCourseServlet</servlet-name>
-		<servlet-class>com.inscourse.controller.MemberServlet</servlet-class>
+		<servlet-class>com.inscourse.controller.InsCourseServlet</servlet-class>
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>InsCourseServlet</servlet-name>
 		<url-pattern>/inscourse/inscourse.do</url-pattern>
 	</servlet-mapping>
   
-  
+ <!-- Member -->
   
 	
 	

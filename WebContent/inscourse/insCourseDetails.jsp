@@ -1,5 +1,13 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ page import="java.util.*"%>
+<%@ page import="com.member.model.*"%>
+<%@ page import="java.util.Base64"%>
+
+<jsp:useBean id="now" scope="page" class="java.util.Date" />  
+<jsp:useBean id="inscCourseTimeSvc" scope="page" class="com.inscoursetime.model.InsCourseTimeService" />
+
 <!doctype html>
 <html lang="en">
 <head>
@@ -8,10 +16,10 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <!-- Bootstrap CSS -->
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" >
-<link rel="stylesheet" href="css/calendar.css">
+<link rel="stylesheet" href="<%=request.getContextPath()%>/css/calendar.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.0.0/jquery.min.js"></script>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-<script src="js/calendar.js"></script>
+<script src="<%=request.getContextPath()%>/js/calendar.js"></script>
 <style type="text/css">
 body {
     background: #f4f9f4;
@@ -50,7 +58,7 @@ body {
     border: 2px #fff solid;
     line-height: 60px;
     font-size: 14px;
-    background-image: url("img/blob/01.jpg");
+    background-image: url("/img/blob/01.jpg");
     text-align: center;
     top: -7.5%;
     position: absolute;
@@ -486,10 +494,10 @@ input[type=radio].with-font:focus~label:before, input[type=checkbox].with-font:f
                 top:0px;
             }
             .star-vote>.add-star{
-                background-image:url("images/inscourse/yellow-star.png");
+                background-image:url("http://localhost:8081/CA107G4/images/inscourse/white-star.png");
             }
             .star-vote>.del-star{
-                background-image:url("images/inscourse/white-star.png");
+                background-image:url("http://localhost:8081/CA107G4/images/inscourse/white-star.png");
                 background-color:white;
             }
 
@@ -509,9 +517,7 @@ input[type=radio].with-font:focus~label:before, input[type=checkbox].with-font:f
 		
 	}
 	
-	#insctime{
-		display:none;
-	}
+
 
     .badge-pill{
     font-size: 18px;
@@ -564,7 +570,7 @@ input[type=radio].with-font:focus~label:before, input[type=checkbox].with-font:f
   <ol class="breadcrumb">
     <li class="breadcrumb-item"><a href="#">課程類型</a></li>
     <li class="breadcrumb-item"><a href="#">程式語言</a></li>
-    <li class="breadcrumb-item active" aria-current="page">Java</li>
+    <li class="breadcrumb-item active" aria-current="page">${param.courseName}</li>
   </ol>
 </nav>
 
@@ -575,14 +581,14 @@ input[type=radio].with-font:focus~label:before, input[type=checkbox].with-font:f
     <div class="row">
       <div class="col-lg-8 col-md-8 col-sm-7 col-xs-12">
         <div class="box d-flex" id="tc1">
-          <div class="tcimg"><img src="images/blob/02.jpg" width="120" height="120" alt=""/> </div>
+          <div class="tcimg"><img src="<%=request.getContextPath()%>/member/DBGifReader.do?memId=${param.memId}" width="120" height="120" alt=""/> </div>
           <div class="teachName">
-            <h4>Emma Watson</h4>
+            <h4>${param.memName}</h4>
  		 <div id="star_con" class="star-vote">
             <span id="add_star" class="add-star"></span>
             <span id="del_star" class="del-star"></span>
         </div>  
-	      <img src="images/inscourse/connection.png" alt="" width="180" height="45" class="fakeimg"/> </div>
+	      <img src="http://localhost:8081/CA107G4/images/inscourse/connection.png" width="180" height="45" class="fakeimg"/> </div>
 			<span><h5 class="howPeople">5.00 ( 5 人評分)</h5></span>
         </div>
 		  
@@ -596,16 +602,16 @@ input[type=radio].with-font:focus~label:before, input[type=checkbox].with-font:f
             <div class="card">
               <div class="card-header" >
                 <h2 class="mb-0">
-                  <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne" value=""> Java</button>
+                  <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne" value=""> ${param.courseName}</button>
                 </h2>
               </div>
               <div  class="collapse show" aria-labelledby="headingOne" data-parent="#accordionExample">
                 <div class="card-body">
-                    <p><span class="badge badge-pill badge-info">類型</span><p/>
-                   <p><span class="badge badge-pill badge-success">地點</span><p/>
-                   <p> <span class="badge badge-pill badge-primary">授課語言</span><p/>
-                   <p> <span class="badge badge-pill badge-warning">價錢</span><p/>
-                   <p> <span class="badge badge-pill badge-secondary">課程大綱</span><p/>
+                    <p><span class="badge badge-pill badge-info">類型</span>${param.memName}<p/>
+                   <p><span class="badge badge-pill badge-success">地點</span>${param.inscLoc}<p/>
+                   <p> <span class="badge badge-pill badge-primary">授課語言</span>${param.inscLang}<p/>
+                   <p> <span class="badge badge-pill badge-warning">價錢</span>${param.inscPrice}<p/>
+                   <p> <span class="badge badge-pill badge-secondary">課程大綱</span>${param.inscCourser}<p/>
                  </div>
               </div>
             </div>
@@ -624,10 +630,10 @@ input[type=radio].with-font:focus~label:before, input[type=checkbox].with-font:f
         <div class="box">
 
           <h3 class="box-title">關於</h3>
-          <p>Are you tired of running around in circles of English Language and getting no good result in the end? Come and book my classes, I provide variety of learning techniques when it comes to Academic English. I earned a Bachelor's Degree in Secondary Education Major in English in one of the reputable Universities here in the Philippines. I've been teaching English to kids and adults for quite some time now, and I know that there are multiple learning styles and with that I make sure that you will learn what you need to learn in a way that we go at your own pace.</p>
+          <p>${param.teacherText}</p>
 
            <h3 class="box-title">學歷</h3>
-          <p>Are you tired of running around in circles of English Language and getting no good result in the end? Come and book my classes, I provide variety of learning techniques when it comes to Academic English. I earned a Bachelor's Degree in Secondary Education Major in English in one of the reputable Universities here in the Philippines. I've been teaching English to kids and adults for quite some time now, and I know that there are multiple learning styles and with that I make sure that you will learn what you need to learn in a way that we go at your own pace.</p>
+          <p>${param.teacherEdu}</p>
 
         </div>
               
@@ -707,6 +713,14 @@ input[type=radio].with-font:focus~label:before, input[type=checkbox].with-font:f
       <div class="col-lg-4 col-md-4 col-sm-5 col-xs-12">
 		
 <div id="appointment">
+
+<form id="paypal" name="form1" action="/inscourse/inscourse.do" method="get" />
+<input type="hidden" name="action" value="Update_ClenderDate">
+<input type="hidden" name="inscId" value="${insCourseVO.inscId}">
+<input type="hidden" id ="bn" name="clcikdate" value="">
+
+<a href="javascript: donate(paypal);"> 
+
 		   <div id="calendar">
     <div id="calendar_header"><i class="icon-chevron-left"></i>          <h1></h1><i class="icon-chevron-right"></i>         </div>
     <div id="calendar_weekdays"></div>
@@ -714,57 +728,34 @@ input[type=radio].with-font:focus~label:before, input[type=checkbox].with-font:f
   </div>
 	
 </div>	
+</a>
+<input id="xxx" type="submit" style=display:none;>
+</form>
 
 <div class="contatiner" id="insctime">
-	<div class="row">
-	<div class="col-1"></div>
-	<div class="col-5">
-	 <div class="form-check">
-  <input class="form-check-input" type="radio" name="exampleRadios" value="option1" >
-  <label class="form-check-label" for="exampleRadios1">
-    12:00 - 14:00
-  </label>
- </div>
-	</div>
-		<div class="col-5">
-	 <div class="form-check">
-  <input class="form-check-input" type="radio" name="exampleRadios" value="option2" >
-  <label class="form-check-label" for="exampleRadios1">
-    12:00 - 14:00
-  </label>
- </div>
-	</div>
-		<div class="col-1"></div>
-		
-		
-			<div class="col-1"></div>
-	<div class="col-5">
-	 <div class="form-check">
-  <input class="form-check-input" type="radio" name="exampleRadios" value="option3" >
-  <label class="form-check-label" for="exampleRadios1">
-    12:00 - 14:00
-  </label>
- </div>
-	</div>
-		<div class="col-5">
-	 <div class="form-check">
-  <input class="form-check-input" type="radio" name="exampleRadios" value="option4" >
-  <label class="form-check-label" for="exampleRadios1">
-    12:00 - 14:00
-  </label>
- </div>
-	</div>
-		<div class="col-1"></div>
-	
-		
+<div class="row">
 
 
+
+
+<c:forEach var="inscCourseTimeVO" items="${inscCourseTimeSvc.findByKey(param.inscId)}">	 
 		
-		
-	</div>	  
+<div class="col-1"></div>
+<div class="col-5">
+<div class="form-check">
+<input class="form-check-input" type="radio" name="inscMFD" value="${inscCourseTimeVO.inscMFD}" >
+<label class="form-check-label" for="exampleRadios1">
+   				 <fmt:formatDate value="${inscCourseTimeVO.inscMFD}" pattern="HH:mm"/> -
+    			 <fmt:formatDate value="${inscCourseTimeVO.inscEXP}" pattern="HH:mm"/>
+</label>
+</div>
 </div>
 
- 
+ </c:forEach>  
+
+
+</div>	  
+</div>
 		  
 	  
 		  
@@ -862,21 +853,50 @@ input[type=radio].with-font:focus~label:before, input[type=checkbox].with-font:f
 </footer>
 	
     <script>
-	
-         window.onload=showStar(10);
-		
+    
+	function donate() {
+
+		document.paypal.action = "https://www.google.com.tw/";
+		document.paypal.submit();
+
+		}
+  		 var dayValue;
+  		  
 		$("#appointment").click(function(event) {
-		console.log("clicked: " + event.target.id);
-			$("#insctime").css('display','none'); 
-			$("#insctime").slideToggle("slow");
-			
+		dayValue=(event.target.id);
+		
+		function returnDateStr(dayValue) { // 字符串转日期
+		    var fullDate = fDate.split("-");
+		    
+		    return new Date(fullDate[0], fullDate[1] - 1, fullDate[2]); 
+		  };
+		  
+		$("#bn").val(dayValue);
 		
 		
-		});  
+		setTimeout(function() {
+			// IE
+			if(document.all) {
+				document.getElementById("xxx").click();
+			}
+			// 其它瀏覽器
+			else {
+				var e = document.createEvent("MouseEvents");
+				e.initEvent("click", true, true);
+				document.getElementById("xxx").dispatchEvent(e);
+			}
+		}, 5000);
+		
+		$("#insctime").css('display','none'); 
+		$("#insctime").slideToggle("slow");
 		
 
+			
+		}); 
 		
-   
+	
+		
+  
             //表示後台選取的星數(1代表0.5)
             function showStar(n){
                 var con_wid=document.getElementById("star_con").offsetWidth;
