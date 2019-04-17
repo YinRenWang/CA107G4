@@ -8,8 +8,8 @@ import java.util.*;
 public class MemberJDBCDAO implements MemberDAO_interface {
 	
 	String driver = "oracle.jdbc.driver.OracleDriver";
-//	String url = "jdbc:oracle:thin:@localhost:1521:XE";
-	String url = "jdbc:oracle:thin:@localhost:49161:XE";
+	String url = "jdbc:oracle:thin:@localhost:1521:XE";
+//	String url = "jdbc:oracle:thin:@localhost:49161:XE";
 	String userid = "WESHARE";
 	String passwd = "123456";
 	
@@ -398,7 +398,7 @@ public class MemberJDBCDAO implements MemberDAO_interface {
 			pstmt.setString(8, memberVO.getMemId());
 
 			pstmt.executeUpdate();
-			System.out.println("已修改一筆資料");
+			System.out.println("已修改一筆資料(有圖片版本!)");
 
 			// Handle any driver errors
 		} catch (ClassNotFoundException e) {
@@ -448,7 +448,7 @@ public class MemberJDBCDAO implements MemberDAO_interface {
 			pstmt.setString(7, memberVO.getMemId());
 
 			pstmt.executeUpdate();
-			System.out.println("已修改一筆資料");
+			System.out.println("已修改一筆資料(沒圖片版本)");
 
 			// Handle any driver errors
 		} catch (ClassNotFoundException e) {

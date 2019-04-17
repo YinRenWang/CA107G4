@@ -8,7 +8,7 @@ import javax.servlet.http.*;
 import com.member.model.MemberService;
 import com.member.model.MemberVO;
 
-public class DBGifReader extends HttpServlet {
+public class DBGifReader_VER2 extends HttpServlet {
 	
 
 	public void doGet(HttpServletRequest req, HttpServletResponse res)

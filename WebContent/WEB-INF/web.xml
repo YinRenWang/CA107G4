@@ -26,6 +26,15 @@
 		<url-pattern>/member/member.do</url-pattern>
 	</servlet-mapping>
 	
+		<servlet>
+		<servlet-name>InsCourseServlet</servlet-name>
+		<servlet-class>com.inscourse.controller.InsCourseServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>InsCourseServlet</servlet-name>
+		<url-pattern>/insCourse/insCourse.do</url-pattern>
+	</servlet-mapping>
+	
 	
 	
 	 <servlet>

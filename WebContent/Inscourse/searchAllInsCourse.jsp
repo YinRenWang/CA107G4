@@ -227,7 +227,7 @@ justify-content:center;
 
 
 <c:forEach var="insCourseVO" items="${list}" begin="<%=pageIndex%>" end="<%=pageIndex+rowsPerPage-1%>">
- <FORM METHOD="get" ACTION="<%=request.getContextPath()%>/emp/emp.do" style="margin-bottom: 0px;">
+ <FORM METHOD="get" ACTION="<%=request.getContextPath()%>/inscourse/inscourse.do" style="margin-bottom: 0px;">
 	<div class="one-row">
 
     <section class="col-xs-12 col-sm-6 col-md-12 ">
@@ -316,7 +316,7 @@ justify-content:center;
 			     <input type="hidden" name="inscCourser"      value="${insCourseVO.inscCourser}">
 			     <input type="hidden" name="requestURL"	value="<%=request.getServletPath()%>"><!--送出本網頁的路徑給Controller-->
 			     <input type="hidden" name="whichPage"	value="<%=whichPage%>">               <!--送出當前是第幾頁給Controller-->
-			     <input type="hidden" name="action"	    value="getOne_For_Update"></FORM>
+			     <input type="hidden" name="action"	    value="findValuebyId"></FORM>
 
 
 </span></li>

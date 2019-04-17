@@ -1,4 +1,4 @@
---WeShare SQL 指令表 2019/04/11--版本4 會員銀行帳號 CAN NULL 
+--WeShare SQL 指令表 2019/04/11--版本3 課程時間 新增到期時間 
 --------------------------------------------------------------------------------------------------------
 alter session set deferred_segment_creation=false;
 
@@ -183,11 +183,12 @@ CONSTRAINT Member_memId_PK PRIMARY KEY (memId));
 COMMENT ON COLUMN Member.memSex IS '0=男性,1=女性';
 COMMENT ON COLUMN Member.memStatus IS '0=待驗證,1=已驗證';
 
-INSERT INTO MEMBER VALUES ('weshare01', '0005', '0008', NULL, 'S143766692', '123456', '123456', 'AKA Ren', '0', empty_blob(), 'n1036434@ntub.edu.tw', '0912344580', TO_DATE('1995-11-23', 'YYYY-MM-DD'), '桃園市中壢區中大路300號 2,3,15樓', 'Java是簡單的', '004116004056492', '35000', '20000', '1');
-INSERT INTO MEMBER VALUES ('weshare02', '0008', '0005', NULL,'Q252488683', '123456', '123456', '蓋兒·加朵', '1', empty_blob(), 'yinren1123@gmail.com', '0954446347', TO_DATE('1985-04-30', 'YYYY-MM-DD'), '台北市信義區信義路四段415號6樓', '我是神力女超人', '00731350235011', '80000', '0', '1');
-INSERT INTO MEMBER VALUES ('weshare03', '0004', '0009', NULL,'B287381891', '123456', '123456', '艾瑪·華森', '1', empty_blob(), 'EmmaWatson@gmail.com', '0958403685', TO_DATE('1989-06-15', 'YYYY-MM-DD'), '台北市松山區八德路四段520號', '你們這群麻瓜', '08545080687111', '60000', '0', '1');
-INSERT INTO MEMBER VALUES ('weshare04', '0006', '0005', NULL,'A167464958', '123456', '123456', '哈利·波特', '0', empty_blob(), 'HarryPotter@gmail.com', '0978254078', TO_DATE('1987-07-12', 'YYYY-MM-DD'), '台北市大安區復興南路一段390號', '我是頭上有閃電', '80885744387461', '20000', '0', '1');
-
+INSERT INTO MEMBER VALUES ('weshare01', '0005', '0008', NULL, 'S143766692', 'a123456', '123456', '板橋金城武', '0', empty_blob(), 'n1036434@ntub.edu.tw', '0912344580', TO_DATE('1995-11-23', 'YYYY-MM-DD'), '桃園市中壢區中大路300號15樓', 'Java是簡單的', '004116004056492', '35000', '20000', '1');
+INSERT INTO MEMBER VALUES ('weshare02', '0008', '0005', NULL,'Q252488683', 'b123456', '123456', '蓋兒加朵', '1', empty_blob(), 'yinren1123@gmail.com', '0954446347', TO_DATE('1985-04-30', 'YYYY-MM-DD'), '台北市信義區信義路四段415號6樓', '我是神力女超人', '00731350235011', '80000', '0', '1');
+INSERT INTO MEMBER VALUES ('weshare03', '0004', '0009', NULL,'B287381891', 'c123456', '123456', '艾瑪華森', '1', empty_blob(), 'EmmaWatson@gmail.com', '0958403685', TO_DATE('1989-06-15', 'YYYY-MM-DD'), '台北市松山區八德路四段520號', '你們這群麻瓜', '08545080687111', '60000', '0', '1');
+INSERT INTO MEMBER VALUES ('weshare04', '0006', '0005', NULL,'A167464958', 'd123456', '123456', '克里斯漢斯沃', '0', empty_blob(), 'ChrisHemsworth@gmail.com', '0978254078', TO_DATE('1987-07-12', 'YYYY-MM-DD'), '台北市大安區復興南路一段390號', '我是頭上有閃電', '80885744387461', '20000', '0', '1');
+INSERT INTO MEMBER VALUES ('weshare05', '0001', '0004',NULL, 'A227604096', 'e123456', '123456', '艾蜜莉克拉克', '1', empty_blob(), 'EmiliaClarke@ntub.edu.tw', '0975475932', TO_DATE('1999-12-23', 'YYYY-MM-DD'), '台北市台北市萬華區中華路一段152號3樓 2,3,15樓', 'Every one love me.', '00314637967473', '35000', '20000', '1');
+INSERT INTO MEMBER VALUES ('weshare06', '0002', '0003',NULL,'A278318487', 'f123456', '123456', '史嘉蕾喬韓森', '1', empty_blob(), 'Scarlett@gmail.com', '0936472842', TO_DATE('1989-06-30', 'YYYY-MM-DD'), '桃園市中壢區元化路306號', '黑寡婦有著世界級的運動員水準能力，她能令身體做出許多高難度的複雜動作。她也是一名大師等級的武術高手，精通空手道、柔道、法式拳擊等各式武技。', '007467579675323', '80000', '0', '1');
 --老師ok(做BLOB指令)--
 
 CREATE TABLE Teacher (
@@ -644,11 +645,15 @@ NOMAXVALUE
 NOCYCLE
 NOCACHE;
 
-INSERT INTO Goods VALUES (('GD'||LPAD(to_char(Goods_seq.NEXTVAL), 5, '0')),'TC00001','吳永志','8888',NULL,NULL,'1');
-INSERT INTO Goods VALUES (('GD'||LPAD(to_char(Goods_seq.NEXTVAL), 5, '0')),'TC00002','David吳','6666',NULL,NULL,'1');
-INSERT INTO Goods VALUES (('GD'||LPAD(to_char(Goods_seq.NEXTVAL), 5, '0')),'TC00002','SeaFood','7777',NULL,NULL,'1');
-INSERT INTO Goods VALUES (('GD'||LPAD(to_char(Goods_seq.NEXTVAL), 5, '0')),'TC00002','大衛海鮮','9999',NULL,NULL,'1');
-INSERT INTO Goods VALUES (('GD'||LPAD(to_char(Goods_seq.NEXTVAL), 5, '0')),'TC00001','Peter吳','5555',NULL,NULL,'1');
+INSERT INTO Goods VALUES (('GD'||LPAD(to_char(Goods_seq.NEXTVAL), 5, '0')),'TC00001','Java深入淺出','1111','Java是簡單的',NULL,'1');
+INSERT INTO Goods VALUES (('GD'||LPAD(to_char(Goods_seq.NEXTVAL), 5, '0')),'TC00002','AJax深入淺出','9999','AJax是簡單的',NULL,'0');
+INSERT INTO Goods VALUES (('GD'||LPAD(to_char(Goods_seq.NEXTVAL), 5, '0')),'TC00002','Oracle深入淺出','2222','Oracle是簡單的',NULL,'1');
+INSERT INTO Goods VALUES (('GD'||LPAD(to_char(Goods_seq.NEXTVAL), 5, '0')),'TC00002','HTML深入淺出','8888','HTML是簡單的',NULL,'0');
+INSERT INTO Goods VALUES (('GD'||LPAD(to_char(Goods_seq.NEXTVAL), 5, '0')),'TC00001','Servlet深入淺出','3333','Servlet是簡單的',NULL,'1');
+INSERT INTO Goods VALUES (('GD'||LPAD(to_char(Goods_seq.NEXTVAL), 5, '0')),'TC00002','jQuery深入淺出','7777','jQuery是簡單的',NULL,'0');
+INSERT INTO Goods VALUES (('GD'||LPAD(to_char(Goods_seq.NEXTVAL), 5, '0')),'TC00002','JavaScript','4444','JavaScript是簡單的',NULL,'1');
+INSERT INTO Goods VALUES (('GD'||LPAD(to_char(Goods_seq.NEXTVAL), 5, '0')),'TC00001','Android深入淺出','6666','Android是簡單的',NULL,'0');
+INSERT INTO Goods VALUES (('GD'||LPAD(to_char(Goods_seq.NEXTVAL), 5, '0')),'TC00001','RWD深入淺出','5555','RWD是簡單的',NULL,'1');
 
 --教材商品訂單--
 CREATE TABLE GoodsOrder ( 

@@ -68,7 +68,7 @@ public class MemberServlet extends HttpServlet {
 						
 						// Send the use back to the form, if there were errors
 						if (!errorMsgs.isEmpty()) {
-							memberVO.setMemPsw("");//帳號保留,密碼清空
+							memberVO.setMemPsw(null);//帳號保留,密碼清空
 							req.setAttribute("memberVO", memberVO); // 含有輸入格式錯誤的empVO物件,也存入req
 							RequestDispatcher failureView = req
 									.getRequestDispatcher("/member/loginMember.jsp");
@@ -118,14 +118,7 @@ public class MemberServlet extends HttpServlet {
 				} else if (!memId.trim().matches(memIdReg)) { // 以下練習正則(規)表示式(regular-expression)
 					errorMsgs.add("會員帳號：請以半形輸入，6-12個英、數字組合");
 				}
-				// Send the use back to the form, if there were errors
-				if (!errorMsgs.isEmpty()) {
-					RequestDispatcher failureView = req
-							.getRequestDispatcher("/select_page.jsp");
-					failureView.forward(req, res);
-					return;//程式中斷
-				}
-				
+			
 
 				String memEmail = req.getParameter("memEmail");
 				String memEmailReg = "^[a-z0-9A-Z]+[- | a-z0-9A-Z . _]+@([a-z0-9A-Z]+(-[a-z0-9A-Z]+)?\\.)+[a-z]{2,}$";
@@ -134,13 +127,8 @@ public class MemberServlet extends HttpServlet {
 				} else if (!memEmail.trim().matches(memEmailReg)) { // 以下練習正則(規)表示式(regular-expression)
 					errorMsgs.add("電子郵件：請輸入有效的手機號碼或電子郵件");
 				}
-				// Send the use back to the form, if there were errors
-				if (!errorMsgs.isEmpty()) {
-					RequestDispatcher failureView = req
-							.getRequestDispatcher("/select_page.jsp");
-					failureView.forward(req, res);
-					return;//程式中斷
-				}
+	
+			
 				
 
 				String memPsw = req.getParameter("memPsw");
@@ -148,16 +136,11 @@ public class MemberServlet extends HttpServlet {
 				if (memPsw == null || memPsw.trim().length() == 0) {
 					errorMsgs.add("會員密碼：請勿空白");
 				} else if (!memPsw.trim().matches(memPswReg)) { // 以下練習正則(規)表示式(regular-expression)
-					errorMsgs.add("會員密碼：請輸入6 位數以上，開頭必須為英文不得有中文");
 					memPsw="";
+					errorMsgs.add("會員密碼：請輸入6 位數以上，開頭必須為英文不得有中文");
 				}
-				// Send the use back to the form, if there were errors
-				if (!errorMsgs.isEmpty()) {
-					RequestDispatcher failureView = req
-							.getRequestDispatcher("/select_page.jsp");
-					failureView.forward(req, res);
-					return;//程式中斷
-				}
+
+			
 				
 
 				String memPswHint = req.getParameter("memPswHint");
@@ -167,14 +150,7 @@ public class MemberServlet extends HttpServlet {
 					errorMsgs.add("會員提示：請勿與密碼相同");
 					memPswHint="";
 				}
-				// Send the use back to the form, if there were errors
-				if (!errorMsgs.isEmpty()) {
-					RequestDispatcher failureView = req
-							.getRequestDispatcher("/select_page.jsp");
-					failureView.forward(req, res);
-					return;//程式中斷
-				}
-				
+		
 
 				String memName = req.getParameter("memName");
 				String memNameReg = "^[(\u4e00-\u9fa5)(a-zA-Z)]{2,10}$";
@@ -183,13 +159,7 @@ public class MemberServlet extends HttpServlet {
 				} else if (!memName.trim().matches(memNameReg)) { // 以下練習正則(規)表示式(regular-expression)
 					errorMsgs.add("姓名: 只能是中、英文字母 , 且長度必需在2到10之間");
 				}
-				// Send the use back to the form, if there were errors
-				if (!errorMsgs.isEmpty()) {
-					RequestDispatcher failureView = req
-							.getRequestDispatcher("/select_page.jsp");
-					failureView.forward(req, res);
-					return;//程式中斷
-				}
+			
 				
 
 				String memIdCard = req.getParameter("memIdCard").toUpperCase();
@@ -201,13 +171,7 @@ public class MemberServlet extends HttpServlet {
 				} else if (!Check.checkId(memIdCard)) {
 					errorMsgs.add("身分證字號: 非正確格式");
 				} 
-				// Send the use back to the form, if there were errors
-				if (!errorMsgs.isEmpty()) {
-					RequestDispatcher failureView = req
-							.getRequestDispatcher("/select_page.jsp");
-					failureView.forward(req, res);
-					return;//程式中斷
-				}
+			
 				
 
 				java.sql.Date memBirth = null;
@@ -218,12 +182,7 @@ public class MemberServlet extends HttpServlet {
 					errorMsgs.add("會員生日：請輸入日期!");
 				}
 				// Send the use back to the form, if there were errors
-				if (!errorMsgs.isEmpty()) {
-					RequestDispatcher failureView = req
-							.getRequestDispatcher("/select_page.jsp");
-					failureView.forward(req, res);
-					return;//程式中斷
-				}
+		
 				
 
 				Integer memSex = new Integer(req.getParameter("memSex"));
@@ -237,14 +196,7 @@ public class MemberServlet extends HttpServlet {
 				} else if (!memPhone.trim().matches(memPhoneReg)) { // 以下練習正則(規)表示式(regular-expression)
 					errorMsgs.add("電話號碼：請輸入正確格式");
 				}
-				// Send the use back to the form, if there were errors
-				if (!errorMsgs.isEmpty()) {
-					RequestDispatcher failureView = req
-							.getRequestDispatcher("/select_page.jsp");
-					failureView.forward(req, res);
-					return;//程式中斷
-				}
-				
+		
 
 				String memAdd = req.getParameter("memAdd");
 				String memAddReg = "^[(\u4e00-\u9fa5)(0-9)]{6,50}$";
@@ -253,13 +205,7 @@ public class MemberServlet extends HttpServlet {
 				} else if (!memAdd.trim().matches(memAddReg)) { // 以下練習正則(規)表示式(regular-expression)
 					errorMsgs.add("地址: 請輸入正確格式");
 				}
-				// Send the use back to the form, if there were errors
-				if (!errorMsgs.isEmpty()) {
-					RequestDispatcher failureView = req
-							.getRequestDispatcher("/select_page.jsp");
-					failureView.forward(req, res);
-					return;//程式中斷
-				}
+			
 				
 
 				Part part = req.getPart("memImage");
@@ -350,7 +296,7 @@ public class MemberServlet extends HttpServlet {
 
 				/*************************** 4.新增完成,準備轉交(Send the Success view) ***********/
 				req.setAttribute("memberVO", memberVO); // 資料庫取出的memberVO物件,存入req
-				String url = "/member/listAllMember.jsp";
+				String url = "/member/editMember.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url); // 成功轉交 loginSuccess.jsp
 				successView.forward(req, res);
 				/*************************** 其他可能的錯誤處理 **********************************/
