@@ -253,6 +253,36 @@ public class InsCourseServlet extends HttpServlet {
 				failureView.forward(req, res);
 			}
 		}
+		
+		if ("findValuebyId".equals(action)) {
+			List<String> errorMsgs = new LinkedList<String>();
+	
+
+			try {
+				String inscId = req.getParameter("inscId");
+
+				InsCourseService insCourseSvc = new InsCourseService();
+				InsCourseVO insCourseVO = insCourseSvc.findOneById(inscId);
+				if (insCourseVO == null) {
+					errorMsgs.add("查無資料");
+				}
+				if (!errorMsgs.isEmpty()) {
+					RequestDispatcher failureView = req.getRequestDispatcher("/Inscourse/select_page.jsp");
+					failureView.forward(req, res);
+				}
+
+				req.setAttribute("insCourseVO", insCourseVO);
+				String url = "/Inscourse/listOneInsCourse.jsp";
+				RequestDispatcher successView = req.getRequestDispatcher(url);
+				successView.forward(req, res);
+
+			} catch (Exception e) {
+				errorMsgs.add("無法取得資料:" + e.getMessage());
+				RequestDispatcher failureView = req.getRequestDispatcher("/Inscourse/select_page.jsp");
+				failureView.forward(req, res);
+			}
+		}
+
 
 		
 		

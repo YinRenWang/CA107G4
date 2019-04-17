@@ -227,6 +227,7 @@ justify-content:center;
 
 
 <c:forEach var="insCourseVO" items="${list}" begin="<%=pageIndex%>" end="<%=pageIndex+rowsPerPage-1%>">
+ <FORM METHOD="get" ACTION="<%=request.getContextPath()%>/emp/emp.do" style="margin-bottom: 0px;">
 	<div class="one-row">
 
     <section class="col-xs-12 col-sm-6 col-md-12 ">
@@ -250,6 +251,9 @@ justify-content:center;
 <c:if test="${memberVO.memId==teacherVO.memId}"> 
 	      <h5> 
 	      <b class="text-dark">${memberVO.memName}</b>
+	      <input type="hidden" name="memId"  value="${memberVO.memId}">
+	      <input type="hidden" name="memName"  value="${memberVO.memName}">
+	      
 	      <b class="text-primary">${teacherVO.teacherText}</b>
 	      </h5>
  </c:if>
@@ -266,7 +270,8 @@ justify-content:center;
 	      
 	      
 	      課程&nbsp;<b class="text-info">${courseVO.courseName}</b>
-	      
+	      <input type="hidden" name="courseName"      value="${courseVO.courseName}">
+			      
 	      
 	      
  </c:if>
@@ -282,6 +287,8 @@ justify-content:center;
 <c:forEach var="teacherVO" items="${teacherSvc.getAll()}">
 <c:if test="${teacherVO.teacherId==insCourseVO.teacherId}"> 
 	      地點&nbsp;<b class="text-secondary"> ${insCourseVO.inscLoc}</b>
+	      <input type="hidden" name="teacherEdu"      value="${teacherVO.teacherEdu}">
+	      <input type="hidden" name="teacherText"      value="${teacherVO.teacherText}">
  </c:if>
 </c:forEach>
 </h6>	
@@ -298,11 +305,29 @@ justify-content:center;
 					<li><i class="glyphicon glyphicon-tags"></i>上課人數- 
 <span>
 <c:out value="${insCourseVO.inscPeople}" default="1"/>人
+
+			 
+			     <input type="submit" class="btn btn-success" value="上課去" name="submit">
+			     <input type="hidden" name="inscId"      value="${insCourseVO.inscId}">
+			     <input type="hidden" name="teacherId"      value="${insCourseVO.teacherId}">
+			     <input type="hidden" name="inscLoc"      value="${insCourseVO.inscLoc}">
+			     <input type="hidden" name="inscPrice"      value="${insCourseVO.inscPrice}">
+			     <input type="hidden" name="inscLang"      value="${insCourseVO.inscLang}">
+			     <input type="hidden" name="inscCourser"      value="${insCourseVO.inscCourser}">
+			     <input type="hidden" name="requestURL"	value="<%=request.getServletPath()%>"><!--送出本網頁的路徑給Controller-->
+			     <input type="hidden" name="whichPage"	value="<%=whichPage%>">               <!--送出當前是第幾頁給Controller-->
+			     <input type="hidden" name="action"	    value="getOne_For_Update"></FORM>
+
+
 </span></li>
 				</ul>
-				<button type="button" class="btn btn-success">上課去</button>
 			</div>
 	   
+
+
+
+
+
 
 			<span class="clearfix borda"></span>
 		</article>		

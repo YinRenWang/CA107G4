@@ -101,9 +101,8 @@
 						</div>
 						<div class="row">
 							<div class="col-md-12">
-								<input type="hidden" name="action" value="login"> <input
-									type="submit" class="btn btn-primary btn-lg btn-block"
-									value="Login" name="submit">
+								<input type="hidden" name="action" value="login"> 
+								<input type="submit" class="btn btn-primary btn-lg btn-block" value="Login" name="submit">
 							</div>
 						</div>
 					</form>
