@@ -16,11 +16,20 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <!-- Bootstrap CSS -->
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" >
-<link rel="stylesheet" href="<%=request.getContextPath()%>/css/calendar.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.8.0/css/bootstrap-datepicker.css" >
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.0.0/jquery.min.js"></script>
+<script type="text/javascript" src="<%=request.getContextPath()%>/js/jquery-3.2.1.min.js"></script>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-<script src="<%=request.getContextPath()%>/js/calendar.js"></script>
+<link   rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/datetimepicker/jquery.datetimepicker.css" />
+<script src="<%=request.getContextPath()%>/datetimepicker/jquery.js"></script>
+<script src="<%=request.getContextPath()%>/datetimepicker/jquery.datetimepicker.full.js"></script>
 <style type="text/css">
+.xdsoft_datetimepicker .xdsoft_datepicker {
+           width:  300px;   /* width:  300px; */
+  }
+  .xdsoft_datetimepicker .xdsoft_timepicker .xdsoft_time_box {
+           height: 151px;   /* height:  151px; */
+  }
 body {
     background: #f4f9f4;
     width: 100%;
@@ -542,11 +551,67 @@ input[type=radio].with-font:focus~label:before, input[type=checkbox].with-font:f
 }
 }
 	
-	
-
 </style>
 <title>WeShare | 最棒的教育共享平台</title>
 </head>
+<!-- Ajax是簡單的! -->
+<script type="text/javascript">
+$(document).ready(function(){
+	 $('#grade').change(function(){
+		 $.ajax({
+			 type: "GET",
+			 url: "<%=request.getContextPath()%>/inscourse/ajaxResponse.do",
+			 data: creatQueryString($(this).val(), ""),
+			 dataType: "json",
+			 success: function (data){
+				clearSelect();
+				$.each(data, function(i, item){
+					$('#class').append("<option value='"+item.classId+"'>"+item.className+"</option>");
+				});
+//				$(data).each(function(i, item){
+//					$('#class').append("<option value='"+item.classId+"'>"+item.className+"</option>");
+//				});
+//				jQuery.each(data, function(i, item){
+//					$('#class').append("<option value='"+item.classId+"'>"+item.className+"</option>");
+//				});
+		     },
+            error: function(){alert("AJAX-grade發生錯誤囉!")}
+        })
+	 })
+	 $('#class').change(function(){
+		$.ajax({
+			 type: "POST",
+			 url: "<%=request.getContextPath()%>/inscourse/ajaxResponse.do",
+			 data: creatQueryString($('#grade').val(), $(this).val()),
+			 dataType: "json",
+			 success: function (data){
+				 clearSelect2();
+				 $.each(data, function(i, item){
+					 $('#name').append("<option value='"+data[i].nameId+"'>"+data[i].name+"</option>");
+				 });
+		     },
+           error: function(){alert("AJAX-class發生錯誤囉!")}
+       })
+	})
+})
+
+function creatQueryString(paramGrade, paramClass){
+	console.log("paramGrade:"+paramGrade+"; paramClass:"+paramClass);
+	var queryString= {"action":"getSelect", "gradeId":paramGrade, "classId":paramClass};
+	return queryString;
+}
+function clearSelect(){
+	$('#class').empty();
+	$('#class').append("<option value='-1'>請選擇</option>");
+	$('#name').empty();
+	$('#name').append("<option value='-1'>請選擇</option>");
+}
+function clearSelect2(){
+	$('#name').empty();
+	$('#name').append("<option value='-1'>請選擇</option>");
+}
+
+</script>
 <body>
 <!------------------------------------------------------首頁頭------------------------------------------------------>
 <div class="header">
@@ -575,6 +640,24 @@ input[type=radio].with-font:focus~label:before, input[type=checkbox].with-font:f
 </nav>
 
 <!------ Include the above in your HEAD tag ---------->
+	年級：
+	<select id="grade">
+		<option value="-1">請選擇</option>
+		<option value="grade3">三年級</option>
+		<option value="grade2">二年級</option>
+		<option value="grade1">一年級</option>
+	</select>
+	班別：
+	<select id="class">
+		<option value="-1">請選擇</option>
+	</select>
+	姓名:
+	<select id="name">
+		<option value="-1">請選擇</option>
+	</select>
+
+
+
 
 <div class="content">
   <div class="container">
@@ -598,7 +681,6 @@ input[type=radio].with-font:focus~label:before, input[type=checkbox].with-font:f
           <div class="accordion" id="heading">
 
 
-
             <div class="card">
               <div class="card-header" >
                 <h2 class="mb-0">
@@ -612,17 +694,10 @@ input[type=radio].with-font:focus~label:before, input[type=checkbox].with-font:f
                    <p> <span class="badge badge-pill badge-primary">授課語言</span>${param.inscLang}<p/>
                    <p> <span class="badge badge-pill badge-warning">價錢</span>${param.inscPrice}<p/>
                    <p> <span class="badge badge-pill badge-secondary">課程大綱</span>${param.inscCourser}<p/>
+                   
                  </div>
               </div>
             </div>
-
-
-          
-
-
-
-      
-
 
 
           </div>
@@ -636,10 +711,6 @@ input[type=radio].with-font:focus~label:before, input[type=checkbox].with-font:f
           <p>${param.teacherEdu}</p>
 
         </div>
-              
-
-
-       
 
 
        <div class="box">
@@ -700,46 +771,44 @@ input[type=radio].with-font:focus~label:before, input[type=checkbox].with-font:f
 </div>
        </div>       
         
-        
-
-
-
-
-
-
-
-
       </div>
       <div class="col-lg-4 col-md-4 col-sm-5 col-xs-12">
+      
+      
+      
+ 
+
+
+
+      
 		
-<div id="appointment">
-
-<form id="paypal" name="form1" action="/inscourse/inscourse.do" method="get" />
-<input type="hidden" name="action" value="Update_ClenderDate">
-<input type="hidden" name="inscId" value="${insCourseVO.inscId}">
-<input type="hidden" id ="bn" name="clcikdate" value="">
-
-<a href="javascript: donate(paypal);"> 
-
-		   <div id="calendar">
-    <div id="calendar_header"><i class="icon-chevron-left"></i>          <h1></h1><i class="icon-chevron-right"></i>         </div>
-    <div id="calendar_weekdays"></div>
-    <div id="calendar_content"></div>
-  </div>
-	
-</div>	
-</a>
-<input id="xxx" type="submit" style=display:none;>
-</form>
-
 <div class="contatiner" id="insctime">
 <div class="row">
 
+<div class="datePicker">
+<span class="badge badge-primary">請選擇日期</span>
+<input type="text" class="form-control"  name="hiredate" id="inputSuccess"  >  <!-- f_date1見第30行  -->
+<script>
+
+        $.datetimepicker.setLocale('zh'); // kr ko ja en
+        $('#inputSuccess').datetimepicker({
+           theme: '',          //theme: 'dark',
+           timepicker: false,   //timepicker: false,
+           step: 1,            //step: 60 (這是timepicker的預設間隔60分鐘)
+	       format: 'Y-m-d',
+	       value: new Date(),
+           //disabledDates:    ['2017/06/08','2017/06/09','2017/06/10'], // 去除特定不含
+           //startDate:	        '2017/07/10',  // 起始日
+           minDate:           '-1970-01-01', // 去除今日(不含)之前
+           //maxDate:           '+1970-01-01'  // 去除今日(不含)之後
+        });
+</script>
+</div>
 
 
-
+<div class="timePicker">
+</div>	
 <c:forEach var="inscCourseTimeVO" items="${inscCourseTimeSvc.findByKey(param.inscId)}">	 
-		
 <div class="col-1"></div>
 <div class="col-5">
 <div class="form-check">
@@ -757,11 +826,19 @@ input[type=radio].with-font:focus~label:before, input[type=checkbox].with-font:f
 </div>	  
 </div>
 		  
+		  
+		  
+
+	  
+	  
+	  
+	  
+	  
+	  
+	  
 	  
 		  
         <div class="widget">
-			
-			
           <h4 class="widget-title">預定課程</h4>
           <div class="summary-block">
             <div class="summary-content">
@@ -853,65 +930,21 @@ input[type=radio].with-font:focus~label:before, input[type=checkbox].with-font:f
 </footer>
 	
     <script>
-    
-	function donate() {
-
-		document.paypal.action = "https://www.google.com.tw/";
-		document.paypal.submit();
-
-		}
-  		 var dayValue;
-  		  
-		$("#appointment").click(function(event) {
-		dayValue=(event.target.id);
-		
-		function returnDateStr(dayValue) { // 字符串转日期
-		    var fullDate = fDate.split("-");
-		    
-		    return new Date(fullDate[0], fullDate[1] - 1, fullDate[2]); 
-		  };
-		  
-		$("#bn").val(dayValue);
-		
-		
-		setTimeout(function() {
-			// IE
-			if(document.all) {
-				document.getElementById("xxx").click();
-			}
-			// 其它瀏覽器
-			else {
-				var e = document.createEvent("MouseEvents");
-				e.initEvent("click", true, true);
-				document.getElementById("xxx").dispatchEvent(e);
-			}
-		}, 5000);
-		
-		$("#insctime").css('display','none'); 
-		$("#insctime").slideToggle("slow");
-		
-
-			
-		}); 
-		
-	
-		
-  
-            //表示後台選取的星數(1代表0.5)
+         //表示後台選取的星數(1代表0.5)
             function showStar(n){
                 var con_wid=document.getElementById("star_con").offsetWidth;
                 var del_star=document.getElementById("del_star");
                 console.log(con_wid);
                 
-            //透明星星移動的像素
+        //透明星星移動的像素
                 var del_move=(n*con_wid)/10;
                 
                 del_star.style.backgroundPosition=-del_move+"px 0px";
                 del_star.style.left=del_move+"px";
             }
-		 $( function() {
-		$( "#datepicker" ).datepicker();
-		  } );
+	
+         
+         
         </script>	
 <!-----------------------------------------------------------------------------------------------------------------> 
 <!-- Optional JavaScript --> 

@@ -360,15 +360,15 @@ public class CourseReportJDBCDAO implements CourseReportDAO_interface {
 //		}
 		
 //		// 查詢全部
-		List<CourseReportVO> list = dao.getAll();
-		for (CourseReportVO courseReportVO3 : list) {
-			System.out.println(courseReportVO3.getCrId()+ ",");
-			System.out.println(courseReportVO3.getMemId()+ ",");
-			System.out.println(courseReportVO3.getInscId()+ ",");
-			System.out.println(courseReportVO3.getCrContent()+ ",");
-			System.out.println(courseReportVO3.getCrStatus()+ ",");
-			System.out.println("---------------------");
-		}
+//		List<CourseReportVO> list = dao.getAll();
+//		for (CourseReportVO courseReportVO3 : list) {
+//			System.out.println(courseReportVO3.getCrId()+ ",");
+//			System.out.println(courseReportVO3.getMemId()+ ",");
+//			System.out.println(courseReportVO3.getInscId()+ ",");
+//			System.out.println(courseReportVO3.getCrContent()+ ",");
+//			System.out.println(courseReportVO3.getCrStatus()+ ",");
+//			System.out.println("---------------------");
+//		}
 		
 
 	}

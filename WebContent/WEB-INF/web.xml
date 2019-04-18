@@ -47,9 +47,22 @@
 	</servlet-mapping>
   
  <!-- Member -->
-  
-	
-	
+ 
+<!-- Inscourse-->
+ 	  <servlet>
+    <description></description>
+    <display-name>AjaxResponse</display-name>
+    <servlet-name>AjaxResponse</servlet-name>
+    <servlet-class>com.inscourse.controller.AjaxResponse</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>AjaxResponse</servlet-name>
+    <url-pattern>/inscourse/ajaxResponse.do</url-pattern>
+  </servlet-mapping>
+<!-- Inscourse-->
+
+
+
 		
 
 </web-app>
