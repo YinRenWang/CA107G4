@@ -556,60 +556,8 @@ input[type=radio].with-font:focus~label:before, input[type=checkbox].with-font:f
 </head>
 <!-- Ajax是簡單的! -->
 <script type="text/javascript">
-$(document).ready(function(){
-	 $('#grade').change(function(){
-		 $.ajax({
-			 type: "GET",
-			 url: "<%=request.getContextPath()%>/inscourse/ajaxResponse.do",
-			 data: creatQueryString($(this).val(), ""),
-			 dataType: "json",
-			 success: function (data){
-				clearSelect();
-				$.each(data, function(i, item){
-					$('#class').append("<option value='"+item.classId+"'>"+item.className+"</option>");
-				});
-//				$(data).each(function(i, item){
-//					$('#class').append("<option value='"+item.classId+"'>"+item.className+"</option>");
-//				});
-//				jQuery.each(data, function(i, item){
-//					$('#class').append("<option value='"+item.classId+"'>"+item.className+"</option>");
-//				});
-		     },
-            error: function(){alert("AJAX-grade發生錯誤囉!")}
-        })
-	 })
-	 $('#class').change(function(){
-		$.ajax({
-			 type: "POST",
-			 url: "<%=request.getContextPath()%>/inscourse/ajaxResponse.do",
-			 data: creatQueryString($('#grade').val(), $(this).val()),
-			 dataType: "json",
-			 success: function (data){
-				 clearSelect2();
-				 $.each(data, function(i, item){
-					 $('#name').append("<option value='"+data[i].nameId+"'>"+data[i].name+"</option>");
-				 });
-		     },
-           error: function(){alert("AJAX-class發生錯誤囉!")}
-       })
-	})
-})
 
-function creatQueryString(paramGrade, paramClass){
-	console.log("paramGrade:"+paramGrade+"; paramClass:"+paramClass);
-	var queryString= {"action":"getSelect", "gradeId":paramGrade, "classId":paramClass};
-	return queryString;
-}
-function clearSelect(){
-	$('#class').empty();
-	$('#class').append("<option value='-1'>請選擇</option>");
-	$('#name').empty();
-	$('#name').append("<option value='-1'>請選擇</option>");
-}
-function clearSelect2(){
-	$('#name').empty();
-	$('#name').append("<option value='-1'>請選擇</option>");
-}
+
 
 </script>
 <body>
@@ -787,7 +735,9 @@ function clearSelect2(){
 
 <div class="datePicker">
 <span class="badge badge-primary">請選擇日期</span>
-<input type="text" class="form-control"  name="hiredate" id="inputSuccess"  >  <!-- f_date1見第30行  -->
+<input type="text" class="form-control"  name="inscDate" id="inputSuccess"  >  <!-- f_date1見第30行  -->
+<input type="hidden" name="inscId"     value="${param.inscId}"> 
+
 <script>
 
         $.datetimepicker.setLocale('zh'); // kr ko ja en
@@ -812,10 +762,13 @@ function clearSelect2(){
 <div class="col-1"></div>
 <div class="col-5">
 <div class="form-check">
-<input class="form-check-input" type="radio" name="inscMFD" value="${inscCourseTimeVO.inscMFD}" >
+<input class="form-check-input" type="radio" name="inscDate" value=" <fmt:formatDate value="${inscCourseTimeVO.inscMFD}" pattern="date"/> " >
 <label class="form-check-label" for="exampleRadios1">
-   				 <fmt:formatDate value="${inscCourseTimeVO.inscMFD}" pattern="HH:mm"/> -
+   				 <fmt:formatDate value="${inscCourseTimeVO.inscMFD}" pattern="HH:mm"/>
     			 <fmt:formatDate value="${inscCourseTimeVO.inscEXP}" pattern="HH:mm"/>
+<input type="hidden" name="inscMFD"      value="<fmt:formatDate value="${inscCourseTimeVO.inscMFD}" pattern="HH:mm"/>">
+<input type="hidden" name="inscEXP"      value="<fmt:formatDate value="${inscCourseTimeVO.inscEXP}" pattern="HH:mm"/>">     			 
+<input type="hidden" name="action"     value=""> 
 </label>
 </div>
 </div>

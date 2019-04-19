@@ -321,6 +321,22 @@ public class InsCourseServlet extends HttpServlet {
 		}
 		
 		
+		//Ajax
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
 		
 		// for Android
 //		if ("search_by_CourseType".equals(action)) {

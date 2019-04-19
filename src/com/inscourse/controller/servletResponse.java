@@ -1,197 +1,196 @@
 package com.inscourse.controller;
 
 import java.io.IOException;
-
-import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.json.JSONArray;
-import org.json.JSONObject;
-
-import com.inscoursetime.model.InsCourseTimeService;
-
 import ajax.model.ClassVO;
 import ajax.model.UserVO;
+@WebServlet("/servletResponse.do")
+public class servletResponse extends HttpServlet {
+	private static final long serialVersionUID = 1L;
 
-
-@WebServlet("/AjaxResponse")
-public class AjaxResponse extends HttpServlet {
+	public servletResponse() {
+		super();
+	}
 
 	protected void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
+		/*************************** 1.±µ¦¬½Ğ¨D°Ñ¼Æ ****************************************/
 		String action = req.getParameter("action");
 		String gradeId = req.getParameter("gradeId");
 		String classId = req.getParameter("classId");
-		
-		InsCourseTimeService insCourseTimeService =new InsCourseTimeService();
-		insCourseTimeService.findDate(startTime, endTime, inscId);
-	
-		
-		// è™•ç†ä¸‰éšå‹•æ…‹é¸å–®è³‡æ–™å€å¡Š
+		// ³B²z¤T¶¥°ÊºA¿ï³æ¸ê®Æ°Ï¶ô
 		if ("getSelect".equals(action)) {
-			JSONArray array = new JSONArray();
-			// æŸ¥è©¢å¹´ç´šã€ç­ç´šå°æ‡‰åŒå­¸è³‡æ–™å€å¡Š
-			if (!"".equals(gradeId) && !"".equals(classId)) {
-				/* æ­¤ä¸€å€å¡Šæ‡‰ç”±serviceå»è³‡æ–™åº«ä¾å¹´ç´šã€ç­ç´šæŸ¥è©¢å–å¾— */
-				List<UserVO> list = null;
-				if("AA101".equals(classId)){
-					list = new ArrayList<UserVO>();
+			try {
+			List<ClassVO> classList = null;
+			List<UserVO> userlist = null;
+			// ¬d¸ß¦~¯Å¡B¯Z¯Å¹ïÀ³¦P¾Ç¸ê®Æ°Ï¶ô
+			if (!"-1".equals(classId)) {
+				/*************************** 2.¶}©l¬d¸ß¸ê®Æ ****************************************/
+				/* ¦¹¤@°Ï¶ôÀ³¥Ñservice¥h¸ê®Æ®w¨Ì¦~¯Å¡B¯Z¯Å¬d¸ß¨ú±o */
+				
+				if ("AA101".equals(classId)) {
+					userlist = new ArrayList<UserVO>();
 					UserVO user1 = new UserVO();
-					user1.setName("ç™½ç«ç‘°");
+					user1.setName("¥Õª´ºÀ");
 					user1.setNameId("1001");
 					user1.setClassId("AA101");
-					list.add(user1);
-	
+					userlist.add(user1);
+
 					UserVO user2 = new UserVO();
-					user2.setName("ç´…ç«ç‘°");
+					user2.setName("¬õª´ºÀ");
 					user2.setNameId("1002");
 					user2.setClassId("AA101");
-					list.add(user2);
-					
+					userlist.add(user2);
+
 					UserVO user3 = new UserVO();
-					user3.setName("é»ƒç«ç‘°");
+					user3.setName("¶Àª´ºÀ");
 					user3.setNameId("1003");
 					user3.setClassId("AA101");
-					list.add(user3);
+					userlist.add(user3);
 				}
-				if("AA102".equals(classId)){
-					list = new ArrayList<UserVO>();
+				if ("AA102".equals(classId)) {
+					userlist = new ArrayList<UserVO>();
 					UserVO user1 = new UserVO();
-					user1.setName("ç™½å‘æ—¥è‘µ");
+					user1.setName("¥Õ¦V¤é¸ª");
 					user1.setNameId("1004");
 					user1.setClassId("AA102");
-					list.add(user1);
-	
+					userlist.add(user1);
+
 					UserVO user2 = new UserVO();
-					user2.setName("ç´…å‘æ—¥è‘µ");
+					user2.setName("¬õ¦V¤é¸ª");
 					user2.setNameId("1005");
 					user2.setClassId("AA102");
-					list.add(user2);
+					userlist.add(user2);
 				}
-				if("AB101".equals(classId)){
-					list = new ArrayList<UserVO>();
+				if ("AB101".equals(classId)) {
+					userlist = new ArrayList<UserVO>();
 					UserVO user1 = new UserVO();
-					user1.setName("æ³¢çµ²å–µ");
+					user1.setName("ªiµ·Øp");
 					user1.setNameId("1006");
 					user1.setClassId("AB101");
-					list.add(user1);
-	
+					userlist.add(user1);
+
 					UserVO user2 = new UserVO();
-					user2.setName("æ©˜å­å–µ");
+					user2.setName("¾ï¤lØp");
 					user2.setNameId("1007");
 					user2.setClassId("AB101");
-					list.add(user2);
+					userlist.add(user2);
 				}
-				if("AB102".equals(classId)){
-					list = new ArrayList<UserVO>();
+				if ("AB102".equals(classId)) {
+					userlist = new ArrayList<UserVO>();
 					UserVO user1 = new UserVO();
-					user1.setName("æ‹‰æ‹‰");
+					user1.setName("©Ô©Ô");
 					user1.setNameId("1008");
 					user1.setClassId("AB102");
-					list.add(user1);
-	
+					userlist.add(user1);
+
 					UserVO user2 = new UserVO();
-					user2.setName("æŸ´æŸ´");
+					user2.setName("®ã®ã");
 					user2.setNameId("1009");
 					user2.setClassId("AB102");
-					list.add(user2);
+					userlist.add(user2);
 				}
-				if("AB103".equals(classId)){
-					list = new ArrayList<UserVO>();
+				if ("AB103".equals(classId)) {
+					userlist = new ArrayList<UserVO>();
 					UserVO user1 = new UserVO();
-					user1.setName("é»ƒç‰›");
+					user1.setName("¶À¤û");
 					user1.setNameId("1010");
 					user1.setClassId("AB103");
-					list.add(user1);
+					userlist.add(user1);
 				}
-				if("AC101".equals(classId)){
-					list = new ArrayList<UserVO>();
+				if ("AC101".equals(classId)) {
+					userlist = new ArrayList<UserVO>();
 					UserVO user1 = new UserVO();
-					user1.setName("çš®å¡ä¸˜1è™Ÿ");
+					user1.setName("¥Ö¥d¥C1¸¹");
 					user1.setNameId("1011");
 					user1.setClassId("AC101");
-					list.add(user1);
-					
+					userlist.add(user1);
+
 					UserVO user2 = new UserVO();
-					user2.setName("çš®å¡ä¸˜2è™Ÿ");
+					user2.setName("¥Ö¥d¥C2¸¹");
 					user2.setNameId("1012");
 					user2.setClassId("AC101");
-					list.add(user2);
+					userlist.add(user2);
 				}
 				/*---------------------------------------------*/
-				for (UserVO usb : list) {
-					JSONObject obj = new JSONObject();
-					obj.put("name", usb.getName());
-					obj.put("nameId", usb.getNameId());
-					obj.put("classId", usb.getClassId());
-					array.put(obj);
-				}
-			} else {
-				/* æ­¤ä¸€å€å¡Šæ‡‰ç”±serviceå»è³‡æ–™åº«ä¾å¹´ç´šã€ç­ç´šæŸ¥è©¢å–å¾— */
-				List<ClassVO> classList = null;
-				if("grade1".equals(gradeId)){
+			} 
+			if(!"-1".equals(gradeId)){
+				
+				/* ¦¹¤@°Ï¶ôÀ³¥Ñservice¥h¸ê®Æ®w¨Ì¦~¯Å¡B¯Z¯Å¬d¸ß¨ú±o */
+				
+				if ("grade1".equals(gradeId)) {
 					classList = new ArrayList<ClassVO>();
 					ClassVO cls1 = new ClassVO();
 					cls1.setClassId("AA101");
-					cls1.setClassName("ç«ç‘°ç­");
+					cls1.setClassName("ª´ºÀ¯Z");
 					cls1.setGradeId("grade1");
 					classList.add(cls1);
-	
+
 					ClassVO cls2 = new ClassVO();
 					cls2.setClassId("AA102");
-					cls2.setClassName("å‘æ—¥è‘µç­");
+					cls2.setClassName("¦V¤é¸ª¯Z");
 					cls2.setGradeId("grade1");
 					classList.add(cls2);
 				}
-				if("grade2".equals(gradeId)){
+				if ("grade2".equals(gradeId)) {
 					classList = new ArrayList<ClassVO>();
 					ClassVO cls1 = new ClassVO();
 					cls1.setClassId("AB101");
-					cls1.setClassName("å–µå–µç­");
+					cls1.setClassName("ØpØp¯Z");
 					cls1.setGradeId("grade2");
 					classList.add(cls1);
-	
+
 					ClassVO cls2 = new ClassVO();
 					cls2.setClassId("AB102");
-					cls2.setClassName("æ±ªæ±ªç­");
+					cls2.setClassName("¨L¨L¯Z");
 					cls2.setGradeId("grade2");
 					classList.add(cls2);
-					
+
 					ClassVO cls3 = new ClassVO();
 					cls3.setClassId("AB103");
-					cls3.setClassName("å“å“ç­");
+					cls3.setClassName("ÎNÎN¯Z");
 					cls3.setGradeId("grade2");
 					classList.add(cls3);
 				}
-				if("grade3".equals(gradeId)){
+				if ("grade3".equals(gradeId)) {
 					classList = new ArrayList<ClassVO>();
 					ClassVO cls1 = new ClassVO();
 					cls1.setClassId("AC101");
-					cls1.setClassName("çš®å¡ä¸˜ç­");
+					cls1.setClassName("¥Ö¥d¥C¯Z");
 					cls1.setGradeId("grade3");
 					classList.add(cls1);
 				}
 				/*---------------------------------------------*/
-				for (ClassVO csb : classList) {
-					JSONObject obj = new JSONObject();
-					obj.put("classId", csb.getClassId());
-					obj.put("gradeId", csb.getGradeId());
-					obj.put("className", csb.getClassName());
-					array.put(obj);
-				}
 			}
-			res.setContentType("text/plain");
-			res.setCharacterEncoding("UTF-8");
-			PrintWriter out = res.getWriter();
-			out.write(array.toString());
-			out.flush();
-			out.close();
+			
+			/*************************** 3.¬d¸ß§¹¦¨,·Ç³ÆÂà¥æ(Send the Success view) ************/
+			System.out.println(action);
+			req.setAttribute("classList", classList);    // ¸ê®Æ®w¨ú¥Xªºª«¥ó,¦s¤Jrequest scope
+			req.setAttribute("userList", userlist);      // ¸ê®Æ®w¨ú¥Xªºª«¥ó,¦s¤Jrequest scope
+			RequestDispatcher successView = req.getRequestDispatcher("/selectChange.jsp");
+			successView.forward(req, res);
+			
+			/*************************** ¨ä¥L¥i¯àªº¿ù»~³B²z ***********************************/
+			} catch (Exception e) {
+				throw new ServletException(e);
+			}
+			
+//			res.setContentType("text/plain");
+//			res.setCharacterEncoding("UTF-8");
+//			PrintWriter out = res.getWriter();
+//			out.write(array.toString());
+//			out.flush();
+//			out.close();
 		}
 	}
 
