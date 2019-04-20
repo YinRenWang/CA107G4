@@ -217,7 +217,7 @@ public class InsCourseJDBCDAO implements InsCourseDAO_interface {
 
 		Connection con = null;
 		PreparedStatement pstmt = null;
-		ResultSet rs = null;
+		ResultSet rs = null; 
 
 		try {
 
@@ -300,9 +300,9 @@ public class InsCourseJDBCDAO implements InsCourseDAO_interface {
 		try {
 			Class.forName(driver);
 			con = DriverManager.getConnection(url, userid, passwd);
-			String finalSQL = "select * from emp2 "
-		          + jdbcUtil_CompositeQuery_Emp.get_WhereCondition(map)
-		          + "order by empno";
+			String finalSQL = "SELECT * FROM InsCourse "
+		          + jdbcUtil_CompositeQuery_Inscourse.get_WhereCondition(map)
+		          + "ORDER BY INSCID";
 			pstmt = con.prepareStatement(finalSQL);
 			System.out.println("●●finalSQL(by DAO) = "+finalSQL);
 			rs = pstmt.executeQuery();

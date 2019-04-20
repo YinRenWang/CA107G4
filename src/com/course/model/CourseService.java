@@ -20,6 +20,10 @@ public class CourseService {
 	public CourseVO findOneById(String courseId) {
 		return dao.findByPrimaryKey(courseId);
 	}
+	
+	public CourseVO findByLike(String xxxName) {
+		return dao.findByLike(xxxName);
+	}
 	public List<CourseVO> getAll(){
 		return dao.getAll();
 	}

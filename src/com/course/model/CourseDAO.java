@@ -1,6 +1,7 @@
 package com.course.model;
 
 import java.sql.Connection;
+import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -238,6 +239,50 @@ public class CourseDAO implements CourseDAO_interface {
 		return null;
 	}
 
-
+	@Override
+	public CourseVO findByLike(String xxxName) {
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		try {
+			con = ds.getConnection();
+			pstmt = con.prepareStatement(SEARCH_COURSE);
+			
+			pstmt.setString(1, xxxName);
+			rs = pstmt.executeQuery();
+			CourseVO courseVO = new CourseVO(); 
+			while(rs.next()) {
+				courseVO.setCourseId(rs.getString("courseTypeId"));
+			}
+			return courseVO;
+			
+		}catch(SQLException se) {
+			throw new RuntimeException("A database error occured. "
+					+ se.getMessage());
+		}finally {
+			if (rs != null) {
+				try {
+					rs.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
+		}
+		
+	}
 
 }

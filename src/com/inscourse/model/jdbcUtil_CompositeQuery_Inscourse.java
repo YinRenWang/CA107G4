@@ -15,10 +15,9 @@ public class jdbcUtil_CompositeQuery_Inscourse {
 
 		String aCondition = null;
 
-		if ("inscId".equals(columnName) || "teacherId".equals(columnName) || "courseId".equals(columnName) || "inscType".equals(columnName)|| "inscPeople".equals(columnName)|| "inscPrice".equals(columnName)|| "inscStatus".equals(columnName)) // 用於其他
-			
+		if ("courseId".equals(columnName)|| "inscType".equals(columnName)) // 用於其他
 			aCondition = columnName + "=" + value;
-		else if ("inscLoc".equals(columnName) || "inscLang".equals(columnName)|| "inscCourser".equals(columnName)) // 用於varchar
+		else if ("inscLoc".equals(columnName)) // 用於varchar
 			aCondition = columnName + " LIKE '%" + value + "%'";
 		return aCondition + " ";
 	}
@@ -49,16 +48,8 @@ public class jdbcUtil_CompositeQuery_Inscourse {
 
 		// 配合 req.getParameterMap()方法 回傳 java.util.Map<java.lang.String,java.lang.String[]> 之測試
 		Map<String, String[]> map = new TreeMap<String, String[]>();
-		map.put("inscId", new String[] { "IC00002" });
-		map.put("teacherId", new String[] { "TC00002" });
-		map.put("courseId", new String[] { "0008" });
-		map.put("inscLoc", new String[] { "台北市信義區" });
-		map.put("inscType", new String[] { "1" });
-		map.put("inscPeople", new String[] { "4" });
-		map.put("inscLang", new String[] { "英文" });
-		map.put("inscPrice", new String[] { "500" });
-		map.put("inscCourser", new String[] { "製作" });
-		map.put("inscStatus", new String[] { "0" });
+		map.put("courseId", new String[] { "0005" });
+		map.put("inscLoc", new String[] { "桃園" });
 		map.put("action", new String[] { "getXXX" }); // 注意Map裡面會含有action的key
 
 		String finalSQL = "SELECT * FROM INSCOURSE "

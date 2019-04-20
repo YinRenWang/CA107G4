@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>    
+<jsp:useBean id="courseSvc" scope="page" class="com.course.model.CourseService" />
 <!DOCTYPE html>
 
 <html lang="en">
@@ -217,34 +219,38 @@ ul, ol {
     <div class="search-title" align="center">
       <h5 class="seat">這裡總有一位適合您的老師! </h5>
     </div>
-    <form action="">
-      <div class="row">
+     
+      
+<FORM METHOD="GET" ACTION="<%=request.getContextPath()%>/inscourse/inscourse.do" name="form1">
+ <div class="row">
       <div class="col-5">
         <div class="d-flex justify-content-around" id="df1">
-          <input class="form-control" type="text" placeholder="請輸入課程關鍵字......">
+          <input class="form-control" type="text" name="courseId" placeholder="請輸入課程關鍵字......" value="">
+          
         </div>
       </div>
       <div class="col-3">
         <div class="d-flex justify-content-around" id="df2">
-          <input class="form-control" type="text" placeholder="請輸入上課地點">
+          <input class="form-control" type="text" name="inscLoc" placeholder="請輸入上課地點" value="">
         </div>
       </div>
         <div class="col-2">
         <div class="d-flex justify-content-around" id="df3">
-          <select class="form-control" name=insctype >
+          <select class="form-control" name=inscType value="" >
             <option  value="" disabled selected >選擇課程類型</option>
-            <option>個人課程</option>
-            <option>團體課程</option>
+            <option value=0>個人課程</option>
+            <option value=1>團體課程</option>
           </select>
         </div>
       </div>
       <div class="col-1">
         <div class="d-flex justify-content-around" id="df4">
-          <button type="button" class="btn btn-success" height="30" id="sbtn">搜尋</button>
+          <button class="btn btn-success"  type="submit" height="30" id="sbtn">搜尋</button>
+        	<input type="hidden" name="action" value="CompositeQuery">
         </div>
       </div>
 	</div>
-    </form>
+</FORM> 
   </div>
 </div>
 <div class="wrapCenter">

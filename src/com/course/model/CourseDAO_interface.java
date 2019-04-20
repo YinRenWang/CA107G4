@@ -7,5 +7,6 @@ public interface CourseDAO_interface {
 	public void update(CourseVO courseVO);
 	public void delete(String courseId);
 	public CourseVO findByPrimaryKey(String courseId);
+	public CourseVO  findByLike(String xxxName);
 	public List<CourseVO> getAll();
 }

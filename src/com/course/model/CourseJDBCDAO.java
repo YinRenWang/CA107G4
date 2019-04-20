@@ -17,7 +17,58 @@ public class CourseJDBCDAO implements CourseDAO_interface {
 	final String DELETE_COURSE = "DELETE FROM COURSE WHERE COURSEID=?";
 	final String SEARCH_COURSE = "SELECT * FROM COURSE WHERE COURSEID=?";
 	final String SEARCH_COURSEALL = "SELECT * FROM COURSE";
+	final String SEARCH_CHINESE = "SELECT * FROM COURSE WHERE UPPER(COURSENAME) LIKE UPPER('%'||?||'%')";
 	
+	@Override
+	public CourseVO findByLike(String xxxName) {
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		
+		try {
+			Class.forName(driver);
+			con = DriverManager.getConnection(url, userid, passwd);
+			pstmt = con.prepareStatement(SEARCH_CHINESE);
+			pstmt.setString(1,xxxName);
+			rs = pstmt.executeQuery();
+			CourseVO courseVO = new CourseVO(); 
+			while(rs.next()) {
+				courseVO.setCourseId(rs.getString("courseId"));
+			}
+			return courseVO;
+			
+			
+		} catch (ClassNotFoundException e) {
+			throw new RuntimeException("Couldn't load database driver. "
+					+ e.getMessage());
+		} catch (SQLException se) {
+			throw new RuntimeException("A database error occured. "
+					+ se.getMessage());
+		} finally {
+			if (rs != null) {
+				try {
+					rs.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
+		}
+	
+	}
 	
 	@Override
 	public void insert(CourseVO courseVO) {
@@ -156,7 +207,7 @@ public class CourseJDBCDAO implements CourseDAO_interface {
 			rs = pstmt.executeQuery();
 			CourseVO courseVO = new CourseVO(); 
 			while(rs.next()) {
-				courseVO.setCourseId(courseId);
+				courseVO.setCourseId(rs.getString("courseId"));
 				courseVO.setCourseTypeId(rs.getInt("courseTypeId"));
 				courseVO.setCourseName(rs.getString("courseName"));
 			}
@@ -194,6 +245,8 @@ public class CourseJDBCDAO implements CourseDAO_interface {
 		}
 	
 	}
+	
+
 
 	@Override
 	public List<CourseVO> getAll() {
@@ -256,9 +309,7 @@ public class CourseJDBCDAO implements CourseDAO_interface {
 	public static void main(String args[]) {
 		
 		CourseJDBCDAO courseJDBCDAO = new CourseJDBCDAO();
-		
-		
-		
+	
 //		//新增
 //		CourseVO courseVO1 =new CourseVO();
 //		courseVO1.setCourseTypeId(2);
@@ -282,13 +333,19 @@ public class CourseJDBCDAO implements CourseDAO_interface {
 //		System.out.println("CourseName="+courseVO3.getCourseName());
 //		
 		//查詢全部
-		List<CourseVO> list = courseJDBCDAO.getAll();
-		for (CourseVO aEmp : list) {
-			System.out.println(aEmp.getCourseId() + ",");
-			System.out.println(aEmp.getCourseTypeId() + ",");
-			System.out.println(aEmp.getCourseName() + ",");
-			System.out.println();
-		}
+//		List<CourseVO> list = courseJDBCDAO.getAll();
+//		for (CourseVO aEmp : list) {
+//			System.out.println(aEmp.getCourseId() + ",");
+//			System.out.println(aEmp.getCourseTypeId() + ",");
+//			System.out.println(aEmp.getCourseName() + ",");
+//			System.out.println();
+//		}
+		
+
+//		//查詢
+		CourseVO courseVO3 = courseJDBCDAO.findByLike("烘");
+		System.out.println("CourseId="+courseVO3.getCourseId());
+
 		
 	}
 

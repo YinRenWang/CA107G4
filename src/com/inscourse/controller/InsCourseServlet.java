@@ -8,11 +8,11 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 
-import org.joda.time.DateTime;
-import org.joda.time.DateTimeZone;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -22,15 +22,15 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
+import com.course.model.CourseService;
+import com.course.model.CourseVO;
 import com.coursereservation.model.CourseReservationVO;
 import com.inscourse.model.InsCourseService;
 import com.inscourse.model.InsCourseVO;
 import com.inscoursetime.model.InsCourseTimeService;
 import com.inscoursetime.model.InsCourseTimeVO;
-
-import ajax.model.ClassVO;
-import ajax.model.UserVO;
 
 @WebServlet("/InsCourseServlet")
 public class InsCourseServlet extends HttpServlet {
@@ -52,7 +52,7 @@ public class InsCourseServlet extends HttpServlet {
 		if ("getOne_For_Display".equals(action)) {
 			List<String> errorMsgs = new LinkedList<String>();
 			req.setAttribute("errorMsgs", errorMsgs);
-
+ 
 			try {
 				String inscId = req.getParameter("inscId");
 				if (inscId == null || (inscId.trim()).length() == 0) {
@@ -375,7 +375,56 @@ public class InsCourseServlet extends HttpServlet {
 
 		
 		
-		
+		if ("CompositeQuery".equals(action)) { // 來自select_page.jsp的複合查詢請求
+			
+			List<String> errorMsgs = new LinkedList<String>();
+			// Store this set in the request scope, in case we need to
+			// send the ErrorPage view.
+			req.setAttribute("errorMsgs", errorMsgs);
+
+			try {
+				
+				/***************************1.將輸入資料轉為Map**********************************/ 
+				//採用Map<String,String[]> getParameterMap()的方法  
+				//注意:an immutable java.util.Map 
+				//Map<String, String[]> map = req.getParameterMap(); 
+				String courseId ="courseId";
+				HttpSession session = req.getSession();
+				Map<String, String[]> map = (Map<String, String[]>)session.getAttribute("map");
+				System.out.println(map);
+				if(map.get(courseId)!=null) {
+					System.out.println("1="+map.get(courseId));
+					String[] stringArray = map.get(courseId);
+					System.out.println("2="+stringArray[0]);
+					CourseService courseSvc =new CourseService();
+					CourseVO courseVO= courseSvc.findByLike(stringArray[0]);
+					String value=courseVO.getCourseId();
+					System.out.println("3="+value);
+					String [] ans= {value};
+					map.put("courseId", ans);
+				}
+				if (req.getParameter("whichPage") == null){
+					HashMap<String, String[]> map1 = new HashMap<String, String[]>(req.getParameterMap());
+					session.setAttribute("map",map1);
+					map = map1;
+				} 
+				/***************************2.開始複合查詢***************************************/
+				InsCourseService insCourseSvc = new InsCourseService();
+				List<InsCourseVO> list  = insCourseSvc.getAll(map);
+				
+				/***************************3.查詢完成,準備轉交(Send the Success view)************/
+				req.setAttribute("listEmps_ByCompositeQuery", list); // 資料庫取出的list物件,存入request
+				RequestDispatcher successView = req.getRequestDispatcher("/emp/listEmps_ByCompositeQuery.jsp"); // 成功轉交listEmps_ByCompositeQuery.jsp
+				successView.forward(req, res);
+				
+				/***************************其他可能的錯誤處理**********************************/
+			} catch (Exception e) {
+				errorMsgs.add(e.getMessage());
+				RequestDispatcher failureView = req
+						.getRequestDispatcher("/index.jsp");
+				failureView.forward(req, res);
+			}
+		}
 
 
 		
