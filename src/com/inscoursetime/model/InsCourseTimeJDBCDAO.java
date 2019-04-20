@@ -16,8 +16,8 @@ import com.coursereport.model.CourseReportVO;
 public class InsCourseTimeJDBCDAO implements InsCourseTimeDAO_interface {
 	static InsCourseTimeJDBCDAO dao=new InsCourseTimeJDBCDAO();
 	String driver = "oracle.jdbc.driver.OracleDriver";
-//	String url = "jdbc:oracle:thin:@localhost:1521:XE";
-	String url = "jdbc:oracle:thin:@localhost:49161:XE";
+	String url = "jdbc:oracle:thin:@localhost:1521:XE";
+//	String url = "jdbc:oracle:thin:@localhost:49161:XE";
 	String userid = "WESHARE";
 	String passwd = "123456";
 	
@@ -362,7 +362,7 @@ public class InsCourseTimeJDBCDAO implements InsCourseTimeDAO_interface {
 	
 
 	@Override
-	public List<InsCourseTimeVO> findDate(String startTime, String endTime, String inscId) {
+	public List<InsCourseTimeVO> findDate(java.sql.Date startTime, java.sql.Date endTime, String inscId) {
 		List<InsCourseTimeVO> list = new ArrayList<InsCourseTimeVO>();
 		InsCourseTimeVO insCourseTimeVO = null;
 
@@ -375,19 +375,9 @@ public class InsCourseTimeJDBCDAO implements InsCourseTimeDAO_interface {
 			Class.forName(driver);
 			con = DriverManager.getConnection(url, userid, passwd);
 			pstmt = con.prepareStatement(GET_DATE_STMT);
-			
-			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-mm-dd");
-			java.util.Date a1 = sdf.parse(startTime); //先把字符串转为util.Date对象
-			java.sql.Date a2 = new java.sql.Date(a1.getTime()); //再转换为sql.Date对象
-		
-			java.util.Date b1 = sdf.parse(endTime); //先把字符串转为util.Date对象
-			java.sql.Date b2 = new java.sql.Date(a1.getTime()); //再转换为sql.Date对象
-			
-			
-			pstmt.setDate(1,a2);
-			pstmt.setDate(2,b2);
-			pstmt.setString(1,startTime);
-			pstmt.setString(2,endTime);
+
+			pstmt.setDate(1,startTime);
+			pstmt.setDate(2,endTime);
 			pstmt.setString(3,inscId);
 			rs = pstmt.executeQuery();
 
@@ -410,9 +400,6 @@ public class InsCourseTimeJDBCDAO implements InsCourseTimeDAO_interface {
 			throw new RuntimeException("A database error occured. "
 					+ se.getMessage());
 			// Clean up JDBC resources
-		} catch (ParseException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
 		} finally {
 			if (rs != null) {
 				try {
@@ -477,14 +464,14 @@ public class InsCourseTimeJDBCDAO implements InsCourseTimeDAO_interface {
 //		}
 		
 		// 查詢時段
-		List<InsCourseTimeVO> list =dao.findDate("2019-04-20","2019-04-21", "IC00001");
-		for (InsCourseTimeVO insCourseTimeVO4 : list) {
-			System.out.print(insCourseTimeVO4.getInscTimeId() + ",");
-			System.out.print(insCourseTimeVO4.getInscId() + ",");
-			System.out.print(insCourseTimeVO4.getInscMFD() + ",");
-			System.out.println(insCourseTimeVO4.getInscEXP() + ",");
-			System.out.println("---------------------");
-	
+//		List<InsCourseTimeVO> list =dao.findDate("2019-04-20","2019-04-20", "IC00001");
+//		for (InsCourseTimeVO insCourseTimeVO4 : list) {
+//			System.out.print(insCourseTimeVO4.getInscTimeId() + ",");
+//			System.out.print(insCourseTimeVO4.getInscId() + ",");
+//			System.out.print(insCourseTimeVO4.getInscMFD() + ",");
+//			System.out.println(insCourseTimeVO4.getInscEXP() + ",");
+//			System.out.println("---------------------");
+//	
 		
 		
 		// 簡易複合查詢
@@ -497,7 +484,7 @@ public class InsCourseTimeJDBCDAO implements InsCourseTimeDAO_interface {
 //			System.out.println("---------------------");
 		
 		}
-	}
+
 
 
 

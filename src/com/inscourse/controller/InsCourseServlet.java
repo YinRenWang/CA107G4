@@ -2,9 +2,17 @@ package com.inscourse.controller;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.Timestamp;
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.LinkedList;
 import java.util.List;
 
+import org.joda.time.DateTime;
+import org.joda.time.DateTimeZone;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -15,10 +23,14 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.coursereservation.model.CourseReservationVO;
 import com.inscourse.model.InsCourseService;
 import com.inscourse.model.InsCourseVO;
 import com.inscoursetime.model.InsCourseTimeService;
 import com.inscoursetime.model.InsCourseTimeVO;
+
+import ajax.model.ClassVO;
+import ajax.model.UserVO;
 
 @WebServlet("/InsCourseServlet")
 public class InsCourseServlet extends HttpServlet {
@@ -261,10 +273,8 @@ public class InsCourseServlet extends HttpServlet {
 		if ("findValuebyId".equals(action)) {
 			List<String> errorMsgs = new LinkedList<String>();
 
-
 			try {
 				String inscId = req.getParameter("inscId");
-
 				InsCourseService insCourseSvc = new InsCourseService();
 				InsCourseVO insCourseVO = insCourseSvc.findOneById(inscId);
 				if (insCourseVO == null) {
@@ -275,53 +285,99 @@ public class InsCourseServlet extends HttpServlet {
 					failureView.forward(req, res);
 					return;
 				}
-
 				req.setAttribute("insCourseVO", insCourseVO);
 				String url = "/inscourse/insCourseDetails.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url);
-				successView.forward(req, res);
+				successView.forward(req,res);
 
 			} catch (Exception e) {
 				errorMsgs.add("無法取得資料:" + e.getMessage());
+				RequestDispatcher failureView = req.getRequestDispatcher("/inscourse/insCourseDetails.jsp");
+				failureView.forward(req,res);
+			}
+		}
+		
+		
+		
+		if ("updateDate".equals(action)) {
+			List<String> errorMsgs = new LinkedList<String>();
+			req.setAttribute("errorMsgs", errorMsgs);
+
+			try {
+				java.sql.Date crvMFD = null;
+				try {
+					crvMFD = java.sql.Date.valueOf(req.getParameter("crvMFD").trim());
+				} catch (IllegalArgumentException e) {
+					crvMFD=new java.sql.Date(System.currentTimeMillis());
+				}
+
+				Calendar cal = Calendar.getInstance();
+				cal.setTime(crvMFD);
+				cal.add(Calendar.DAY_OF_YEAR,1);
+		
+				java.sql.Date sqlTommorow = new java.sql.Date(cal.getTimeInMillis());
+
+				String teacherId = req.getParameter("teacherId").trim();
+		
+				String memId = req.getParameter("memId").trim();
+			
+				String memName = req.getParameter("memName").trim();
+			
+				String inscId = req.getParameter("inscId").trim();
+		
+				String inscLoc = req.getParameter("inscLoc").trim();
+			
+				Integer inscPrice = new Integer(req.getParameter("inscPrice").trim());
+			
+				String inscTimeId = req.getParameter("inscTimeId").trim();
+
+				InsCourseTimeService insCourseTimvc = new InsCourseTimeService();
+//				insCourseTimvc.findDate(crvMFD, sqlTommorow, inscId);
+//				List<InsCourseTimeVO> list = new LinkedList<InsCourseTimeVO>();
+				
+				InsCourseTimeVO insCourseTimeVO =insCourseTimvc.getOneInsCourseTime(inscTimeId);
+				
+				Timestamp inscMFD =insCourseTimeVO.getInscMFD();
+				Timestamp inscEXP =insCourseTimeVO.getInscEXP();
+				
+				Double crvTotalTime=(double) (inscEXP.getHours()-inscMFD.getHours());
+				//價格
+				Double price=(double) (inscPrice*crvTotalTime);
+				String crvPrice = String.valueOf(price); 
+
+				Double tax=price*0.1;
+				String crvTax = String.valueOf(tax); 
+
+				//總金額
+				Double totalPrice=price+tax;
+				String crvTotalPrice = String.valueOf(totalPrice); 
+				
+				
+				req.setAttribute("crvPrice", crvPrice);
+				req.setAttribute("crvTax", crvTax);
+				req.setAttribute("crvTotalPrice", crvTotalPrice);
+				req.setAttribute("crvTotalTime", crvTotalTime);
+				req.setAttribute("inscMFD", inscMFD);
+				req.setAttribute("inscEXP", inscEXP);
+				req.setAttribute("inscId", inscId);
+				req.setAttribute("inscLoc", inscLoc);
+				String url = "/inscourse/insCourseDetails.jsp";
+		
+				RequestDispatcher successView = req.getRequestDispatcher(url); // 新增成功後轉交listAllEmp.jsp
+				successView.forward(req, res);
+
+			} catch (Exception e) {
+				errorMsgs.add(e.getMessage());
 				RequestDispatcher failureView = req.getRequestDispatcher("/inscourse/insCourseDetails.jsp");
 				failureView.forward(req, res);
 			}
 		}
 
-
-		if ("Update_ClenderDate".equals(action)) {
-			List<String> errorMsgs = new LinkedList<String>();
-			req.setAttribute("erroMsgs", errorMsgs);
-			
-			try {
-			String inscId = req.getParameter("inscId");	
-			
-			java.sql.Date clcikdate = null;
-			clcikdate = java.sql.Date.valueOf(req.getParameter("clcikdate").trim());
-			System.out.println(clcikdate);
-			InsCourseTimeService insCourseTimeService = new InsCourseTimeService();
-			List<InsCourseTimeVO> list =insCourseTimeService.findByKey(inscId);
-			
-			
-			InsCourseService insCourseSvc = new InsCourseService();
-			InsCourseVO insCourseVO = insCourseSvc.findOneById(inscId);
+		
+		
+		
 
 
-			req.setAttribute("insCourseVO", insCourseVO);
-			String url = "/Inscourse/insCourseDetails.jsp";
-			RequestDispatcher successView = req.getRequestDispatcher(url);
-			successView.forward(req, res);
-			
-			} catch (Exception e) {
-				errorMsgs.add("無法取得要修改的資料:" + e.getMessage());
-				RequestDispatcher failureView = req
-						.getRequestDispatcher("/emp/listAllEmp.jsp");
-				failureView.forward(req, res);
-			}
-		}
-		
-		
-		//Ajax
 		
 		
 		
@@ -337,6 +393,13 @@ public class InsCourseServlet extends HttpServlet {
 		
 		
 		
+		
+		
+		
+		
+	
+		
+	
 		
 		// for Android
 //		if ("search_by_CourseType".equals(action)) {
@@ -350,6 +413,8 @@ public class InsCourseServlet extends HttpServlet {
 //			Gson gson = new Gson();
 //			out.print(gson.toJson(insCourseVOs));
 //		}
-	}
+		
+		
+		}
 
 }

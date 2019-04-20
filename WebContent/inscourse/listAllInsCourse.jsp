@@ -237,6 +237,7 @@ justify-content:center;
 			
 			<div class="col-xs-12 col-sm-12 col-md-3 border-bottom" >
 <c:forEach var="teacherVO" items="${teacherSvc.getAll()}">
+
 <c:if test="${teacherVO.teacherId==insCourseVO.teacherId}"> 
 <img class="imgblob" src="<%=request.getContextPath()%>/member/DBGifReader.do?memId=${teacherVO.memId}" width="160" height="160" "/></a>
  </c:if>
@@ -289,6 +290,7 @@ justify-content:center;
 	      地點&nbsp;<b class="text-secondary"> ${insCourseVO.inscLoc}</b>
 	      <input type="hidden" name="teacherEdu"      value="${teacherVO.teacherEdu}">
 	      <input type="hidden" name="teacherText"      value="${teacherVO.teacherText}">
+	     <input type="hidden" name="teacherId"      value="${teacherVO.teacherId}">
  </c:if>
 </c:forEach>
 </h6>	
@@ -305,10 +307,9 @@ justify-content:center;
 					<li><i class="glyphicon glyphicon-tags"></i>上課人數- 
 <span>
 <c:out value="${insCourseVO.inscPeople}" default="1"/>人
-
-			 
 			     <input type="submit" class="btn btn-success" value="上課去" name="submit">
 			     <input type="hidden" name="inscId"      value="${insCourseVO.inscId}">
+			     <input type="hidden" name="inscType"      value="${insCourseVO.inscType}">
 			     <input type="hidden" name="teacherId"      value="${insCourseVO.teacherId}">
 			     <input type="hidden" name="inscLoc"      value="${insCourseVO.inscLoc}">
 			     <input type="hidden" name="inscPrice"      value="${insCourseVO.inscPrice}">
@@ -317,7 +318,6 @@ justify-content:center;
 			     <input type="hidden" name="requestURL"	value="<%=request.getServletPath()%>"><!--送出本網頁的路徑給Controller-->
 			     <input type="hidden" name="whichPage"	value="<%=whichPage%>">               <!--送出當前是第幾頁給Controller-->
 			     <input type="hidden" name="action"	    value="findValuebyId"></FORM>
-
 
 </span></li>
 				</ul>

@@ -1,0 +1,160 @@
+package com.coursereservation.controller;
+
+import java.io.IOException;
+import java.sql.Timestamp;
+import java.util.LinkedList;
+import java.util.List;
+
+import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import com.coursereservation.model.CourseReservationService;
+import com.coursereservation.model.CourseReservationVO;
+
+@WebServlet("/CourseReservationServlet")
+public class CourseReservationServlet extends HttpServlet {
+	
+	protected void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
+		doPost(req, res);
+	}
+
+	protected void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
+
+		req.setCharacterEncoding("UTF-8");
+		String action = req.getParameter("action");
+
+		  if ("addOrder".equals(action)) { // 來自addEmp.jsp的請求  
+				
+				List<String> errorMsgs = new LinkedList<String>();
+				// Store this set in the request scope, in case we need to
+				// send the ErrorPage view.
+				req.setAttribute("errorMsgs", errorMsgs);
+				
+
+//				try {
+					/***********************1.接收請求參數 - 輸入格式的錯誤處理*************************/
+					System.out.println("我進來訂單了!");
+					String teacherId = req.getParameter("teacherId").trim();
+//					String memId = req.getParameter("memId").trim();
+					String inscId = req.getParameter("inscId").trim();
+
+					
+					Timestamp crvMFD = null;
+					try {
+						crvMFD = Timestamp.valueOf(req.getParameter("crvMFD").trim());
+					} catch (IllegalArgumentException e) {
+						crvMFD=new Timestamp(System.currentTimeMillis());
+						errorMsgs.add("請輸入日期!");
+					}
+					
+					String TeamId =null;
+					
+					Timestamp crvEXP = null;
+					try {
+						crvEXP = Timestamp.valueOf(req.getParameter("crvEXP").trim());
+					} catch (IllegalArgumentException e) {
+						crvEXP=new Timestamp(System.currentTimeMillis());
+						errorMsgs.add("請輸入日期!");
+					}
+					
+					String crvLoc = req.getParameter("crvLoc").trim();
+			
+					Double crvTotalTime = null;
+
+						crvTotalTime = new Double(req.getParameter("crvTotalTime"));
+						System.out.println("總時間"+crvTotalTime);
+					
+					Double crvTotalPrice = null;
+					try {
+						crvTotalPrice = new Double(req.getParameter("crvTotalPrice"));
+						System.out.println("總金額"+crvTotalPrice);
+					} catch (NumberFormatException e) {
+						crvTotalPrice = 0.0;
+						errorMsgs.add("請選擇時間!");
+					}
+					String teamId =null;
+					Integer crvStatus = 1;
+					Integer classStatus = 1;
+					Integer tranStatus = 1;
+					Double crvScore = 0.0;
+					String crvRate = null;
+					String xxx= "weshare05";
+					
+					CourseReservationVO courseReservationVO=new CourseReservationVO();
+					courseReservationVO.setTeacherId(teacherId);
+					System.out.println("teacherId"+teacherId);
+					courseReservationVO.setMemId(xxx);
+					System.out.println("memId+"+xxx);
+					courseReservationVO.setInscId(inscId);
+					System.out.println("inscId"+inscId);
+					courseReservationVO.setTeamId(teamId);
+					System.out.println("teamId"+teamId);
+					courseReservationVO.setCrvStatus(crvStatus);
+					System.out.println("crvStatus"+crvStatus);
+					courseReservationVO.setClassStatus(classStatus);
+					System.out.println("classStatus"+classStatus);
+					courseReservationVO.setTranStatus(tranStatus);
+					System.out.println("tranStatus"+tranStatus);
+					courseReservationVO.setCrvMFD(crvMFD);
+					System.out.println("crvMFD"+crvMFD);
+					courseReservationVO.setCrvEXP(crvEXP);
+					System.out.println("crvEXP"+crvEXP);
+					courseReservationVO.setCrvLoc(crvLoc);
+					System.out.println("crvLoc"+crvLoc);
+					courseReservationVO.setCrvTotalTime(crvTotalTime);
+					System.out.println("crvTotalTime"+crvTotalTime);
+					courseReservationVO.setCrvTotalPrice(crvTotalPrice);
+					System.out.println("crvTotalPrice"+crvTotalPrice);
+					courseReservationVO.setCrvScore(crvScore);
+					System.out.println("crvScore"+crvScore);
+					courseReservationVO.setCrvRate(crvRate);
+					System.out.println("crvRate"+crvRate);
+					
+			
+
+					// Send the use back to the form, if there were errors
+					if (!errorMsgs.isEmpty()) {
+						req.setAttribute("courseReservationVO", courseReservationVO); // 含有輸入格式錯誤的empVO物件,也存入req
+						RequestDispatcher failureView = req
+								.getRequestDispatcher("/coursereservation/courseOrder.jsp");
+						failureView.forward(req, res);
+						System.out.println("我被中斷了~~!");
+						return;
+						
+					}
+					
+					/***************************2.開始新增資料***************************************/
+					CourseReservationService crSvc = new CourseReservationService();
+					
+					crSvc.addCourseReservation(teacherId, xxx, inscId, teamId, crvStatus, classStatus, tranStatus, crvMFD, crvEXP, crvLoc, crvTotalTime, crvTotalPrice, crvScore, crvRate);
+					System.out.println("我有下指令啦~~!");
+					/***************************3.新增完成,準備轉交(Send the Success view)***********/
+					String url = "/coursereservation/courseOrder.jsp";
+					RequestDispatcher successView = req.getRequestDispatcher(url); // 
+					successView.forward(req, res);				
+					
+					/***************************其他可能的錯誤處理**********************************/
+				} 
+//				catch (Exception e) {
+//					errorMsgs.add(e.getMessage());
+//					RequestDispatcher failureView = req
+//							.getRequestDispatcher("/insCourseServlet/insCourseDetails.jsp");
+//					failureView.forward(req, res);
+//				}
+			}
+		
+		
+		
+		
+		
+
+	
+	
+	
+
+		
+}

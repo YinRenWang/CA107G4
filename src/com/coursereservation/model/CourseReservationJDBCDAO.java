@@ -17,7 +17,7 @@ public class CourseReservationJDBCDAO implements CourseReservationDAO_interface 
 	String passwd = "123456";
 	
 	//新增
-	private static final String INSERT_STMT = "Insert into CourseReservation values ('CR'||LPAD(to_char(CourseReservation_seq.NEXTVAL),5,'0'),sysdate,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+	private static final String INSERT_STMT = "Insert into CourseReservation values ('CR'||LPAD(to_char(CourseReservation_seq.NEXTVAL),5,'0'),?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 	
 	//修改
 	private static final String UPDATE = "UPDATE CourseReservation set teamId=?, crvStatus=?, classStatus=?, TranStatus=? , crvScore=?, crvRate=? where crvId = ?";
@@ -51,8 +51,8 @@ public class CourseReservationJDBCDAO implements CourseReservationDAO_interface 
 			pstmt.setTimestamp(8,courseReservationVO.getCrvMFD());
 			pstmt.setTimestamp(9,courseReservationVO.getCrvEXP());
 			pstmt.setString(10,courseReservationVO.getCrvLoc());
-			pstmt.setInt(11,courseReservationVO.getCrvTotalTime());
-			pstmt.setInt(12,courseReservationVO.getCrvTotalPrice());
+			pstmt.setDouble(11,courseReservationVO.getCrvTotalTime());
+			pstmt.setDouble(12,courseReservationVO.getCrvTotalPrice());
 			pstmt.setDouble(13,courseReservationVO.getCrvScore());
 			pstmt.setString(14, courseReservationVO.getCrvRate());
 			pstmt.executeUpdate();
@@ -159,7 +159,6 @@ public class CourseReservationJDBCDAO implements CourseReservationDAO_interface 
 			while (rs.next()) {
 				courseReservationVO = new CourseReservationVO();
 				courseReservationVO.setCrvId(rs.getString("crvId"));
-				courseReservationVO.setCrvDate(rs.getDate("crvDate"));
 				courseReservationVO.setTeacherId(rs.getString("teacherId"));
 				courseReservationVO.setMemId(rs.getString("memId"));
 				courseReservationVO.setInscId(rs.getString("inscId"));
@@ -170,8 +169,8 @@ public class CourseReservationJDBCDAO implements CourseReservationDAO_interface 
 				courseReservationVO.setCrvMFD(rs.getTimestamp("crvMFD"));
 				courseReservationVO.setCrvEXP(rs.getTimestamp("crvEXP"));
 				courseReservationVO.setCrvLoc(rs.getString("crvLoc"));
-				courseReservationVO.setCrvTotalTime(rs.getInt("crvTotalTime"));
-				courseReservationVO.setCrvTotalPrice(rs.getInt("crvTotalPrice"));
+				courseReservationVO.setCrvTotalTime(rs.getDouble("crvTotalTime"));
+				courseReservationVO.setCrvTotalPrice(rs.getDouble("crvTotalPrice"));
 				courseReservationVO.setCrvScore(rs.getDouble("crvScore"));
 				courseReservationVO.setCrvRate(rs.getString("crvRate"));
 				list.add(courseReservationVO); // Store the row in the list
@@ -234,7 +233,6 @@ public class CourseReservationJDBCDAO implements CourseReservationDAO_interface 
 			while (rs.next()) {
 				courseReservationVO = new CourseReservationVO();
 				courseReservationVO.setCrvId(rs.getString("crvId"));
-				courseReservationVO.setCrvDate(rs.getDate("crvDate"));
 				courseReservationVO.setTeacherId(rs.getString("teacherId"));
 				courseReservationVO.setMemId(rs.getString("memId"));
 				courseReservationVO.setInscId(rs.getString("inscId"));
@@ -245,8 +243,8 @@ public class CourseReservationJDBCDAO implements CourseReservationDAO_interface 
 				courseReservationVO.setCrvMFD(rs.getTimestamp("crvMFD"));
 				courseReservationVO.setCrvEXP(rs.getTimestamp("crvEXP"));
 				courseReservationVO.setCrvLoc(rs.getString("crvLoc"));
-				courseReservationVO.setCrvTotalTime(rs.getInt("crvTotalTime"));
-				courseReservationVO.setCrvTotalPrice(rs.getInt("crvTotalPrice"));
+				courseReservationVO.setCrvTotalTime(rs.getDouble("crvTotalTime"));
+				courseReservationVO.setCrvTotalPrice(rs.getDouble("crvTotalPrice"));
 				courseReservationVO.setCrvScore(rs.getDouble("crvScore"));
 				courseReservationVO.setCrvRate(rs.getString("crvRate"));
 				list.add(courseReservationVO); // Store the row in the list
@@ -305,7 +303,6 @@ public class CourseReservationJDBCDAO implements CourseReservationDAO_interface 
 			while (rs.next()) {
 				courseReservationVO = new CourseReservationVO();
 				courseReservationVO.setCrvId(rs.getString("crvId"));
-				courseReservationVO.setCrvDate(rs.getDate("crvDate"));
 				courseReservationVO.setTeacherId(rs.getString("teacherId"));
 				courseReservationVO.setMemId(rs.getString("memId"));
 				courseReservationVO.setInscId(rs.getString("inscId"));
@@ -316,8 +313,8 @@ public class CourseReservationJDBCDAO implements CourseReservationDAO_interface 
 				courseReservationVO.setCrvMFD(rs.getTimestamp("crvMFD"));
 				courseReservationVO.setCrvEXP(rs.getTimestamp("crvEXP"));
 				courseReservationVO.setCrvLoc(rs.getString("crvLoc"));
-				courseReservationVO.setCrvTotalTime(rs.getInt("crvTotalTime"));
-				courseReservationVO.setCrvTotalPrice(rs.getInt("crvTotalPrice"));
+				courseReservationVO.setCrvTotalTime(rs.getDouble("crvTotalTime"));
+				courseReservationVO.setCrvTotalPrice(rs.getDouble("crvTotalPrice"));
 				courseReservationVO.setCrvScore(rs.getDouble("crvScore"));
 				courseReservationVO.setCrvRate(rs.getString("crvRate"));
 				list.add(courseReservationVO); // Store the row in the list
@@ -359,22 +356,22 @@ public class CourseReservationJDBCDAO implements CourseReservationDAO_interface 
 
 	public static void main(String[] args) {
 		// 新增
-//		CourseReservationVO courseReservationVO1 = new CourseReservationVO();
-//		courseReservationVO1.setTeacherId("TC00002");
-//		courseReservationVO1.setMemId("weshare01");
-//		courseReservationVO1.setInscId("IC00002");
-//		courseReservationVO1.setTeamId(null);
-//		courseReservationVO1.setCrvStatus(1);
-//		courseReservationVO1.setClassStatus(1);
-//		courseReservationVO1.setTranStatus(0);
-//		courseReservationVO1.setCrvMFD(java.sql.Timestamp.valueOf("2019-04-02 12:00:00"));
-//		courseReservationVO1.setCrvEXP(java.sql.Timestamp.valueOf("2019-04-02 14:00:00"));
-//		courseReservationVO1.setCrvLoc("台北市信義區信義路六段22號");
-//		courseReservationVO1.setCrvTotalTime(2);
-//		courseReservationVO1.setCrvTotalPrice(1000);
-//		courseReservationVO1.setCrvScore(4.50);
-//		courseReservationVO1.setCrvRate("老師超厲害,教的超好!!");
-//		dao.insert(courseReservationVO1);
+		CourseReservationVO courseReservationVO1 = new CourseReservationVO();
+		courseReservationVO1.setTeacherId("TC00002");
+		courseReservationVO1.setMemId("weshare01");
+		courseReservationVO1.setInscId("IC00002");
+		courseReservationVO1.setTeamId(null);
+		courseReservationVO1.setCrvStatus(1);
+		courseReservationVO1.setClassStatus(1);
+		courseReservationVO1.setTranStatus(0);
+		courseReservationVO1.setCrvMFD(java.sql.Timestamp.valueOf("2019-04-02 12:00:00"));
+		courseReservationVO1.setCrvEXP(java.sql.Timestamp.valueOf("2019-04-02 14:00:00"));
+		courseReservationVO1.setCrvLoc("台北市信義區信義路六段22號");
+		courseReservationVO1.setCrvTotalTime(2.0);
+		courseReservationVO1.setCrvTotalPrice(1000.0);
+		courseReservationVO1.setCrvScore(4.50);
+		courseReservationVO1.setCrvRate("老師超厲害,教的超好!!");
+		dao.insert(courseReservationVO1);
 			
 		// 修改
 //		CourseReservationVO courseReservationVO2 = new CourseReservationVO();
@@ -430,25 +427,24 @@ public class CourseReservationJDBCDAO implements CourseReservationDAO_interface 
 //		}
 		
 		// 複合查詢狀態
-				List<CourseReservationVO> list = dao.findByStatus(1);
-				for (CourseReservationVO courseReservationVO5 : list) {
-					System.out.print(courseReservationVO5.getCrvId()+",");
-					System.out.print(courseReservationVO5.getCrvDate()+ ",");
-					System.out.print(courseReservationVO5.getTeacherId()+ ",");
-					System.out.print(courseReservationVO5.getMemId()+ ",");
-					System.out.print(courseReservationVO5.getTeamId()+ ",");
-					System.out.print(courseReservationVO5.getCrvStatus()+ ",");
-					System.out.print(courseReservationVO5.getClassStatus()+ ",");
-					System.out.print(courseReservationVO5.getTranStatus()+ ",");
-					System.out.print(courseReservationVO5.getCrvMFD()+ ",");
-					System.out.print(courseReservationVO5.getCrvEXP()+ ",");
-					System.out.print(courseReservationVO5.getCrvLoc()+ ",");
-					System.out.print(courseReservationVO5.getCrvTotalTime()+ ",");
-					System.out.print(courseReservationVO5.getCrvTotalPrice()+ ",");
-					System.out.print(courseReservationVO5.getCrvScore()+ ",");
-					System.out.println(courseReservationVO5.getCrvRate()+ ",");
-					System.out.println();
-				}
+//				List<CourseReservationVO> list = dao.findByStatus(1);
+//				for (CourseReservationVO courseReservationVO5 : list) {
+//					System.out.print(courseReservationVO5.getCrvId()+",");
+//					System.out.print(courseReservationVO5.getTeacherId()+ ",");
+//					System.out.print(courseReservationVO5.getMemId()+ ",");
+//					System.out.print(courseReservationVO5.getTeamId()+ ",");
+//					System.out.print(courseReservationVO5.getCrvStatus()+ ",");
+//					System.out.print(courseReservationVO5.getClassStatus()+ ",");
+//					System.out.print(courseReservationVO5.getTranStatus()+ ",");
+//					System.out.print(courseReservationVO5.getCrvMFD()+ ",");
+//					System.out.print(courseReservationVO5.getCrvEXP()+ ",");
+//					System.out.print(courseReservationVO5.getCrvLoc()+ ",");
+//					System.out.print(courseReservationVO5.getCrvTotalTime()+ ",");
+//					System.out.print(courseReservationVO5.getCrvTotalPrice()+ ",");
+//					System.out.print(courseReservationVO5.getCrvScore()+ ",");
+//					System.out.println(courseReservationVO5.getCrvRate()+ ",");
+//					System.out.println();
+//				}
 		
 		
 	

@@ -556,9 +556,19 @@ input[type=radio].with-font:focus~label:before, input[type=checkbox].with-font:f
 </head>
 <!-- Ajax是簡單的! -->
 <script type="text/javascript">
-
-
-
+	$(document).ready(function(){
+		 $('#inputSuccess').change(function(){
+			 $('#form1').submit();
+		 })
+		 
+		 $(":radio").click(function(){
+			 var inscid=$(this).val();
+			 $('#inscTimeId').val(inscid);
+			 $('#form1').submit();
+			  });
+	
+	})
+	
 </script>
 <body>
 <!------------------------------------------------------首頁頭------------------------------------------------------>
@@ -588,26 +598,14 @@ input[type=radio].with-font:focus~label:before, input[type=checkbox].with-font:f
 </nav>
 
 <!------ Include the above in your HEAD tag ---------->
-	年級：
-	<select id="grade">
-		<option value="-1">請選擇</option>
-		<option value="grade3">三年級</option>
-		<option value="grade2">二年級</option>
-		<option value="grade1">一年級</option>
-	</select>
-	班別：
-	<select id="class">
-		<option value="-1">請選擇</option>
-	</select>
-	姓名:
-	<select id="name">
-		<option value="-1">請選擇</option>
-	</select>
 
+	
+	
 
-
-
+<form id="form1" action="<%= request.getContextPath()%>/InsCourseServlet" method="GET">
+<input type="hidden" name="action"  id="action" value="updateDate">
 <div class="content">
+
   <div class="container">
     <div class="row">
       <div class="col-lg-8 col-md-8 col-sm-7 col-xs-12">
@@ -615,6 +613,10 @@ input[type=radio].with-font:focus~label:before, input[type=checkbox].with-font:f
           <div class="tcimg"><img src="<%=request.getContextPath()%>/member/DBGifReader.do?memId=${param.memId}" width="120" height="120" alt=""/> </div>
           <div class="teachName">
             <h4>${param.memName}</h4>
+<input type="hidden" name="memName"  value="${param.memName}">
+<input type="hidden" name="teacherId" value="${param.teacherId}"> 
+<input type="hidden" name="memId"  value="${param.memId}">    
+             
  		 <div id="star_con" class="star-vote">
             <span id="add_star" class="add-star"></span>
             <span id="del_star" class="del-star"></span>
@@ -637,11 +639,24 @@ input[type=radio].with-font:focus~label:before, input[type=checkbox].with-font:f
               </div>
               <div  class="collapse show" aria-labelledby="headingOne" data-parent="#accordionExample">
                 <div class="card-body">
-                    <p><span class="badge badge-pill badge-info">類型</span>${param.memName}<p/>
-                   <p><span class="badge badge-pill badge-success">地點</span>${param.inscLoc}<p/>
+                    <p><span class="badge badge-pill badge-info">類型</span>
+              	<c:if test="${param.inscType==0}">
+              		個人課程
+              	</c:if>
+              	<c:if test="${param.inscType==1}">
+              		團體課程
+              	</c:if>
+                    <p/>
+                   <p><span class="badge badge-pill badge-success">地點</span>${param.inscLoc} <p/>
                    <p> <span class="badge badge-pill badge-primary">授課語言</span>${param.inscLang}<p/>
-                   <p> <span class="badge badge-pill badge-warning">價錢</span>${param.inscPrice}<p/>
+                   <p> <span class="badge badge-pill badge-warning">價錢</span>$${param.inscPrice}元(每小時)<p/>
                    <p> <span class="badge badge-pill badge-secondary">課程大綱</span>${param.inscCourser}<p/>
+                   
+<input type="hidden" name="inscType"  value="${param.inscType}">   
+<input type="hidden" name="inscLoc"  value="${param.inscLoc}"> 
+<input type="hidden" name="inscLang"  value="${param.inscLang}">    
+<input type="hidden" name="inscPrice"  value="${param.inscPrice}">    
+<input type="hidden" name="inscCourser"  value="${param.inscCourser}">  
                    
                  </div>
               </div>
@@ -654,9 +669,10 @@ input[type=radio].with-font:focus~label:before, input[type=checkbox].with-font:f
 
           <h3 class="box-title">關於</h3>
           <p>${param.teacherText}</p>
-
+<input type="hidden" name="teacherText"  value="${param.teacherText}">    
            <h3 class="box-title">學歷</h3>
           <p>${param.teacherEdu}</p>
+<input type="hidden" name="teacherEdu"  value="${param.teacherEdu}">    
 
         </div>
 
@@ -735,8 +751,7 @@ input[type=radio].with-font:focus~label:before, input[type=checkbox].with-font:f
 
 <div class="datePicker">
 <span class="badge badge-primary">請選擇日期</span>
-<input type="text" class="form-control"  name="inscDate" id="inputSuccess"  >  <!-- f_date1見第30行  -->
-<input type="hidden" name="inscId"     value="${param.inscId}"> 
+<input type="text" class="form-control"  name="crvMFD" id="inputSuccess"  >  <!-- f_date1見第30行  -->
 
 <script>
 
@@ -758,60 +773,71 @@ input[type=radio].with-font:focus~label:before, input[type=checkbox].with-font:f
 
 <div class="timePicker">
 </div>	
+<input type="hidden" name="inscId"  value="${param.inscId}">   		
 <c:forEach var="inscCourseTimeVO" items="${inscCourseTimeSvc.findByKey(param.inscId)}">	 
+ 
 <div class="col-1"></div>
 <div class="col-5">
 <div class="form-check">
-<input class="form-check-input" type="radio" name="inscDate" value=" <fmt:formatDate value="${inscCourseTimeVO.inscMFD}" pattern="date"/> " >
+<input class="form-check-input" type="radio" name="inscDate" value="${inscCourseTimeVO.inscTimeId}" />
 <label class="form-check-label" for="exampleRadios1">
    				 <fmt:formatDate value="${inscCourseTimeVO.inscMFD}" pattern="HH:mm"/>
-    			 <fmt:formatDate value="${inscCourseTimeVO.inscEXP}" pattern="HH:mm"/>
-<input type="hidden" name="inscMFD"      value="<fmt:formatDate value="${inscCourseTimeVO.inscMFD}" pattern="HH:mm"/>">
-<input type="hidden" name="inscEXP"      value="<fmt:formatDate value="${inscCourseTimeVO.inscEXP}" pattern="HH:mm"/>">     			 
-<input type="hidden" name="action"     value=""> 
+    			 <fmt:formatDate value="${inscCourseTimeVO.inscEXP}" pattern="HH:mm"/>			 
 </label>
+
 </div>
 </div>
 
- </c:forEach>  
+ </c:forEach>
+ 
 
 
 </div>	  
 </div>
 		  
-		  
-		  
+ 
+<input type="hidden" name="inscTimeId"  id="inscTimeId" value="">
+   
+	  
 
+ 
+</form>	  
 	  
-	  
-	  
-	  
-	  
-	  
-	  
-	  
-		  
+<form id="form2" action="<%= request.getContextPath()%>/coursereservation/coursereservation.do" method="GET">	
+ <input type="hidden" name="action" value="addOrder">     
+ <input type="hidden" name="memName"  value="${param.memName}">
+<input type="hidden" name="teacherId" value="${param.teacherId}"> 
+<input type="hidden" name="memId"  value="${param.memId}"> 
+ <input type="hidden" name="inscId"  value="${param.inscId}">
+<input type="hidden" name="crvMFD"  value="${inscMFD}">
+ <input type="hidden" name="crvEXP"  value="${inscEXP}">
+  <input type="hidden" name="crvLoc"  value="${param.inscLoc}">
+    <input type="hidden" name="TotalTime"  value="${param.crvTotalTime}">
+      <input type="hidden" name="TotalPrice"  value="${param.crvTotalPrice}">
         <div class="widget">
-          <h4 class="widget-title">預定課程</h4>
+          <h4 class="widget-title">預訂課程</h4>
           <div class="summary-block">
             <div class="summary-content">
               <div class="summary-head">
                 <h5 class="summary-title">價格</h5>
               </div>
               <div class="summary-price">
-                <p class="summary-text">$29 / mo</p>
-                <span class="summary-small-text pull-right">1 month</span> </div>
+                <p class="summary-text">
+                $<c:out value="${crvPrice}" default="0"/></p>
+                 <input type="hidden" name="crvTotalTime"  id="crvTotalTime" value="<c:out value="${crvTotalTime}"/>">  
+                <span class="summary-small-text pull-right">元(每小時)</span> </div>
             </div>
           </div>
           <div class="summary-block">
             <div class="summary-content">
               <div class="summary-head">
-                <h5 class="summary-title">手續費
-                  Essential</h5>
+                <h5 class="summary-title">手續費</h5>
               </div>
               <div class="summary-price">
-                <p class="summary-text">$229 / mo</p>
-                <span class="summary-small-text pull-right">1 month</span> </div>
+                <p class="summary-text">
+                $<c:out value="${crvTax}" default="0"/>
+                </p>
+                <span class="summary-small-text pull-right">手續費(10%)</span> </div>
             </div>
           </div>
           <div class="summary-block">
@@ -820,14 +846,24 @@ input[type=radio].with-font:focus~label:before, input[type=checkbox].with-font:f
                 <h5 class="summary-title">總金額</h5>
               </div>
               <div class="summary-price">
-                <p class="summary-text">$258 / mo</p>
-                <span class="summary-small-text pull-right">1 month</span> </div>
+                <p class="summary-text" >
+                $<c:out value="${crvTotalPrice}" default="0"/>
+                <input type="hidden" name="crvTotalPrice"  id="crvTotalPrice" value="<c:out value="${crvTotalPrice}" />">     
+                </p>
+                <span class="summary-small-text pull-right">元</span> </div>
             </div>
           </div><br>
 
-            <div class="d-flex justify-content-center" id="orderSumit"><button type="summit" class="btn btn-success">送出預定</button></div>
+
+
+
+ 
+            <div class="d-flex justify-content-center" id="orderSumit"><button type="summit" id="readyGo" class="btn btn-success">送出預定</button></div>
 
         </div>
+        
+        
+ </form>       
       </div>
     </div>
   

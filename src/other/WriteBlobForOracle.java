@@ -40,7 +40,7 @@ public class WriteBlobForOracle {
 //				File pic = new File("/Users/yinren/Desktop/images/blob/", picName[i-1]);
 				
 //Window用 		
-				File pic = new File("C:/CA107_WebApp/eclipse_WTP_Workspace/CA107G4/WebContent/images/blob/", picName[i-1]);
+				File pic = new File("C:/Users/YinRen/git/CA107G4/WebContent/images/blob/", picName[i-1]);
 				long flen = pic.length();
 				String fileName = pic.getName();
 				int dotPos = fileName.indexOf('.');

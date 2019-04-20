@@ -33,7 +33,7 @@ public class InsCourseTimeService {
 		
 	}
 	public InsCourseTimeVO getOneInsCourseTime(String inscTimeId) {
-		return dao.findByPrimaryKey("TT00001");
+		return dao.findByPrimaryKey(inscTimeId);
 		
 	}
 	public List<InsCourseTimeVO> getAll(){
@@ -46,7 +46,7 @@ public class InsCourseTimeService {
 		
 	}
 	
-	public List<InsCourseTimeVO> findDate(String startTime,String endTime,String inscId){
+	public List<InsCourseTimeVO> findDate(java.sql.Date startTime,java.sql.Date endTime,String inscId){
 		return dao.findDate(startTime, endTime, inscId);
 	}
 	
