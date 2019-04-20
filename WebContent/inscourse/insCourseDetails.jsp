@@ -566,7 +566,18 @@ input[type=radio].with-font:focus~label:before, input[type=checkbox].with-font:f
 			 $('#inscTimeId').val(inscid);
 			 $('#form1').submit();
 			  });
-	
+		 
+		 $('#readyGo').click(function(){
+			 var error=$('#crvTotalPrice').val();
+			 
+			 if(error==0||error==null){
+				 alert("請選擇日期!");
+			 }else{
+				 $('#form2').submit();
+			 }
+		 })
+		 
+
 	})
 	
 </script>
@@ -856,9 +867,7 @@ input[type=radio].with-font:focus~label:before, input[type=checkbox].with-font:f
 
 
 
-
- 
-            <div class="d-flex justify-content-center" id="orderSumit"><button type="summit" id="readyGo" class="btn btn-success">送出預定</button></div>
+            <div class="d-flex justify-content-center" id="orderSumit"><input type="button" id="readyGo"  class="btn btn-success" value="送出預定 "></div>
 
         </div>
         

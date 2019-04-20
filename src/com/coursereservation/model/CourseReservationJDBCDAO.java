@@ -4,7 +4,9 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -40,7 +42,7 @@ public class CourseReservationJDBCDAO implements CourseReservationDAO_interface 
 
 			Class.forName(driver);
 			con = DriverManager.getConnection(url, userid, passwd);
-			pstmt = con.prepareStatement(INSERT_STMT);
+			pstmt = con.prepareStatement(INSERT_STMT,Statement.RETURN_GENERATED_KEYS);
 			pstmt.setString(1,courseReservationVO.getTeacherId());
 			pstmt.setString(2,courseReservationVO.getMemId());
 			pstmt.setString(3,courseReservationVO.getInscId());
@@ -56,6 +58,11 @@ public class CourseReservationJDBCDAO implements CourseReservationDAO_interface 
 			pstmt.setDouble(13,courseReservationVO.getCrvScore());
 			pstmt.setString(14, courseReservationVO.getCrvRate());
 			pstmt.executeUpdate();
+		
+			ResultSet rs=pstmt.getGeneratedKeys();
+		        if(rs.next()){
+		        System.out.println(rs.getString(1));
+		        }
 			System.out.println("已新增一筆資料");
 
 			// Handle any driver errors

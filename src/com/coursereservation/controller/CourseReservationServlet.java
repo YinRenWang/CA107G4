@@ -61,6 +61,7 @@ public class CourseReservationServlet extends HttpServlet {
 						errorMsgs.add("請輸入日期!");
 					}
 					
+					
 					String crvLoc = req.getParameter("crvLoc").trim();
 			
 					Double crvTotalTime = null;
@@ -86,43 +87,25 @@ public class CourseReservationServlet extends HttpServlet {
 					
 					CourseReservationVO courseReservationVO=new CourseReservationVO();
 					courseReservationVO.setTeacherId(teacherId);
-					System.out.println("teacherId"+teacherId);
 					courseReservationVO.setMemId(xxx);
-					System.out.println("memId+"+xxx);
 					courseReservationVO.setInscId(inscId);
-					System.out.println("inscId"+inscId);
 					courseReservationVO.setTeamId(teamId);
-					System.out.println("teamId"+teamId);
 					courseReservationVO.setCrvStatus(crvStatus);
-					System.out.println("crvStatus"+crvStatus);
 					courseReservationVO.setClassStatus(classStatus);
-					System.out.println("classStatus"+classStatus);
 					courseReservationVO.setTranStatus(tranStatus);
-					System.out.println("tranStatus"+tranStatus);
 					courseReservationVO.setCrvMFD(crvMFD);
-					System.out.println("crvMFD"+crvMFD);
 					courseReservationVO.setCrvEXP(crvEXP);
-					System.out.println("crvEXP"+crvEXP);
 					courseReservationVO.setCrvLoc(crvLoc);
-					System.out.println("crvLoc"+crvLoc);
 					courseReservationVO.setCrvTotalTime(crvTotalTime);
-					System.out.println("crvTotalTime"+crvTotalTime);
 					courseReservationVO.setCrvTotalPrice(crvTotalPrice);
-					System.out.println("crvTotalPrice"+crvTotalPrice);
 					courseReservationVO.setCrvScore(crvScore);
-					System.out.println("crvScore"+crvScore);
 					courseReservationVO.setCrvRate(crvRate);
-					System.out.println("crvRate"+crvRate);
-					
-			
-
 					// Send the use back to the form, if there were errors
 					if (!errorMsgs.isEmpty()) {
 						req.setAttribute("courseReservationVO", courseReservationVO); // 含有輸入格式錯誤的empVO物件,也存入req
 						RequestDispatcher failureView = req
 								.getRequestDispatcher("/coursereservation/courseOrder.jsp");
 						failureView.forward(req, res);
-						System.out.println("我被中斷了~~!");
 						return;
 						
 					}
@@ -131,9 +114,10 @@ public class CourseReservationServlet extends HttpServlet {
 					CourseReservationService crSvc = new CourseReservationService();
 					
 					crSvc.addCourseReservation(teacherId, xxx, inscId, teamId, crvStatus, classStatus, tranStatus, crvMFD, crvEXP, crvLoc, crvTotalTime, crvTotalPrice, crvScore, crvRate);
-					System.out.println("我有下指令啦~~!");
+					System.out.println("新增一筆預約");
 					/***************************3.新增完成,準備轉交(Send the Success view)***********/
 					String url = "/coursereservation/courseOrder.jsp";
+					req.setAttribute("courseReservationVO", courseReservationVO); 
 					RequestDispatcher successView = req.getRequestDispatcher(url); // 
 					successView.forward(req, res);				
 					

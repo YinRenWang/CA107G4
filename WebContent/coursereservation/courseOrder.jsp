@@ -1,12 +1,16 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ page import="com.coursereservation.model.*"%>
 
-<%-- <% --%>
-// 	CourseReservationVO courseReservationVO = (CourseReservationVO) request.getAttribute("courseReservationVO");	
-<%-- %> --%>
+<%
+ 	CourseReservationVO courseReservationVO = (CourseReservationVO) request.getAttribute("courseReservationVO");	
+%>
 
-
+<jsp:useBean id="memberSvc" scope="page" class="com.member.model.MemberService" />
+<jsp:useBean id="teacherSvc" scope="page" class="com.teacher.model.TeacherService" />
+<jsp:useBean id="insCourseSvc" scope="page" class="com.inscourse.model.InsCourseService" />
+<jsp:useBean id="courseSvc" scope="page" class="com.course.model.CourseService" />
 <!doctype html>
 <html lang="en">
 
@@ -32,7 +36,8 @@
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <script
 	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-	
+     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC3teApdwmpN2yUfc6dftcDkHw1dLpV2B4&callback=initMap"></script>
+    <script src="http://code.jquery.com/jquery-2.1.4.min.js"></script>
 <style>
 
 	body{
@@ -44,7 +49,43 @@
 	}
 
 </style>
+    <script>
 
+    $(function(){
+    // 取得使用者輸入的地址
+      var addr = $('#addr').val();
+      // 建立 Geocoder() 物件
+      var gc = new google.maps.Geocoder();
+   // 用使用者輸入的地址查詢
+      gc.geocode({'address': addr}, function(result, status){
+        // 確認 OK
+        if(status == google.maps.GeocoderStatus.OK) {
+          var latlng = result[0].geometry.location;
+          // 將查詢結果設為地圖的中心
+          var LAT=latlng.lat(); //顯示經度
+          var LNG=latlng.lng(); //顯示緯度
+          
+          var mymap = new google.maps.Map($('#map').get(0), {
+              zoom: 15,
+              center: {lat:LAT , lng:LNG}
+    });
+          
+        }
+      }); 
+      
+
+       
+        
+        
+
+      
+      // 設定輸入欄位按鍵放開的事件處理函式
+      $('#addr').keyup(function(event){
+        if(event.keyCode == 13) // 若是按下/放開 Enter 鍵 
+          $('#query').click();
+      });  // END of keyup()
+    });
+    </script>
 <title>WeShare | 最棒的教育共享平台</title>
 </head>
 <body>
@@ -73,13 +114,17 @@
             <div class="card">
                 <div class="card-body p-0">
                     <div class="row p-5">
-                        <div class="col-md-6">
-                            <img src="http://via.placeholder.com/400x90?text=logo">
+                        <div class="col-md-6">             	
+   <p class="font-weight-bold mb-4">上課地點 <p class="mb-1"> ${memberSvc.getOneMember(teacherSvc.findOneById(courseReservationVO.teacherId).memId).memAdd}</p></p>
+  <p><input type="hidden" id="addr" value=" ${memberSvc.getOneMember(teacherSvc.findOneById(courseReservationVO.teacherId).memId).memAdd}">
+      <div id="map" style="width:400px; height:300px; margin:0px auto;" ></div>
+
+ 						</div>
                         </div>
 
                         <div class="col-md-6 text-right">
-                            <p class="font-weight-bold mb-1">Invoice #550</p>
-                            <p class="text-muted">Due to: 4 Dec, 2019</p>
+                            <p class="font-weight-bold mb-1"></p>
+                            <p class="text-muted"><fmt:formatDate value="${now}" type="both"/></p>
                         </div>
                     </div>
 
@@ -87,19 +132,19 @@
 
                     <div class="row pb-5 p-5">
                         <div class="col-md-6">
-                            <p class="font-weight-bold mb-4">Client Information</p>
-                            <p class="mb-1">John Doe, Mrs Emma Downson</p>
-                            <p>Acme Inc</p>
-                            <p class="mb-1">Berlin, Germany</p>
-                            <p class="mb-1">6781 45P</p>
+                            <p class="font-weight-bold mb-4">教師資訊</p>
+                            <p class="mb-1"><th class="border-0 text-uppercase small font-weight-bold">姓名：</th>
+                            ${memberSvc.getOneMember(teacherSvc.findOneById(courseReservationVO.teacherId).memId).memName}</p>
+                          	<p class="mb-1"><th class="border-0 text-uppercase small font-weight-bold">電話：</th>
+                          	${memberSvc.getOneMember(teacherSvc.findOneById(courseReservationVO.teacherId).memId).memPhone}</p>
+                  
+                            
                         </div>
 
                         <div class="col-md-6 text-right">
-                            <p class="font-weight-bold mb-4">Payment Details</p>
-                            <p class="mb-1"><span class="text-muted">VAT: </span> 1425782</p>
-                            <p class="mb-1"><span class="text-muted">VAT ID: </span> 10253642</p>
-                            <p class="mb-1"><span class="text-muted">Payment Type: </span> Root</p>
-                            <p class="mb-1"><span class="text-muted">Name: </span> John Doe</p>
+                            <p class="font-weight-bold mb-4">學生資訊</p>
+                            <p class="mb-1"><th class="border-0 text-uppercase small font-weight-bold">姓名：</th>${memberSvc.getOneMember(courseReservationVO.memId).memName}</p>
+                            <p class="mb-1"><th class="border-0 text-uppercase small font-weight-bold">電話：</th>${memberSvc.getOneMember(courseReservationVO.memId).memPhone}</p>
                         </div>
                     </div>
 
@@ -108,38 +153,37 @@
                             <table class="table">
                                 <thead>
                                     <tr>
-                                        <th class="border-0 text-uppercase small font-weight-bold">ID</th>
-                                        <th class="border-0 text-uppercase small font-weight-bold">Item</th>
-                                        <th class="border-0 text-uppercase small font-weight-bold">Description</th>
-                                        <th class="border-0 text-uppercase small font-weight-bold">Quantity</th>
-                                        <th class="border-0 text-uppercase small font-weight-bold">Unit Cost</th>
-                                        <th class="border-0 text-uppercase small font-weight-bold">Total</th>
+                             
+                                        <th class="border-0 text-uppercase small font-weight-bold">課程名稱</th>
+                                        <th class="border-0 text-uppercase small font-weight-bold">開始時間</th>
+                                        <th class="border-0 text-uppercase small font-weight-bold">結束時間</th>
+                                        <th class="border-0 text-uppercase small font-weight-bold">時數</th>
+                                        <th class="border-0 text-uppercase small font-weight-bold">訂單狀態</th>
+                                        <th class="border-0 text-uppercase small font-weight-bold">上課狀態</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <tr>
-                                        <td>1</td>
-                                        <td>Software</td>
-                                        <td>LTS Versions</td>
-                                        <td>21</td>
-                                        <td>$321</td>
-                                        <td>$3452</td>
-                                    </tr>
-                                    <tr>
-                                        <td>1</td>
-                                        <td>Software</td>
-                                        <td>Support</td>
-                                        <td>234</td>
-                                        <td>$6356</td>
-                                        <td>$23423</td>
-                                    </tr>
-                                    <tr>
-                                        <td>1</td>
-                                        <td>Software</td>
-                                        <td>Sofware Collection</td>
-                                        <td>4534</td>
-                                        <td>$354</td>
-                                        <td>$23434</td>
+                                        <td>${courseSvc.findOneById(insCourseSvc.findOneById(courseReservationVO.inscId).courseId).courseName}</td>
+                                        <td> <fmt:formatDate value="${courseReservationVO.crvMFD}" pattern="yyyy-MM-dd HH:mm"/></td>
+                                        <td> <fmt:formatDate value="${courseReservationVO.crvEXP}" pattern="yyyy-MM-dd HH:mm"/></td>
+                                         <td>${courseReservationVO.crvTotalTime}</td>
+                                         <td>
+              							<c:if test="${courseReservationVO.crvStatus==0}">
+              							取消
+              							</c:if>
+              							<c:if test="${courseReservationVO.crvStatus==1}">
+              							正常
+              							</c:if>
+              							</td>
+                  						<td>
+              							<c:if test="${courseReservationVO.classStatus==0}">
+              							未上課
+              							</c:if>
+              							<c:if test="${courseReservationVO.classStatus==1}">
+              							已上課
+              							</c:if>
+              							</td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -147,20 +191,24 @@
                     </div>
 
                     <div class="d-flex flex-row-reverse bg-dark text-white p-4">
-                        <div class="py-3 px-5 text-right">
-                            <div class="mb-2">Grand Total</div>
-                            <div class="h2 font-weight-light">$234,234</div>
+                    
+                     <div class="py-3 px-5 text-right">
+                            <div class="mb-2">訂單總金額</div>
+                            <div class="h2 font-weight-light">$${courseReservationVO.crvTotalPrice}</div>
                         </div>
+                       
 
                         <div class="py-3 px-5 text-right">
-                            <div class="mb-2">Discount</div>
-                            <div class="h2 font-weight-light">10%</div>
+                            <div class="mb-2">手續費</div>
+                            <div class="h2 font-weight-light">$<%=courseReservationVO.getCrvTotalPrice()/1.1*0.1%></div>
+                        </div>
+                        
+                         <div class="py-3 px-5 text-right">
+                            <div class="mb-2">訂單金額</div>
+                            <div class="h2 font-weight-light">$<%=courseReservationVO.getCrvTotalPrice()/1.1%></div>
                         </div>
 
-                        <div class="py-3 px-5 text-right">
-                            <div class="mb-2">Sub - Total amount</div>
-                            <div class="h2 font-weight-light">$32,432</div>
-                        </div>
+                       
                     </div>
                 </div>
             </div>
