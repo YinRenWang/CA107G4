@@ -164,28 +164,9 @@ body{
   z-index: -1;
 }
 
-.card-body2 {
-  display: inline-block;
-  float: right;
-  width: 310px;
-}
-
 #joinTeacher{
 		margin-bottom:350px;
-}
-.plese{
-display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-#gogo{
-    margin: 130px -170px; 
-    position:relative;
-    top:50%; 
-    left:50%;
-
-}
+	}
 </style>
   
 <title>WeShare | 最棒的教育共享平台</title>
@@ -197,7 +178,7 @@ display: flex;
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"> <span class="navbar-toggler-icon"></span> </button>
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
           <ul class="navbar-nav mr-auto">
-            <li class="nav-item active"> <a class="nav-link" href="<%= request.getContextPath()%>/teacher/joinTeacher.jsp">成為老師 <span class="sr-only">(current)</span></a> </li>
+            <li class="nav-item active"> <a class="nav-link" href="#">成為老師 <span class="sr-only">(current)</span></a> </li>
             <li class="nav-item dropdown"> <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">探索課程</a>
               <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink"> <a class="dropdown-item" href="<%= request.getContextPath()%>/Inscourse/NewFile.jsp">所有課程</a> <a class="dropdown-item" href="#">音樂</a> <a class="dropdown-item" href="#">語言</a> <a class="dropdown-item" href="#">運動</a> <a class="dropdown-item" href="#">藝術</a> <a class="dropdown-item" href="#">設計</a> <a class="dropdown-item" href="#">人文</a> <a class="dropdown-item" href="#">行銷</a> <a class="dropdown-item" href="#">程式語言</a> <a class="dropdown-item" href="#">投資理財</a> <a class="dropdown-item" href="#">職場技能</a> <a class="dropdown-item" href="#">手作</a> <a class="dropdown-item" href="#">烹飪</a> </div>
             </li>
@@ -209,30 +190,20 @@ display: flex;
       </nav>
     </div>	
 	<!-------------------------------------------------------------------------headerEnd------------------------------------------------------------------------->
-<form id="form1" action="<%= request.getContextPath()%>/member/loginMember.jsp" method="POST">
 <div class="card-container" >
   <div class="card u-clearfix" id="joinTeacher">
-  <div class=container>
-  <div class="row">
-  <div class=col-3>
     <div class="card-body"> 
-      <span class="card-author subtle">&nbsp;透過WeShare分享您的技能、知識</span>
-      <h2 class="card-title">成為老師 輕鬆賺取業外收益</h2>
-     <span class="card-description subtle">&nbsp;現在就申請成為老師，開始授課！</span>   
+      <span class="card-number card-circle subtle">01</span>
+      <span class="card-author subtle">John Smith</span>
+      <h2 class="card-title">New Brunch Recipe</h2>
+      <span class="card-description subtle">These last few weeks I have been working hard on a new brunch recipe for you all.</span>
+      <div class="card-read">Read</div>
+      <span class="card-tag card-circle subtle">C</span>
     </div>
-    </div>
-      <div class=col-6>
-      <div class="plese">
-      </div>
-       <button id="gogo" type="summit" class="btn btn-success btn-lg">成為老師</button>
-       </div>
-    </div>
-    </div>
-    <img src="http://localhost:8081/CA107G4/images/teacher/joinTeacher.jpg" alt="" class="card-media" width="600px"/>
+    <img src="https://s15.postimg.cc/temvv7u4r/recipe.jpg" alt="" class="card-media" />
   </div>
   <div class="card-shadow"></div>
 </div>
-</form>
 	<!-------------------------------------------------------------------------footerStart------------------------------------------------------------------------->
 	<footer
 		class="section footer-classic context-dark bg-image footer navbar-fixed-bottom"

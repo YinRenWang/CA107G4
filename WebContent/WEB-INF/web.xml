@@ -9,7 +9,6 @@
     <welcome-file>default.htm</welcome-file>
     <welcome-file>default.jsp</welcome-file>
   </welcome-file-list>
-  
   <servlet>
     <servlet-name>MemberServlet</servlet-name>
     <servlet-class>com.member.controller.MemberServlet</servlet-class>
@@ -26,7 +25,6 @@
     <servlet-name>DBGifReader</servlet-name>
     <url-pattern>/member/DBGifReader.do</url-pattern>
   </servlet-mapping>
-  
   <servlet>
     <servlet-name>InsCourseServlet</servlet-name>
     <servlet-class>com.inscourse.controller.InsCourseServlet</servlet-class>
@@ -35,8 +33,7 @@
     <servlet-name>InsCourseServlet</servlet-name>
     <url-pattern>/inscourse/inscourse.do</url-pattern>
   </servlet-mapping>
-  
-    <servlet>
+  <servlet>
     <servlet-name>CourseReservationServlet</servlet-name>
     <servlet-class>com.coursereservation.controller.CourseReservationServlet</servlet-class>
   </servlet>
@@ -44,11 +41,4 @@
     <servlet-name>CourseReservationServlet</servlet-name>
     <url-pattern>/coursereservation/coursereservation.do</url-pattern>
   </servlet-mapping>
-  
-  
-  
-  
-  
-  
-  
 </web-app>
