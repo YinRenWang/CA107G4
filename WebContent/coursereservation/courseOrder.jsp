@@ -65,13 +65,27 @@
           var LAT=latlng.lat(); //顯示經度
           var LNG=latlng.lng(); //顯示緯度
           
+          var position = {
+        		    lat: LAT,
+        		    lng: LNG
+        		  };
+          
           var mymap = new google.maps.Map($('#map').get(0), {
               zoom: 15,
               center: {lat:LAT , lng:LNG}
     });
           
+          var marker = new google.maps.Marker({
+        	  position: position,
+        	  map: mymap,
+        	  animation: google.maps.Animation.BOUNCE
+        	});
+          
         }
       }); 
+   
+   
+   
       
 
     });
@@ -107,7 +121,7 @@
                         <div class="col-md-6">             	
    <p class="font-weight-bold mb-4">上課地點 <p class="mb-1"> ${memberSvc.getOneMember(teacherSvc.findOneById(courseReservationVO.teacherId).memId).memAdd}</p></p>
   <p><input type="hidden" id="addr" value=" ${memberSvc.getOneMember(teacherSvc.findOneById(courseReservationVO.teacherId).memId).memAdd}">
-      <div id="map" style="width:400px; height:300px; margin:0px auto;" ></div>
+      <div id="map" style="width:1000px; height:400px; margin:0px auto;" ></div>
 
  						</div>
                         </div>
