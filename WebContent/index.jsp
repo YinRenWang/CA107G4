@@ -1,7 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>    
-<jsp:useBean id="courseSvc" scope="page" class="com.course.model.CourseService" />
 <!DOCTYPE html>
 
 <html lang="en">
@@ -221,12 +220,11 @@ ul, ol {
     </div>
      
       
-<FORM METHOD="GET" ACTION="<%=request.getContextPath()%>/inscourse/inscourse.do" name="form1">
+<FORM METHOD="get" ACTION="<%=request.getContextPath()%>/inscourse/inscourse.do" name="form1">
  <div class="row">
       <div class="col-5">
         <div class="d-flex justify-content-around" id="df1">
           <input class="form-control" type="text" name="courseId" placeholder="請輸入課程關鍵字......" value="">
-          
         </div>
       </div>
       <div class="col-3">
@@ -245,12 +243,13 @@ ul, ol {
       </div>
       <div class="col-1">
         <div class="d-flex justify-content-around" id="df4">
-          <button class="btn btn-success"  type="submit" height="30" id="sbtn">搜尋</button>
-        	<input type="hidden" name="action" value="CompositeQuery">
+        <input type="hidden" name="action" value="listEmps_ByCompositeQuery">
+          <input class="btn btn-success"  type="submit" height="30" id="sbtn" value="搜尋">
         </div>
       </div>
 	</div>
 </FORM> 
+
   </div>
 </div>
 <div class="wrapCenter">

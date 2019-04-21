@@ -74,16 +74,6 @@
       }); 
       
 
-       
-        
-        
-
-      
-      // 設定輸入欄位按鍵放開的事件處理函式
-      $('#addr').keyup(function(event){
-        if(event.keyCode == 13) // 若是按下/放開 Enter 鍵 
-          $('#query').click();
-      });  // END of keyup()
     });
     </script>
 <title>WeShare | 最棒的教育共享平台</title>
