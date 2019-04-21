@@ -218,7 +218,7 @@ justify-content:center;
 
 <div class="container" id="krkr">
 
-	<%@ include file="page1.file" %> 
+	<%@ include file="pages/page1.file" %> 
 	
 
     <hgroup class="mb20">
@@ -339,7 +339,7 @@ justify-content:center;
 
 	</c:forEach>
 
-	<%@ include file="page2.file" %>
+	<%@ include file="pages/page2.file" %>
 
 </div>
 

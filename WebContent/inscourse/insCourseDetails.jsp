@@ -503,10 +503,10 @@ input[type=radio].with-font:focus~label:before, input[type=checkbox].with-font:f
                 top:0px;
             }
             .star-vote>.add-star{
-                background-image:url("http://localhost:8081/CA107G4/images/inscourse/white-star.png");
+                background-image:url("<%=request.getContextPath()%>images/inscourse/white-star.png");
             }
             .star-vote>.del-star{
-                background-image:url("http://localhost:8081/CA107G4/images/inscourse/white-star.png");
+                background-image:url("<%=request.getContextPath()%>/images/inscourse/white-star.png");
                 background-color:white;
             }
 
@@ -584,7 +584,7 @@ input[type=radio].with-font:focus~label:before, input[type=checkbox].with-font:f
 <body>
 <!------------------------------------------------------首頁頭------------------------------------------------------>
 <div class="header">
-  <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top"> <img src="images/icon/logo.png" width="80" height="60" alt=""/><a class="navbar-brand" href="#">教育共享平台</a>
+  <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top"> <img src="<%=request.getContextPath()%>/images/icon/logo.png" width="80" height="60" alt=""/><a class="navbar-brand" href="#">教育共享平台</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"> <span class="navbar-toggler-icon"></span> </button>
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav mr-auto">
@@ -613,7 +613,7 @@ input[type=radio].with-font:focus~label:before, input[type=checkbox].with-font:f
 	
 	
 
-<form id="form1" action="<%= request.getContextPath()%>/InsCourseServlet" method="GET">
+<form id="form1" action="<%= request.getContextPath()%>/InsCourseServlet" method="POST">
 <input type="hidden" name="action"  id="action" value="updateDate">
 <div class="content">
 
@@ -814,7 +814,7 @@ input[type=radio].with-font:focus~label:before, input[type=checkbox].with-font:f
  
 </form>	  
 	  
-<form id="form2" action="<%= request.getContextPath()%>/coursereservation/coursereservation.do" method="GET">	
+<form id="form2" action="<%= request.getContextPath()%>/coursereservation/coursereservation.do" method="POST">	
  <input type="hidden" name="action" value="addOrder">     
  <input type="hidden" name="memName"  value="${param.memName}">
 <input type="hidden" name="teacherId" value="${param.teacherId}"> 

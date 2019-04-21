@@ -2,13 +2,11 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page import="java.util.*"%>
 <%@ page import="com.inscourse.model.*"%>
-<%-- 此頁練習採用 EL 的寫法取值 --%>
+<%-- 萬用複合查詢-可由客戶端select_page.jsp隨意增減任何想查詢的欄位 --%>
+<%-- 此頁只作為複合查詢時之結果練習，可視需要再增加分頁、送出修改、刪除之功能--%>
 
-<%
-    InsCourseService insCourseSvc = new InsCourseService();
-    List<InsCourseVO> list = insCourseSvc.getAll();
-    pageContext.setAttribute("list",list);
-%>
+<jsp:useBean id="listEmps_ByCompositeQuery" scope="request" type="java.util.List<InsCourseVO>" /> <!-- 於EL此行可省略 -->
+
 <jsp:useBean id="memberSvc" scope="page" class="com.member.model.MemberService" />
 <jsp:useBean id="teacherSvc" scope="page" class="com.teacher.model.TeacherService" />
 <jsp:useBean id="courseSvc" scope="page" class="com.course.model.CourseService" />
@@ -218,7 +216,7 @@ justify-content:center;
 
 <div class="container" id="krkr">
 
-	<%@ include file="page1.file" %> 
+<%@ include file="pages/page1_ByCompositeQuery.file" %>
 	
 
     <hgroup class="mb20">
@@ -226,7 +224,7 @@ justify-content:center;
 	</hgroup>
 
 
-<c:forEach var="insCourseVO" items="${list}" begin="<%=pageIndex%>" end="<%=pageIndex+rowsPerPage-1%>">
+<c:forEach var="insCourseVO" items="${listEmps_ByCompositeQuery}" begin="<%=pageIndex%>" end="<%=pageIndex+rowsPerPage-1%>">
  <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/inscourse/inscourse.do" style="margin-bottom: 0px;">
 	<div class="one-row">
 
@@ -339,7 +337,7 @@ justify-content:center;
 
 	</c:forEach>
 
-	<%@ include file="page2.file" %>
+<%@ include file="pages/page2_ByCompositeQuery.file" %>
 
 </div>
 

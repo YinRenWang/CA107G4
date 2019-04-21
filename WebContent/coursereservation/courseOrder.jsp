@@ -45,7 +45,7 @@
 	}
 	
 	#Information{
-		margin-bottom:10%;
+		margin-bottom:15%;
 	}
 
 </style>

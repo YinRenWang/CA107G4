@@ -382,7 +382,7 @@ public class InsCourseServlet extends HttpServlet {
 			// send the ErrorPage view.
 			req.setAttribute("errorMsgs", errorMsgs);
 
-			try {
+//			try {
 
 				/***************************1.將輸入資料轉為Map**********************************/ 
 				//採用Map<String,String[]> getParameterMap()的方法  
@@ -418,17 +418,18 @@ public class InsCourseServlet extends HttpServlet {
 				
 				/***************************3.查詢完成,準備轉交(Send the Success view)************/
 				req.setAttribute("listEmps_ByCompositeQuery", list); // 資料庫取出的list物件,存入request
-				RequestDispatcher successView = req.getRequestDispatcher("/emp/listEmps_ByCompositeQuery.jsp"); // 成功轉交listEmps_ByCompositeQuery.jsp
+				RequestDispatcher successView = req.getRequestDispatcher("/inscourse/listEmps_ByCompositeQuery.jsp"); // 成功轉交listEmps_ByCompositeQuery.jsp
 				successView.forward(req, res);
+				System.out.println("已轉交");
 				
 				/***************************其他可能的錯誤處理**********************************/
 			} 
-			catch (Exception e) {
-				errorMsgs.add(e.getMessage());
-				RequestDispatcher failureView = req
-						.getRequestDispatcher("/index.jsp");
-				failureView.forward(req, res);
-			}
+//			catch (Exception e) {
+//				errorMsgs.add(e.getMessage());
+//				RequestDispatcher failureView = req
+//						.getRequestDispatcher("/index.jsp");
+//				failureView.forward(req, res);
+//			}
 		
 		}
 
@@ -471,6 +472,6 @@ public class InsCourseServlet extends HttpServlet {
 		
 		
 		
-	}
+	
 
 }
