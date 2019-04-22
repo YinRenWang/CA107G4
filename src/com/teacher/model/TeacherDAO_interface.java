@@ -7,5 +7,6 @@ public interface TeacherDAO_interface {
 	public void update(TeacherVO teacherVO);
 	public void delete(String teacherId);
 	public TeacherVO findByPrimaryKey(String teacherId);
+	public TeacherVO findByStatus(String memId);
 	public List<TeacherVO> getAll();
 }

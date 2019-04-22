@@ -57,8 +57,6 @@
 </c:forEach>
 </c:if>
 					<form data-toggle="validator" role="form" method="post" action="member.do" >
-						<input type="hidden" class="hide" id="csrf_token"
-							name="csrf_token" value="C8nPqbqTxzcML7Hw0jLRu41ry5b9a10a0e2bc2">
 						<div class="row">
 							<div class="col-md-12">
 								<div class="form-group">
