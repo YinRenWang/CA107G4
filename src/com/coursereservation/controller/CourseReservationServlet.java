@@ -76,8 +76,8 @@ public class CourseReservationServlet extends HttpServlet {
 					}
 					String teamId =null;
 					Integer crvStatus = 1;
-					Integer classStatus = 1;
-					Integer tranStatus = 1;
+					Integer classStatus = 0;
+					Integer tranStatus = 0;
 					Double crvScore = 0.0;
 					String crvRate = null;
 					String xxx= "weshare05";

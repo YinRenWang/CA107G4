@@ -487,29 +487,6 @@ input[type=radio].with-font:focus~label:before, input[type=checkbox].with-font:f
     border: 1px solid #063bb3;
 }
 
-    .star-vote{
-                width:120px;
-                height:20px;
-                position:relative;
-                overflow:hidden;
-            }
-            .star-vote>span{
-                position:absolute;
-                width:120px;
-                height:20px;
-                background-size:cover;
-                background-repeat:no-repeat;
-                left:0px;
-                top:0px;
-            }
-            .star-vote>.add-star{
-                background-image:url("<%=request.getContextPath()%>images/inscourse/white-star.png");
-            }
-            .star-vote>.del-star{
-                background-image:url("<%=request.getContextPath()%>/images/inscourse/white-star.png");
-                background-color:white;
-            }
-
 	.teachName{
 		padding-left: 20px;
 		padding-top: 10px;
@@ -540,6 +517,30 @@ input[type=radio].with-font:focus~label:before, input[type=checkbox].with-font:f
     .orderSumit{
         width:20px;
     }
+    
+        	.star-vote{
+                width:120px;
+                height:20px;
+                position:relative;
+                overflow:hidden;
+            }
+            .star-vote>span{
+                position:absolute;
+                width:120px;
+                height:20px;
+                background-size:cover;
+                background-repeat:no-repeat;
+                left:0px;
+                top:0px;
+            }
+            .star-vote>.add-star{
+                background-image:url("<%=request.getContextPath()%>/images/inscourse/yellow-star.png");
+            }
+            .star-vote>.del-star{
+                background-image:url("<%=request.getContextPath()%>/images/inscourse/white-star.png");
+                background-color:white;
+             }
+    
 	
 
 @media screen and (min-width: 768px) {
@@ -576,6 +577,20 @@ input[type=radio].with-font:focus~label:before, input[type=checkbox].with-font:f
 				 $('#form2').submit();
 			 }
 		 })
+	        //表示後台選取的星數(1代表0.5)
+	     window.onload=showStar(10);
+         function showStar(n){
+             var con_wid=document.getElementById("star_con").offsetWidth;
+             var del_star=document.getElementById("del_star");
+             console.log(con_wid);
+             
+     //透明星星移動的像素
+             var del_move=(n*con_wid)/10;
+             
+             del_star.style.backgroundPosition=-del_move+"px 0px";
+             del_star.style.left=del_move+"px";
+         }
+	
 		 
 
 	})
@@ -847,6 +862,21 @@ input[type=radio].with-font:focus~label:before, input[type=checkbox].with-font:f
       <input type="hidden" name="TotalPrice"  value="${param.crvTotalPrice}">
         <div class="widget">
           <h4 class="widget-title">預訂課程</h4>
+          
+        <div class="summary-block">
+            <div class="summary-content">
+              <div class="summary-head">
+                <h5 class="summary-title">上課時段</h5>
+              </div>
+              <div class="summary-price">
+                <p class="summary-text">
+<fmt:formatDate value="${inscMFD}" pattern="yyyy-MM-dd"/>
+<fmt:formatDate value="${inscMFD}" pattern="HH:mm"/>-
+<fmt:formatDate value="${inscEXP}" pattern="HH:mm"/>
+                </p>
+            </div>
+          </div>
+                 
           <div class="summary-block">
             <div class="summary-content">
               <div class="summary-head">
@@ -856,7 +886,7 @@ input[type=radio].with-font:focus~label:before, input[type=checkbox].with-font:f
                 <p class="summary-text">
                 $<c:out value="${crvPrice}" default="0"/></p>
                  <input type="hidden" name="crvTotalTime"  id="crvTotalTime" value="<c:out value="${crvTotalTime}"/>">  
-                <span class="summary-small-text pull-right">元(每小時)</span> </div>
+                <span class="summary-small-text pull-right">元(總計小時)</span> </div>
             </div>
           </div>
           <div class="summary-block">
@@ -947,23 +977,10 @@ input[type=radio].with-font:focus~label:before, input[type=checkbox].with-font:f
   </div>
 </footer>
 	
-    <script>
-         //表示後台選取的星數(1代表0.5)
-            function showStar(n){
-                var con_wid=document.getElementById("star_con").offsetWidth;
-                var del_star=document.getElementById("del_star");
-                console.log(con_wid);
-                
-        //透明星星移動的像素
-                var del_move=(n*con_wid)/10;
-                
-                del_star.style.backgroundPosition=-del_move+"px 0px";
-                del_star.style.left=del_move+"px";
-            }
-	
+ 
          
          
-        </script>	
+
 <!-----------------------------------------------------------------------------------------------------------------> 
 <!-- Optional JavaScript --> 
 <!-- jQuery first, then Popper.js, then Bootstrap JS --> 

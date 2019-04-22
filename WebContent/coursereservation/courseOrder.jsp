@@ -2,7 +2,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ page import="com.coursereservation.model.*"%>
-
 <%
  	CourseReservationVO courseReservationVO = (CourseReservationVO) request.getAttribute("courseReservationVO");	
 %>
@@ -202,16 +201,16 @@
                             <div class="mb-2">訂單總金額</div>
                             <div class="h2 font-weight-light">$${courseReservationVO.crvTotalPrice}</div>
                         </div>
-                       
-
                         <div class="py-3 px-5 text-right">
                             <div class="mb-2">手續費</div>
-                            <div class="h2 font-weight-light">$<%=courseReservationVO.getCrvTotalPrice()/1.1*0.1%></div>
+                            <div class="h2 font-weight-light">$<fmt:formatNumber type="number" value="<%=courseReservationVO.getCrvTotalPrice()/1.1*0.1%>" pattern="#.00"/></div>
+                           
                         </div>
                         
                          <div class="py-3 px-5 text-right">
                             <div class="mb-2">訂單金額</div>
-                            <div class="h2 font-weight-light">$<%=courseReservationVO.getCrvTotalPrice()/1.1%></div>
+                            <div class="h2 font-weight-light">$<fmt:formatNumber type="number" value="<%=courseReservationVO.getCrvTotalPrice()/1.1%>" pattern="#.00"/></div>
+                            
                         </div>
 
                        
