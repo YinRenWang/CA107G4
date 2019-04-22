@@ -16,8 +16,8 @@ import com.coursereport.model.CourseReportVO;
 public class InsCourseTimeJDBCDAO implements InsCourseTimeDAO_interface {
 	static InsCourseTimeJDBCDAO dao=new InsCourseTimeJDBCDAO();
 	String driver = "oracle.jdbc.driver.OracleDriver";
-//	String url = "jdbc:oracle:thin:@localhost:1521:XE";
-	String url = "jdbc:oracle:thin:@localhost:49161:XE";
+	String url = "jdbc:oracle:thin:@localhost:1521:XE";
+//	String url = "jdbc:oracle:thin:@localhost:49161:XE";
 	String userid = "WESHARE";
 	String passwd = "123456";
 	
@@ -378,6 +378,72 @@ public class InsCourseTimeJDBCDAO implements InsCourseTimeDAO_interface {
 
 			pstmt.setDate(1,startTime);
 			pstmt.setDate(2,endTime);
+			pstmt.setString(3,inscId);
+			rs = pstmt.executeQuery();
+
+			while (rs.next()) {
+				// empVO 也稱為 Domain objects
+				insCourseTimeVO = new InsCourseTimeVO();
+				insCourseTimeVO.setInscTimeId(rs.getString("inscTimeId"));
+				insCourseTimeVO.setInscId(rs.getString("inscId"));
+				insCourseTimeVO.setInscMFD(rs.getTimestamp("inscMFD"));
+				insCourseTimeVO.setInscEXP(rs.getTimestamp("inscEXP"));
+				list.add(insCourseTimeVO); // Store the row in the list
+			}
+
+			// Handle any driver errors
+		} catch (ClassNotFoundException e) {
+			throw new RuntimeException("Couldn't load database driver. "
+					+ e.getMessage());
+			// Handle any SQL errors
+		} catch (SQLException se) {
+			throw new RuntimeException("A database error occured. "
+					+ se.getMessage());
+			// Clean up JDBC resources
+		} finally {
+			if (rs != null) {
+				try {
+					rs.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
+		}
+		return list;
+	}
+	
+	
+	@Override
+	public List<InsCourseTimeVO> findDate(String startTime, String endTime, String inscId) {
+		List<InsCourseTimeVO> list = new ArrayList<InsCourseTimeVO>();
+		InsCourseTimeVO insCourseTimeVO = null;
+
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+
+		try {
+
+			Class.forName(driver);
+			con = DriverManager.getConnection(url, userid, passwd);
+			pstmt = con.prepareStatement(GET_DATE_STMT);
+
+			pstmt.setString(1,startTime);
+			pstmt.setString(2,endTime);
 			pstmt.setString(3,inscId);
 			rs = pstmt.executeQuery();
 

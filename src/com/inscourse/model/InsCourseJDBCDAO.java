@@ -4,12 +4,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import jdbc.util.CompositeQuery.jdbcUtil_CompositeQuery_Emp;
-
 public class InsCourseJDBCDAO implements InsCourseDAO_interface {
 	String driver = "oracle.jdbc.driver.OracleDriver";
-//	String url = "jdbc:oracle:thin:@localhost:1521:XE";
-	String url = "jdbc:oracle:thin:@localhost:49161:XE";
+	String url = "jdbc:oracle:thin:@localhost:1521:XE";
+//	String url = "jdbc:oracle:thin:@localhost:49161:XE";
 	String userid = "weshare";
 	String passwd = "123456";
 	

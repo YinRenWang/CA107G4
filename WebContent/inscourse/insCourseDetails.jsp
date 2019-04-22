@@ -564,7 +564,7 @@ input[type=radio].with-font:focus~label:before, input[type=checkbox].with-font:f
 		 $(":radio").click(function(){
 			 var inscid=$(this).val();
 			 $('#inscTimeId').val(inscid);
-			 $('#form1').submit();
+			 $('#form3').submit();
 			  });
 		 
 		 $('#readyGo').click(function(){
@@ -754,15 +754,15 @@ input[type=radio].with-font:focus~label:before, input[type=checkbox].with-font:f
  
 
 
-
+<input type="hidden" name="inscId"  value="${param.inscId}">   	
       
 		
 <div class="contatiner" id="insctime">
 <div class="row">
-
+<div class="col-12">
 <div class="datePicker">
 <span class="badge badge-primary">請選擇日期</span>
-<input type="text" class="form-control"  name="crvMFD" id="inputSuccess"  >  <!-- f_date1見第30行  -->
+<input type="text" class="form-control"  name="inputSuccess" id="inputSuccess"  >  <!-- f_date1見第30行  -->
 
 <script>
 
@@ -772,7 +772,6 @@ input[type=radio].with-font:focus~label:before, input[type=checkbox].with-font:f
            timepicker: false,   //timepicker: false,
            step: 1,            //step: 60 (這是timepicker的預設間隔60分鐘)
 	       format: 'Y-m-d',
-	       value: new Date(),
            //disabledDates:    ['2017/06/08','2017/06/09','2017/06/10'], // 去除特定不含
            //startDate:	        '2017/07/10',  // 起始日
            minDate:           '-1970-01-01', // 去除今日(不含)之前
@@ -780,12 +779,19 @@ input[type=radio].with-font:focus~label:before, input[type=checkbox].with-font:f
         });
 </script>
 </div>
-
+</div>
 
 <div class="timePicker">
 </div>	
-<input type="hidden" name="inscId"  value="${param.inscId}">   		
-<c:forEach var="inscCourseTimeVO" items="${inscCourseTimeSvc.findByKey(param.inscId)}">	 
+
+</form>	
+</div>	
+
+
+<form id="form3" action="<%= request.getContextPath()%>/InsCourseServlet" method="POST"> 
+<input type="hidden" name="action"  id="action" value="updateTime"> 
+<div class="row">	
+ <c:forEach var="inscCourseTimeVO" items="${list}">	
  
 <div class="col-1"></div>
 <div class="col-5">
@@ -800,19 +806,33 @@ input[type=radio].with-font:focus~label:before, input[type=checkbox].with-font:f
 </div>
 
  </c:forEach>
+ </div>
  
+<input type="hidden" name="inscTimeId"  id="inscTimeId" value="">
+<input type="hidden" name="memName"  value="${param.memName}">
+<input type="hidden" name="teacherId" value="${param.teacherId}"> 
+<input type="hidden" name="memId"  value="${param.memId}">    
+<input type="hidden" name="inscType"  value="${param.inscType}">   
+<input type="hidden" name="inscLoc"  value="${param.inscLoc}"> 
+<input type="hidden" name="inscLang"  value="${param.inscLang}">    
+<input type="hidden" name="inscPrice"  value="${param.inscPrice}">    
+<input type="hidden" name="inscCourser"  value="${param.inscCourser}">  
+<input type="hidden" name="teacherText"  value="${param.teacherText}"> 
+<input type="hidden" name="teacherEdu"  value="${param.teacherEdu}">   
+<input type="hidden" name="inscId"  value="${param.inscId}">  
+ 
+</form>
 
-
-</div>	  
+  
 </div>
 		  
  
-<input type="hidden" name="inscTimeId"  id="inscTimeId" value="">
+
    
 	  
 
  
-</form>	  
+
 	  
 <form id="form2" action="<%= request.getContextPath()%>/coursereservation/coursereservation.do" method="POST">	
  <input type="hidden" name="action" value="addOrder">     

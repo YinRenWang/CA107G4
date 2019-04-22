@@ -12,8 +12,8 @@ import java.util.List;
 
 public class TeacherJDBCDAO implements TeacherDAO_interface {
 	String driver = "oracle.jdbc.driver.OracleDriver";
-//	String url = "jdbc:oracle:thin:@localhost:1521:XE";
-	String url = "jdbc:oracle:thin:@localhost:49161:XE";
+	String url = "jdbc:oracle:thin:@localhost:1521:XE";
+//	String url = "jdbc:oracle:thin:@localhost:49161:XE";
 	String userid = "weshare";
 	String passwd = "123456";
 	

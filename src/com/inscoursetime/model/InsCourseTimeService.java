@@ -50,6 +50,10 @@ public class InsCourseTimeService {
 		return dao.findDate(startTime, endTime, inscId);
 	}
 	
+	public List<InsCourseTimeVO> findDate(String startTime,String endTime,String inscId){
+		return dao.findDate(startTime, endTime, inscId);
+	}
+	
 	
 	
 

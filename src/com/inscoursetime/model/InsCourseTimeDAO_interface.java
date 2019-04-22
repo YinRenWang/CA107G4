@@ -10,6 +10,7 @@ public interface InsCourseTimeDAO_interface {
 	public InsCourseTimeVO findByPrimaryKey(String inscTimeId);
 	public List<InsCourseTimeVO> findByKey(String xxxId); 
 	public List<InsCourseTimeVO> findDate(java.sql.Date startTime,java.sql.Date endTime,String inscId); 
+	public List<InsCourseTimeVO> findDate(String startTime,String endTime,String inscId); 
 	public List<InsCourseTimeVO> getAll();
 
 }
