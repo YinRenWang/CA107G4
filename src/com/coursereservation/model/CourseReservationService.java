@@ -18,7 +18,7 @@ public class CourseReservationService {
 	
 	public CourseReservationVO addCourseReservation(String teacherId, String memId, String inscId, String teamId,
 			Integer crvStatus, Integer classStatus, Integer tranStatus, Timestamp crvMFD, Timestamp crvEXP,
-			String crvLoc, Double crvTotalTime, Double crvTotalPrice,Double crvScore,String crvRate) {
+			String crvLoc, Double crvTotalTime, Double crvTotalPrice,String crvRate) {
 		
 		CourseReservationVO courseReservationVO = new CourseReservationVO();
 	
@@ -34,7 +34,6 @@ public class CourseReservationService {
 		courseReservationVO.setCrvLoc(crvLoc);
 		courseReservationVO.setCrvTotalTime(crvTotalTime);
 		courseReservationVO.setCrvTotalPrice(crvTotalPrice);
-		courseReservationVO.setCrvScore(crvScore);
 		courseReservationVO.setCrvRate(crvRate);
 		dao.insert(courseReservationVO);
 		return courseReservationVO;

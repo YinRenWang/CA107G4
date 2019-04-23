@@ -20,7 +20,7 @@ public class CourseReservationJDBCDAO implements CourseReservationDAO_interface 
 	String passwd = "123456";
 	
 	//新增
-	private static final String INSERT_STMT = "Insert into CourseReservation values ('CR'||LPAD(to_char(CourseReservation_seq.NEXTVAL),5,'0'),?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+	private static final String INSERT_STMT = "Insert into CourseReservation values ('CR'||LPAD(to_char(CourseReservation_seq.NEXTVAL),5,'0'),?,?,?,?,?,?,?,?,?,?,?,?,null,?)";
 	
 	//修改
 	private static final String UPDATE = "UPDATE CourseReservation set teamId=?, crvStatus=?, classStatus=?, TranStatus=? , crvScore=?, crvRate=? where crvId = ?";
@@ -56,8 +56,7 @@ public class CourseReservationJDBCDAO implements CourseReservationDAO_interface 
 			pstmt.setString(10,courseReservationVO.getCrvLoc());
 			pstmt.setDouble(11,courseReservationVO.getCrvTotalTime());
 			pstmt.setDouble(12,courseReservationVO.getCrvTotalPrice());
-			pstmt.setDouble(13,courseReservationVO.getCrvScore());
-			pstmt.setString(14, courseReservationVO.getCrvRate());
+			pstmt.setString(13, courseReservationVO.getCrvRate());
 			pstmt.executeUpdate();
 		
 			ResultSet rs=pstmt.getGeneratedKeys();

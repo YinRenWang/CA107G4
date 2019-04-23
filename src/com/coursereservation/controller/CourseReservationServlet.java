@@ -78,7 +78,6 @@ public class CourseReservationServlet extends HttpServlet {
 					Integer crvStatus = 1;
 					Integer classStatus = 0;
 					Integer tranStatus = 0;
-					Double crvScore = 0.0;
 					String crvRate = null;
 					String xxx= "weshare05";
 					
@@ -95,7 +94,6 @@ public class CourseReservationServlet extends HttpServlet {
 					courseReservationVO.setCrvLoc(crvLoc);
 					courseReservationVO.setCrvTotalTime(crvTotalTime);
 					courseReservationVO.setCrvTotalPrice(crvTotalPrice);
-					courseReservationVO.setCrvScore(crvScore);
 					courseReservationVO.setCrvRate(crvRate);
 					// Send the use back to the form, if there were errors
 					if (!errorMsgs.isEmpty()) {
@@ -110,7 +108,7 @@ public class CourseReservationServlet extends HttpServlet {
 					/***************************2.開始新增資料***************************************/
 					CourseReservationService crSvc = new CourseReservationService();
 					
-					crSvc.addCourseReservation(teacherId, xxx, inscId, teamId, crvStatus, classStatus, tranStatus, crvMFD, crvEXP, crvLoc, crvTotalTime, crvTotalPrice, crvScore, crvRate);
+					crSvc.addCourseReservation(teacherId, xxx, inscId, teamId, crvStatus, classStatus, tranStatus, crvMFD, crvEXP, crvLoc, crvTotalTime, crvTotalPrice,  crvRate);
 					/***************************3.新增完成,準備轉交(Send the Success view)***********/
 					String url = "/coursereservation/courseOrder.jsp";
 					req.setAttribute("courseReservationVO", courseReservationVO); 
@@ -125,9 +123,9 @@ public class CourseReservationServlet extends HttpServlet {
 							.getRequestDispatcher("/insCourseServlet/insCourseDetails.jsp");
 					failureView.forward(req, res);
 				}
-			}
-		
-		
+			
+		  }
+				
 		
 		
 		
@@ -135,6 +133,6 @@ public class CourseReservationServlet extends HttpServlet {
 	
 	
 	
-
+				
 	}	
 }
