@@ -4,6 +4,7 @@ import java.sql.Date;
 import java.sql.Timestamp;
 
 public class CourseReservationVO {
+	
 	private String crvId;
 	private String teacherId;
 	private String memId;
@@ -19,6 +20,7 @@ public class CourseReservationVO {
 	private Double crvTotalPrice;
 	private Double crvScore;
 	private String crvRate;
+
 	public String getCrvId() {
 		return crvId;
 	}

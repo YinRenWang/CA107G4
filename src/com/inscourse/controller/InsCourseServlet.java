@@ -335,8 +335,6 @@ public class InsCourseServlet extends HttpServlet {
 
 			RequestDispatcher successView = req.getRequestDispatcher(url); // 新增成功後轉交listAllEmp.jsp
 			successView.forward(req, res);
-			System.out.println("開心");
-
 		}
 			catch (Exception e) {
 				errorMsgs.add(e.getMessage());
@@ -381,7 +379,6 @@ public class InsCourseServlet extends HttpServlet {
 
 			RequestDispatcher successView = req.getRequestDispatcher(url); // 新增成功後轉交listAllEmp.jsp
 			successView.forward(req, res);
-			System.out.println("開心");
 
 		}
 			catch (Exception e) {
@@ -435,7 +432,6 @@ public class InsCourseServlet extends HttpServlet {
 			req.setAttribute("listEmps_ByCompositeQuery", list); // 資料庫取出的list物件,存入request
 			RequestDispatcher successView = req.getRequestDispatcher("/inscourse/listEmps_ByCompositeQuery.jsp"); // 成功轉交listEmps_ByCompositeQuery.jsp
 			successView.forward(req, res);
-			System.out.println("已轉交");
 
 			/*************************** 其他可能的錯誤處理 **********************************/
 		}

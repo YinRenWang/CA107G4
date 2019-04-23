@@ -3,10 +3,33 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ page import="java.util.*"%>
 <%@ page import="com.member.model.*"%>
+<%@ page import="com.coursereservation.model.*"%>
 <%@ page import="java.util.Base64"%>
 
 <jsp:useBean id="now" scope="page" class="java.util.Date" />  
 <jsp:useBean id="inscCourseTimeSvc" scope="page" class="com.inscoursetime.model.InsCourseTimeService" />
+<jsp:useBean id="courseReservationSvc" scope="page" class="com.coursereservation.model.CourseReservationService" />
+<jsp:useBean id="memberSvc" scope="page" class="com.member.model.MemberService" />
+
+<%
+	String inscid=request.getParameter("inscId");
+	CourseReservationService xxx = new CourseReservationService();
+	List<CourseReservationVO> yyy = xxx.findByRate(inscid);
+	Double zzz=0.0;
+	Double point=0.0;
+	Double really=0.0;
+	int howPeople=yyy.size();
+	for(int i=0;i<yyy.size();i++){
+		CourseReservationVO obj = yyy.get(i);
+		zzz+=obj.getCrvScore();
+	}
+	point=(zzz/yyy.size())*2;
+	really=point/2;
+	pageContext.setAttribute("point",point);
+	pageContext.setAttribute("howPeople",howPeople);
+	pageContext.setAttribute("really",really);
+%>
+
 
 <!doctype html>
 <html lang="en">
@@ -557,6 +580,7 @@ input[type=radio].with-font:focus~label:before, input[type=checkbox].with-font:f
 </head>
 <!-- Ajax是簡單的! -->
 <script type="text/javascript">
+
 	$(document).ready(function(){
 		 $('#inputSuccess').change(function(){
 			 $('#form1').submit();
@@ -578,7 +602,7 @@ input[type=radio].with-font:focus~label:before, input[type=checkbox].with-font:f
 			 }
 		 })
 	        //表示後台選取的星數(1代表0.5)
-	     window.onload=showStar(10);
+	     window.onload=showStar(${point});
          function showStar(n){
              var con_wid=document.getElementById("star_con").offsetWidth;
              var del_star=document.getElementById("del_star");
@@ -625,8 +649,6 @@ input[type=radio].with-font:focus~label:before, input[type=checkbox].with-font:f
 
 <!------ Include the above in your HEAD tag ---------->
 
-	
-	
 
 <form id="form1" action="<%= request.getContextPath()%>/InsCourseServlet" method="POST">
 <input type="hidden" name="action"  id="action" value="updateDate">
@@ -642,13 +664,15 @@ input[type=radio].with-font:focus~label:before, input[type=checkbox].with-font:f
 <input type="hidden" name="memName"  value="${param.memName}">
 <input type="hidden" name="teacherId" value="${param.teacherId}"> 
 <input type="hidden" name="memId"  value="${param.memId}">    
-             
+
+       
  		 <div id="star_con" class="star-vote">
             <span id="add_star" class="add-star"></span>
             <span id="del_star" class="del-star"></span>
         </div>  
 	      <img src="http://localhost:8081/CA107G4/images/inscourse/connection.png" width="180" height="45" class="fakeimg"/> </div>
-			<span><h5 class="howPeople">5.00 ( 5 人評分)</h5></span>
+ 
+			<span><h5 class="howPeople">${really}(${howPeople}人評分)</h5></span>
         </div>
 		  
         <div class="box">
@@ -706,11 +730,14 @@ input[type=radio].with-font:focus~label:before, input[type=checkbox].with-font:f
        <div class="box">
           <h3 class="box-title">對他的評價</h3>
 
+
+
         <div class="container">
-    <div class="row text-center">                                       
+    <div class="row text-center"> 
+ <c:forEach var="courseReservationVO" end="2" items="${courseReservationSvc.findByRate(param.inscId)}">	    
                     <div class="col-sm-6 col-md-4">                                                                     
                         <div class="testimonial-box">                           
-                            <img src="https://images.pexels.com/photos/206615/pexels-photo-206615.jpeg?w=940&h=650&auto=compress&cs=tinysrgb" class="img-responsive" alt="" width="90">
+                           <img src="<%=request.getContextPath()%>/member/DBGifReader.do?memId=${courseReservationVO.memId}" width="120" height="120" alt=""/>
                             <div class="ratings-icons">
                                 <span class="glyphicon glyphicon-star"></span>
                                 <span class="glyphicon glyphicon-star"></span>
@@ -718,56 +745,23 @@ input[type=radio].with-font:focus~label:before, input[type=checkbox].with-font:f
                                 <span class="glyphicon glyphicon-star"></span>
                                 <span class="glyphicon glyphicon-star"></span>
                             </div>
-                            <h4>James Baker</h4>
-                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin sapien augue, dictum et gravida et</p>                                                                
-                            
+                            <h4>${memberSvc.getOneMember(courseReservationVO.memId).memName}</h4>
+                            <p>${courseReservationVO.crvRate}</p> 
                         </div>                  
-                    </div> <!-- End Col -->                             
-                    
-                    <div class="col-sm-6 col-md-4">                                                                     
-                        <div class="testimonial-box">                           
-                            <img src="https://images.pexels.com/photos/478544/pexels-photo-478544.jpeg?w=940&h=650&auto=compress&cs=tinysrgb" class="img-responsive" alt="" width="90">
-                            <div class="ratings-icons">
-                                <span class="glyphicon glyphicon-star"></span>
-                                <span class="glyphicon glyphicon-star"></span>
-                                <span class="glyphicon glyphicon-star"></span>
-                                <span class="glyphicon glyphicon-star"></span>
-                                <span class="glyphicon glyphicon-star"></span>
-                            </div>
-                            <h4>Jon Doe</h4>
-                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin sapien augue, dictum et gravida et</p>                                                                
-                            
-                        </div>                  
-                    </div> <!-- End Col -->                             
-                    
-                    <div class="col-sm-6 col-md-4">                                                                     
-                        <div class="testimonial-box">
-                            <img src="https://images.pexels.com/photos/478544/pexels-photo-478544.jpeg?w=940&h=650&auto=compress&cs=tinysrgb" class="img-responsive" alt="" width="90">
-                            <div class="ratings-icons">
-                                <span class="glyphicon glyphicon-star"></span>
-                                <span class="glyphicon glyphicon-star"></span>
-                                <span class="glyphicon glyphicon-star"></span>
-                                <span class="glyphicon glyphicon-star"></span>
-                                <span class="glyphicon glyphicon-star"></span>
-                            </div>
-                            <h4>Maria Jose</h4>
-                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin sapien augue, dictum et gravida et</p>                                                                
-                            
-                        </div>                  
-                    </div> <!-- End Col -->                             
-                                    
-                
+                    </div>                           
+ </c:forEach>                   
                 </div>
-</div>
+		</div>
        </div>       
         
-      </div>
-      <div class="col-lg-4 col-md-4 col-sm-5 col-xs-12">
-      
-      
-      
- 
+        
+        
+        
 
+        
+        
+   </div>
+ <div class="col-lg-4 col-md-4 col-sm-5 col-xs-12">
 
 <input type="hidden" name="inscId"  value="${param.inscId}">   	
       

@@ -21,7 +21,7 @@ public class CourseReservationService {
 			String crvLoc, Double crvTotalTime, Double crvTotalPrice,String crvRate) {
 		
 		CourseReservationVO courseReservationVO = new CourseReservationVO();
-	
+		
 		courseReservationVO.setTeacherId(teacherId);
 		courseReservationVO.setMemId(memId);
 		courseReservationVO.setInscId(inscId);
@@ -54,8 +54,13 @@ public class CourseReservationService {
 	}
 	public List<CourseReservationVO> findByStatus(Integer xxxStatus){
 		return dao.findByStatus(xxxStatus);
+	}
+	
+	public List<CourseReservationVO> findByRate(String inscId){
+		return dao.findByRate(inscId);
 		
 	}
+	
 	public List<CourseReservationVO> findByPrimaryKey(String xxxId){
 		return dao.findByPrimaryKey(xxxId);
 		

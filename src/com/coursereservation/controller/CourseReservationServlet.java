@@ -107,7 +107,6 @@ public class CourseReservationServlet extends HttpServlet {
 					
 					/***************************2.開始新增資料***************************************/
 					CourseReservationService crSvc = new CourseReservationService();
-					
 					crSvc.addCourseReservation(teacherId, xxx, inscId, teamId, crvStatus, classStatus, tranStatus, crvMFD, crvEXP, crvLoc, crvTotalTime, crvTotalPrice,  crvRate);
 					/***************************3.新增完成,準備轉交(Send the Success view)***********/
 					String url = "/coursereservation/courseOrder.jsp";

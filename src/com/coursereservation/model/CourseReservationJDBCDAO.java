@@ -25,6 +25,9 @@ public class CourseReservationJDBCDAO implements CourseReservationDAO_interface 
 	//修改
 	private static final String UPDATE = "UPDATE CourseReservation set teamId=?, crvStatus=?, classStatus=?, TranStatus=? , crvScore=?, crvRate=? where crvId = ?";
 	
+	//查詢訂單評價
+	private static final String GET_ALL_RATE ="SELECT MEMID,CRVSCORE,CRVRATE FROM CourseReservation WHERE CLASSSTATUS='1' AND INSCID=? ORDER BY CRVID DESC";
+	
 	//查詢全部
 	private static final String GET_ALL_STMT = "SELECT * FROM CourseReservation";
 	
@@ -361,6 +364,67 @@ public class CourseReservationJDBCDAO implements CourseReservationDAO_interface 
 		return list;
 	}
 
+	@Override
+	public List<CourseReservationVO> findByRate(String inscId) {
+		List<CourseReservationVO> list = new ArrayList<CourseReservationVO>();
+		CourseReservationVO courseReservationVO = null;
+
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		
+
+		try {
+
+			Class.forName(driver);
+			con = DriverManager.getConnection(url, userid, passwd);
+			pstmt = con.prepareStatement(GET_ALL_RATE);
+			pstmt.setString(1, inscId);
+			rs = pstmt.executeQuery();
+
+			while (rs.next()) {
+				courseReservationVO = new CourseReservationVO();
+				courseReservationVO.setMemId(rs.getString("memId"));
+				courseReservationVO.setCrvScore(rs.getDouble("crvScore"));
+				courseReservationVO.setCrvRate(rs.getString("crvRate"));
+				list.add(courseReservationVO); // Store the row in the list
+			}
+
+			// Handle any driver errors
+		} catch (ClassNotFoundException e) {
+			throw new RuntimeException("Couldn't load database driver. "
+					+ e.getMessage());
+			// Handle any SQL errors
+		} catch (SQLException se) {
+			throw new RuntimeException("A database error occured. "
+					+ se.getMessage());
+		} finally {
+			if (rs != null) {
+				try {
+					rs.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
+		}
+		return list;
+	}
+
+	
 	public static void main(String[] args) {
 		// 新增
 		CourseReservationVO courseReservationVO1 = new CourseReservationVO();
@@ -434,28 +498,18 @@ public class CourseReservationJDBCDAO implements CourseReservationDAO_interface 
 //		}
 		
 		// 複合查詢狀態
-//				List<CourseReservationVO> list = dao.findByStatus(1);
-//				for (CourseReservationVO courseReservationVO5 : list) {
-//					System.out.print(courseReservationVO5.getCrvId()+",");
-//					System.out.print(courseReservationVO5.getTeacherId()+ ",");
-//					System.out.print(courseReservationVO5.getMemId()+ ",");
-//					System.out.print(courseReservationVO5.getTeamId()+ ",");
-//					System.out.print(courseReservationVO5.getCrvStatus()+ ",");
-//					System.out.print(courseReservationVO5.getClassStatus()+ ",");
-//					System.out.print(courseReservationVO5.getTranStatus()+ ",");
-//					System.out.print(courseReservationVO5.getCrvMFD()+ ",");
-//					System.out.print(courseReservationVO5.getCrvEXP()+ ",");
-//					System.out.print(courseReservationVO5.getCrvLoc()+ ",");
-//					System.out.print(courseReservationVO5.getCrvTotalTime()+ ",");
-//					System.out.print(courseReservationVO5.getCrvTotalPrice()+ ",");
-//					System.out.print(courseReservationVO5.getCrvScore()+ ",");
-//					System.out.println(courseReservationVO5.getCrvRate()+ ",");
-//					System.out.println();
-//				}
+				List<CourseReservationVO> list = dao.findByRate("IC00001");
+				for (CourseReservationVO courseReservationVO5 : list) {
+					System.out.print(courseReservationVO5.getMemId()+ ",");
+					System.out.print(courseReservationVO5.getCrvScore()+ ",");
+					System.out.println(courseReservationVO5.getCrvRate()+ ",");
+					System.out.println();
+				}
 		
 		
 	
 
 	}
+
 
 }
