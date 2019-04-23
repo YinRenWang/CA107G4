@@ -45,12 +45,12 @@ public class TeacherServlet extends HttpServlet {
 			// send the ErrorPage view.
 			req.setAttribute("errorMsgs", errorMsgs);
 
-//			try {
+			try {
 				/*************************** 1.接收請求參數 - 輸入格式的錯誤處理 **********************/
 				String memId = req.getParameter("memId");
 				TeacherService teacherSvc = new TeacherService();
-				TeacherVO teacherSt=teacherSvc.findByStatus(memId);
-				if(teacherSt==null) {
+				Integer tcST=teacherSvc.findByStatus(memId).getTeacherStatus();
+				if(tcST==null) {
 					String teacherCity = req.getParameter("teacherCity");
 					String teacherEdu = req.getParameter("teacherEdu");
 				
@@ -81,24 +81,22 @@ public class TeacherServlet extends HttpServlet {
 					/*************************** 2.開始查詢資料 *****************************************/
 				
 					
-					Integer teacherStatus = 0;
-					byte[] idCardImg =null;
-					teacherSvc.addTeacher(memId, teacherStatus, teacherCity, teacherEdu, idCardImg, diplomaImg, teacherText);
+					Integer teacherStatus = 0;//待審核
+					teacherSvc.addTeacher(memId, teacherStatus, teacherCity, teacherEdu, diplomaImg, teacherText);
 
 					/*************************** 3.查詢完成,準備轉交(Send the Success view) *************/
 					
-					String url = "/index.jsp";
+					String url = "http://localhost:8081/CA107G4/index.jsp";
 					RequestDispatcher successView = req.getRequestDispatcher(url); // 成功轉交 loginSuccess.jsp
 					successView.forward(req, res);
 				}else {
-					Integer teacherStatus =teacherSt.getTeacherStatus();
-					if(teacherStatus==0) {
+					if(tcST==0) {
 						errorMsgs.add("您目前正在審核中");
 					}
-					if(teacherStatus==1) {
+					if(tcST==1) {
 						errorMsgs.add("您已是老師了！");
 					}
-					if(teacherStatus==2) {
+					if(tcST==2) {
 						errorMsgs.add("您目前被停權中，請聯絡我們");
 					}
 					
@@ -107,11 +105,13 @@ public class TeacherServlet extends HttpServlet {
 				}
 
 			} 
-//			catch (Exception e) {
-//				errorMsgs.add("無法取得資料:" + e.getMessage());
-//				RequestDispatcher failureView = req.getRequestDispatcher("/teacher/addTeacher.jsp");
-//				failureView.forward(req, res);
-//			}
+			catch (Exception e) {
+				errorMsgs.add("無法取得資料:" + e.getMessage());
+				RequestDispatcher failureView = req.getRequestDispatcher("/teacher/addTeacher.jsp");
+				failureView.forward(req, res);
+			}
+			
+		}	
 
 		
 		

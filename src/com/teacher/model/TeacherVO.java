@@ -6,7 +6,6 @@ public class TeacherVO implements java.io.Serializable{
 	private Integer teacherStatus;
 	private String teacherCity;
 	private String teacherEdu; //學歷
-	private byte[] idCardImg;   //身分眾照片
 	private byte[] diplomaImg;  //學歷照片
 	private String teacherText; //老師介紹
 	
@@ -39,12 +38,6 @@ public class TeacherVO implements java.io.Serializable{
 	}
 	public void setTeacherEdu(String teacherEdu) {
 		this.teacherEdu = teacherEdu;
-	}
-	public byte[] getIdCardImg() {
-		return idCardImg;
-	}
-	public void setIdCardImg(byte[] blob) {
-		this.idCardImg = blob;
 	}
 	public byte[] getDiplomaImg() {
 		return diplomaImg;
