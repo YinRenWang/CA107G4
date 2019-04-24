@@ -51,4 +51,12 @@
     <servlet-name>TeacherServlet</servlet-name>
     <url-pattern>/teacher/teacher.do</url-pattern>
   </servlet-mapping>
+    <servlet>
+    <servlet-name>DBGifReader_VER2</servlet-name>
+    <servlet-class>com.teacher.controller.DBGifReader_VER2</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>DBGifReader_VER2</servlet-name>
+    <url-pattern>/teacher/DBGifReader_VER2.do</url-pattern>
+  </servlet-mapping>
 </web-app>

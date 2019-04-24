@@ -20,7 +20,7 @@ public class TeacherDAO implements TeacherDAO_interface {
 			Context ctx = new InitialContext();
 			ds = (DataSource)ctx.lookup("java:comp/env/jdbc/TestDB");
 		} catch (NamingException e) {
-			e.printStackTrace();
+			e.printStackTrace(); 
 		}
 	}
 	
@@ -265,6 +265,18 @@ public class TeacherDAO implements TeacherDAO_interface {
 	public TeacherVO findByStatus(String memId) {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	@Override
+	public List<TeacherVO> getAllStatus(Integer teacherStatus) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void updateStatus(Integer teacherStatus, String teacherId) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

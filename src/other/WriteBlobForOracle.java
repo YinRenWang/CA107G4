@@ -19,10 +19,10 @@ public class WriteBlobForOracle {
 		PreparedStatement pstmt = null;
 		String driver = "oracle.jdbc.driver.OracleDriver";
 //Windows用	
-		String url = "jdbc:oracle:thin:@localhost:1521:XE";
+//		String url = "jdbc:oracle:thin:@localhost:1521:XE";
 		
 //Mac用
-//		String url = "jdbc:oracle:thin:@localhost:49161:XE";
+		String url = "jdbc:oracle:thin:@localhost:49161:XE";
 		String userid = "WESHARE";
 		String passwd = "123456";
 		int    count  = 6;
@@ -37,10 +37,10 @@ public class WriteBlobForOracle {
 				// 絕對路徑- 譬如:
 				
 //Mac用
-//				File pic = new File("/Users/yinren/Desktop/images/blob/", picName[i-1]);
+				File pic = new File("/Users/yinren/Desktop/images/blob/", picName[i-1]);
 				
 //Window用 		
-				File pic = new File("C:/Users/Java/git/CA107G4/WebContent/images/blob/", picName[i-1]);
+//				File pic = new File("C:/Users/Java/git/CA107G4/WebContent/images/blob/", picName[i-1]);
 				long flen = pic.length();
 				String fileName = pic.getName();
 				int dotPos = fileName.indexOf('.');

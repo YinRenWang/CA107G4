@@ -20,11 +20,20 @@ public class TeacherService {
 		dao.insert(teacherVO);
 	}
 	
-	public TeacherVO findOneById(String teacherId) {
-		return dao.findByPrimaryKey(teacherId);
+	public TeacherVO findOneById(String xxxId) {
+		return dao.findByPrimaryKey(xxxId);
 	}
+	
+	public void updateStatus(Integer teacherStatus, String teacherId) {
+		dao.updateStatus(teacherStatus, teacherId);
+	}
+	
 	public List<TeacherVO> getAll(){
 		return dao.getAll();
+	}
+	
+	public List<TeacherVO> getAllStatus(Integer teacherStatus){
+		return dao.getAllStatus(teacherStatus);
 	}
 	public TeacherVO findByStatus(String memId) {
 		return dao.findByStatus(memId);

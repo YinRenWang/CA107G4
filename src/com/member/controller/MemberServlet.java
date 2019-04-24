@@ -92,7 +92,7 @@ public class MemberServlet extends HttpServlet {
 				}
 				/*************************** 3.查詢完成,準備轉交(Send the Success view) *************/
 				session.setAttribute("memberVO", memberVO); // 資料庫取出的memberVO物件,存入req
-				String url = "/teacher/addTeacher.jsp";
+				String url ="/teacher/addTeacher.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url); // 成功轉交 loginSuccess.jsp
 				successView.forward(req, res);
 
@@ -111,7 +111,7 @@ public class MemberServlet extends HttpServlet {
 			// send the ErrorPage view.
 			req.setAttribute("errorMsgs", errorMsgs);
 
-			try {
+			try { 
 				/*********************** 1.接收請求參數 - 輸入格式的錯誤處理 *************************/
 				String memId = req.getParameter("memId");
 				String memIdReg = "^[(a-zA-Z0-9_)]{6,12}$";

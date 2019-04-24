@@ -578,7 +578,7 @@ input[type=radio].with-font:focus~label:before, input[type=checkbox].with-font:f
 </style>
 <title>WeShare | 最棒的教育共享平台</title>
 </head>
-<!-- Ajax是簡單的! -->
+
 <script type="text/javascript">
 
 	$(document).ready(function(){
@@ -617,7 +617,7 @@ input[type=radio].with-font:focus~label:before, input[type=checkbox].with-font:f
 	
 		 
 
-	})
+	});
 	
 </script>
 <body>
