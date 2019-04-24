@@ -364,7 +364,7 @@ public class InsCourseTimeJDBCDAO implements InsCourseTimeDAO_interface {
 	@Override
 	public List<InsCourseTimeVO> findDate(java.sql.Date startTime, java.sql.Date endTime, String inscId) {
 		List<InsCourseTimeVO> list = new ArrayList<InsCourseTimeVO>();
-		InsCourseTimeVO insCourseTimeVO = null;
+		InsCourseTimeVO insCourseTimeVO = null; 
 
 		Connection con = null;
 		PreparedStatement pstmt = null;

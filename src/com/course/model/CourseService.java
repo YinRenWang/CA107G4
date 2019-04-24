@@ -26,6 +26,10 @@ public class CourseService {
 	}
 	public List<CourseVO> getAll(){
 		return dao.getAll();
+	} 
+
+	public List<CourseVO> findByCourseType(Integer courseTypeId) {
+		return dao.findCourseTypeId(courseTypeId);
 	}
 	
 	

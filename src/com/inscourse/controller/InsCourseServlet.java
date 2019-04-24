@@ -70,7 +70,7 @@ public class InsCourseServlet extends HttpServlet {
 					RequestDispatcher failureView = req.getRequestDispatcher("/Inscourse/select_page.jsp");
 					failureView.forward(req, res);
 					return;
-				}
+				} 
 
 				InsCourseService insCourseSvc = new InsCourseService();
 				InsCourseVO insCourseVO = insCourseSvc.findOneById(inscId);

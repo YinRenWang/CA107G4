@@ -14,7 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.coursereservation.model.CourseReservationService;
 import com.coursereservation.model.CourseReservationVO;
-
+ 
 @WebServlet("/CourseReservationServlet")
 public class CourseReservationServlet extends HttpServlet {
 	
@@ -32,7 +32,7 @@ public class CourseReservationServlet extends HttpServlet {
 				List<String> errorMsgs = new LinkedList<String>();
 				// Store this set in the request scope, in case we need to
 				// send the ErrorPage view.
-				req.setAttribute("errorMsgs", errorMsgs);
+				req.setAttribute("errorMsgs", errorMsgs); 
 				
 
 				try {
@@ -49,7 +49,7 @@ public class CourseReservationServlet extends HttpServlet {
 						crvMFD=new Timestamp(System.currentTimeMillis());
 						errorMsgs.add("請輸入日期!");
 					}
-					
+			 		
 					String TeamId =null;
 					
 					Timestamp crvEXP = null;

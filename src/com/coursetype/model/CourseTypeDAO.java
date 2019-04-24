@@ -1,7 +1,6 @@
-package com.course.model;
+package com.coursetype.model;
 
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -13,39 +12,35 @@ import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.sql.DataSource;
 
-public class CourseDAO implements CourseDAO_interface {
+public class CourseTypeDAO implements CourseTypeDAO_interface {
 	
 	private static DataSource ds = null;
-	
 	static {
 		try {
 			Context ctx = new InitialContext();
 			ds = (DataSource)ctx.lookup("java:comp/env/jdbc/TestDB");
 		} catch (NamingException e) {
-	
 			e.printStackTrace();
 		}
 	}
+
+	final String INSERT_STMT = "INSERT INTO COURSETYPE VALUES(CourseType_seq.NEXTVAL,?)";
+	final String UPDATE_STMT = "UPDATE COURSETYPE SET COURSETYPENAME=? WHERE COURSETYPEID=?";
+	final String DELETE_COURSETYPE = "DELETE FROM COURSETYPE WHERE COURSETYPEID=?";
+	final String SEARCH_COURSETYPE = "SELECT * FROM COURSETYPE WHERE COURSETYPEID=?";
+	final String SEARCH_COURSEALL = "SELECT * FROM COURSETYPE";
 	
-	
-	final String INSERT_STMT = "INSERT INTO COURSE VALUES(LPAD(Course_seq.NEXTVAL,4,'0'),?,?)";
-	final String UPDATE_STMT = "UPDATE COURSE SET COURSETYPEID=?,COURSENAME=? WHERE COURSEID=?";
-	final String DELETE_COURSE = "DELETE FROM COURSE WHERE COURSEID=?";
-	final String SEARCH_COURSE = "SELECT * FROM COURSE WHERE COURSEID=?";
-	final String SEARCH_COURSEALL = "SELECT * FROM COURSE";
-	
-	
-	
+
 	@Override
-	public void insert(CourseVO courseVO) {
+	public void insert(CourseTypeVO courseTypeVO) {
 		Connection con = null;
 		PreparedStatement pstmt = null;
+		
 		try {
 			con = ds.getConnection();
 			pstmt = con.prepareStatement(INSERT_STMT);
-
-			pstmt.setInt(1, courseVO.getCourseTypeId());
-			pstmt.setString(2, courseVO.getCourseName());
+			
+			pstmt.setString(1, courseTypeVO.getCourseTypeName());
 			pstmt.executeUpdate();
 			
 		}catch(SQLException se) {
@@ -67,21 +62,22 @@ public class CourseDAO implements CourseDAO_interface {
 				}
 			}
 		}
+
 	}
 
 	@Override
-	public void update(CourseVO courseVO) {
+	public void update(CourseTypeVO courseTypeVO) {
 		Connection con = null;
 		PreparedStatement pstmt = null;
+		
 		try {
 			con = ds.getConnection();
 			pstmt = con.prepareStatement(UPDATE_STMT);
 			
-			pstmt.setInt(1, courseVO.getCourseTypeId());
-			pstmt.setString(2, courseVO.getCourseName());
-			pstmt.setString(3, courseVO.getCourseId());
-			pstmt.executeUpdate();
+			pstmt.setString(1, courseTypeVO.getCourseTypeName());
+			pstmt.setInt(2, courseTypeVO.getCourseTypeId());
 			
+			pstmt.executeUpdate();
 			
 		}catch(SQLException se) {
 			throw new RuntimeException("A database error occured. "
@@ -106,14 +102,17 @@ public class CourseDAO implements CourseDAO_interface {
 	}
 
 	@Override
-	public void delete(String courseId) {
+	public void delete(Integer courseTypeId) {
 		Connection con = null;
 		PreparedStatement pstmt = null;
+		
 		try {
 			con = ds.getConnection();
-			pstmt = con.prepareStatement(DELETE_COURSE);
+			con.setAutoCommit(false);
 			
-			pstmt.setString(1, courseId);
+			pstmt = con.prepareStatement(DELETE_COURSETYPE);
+			
+			pstmt.setInt(1, courseTypeId);
 			pstmt.executeUpdate();
 			
 			
@@ -140,23 +139,23 @@ public class CourseDAO implements CourseDAO_interface {
 	}
 
 	@Override
-	public CourseVO findByPrimaryKey(String courseId) {
+	public CourseTypeVO findByPrimaryKey(Integer courseTypeId) {
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
+		
 		try {
 			con = ds.getConnection();
-			pstmt = con.prepareStatement(SEARCH_COURSE);
+			pstmt = con.prepareStatement(SEARCH_COURSETYPE);
 			
-			pstmt.setString(1, courseId);
+			pstmt.setInt(1, courseTypeId);
 			rs = pstmt.executeQuery();
-			CourseVO courseVO = new CourseVO(); 
+			CourseTypeVO courseTypeVO = new CourseTypeVO(); 
 			while(rs.next()) {
-				courseVO.setCourseId(courseId);
-				courseVO.setCourseTypeId(rs.getInt("courseTypeId"));
-				courseVO.setCourseName(rs.getString("courseName"));
+				courseTypeVO.setCourseTypeId(courseTypeId);
+				courseTypeVO.setCourseTypeName(rs.getString("courseTypeName"));
 			}
-			return courseVO;
+			return courseTypeVO;
 			
 		}catch(SQLException se) {
 			throw new RuntimeException("A database error occured. "
@@ -188,9 +187,9 @@ public class CourseDAO implements CourseDAO_interface {
 	}
 
 	@Override
-	public List<CourseVO> getAll() {
-		List<CourseVO> list = new ArrayList<CourseVO>();
-		CourseVO courseVO = null;
+	public List<CourseTypeVO> getAll() {
+		List<CourseTypeVO> list = new ArrayList<>();
+		CourseTypeVO CourseTypeVO = null;
 		
 		Connection con = null;
 		PreparedStatement pstmt = null;
@@ -201,14 +200,12 @@ public class CourseDAO implements CourseDAO_interface {
 			rs = pstmt.executeQuery();
 
 			while (rs.next()) {
-				courseVO = new CourseVO();
-				courseVO.setCourseId(rs.getString("CourseId"));
-				courseVO.setCourseTypeId(rs.getInt("CourseTypeId"));
-				courseVO.setCourseName(rs.getString("CourseName"));
-				list.add(courseVO);
+				CourseTypeVO = new CourseTypeVO();
+				CourseTypeVO.setCourseTypeId(rs.getInt("CourseTypeId"));
+				CourseTypeVO.setCourseTypeName(rs.getString("CourseTypeName"));
+				list.add(CourseTypeVO);
 			}
 
-			
 			
 		}catch(SQLException se) {
 			throw new RuntimeException("A database error occured. "
@@ -220,7 +217,6 @@ public class CourseDAO implements CourseDAO_interface {
 				} catch (SQLException se) {
 					se.printStackTrace(System.err);
 				}
-			}
 			if (pstmt != null) {
 				try {
 					pstmt.close();
@@ -236,59 +232,8 @@ public class CourseDAO implements CourseDAO_interface {
 				}
 			}
 		}
-		return null;
+		return list;
 	}
 
-	@Override
-	public CourseVO findByLike(String xxxName) {
-		Connection con = null;
-		PreparedStatement pstmt = null;
-		ResultSet rs = null;
-		try {
-			con = ds.getConnection();
-			pstmt = con.prepareStatement(SEARCH_COURSE);
-			
-			pstmt.setString(1, xxxName);
-			rs = pstmt.executeQuery();
-			CourseVO courseVO = new CourseVO(); 
-			while(rs.next()) {
-				courseVO.setCourseId(rs.getString("courseTypeId"));
-			}
-			return courseVO;
-			
-		}catch(SQLException se) {
-			throw new RuntimeException("A database error occured. "
-					+ se.getMessage());
-		}finally {
-			if (rs != null) {
-				try {
-					rs.close();
-				} catch (SQLException se) {
-					se.printStackTrace(System.err);
-				}
-			}
-			if (pstmt != null) {
-				try {
-					pstmt.close();
-				} catch (SQLException se) {
-					se.printStackTrace(System.err);
-				}
-			}
-			if (con != null) {
-				try {
-					con.close();
-				} catch (Exception e) {
-					e.printStackTrace(System.err);
-				}
-			}
-		}
-		
-	}
-
-	@Override
-	public List<CourseVO> findCourseTypeId(Integer courseType) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
+}
 }

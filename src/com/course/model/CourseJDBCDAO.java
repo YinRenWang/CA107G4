@@ -5,6 +5,8 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.inscoursetime.model.InsCourseTimeVO;
+
 public class CourseJDBCDAO implements CourseDAO_interface {
 	String driver = "oracle.jdbc.driver.OracleDriver";
 //	String url = "jdbc:oracle:thin:@localhost:1521:XE";
@@ -16,6 +18,7 @@ public class CourseJDBCDAO implements CourseDAO_interface {
 	final String UPDATE_STMT = "UPDATE COURSE SET COURSETYPEID=?,COURSENAME=? WHERE COURSEID=?";
 	final String DELETE_COURSE = "DELETE FROM COURSE WHERE COURSEID=?";
 	final String SEARCH_COURSE = "SELECT * FROM COURSE WHERE COURSEID=?";
+	final String SEARCH_COURSETYPE = "SELECT CourseId,CourseName FROM COURSE WHERE CourseTypeId=?";
 	final String SEARCH_COURSEALL = "SELECT * FROM COURSE";
 	final String SEARCH_CHINESE = "SELECT * FROM COURSE WHERE UPPER(COURSENAME) LIKE UPPER('%'||?||'%')";
 	
@@ -25,7 +28,7 @@ public class CourseJDBCDAO implements CourseDAO_interface {
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		
-		try {
+		try { 
 			Class.forName(driver);
 			con = DriverManager.getConnection(url, userid, passwd);
 			pstmt = con.prepareStatement(SEARCH_CHINESE);
@@ -306,6 +309,65 @@ public class CourseJDBCDAO implements CourseDAO_interface {
 		return list;
 	}
 	
+	@Override
+	public List<CourseVO> findCourseTypeId(Integer courseType) {
+		List<CourseVO> list = new ArrayList<CourseVO>();
+		CourseVO courseVO = null; 
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+
+		try {
+
+			Class.forName(driver);
+			con = DriverManager.getConnection(url, userid, passwd);
+			pstmt = con.prepareStatement(SEARCH_COURSETYPE);
+			pstmt.setInt(1,courseType);
+			rs = pstmt.executeQuery();
+
+			while (rs.next()) {
+				// empVO 也稱為 Domain objects
+				courseVO = new CourseVO();
+				courseVO.setCourseId(rs.getString("CourseId"));
+				courseVO.setCourseName(rs.getString("CourseName"));
+				list.add(courseVO); // Store the row in the list
+			}
+
+			// Handle any driver errors
+		} catch (ClassNotFoundException e) {
+			throw new RuntimeException("Couldn't load database driver. "
+					+ e.getMessage());
+			// Handle any SQL errors
+		} catch (SQLException se) {
+			throw new RuntimeException("A database error occured. "
+					+ se.getMessage());
+			// Clean up JDBC resources
+		} finally {
+			if (rs != null) {
+				try {
+					rs.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
+		}
+		return list;
+	}
+
 	public static void main(String args[]) {
 		
 		CourseJDBCDAO courseJDBCDAO = new CourseJDBCDAO();
@@ -333,13 +395,12 @@ public class CourseJDBCDAO implements CourseDAO_interface {
 //		System.out.println("CourseName="+courseVO3.getCourseName());
 //		
 		//查詢全部
-//		List<CourseVO> list = courseJDBCDAO.getAll();
-//		for (CourseVO aEmp : list) {
-//			System.out.println(aEmp.getCourseId() + ",");
-//			System.out.println(aEmp.getCourseTypeId() + ",");
-//			System.out.println(aEmp.getCourseName() + ",");
-//			System.out.println();
-//		}
+		List<CourseVO> list = courseJDBCDAO.findCourseTypeId(01);
+		for (CourseVO aEmp : list) {
+			System.out.println(aEmp.getCourseId() + ",");
+			System.out.println(aEmp.getCourseName() + ",");
+			System.out.println();
+		}
 		
 
 //		//查詢
@@ -349,4 +410,5 @@ public class CourseJDBCDAO implements CourseDAO_interface {
 		
 	}
 
+	
 }

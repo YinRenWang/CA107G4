@@ -9,4 +9,5 @@ public interface CourseDAO_interface {
 	public CourseVO findByPrimaryKey(String courseId);
 	public CourseVO  findByLike(String xxxName);
 	public List<CourseVO> getAll();
+	public List<CourseVO> findCourseTypeId(Integer courseType);
 }

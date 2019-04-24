@@ -5,7 +5,7 @@ public class CourseVO implements java.io.Serializable{
 	private Integer courseTypeId;
 	private String courseName;
 	
-	public String getCourseId() {
+	public String getCourseId() { 
 		return courseId;
 	}
 	public void setCourseId(String courseId) {
