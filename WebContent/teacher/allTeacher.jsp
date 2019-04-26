@@ -237,6 +237,11 @@ $(document).ready(function () {
          									 <option value="0"> 待審核
        							</select>
        							</form>
+       			<FORM METHOD="get" ACTION="<%=request.getContextPath()%>/inscourse/addInsCourse.jsp" style="margin-bottom: 0px;">
+			     <input type="submit" value="新增課程">
+			     <input type="hidden" name="teacherId"      value="${teacherVO0.teacherId}">
+			     <c:set var="teacherId" value="${teacherVO0.teacherId}" scope="session"/>             
+			     <input type="hidden" name="action"     value="checkStatus"></FORM>
 										</td>
 										<td>
 											<a href="javascript:;" class="star">
@@ -281,6 +286,7 @@ $(document).ready(function () {
          									 <option value="2"> 已停權
        									</select>
        							</form>		
+       							
 										</td>
 										<td>
 											<a href="javascript:;" class="star">

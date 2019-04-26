@@ -11,6 +11,7 @@ public class InsCourseVO implements java.io.Serializable{
 	private Integer inscPrice;
 	private String inscCourser;    //課綱
 	private Integer inscStatus;  //上下架
+	
 	public String getInscId() {
 		return inscId;
 	}

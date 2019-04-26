@@ -374,6 +374,15 @@ public class InsCourseDAO implements InsCourseDAO_interface {
 		return list;
 	}
 
+	@Override
+	public List<InsCourseVO> findByTeacher(String teacherId) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	
+
+
 
 	
 	

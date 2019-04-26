@@ -10,6 +10,7 @@
 <jsp:useBean id="inscCourseTimeSvc" scope="page" class="com.inscoursetime.model.InsCourseTimeService" />
 <jsp:useBean id="courseReservationSvc" scope="page" class="com.coursereservation.model.CourseReservationService" />
 <jsp:useBean id="memberSvc" scope="page" class="com.member.model.MemberService" />
+<jsp:useBean id="memberVO"  scope="session" type="com.member.model.MemberVO" />
 
 <%
 	String inscid=request.getParameter("inscId");
@@ -843,11 +844,12 @@ input[type=radio].with-font:focus~label:before, input[type=checkbox].with-font:f
  
 
 	  
-<form id="form2" action="<%= request.getContextPath()%>/coursereservation/coursereservation.do" method="POST">	
+<form id="form2" action="<%= request.getContextPath()%>/coursereservation/coursereservation.do" method="GET">	
  <input type="hidden" name="action" value="addOrder">     
+ <input type="hidden" name="inscTimeId"  value="${inscTimeId}">
  <input type="hidden" name="memName"  value="${param.memName}">
 <input type="hidden" name="teacherId" value="${param.teacherId}"> 
-<input type="hidden" name="memId"  value="${param.memId}"> 
+<input type="hidden" name="memId"  value="${memberVO.memId}"> 
  <input type="hidden" name="inscId"  value="${param.inscId}">
 <input type="hidden" name="crvMFD"  value="${inscMFD}">
  <input type="hidden" name="crvEXP"  value="${inscEXP}">

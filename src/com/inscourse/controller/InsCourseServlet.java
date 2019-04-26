@@ -199,8 +199,9 @@ public class InsCourseServlet extends HttpServlet {
 			List<String> errorMsgs = new LinkedList<String>();
 			req.setAttribute("errorMsgs", errorMsgs);
 
-			try {
-
+//			try {
+				
+			
 				String teacherId = req.getParameter("teacherId");
 
 				String courseId = req.getParameter("courseId").trim();
@@ -209,14 +210,18 @@ public class InsCourseServlet extends HttpServlet {
 
 				Integer inscType = new Integer(req.getParameter("inscType").trim());
 
-				Integer inscPeople = null;
-				try {
-					inscPeople = new Integer(req.getParameter("inscPeople").trim());
-				} catch (NumberFormatException e) {
-					inscPeople = 0;
-					errorMsgs.add("人數請填數字.");
-				}
-
+				
+			
+					Integer inscPeople = null;
+					
+					try {
+						inscPeople = new Integer(req.getParameter("inscPeople").trim());
+					} catch (NumberFormatException e) {
+						inscPeople = null;
+					
+					}
+					
+				
 				String inscLang = req.getParameter("inscLang").trim();
 
 				Integer inscPrice = null;
@@ -229,10 +234,10 @@ public class InsCourseServlet extends HttpServlet {
 
 				String inscCourser = req.getParameter("inscCourser").trim();
 				if (inscCourser == null || inscCourser.trim().length() == 0) {
-					errorMsgs.add("職位請勿空白");
+					errorMsgs.add("課程介紹請勿空白");
 				}
-
-				Integer inscStatus = new Integer(req.getParameter("inscStatus").trim());
+				//課程預設為上架
+				Integer inscStatus = 0;
 
 				InsCourseVO insCourseVO = new InsCourseVO();
 				insCourseVO.setTeacherId(teacherId);
@@ -247,7 +252,7 @@ public class InsCourseServlet extends HttpServlet {
 
 				if (!errorMsgs.isEmpty()) {
 					req.setAttribute("insCourseVO", insCourseVO);
-					RequestDispatcher failureView = req.getRequestDispatcher("/Inscourse/update_insCourse_input.jsp");
+					RequestDispatcher failureView = req.getRequestDispatcher("/inscourse/addInsCourse.jsp");
 					failureView.forward(req, res);
 					return;
 				}
@@ -256,16 +261,18 @@ public class InsCourseServlet extends HttpServlet {
 				insCourseSvc.addInsCourse(teacherId, courseId, inscLoc, inscType, inscPeople, inscLang, inscPrice,
 						inscCourser, inscStatus);
 
-				String url = "/Inscourse/listAllInsCourse.jsp";
+				String url = "/inscourse/listAllInsCourse.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url); // 新增成功後轉交listAllEmp.jsp
 				successView.forward(req, res);
+				System.out.print("出去了");
 
-			} catch (Exception e) {
-				errorMsgs.add(e.getMessage());
-				RequestDispatcher failureView = req.getRequestDispatcher("/Inscourse/addInsCourse.jsp");
-				failureView.forward(req, res);
-			}
-		}
+			} 
+//			catch (Exception e) {
+//				errorMsgs.add(e.getMessage());
+//				RequestDispatcher failureView = req.getRequestDispatcher("/inscourse/addInsCourse.jsp");
+//				failureView.forward(req, res);
+//			}
+//		}
 
 		if ("findValuebyId".equals(action)) {
 			List<String> errorMsgs = new LinkedList<String>();
@@ -369,6 +376,7 @@ public class InsCourseServlet extends HttpServlet {
 //				//總金額
 			Double totalPrice = price + tax;
 			String crvTotalPrice = String.valueOf(totalPrice);
+			req.setAttribute("inscTimeId", inscTimeId);
 			req.setAttribute("crvPrice", crvPrice);
 			req.setAttribute("crvTax", crvTax);
 			req.setAttribute("crvTotalPrice", crvTotalPrice);

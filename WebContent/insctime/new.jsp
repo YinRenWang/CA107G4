@@ -1,13 +1,12 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<jsp:useBean id="inscCourseTimeSvc" scope="page" class="com.inscoursetime.model.InsCourseTimeService" />
+<jsp:useBean id="insCourseSvc" scope="page" class="com.inscourse.model.InsCourseService" />
+<jsp:useBean id="CourseSvc" scope="page" class="com.course.model.CourseService" />
+<jsp:useBean id="memberSvc" scope="page" class="com.member.model.MemberService" />
 <!doctype html>
 <html lang="en">
-
-
-<jsp:useBean id="memberVO"  scope="session" type="com.member.model.MemberVO" />
-
-
 <head>
 <!-- Required meta tags -->
 <meta charset="utf-8">
@@ -18,12 +17,9 @@
 	href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
 <link rel="stylesheet" type="text/css"
 	href="<%=request.getContextPath()%>/css/G4.css ">
-<link rel="stylesheet"
-	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 <link rel="stylesheet" type="text/css"
 	href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-<link 
-	href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/2.0.0/jquery.min.js"></script>
 <script
@@ -33,87 +29,10 @@
 	src="http://code.jquery.com/jquery-2.1.4.min.js"></script>
 
 <script 
-	src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+	src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>	
 <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
-<script src="//code.jquery.com/jquery-1.11.1.min.js"></script>		
-
+<script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
     
-<style>
-
-.mainbody {
-    background:#f0f0f0;
-}
-/* Special class on .container surrounding .navbar, used for positioning it into place. */
-.navbar-wrapper {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  z-index: 20;
-  margin-left: -15px;
-  margin-right: -15px;
-}
-
-
-
-.brand_network {
-    color: #9D9D9D;
-    float: left;
-    position: absolute;
-    left: 70px;
-    top: 30px;
-    font-size: smaller;
-}
-
-.post-content {
-    margin-left:58px;
-}
-
-.badge-important {
-    margin-top: 3px;
-    margin-left: 25px;
-    position: absolute;
-}
-.mainbody{
-	margin-bottom:10%;
-}
-#coole{
-	margin-bottom:22%;
-	padding-left:22%;
-}
-
-</style>
- 
-<script>
-$(function (){
-	 
-    function format_float(num, pos)
-    {
-        var size = Math.pow(20, pos);
-        return Math.round(num * size) / size;
-    }
- 
-    function preview(input) {
- 
-        if (input.files && input.files[0]) {
-            var reader = new FileReader();
-            
-            reader.onload = function (e) {
-                $('.preview').attr('src', e.target.result);
-                var KB = format_float(e.total / 1024, 2);
-                $('.size').text("檔案大小：" + KB + " KB");
-            }
- 
-            reader.readAsDataURL(input.files[0]);
-        }
-    }
- 
-    $("body").on("change", ".upl", function (){
-        preview(this);
-    })
-    
-})
-</script>
 <title>WeShare | 最棒的教育共享平台</title>
 </head>
 <body>
@@ -123,7 +42,7 @@ $(function (){
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"> <span class="navbar-toggler-icon"></span> </button>
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
           <ul class="navbar-nav mr-auto">
-            <li class="nav-item active"> <a class="nav-link" href="<%= request.getContextPath()%>/teacher/joinTeacher.jsp">成為老師 <span class="sr-only">(current)</span></a> </li>
+            <li class="nav-item active"> <a class="nav-link" href="#">成為老師 <span class="sr-only">(current)</span></a> </li>
             <li class="nav-item dropdown"> <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">探索課程</a>
               <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink"> <a class="dropdown-item" href="<%= request.getContextPath()%>/Inscourse/NewFile.jsp">所有課程</a> <a class="dropdown-item" href="#">音樂</a> <a class="dropdown-item" href="#">語言</a> <a class="dropdown-item" href="#">運動</a> <a class="dropdown-item" href="#">藝術</a> <a class="dropdown-item" href="#">設計</a> <a class="dropdown-item" href="#">人文</a> <a class="dropdown-item" href="#">行銷</a> <a class="dropdown-item" href="#">程式語言</a> <a class="dropdown-item" href="#">投資理財</a> <a class="dropdown-item" href="#">職場技能</a> <a class="dropdown-item" href="#">手作</a> <a class="dropdown-item" href="#">烹飪</a> </div>
             </li>
@@ -135,87 +54,84 @@ $(function (){
       </nav>
     </div>	
 	<!-------------------------------------------------------------------------headerEnd------------------------------------------------------------------------->
-
-
-
-<div class="mainbody container-fluid" id="coole">
-    <div class="row align-items-center">
-        <div style="padding-top:50px;"> </div>
-        <div class="col-lg-9 col-md-9 col-sm-12 col-xs-12">
-            <div class="panel panel-default">
-                <div class="panel-body">
-                    <h1 class="panel-title pull-left" style="font-size:30px;">申請成為老師</h1>
+ <div class="container" id="tourpackages-carousel">
+      <div class="row">
+        <div class="col-lg-12"><h1>課程列表 <a class="btn icon-btn btn-primary pull-right" href="#"><span class="glyphicon btn-glyphicon glyphicon-plus img-circle"></span> 新增課程</a></h1></div>
+	<c:forEach var="insCourseVO" items="${insCourseSvc.findByTeacher('TC00001')}">	
+        <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
+          <div class="thumbnail">
+              <div class="caption">
+                <div class='col-lg-12'>
+                    <span class="glyphicon glyphicon-credit-card"></span>
+                    <button type="button" class="glyphicon glyphicon-trash pull-right text-primary"></button>
                 </div>
-            </div>    
-            	<c:if test="${not empty errorMsgs}">
-		<div class="alert alert-danger" role="alert">
-			<ul>
-				<c:forEach var="message" items="${errorMsgs}">
-					<li style="color: red; text-align: center;">${message}</li>
-				</c:forEach>
-			</ul>
-			</div>		
-		</c:if>     
-            <div class="panel panel-default">
-                <div class="panel-body">
-                    <h3 class="panel-title pull-left">個人資料</h3>
-                    <br><br>
-                        <label for="First_name">姓名</label>
- <form data-toggle="validator" role="form" method="post" action="<%=request.getContextPath()%>/teacher/teacher.do" enctype="multipart/form-data">
-<input type="hidden" name="action" value="insert">                       
-                        <input type="hidden" name="memId"  value="${memberVO.memId}">
-                        <input type="text" class="form-control" value="${memberVO.memName}" readonly="readonly">
-                         <label for="Your_location">授課城市</label>
-                          <% String memAdd = memberVO.getMemAdd();%>
-                        <input type="text" class="form-control" name="teacherCity" value="<%=memAdd.substring(0,6)%>" readonly="readonly">
-                       
-                        <br>
-    
+               
+                <div class='col-lg-12 well well-add-card'>
+                    <h4> ${CourseSvc.findOneById(insCourseVO.courseId).courseName}</h4> 
                 </div>
+                <div class='col-lg-12'>
+                    <p>上課地區-${insCourseVO.inscLoc}</p> 
+                     <p class="text-muted">售價:${insCourseVO.inscPrice}</p> 
+                </div>
+                
+                <form id="form1" action="<%= request.getContextPath()%>/InsCourseTimeServlet" method="GET">
+                <input type="hidden" name="action"  value="getOne_For_Display">
+                <input type="hidden" name="inscId"  value="${insCourseVO.inscId}"> 
+                <input type="submit"class="showTime btn btn-primary btn-xs btn-update btn-add-card" value="上課時間">
+                </form>
+                
+                <form id="form2" action="<%= request.getContextPath()%>/InsCourseTimeServlet" method="GET">
+                <button type="button" class="btn btn-danger btn-xs btn-update btn-add-card">課程編輯</button>
+               </form>
+               
             </div>
-            <div class="panel panel-default">
-                <div class="panel-body">
-                    <h3 class="panel-title pull-left">教學資訊</h3>
-                 
-                    <br><br>
-
-                       
-                        <label for="Your_gender">教育程度</label>
-                        <input type="text" class="form-control" name="teacherEdu" placeholder="請填寫學校名稱">
-                        <br>
-                   
-                        </div>
-                  
-                             <div class="panel panel-default">
-                <div class="panel-body">
-                    <h3 class="panel-title pull-left">學經歷證明</h3>
-                    <br><br>
-                    <div align="center">
-                        <div class="col-lg-12 col-md-12">
-                        
-                        </div>
-                        <div class="col-lg-12 col-md-12">
-                		 <input name="diplomaImg" type="file" class="upl">
-    <div>
-        <img class="preview" style="max-width: 150px; max-height: 150px;">
-        <div class="size"></div>
-    </div>
-						
-                        </div>
-                    </div>
-                </div>
-            </div>
-            
-                        <label>老師介紹</label>
-                       <textarea class="form-control" rows="3" name="teacherText" placeholder="試著介紹自己吧"></textarea>
-                  <div class="d-flex justify-content-center"><input type="submit" class="btn btn-secondary" value="送出申請"></div>
-                </div>
-            </div>
-     
-         
+          </div>
         </div>
+    </c:forEach>
+      </div>
+      
+      <div class=row>
+      <div class=col-6>
+      <table >
+      	<thead>
+			<tr>
+				<th>筆數</th>
+				<th>開始時間:</th>
+				<th>結束時間:</th>
+			</tr>
+		</thead>
+		
+	
+<tbody>	
+<div>
+<form>	
+
+<tr>
+<td class="rank"></td>
+<td><input class="start_dateTime" name="start_dateTime" type="text" value=""></td>
+<td><input class="end_dateTime" name="end_dateTime" type="text" value=""></td>
+<td><input type="button" class="add" value="新增"><input type="button" class="remove" value="刪除" disabled="disabled"></td>
+</tr>
+<input type="hidden" name="action"  value="insert">
+<input type="submit" class="remove" value="fuck">
+</form>
+</div></tbody>
+
+
+
+
+      
+      </table>
+      
+      
+      </div>
+      </div>
+
+      
+
     </div>
-</form>    
+ 
+
 	<!-------------------------------------------------------------------------footerStart------------------------------------------------------------------------->
 	<footer
 		class="section footer-classic context-dark bg-image footer navbar-fixed-bottom"

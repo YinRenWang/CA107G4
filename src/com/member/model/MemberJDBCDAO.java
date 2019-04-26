@@ -24,6 +24,8 @@ public class MemberJDBCDAO implements MemberDAO_interface {
 			+ "VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 	private static final String GET_ALL_STMT = 
 		"SELECT * FROM Member  order by memId";
+	private static final String GET_ALL_NOIMG ="SELECT MEMID,MEMSKILL,MEMWANTSKILL,MEMPAIR,MEMIDCARD,MEMPSW,MEMPSWHINT,MEMNAME,MEMSEX,MEMEMAIL,MEMPHONE,MEMBIRTH,MEMADD,MEMTEXT,MEMBANK,MEMBALANCE,MEMBLOCK,MEMSTATUS FROM MEMBER;";
+	private static final String GET_ONE_NOIMG ="SELECT MEMSKILL,MEMWANTSKILL,MEMPAIR,MEMIDCARD,MEMPSW,MEMPSWHINT,MEMNAME,MEMSEX,MEMEMAIL,MEMPHONE,MEMBIRTH,MEMADD,MEMTEXT,MEMBANK,MEMBALANCE,MEMBLOCK,MEMSTATUS FROM MEMBER WHERE MEMID=?";
 	private static final String GET_ONE_STMT = 
 		"SELECT * FROM Member where memId = ?";
 	private static final String UPDATE = 
@@ -633,6 +635,157 @@ public class MemberJDBCDAO implements MemberDAO_interface {
 		
 
 
+	}
+
+	@Override
+	public List<MemberVO> getAllnoImg() {
+		List<MemberVO> list = new ArrayList<MemberVO>();
+		MemberVO memberVO = null;
+
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+
+		try {
+
+			Class.forName(driver);
+			con = DriverManager.getConnection(url, userid, passwd);
+			pstmt = con.prepareStatement(GET_ALL_NOIMG);
+		
+			rs = pstmt.executeQuery();
+
+			while (rs.next()) {
+				// empVO 也稱為 Domain objects
+				memberVO = new MemberVO();
+				memberVO.setMemId(rs.getString("memId"));
+				memberVO.setMemSkill(rs.getString("memSkill"));
+				memberVO.setMemWantSkill(rs.getString("memWantSkill"));
+				memberVO.setMemPair(rs.getString("memPair"));
+				memberVO.setMemPsw(rs.getString("memPsw"));
+				memberVO.setMemPswHint(rs.getString("memPswHint"));
+				memberVO.setMemIdCard(rs.getString("memIdCard"));
+				memberVO.setMemName(rs.getString("memName"));
+				memberVO.setMemSex(rs.getInt("memSex"));
+				memberVO.setMemEmail(rs.getString("memEmail"));
+				memberVO.setMemPhone(rs.getString("memPhone"));
+				memberVO.setMemBirth(rs.getDate("memBirth"));
+				memberVO.setMemAdd(rs.getString("memAdd"));
+				memberVO.setMemText(rs.getString("memText"));
+				memberVO.setMemBank(rs.getString("memBank"));
+				memberVO.setMemBalance(rs.getInt("memBalance"));
+				memberVO.setMemBlock(rs.getInt("memBlock"));
+				memberVO.setMemStatus(rs.getInt("memStatus"));
+				list.add(memberVO); // Store the row in the list
+			}
+
+			// Handle any driver errors
+		} catch (ClassNotFoundException e) {
+			throw new RuntimeException("Couldn't load database driver. "
+					+ e.getMessage());
+			// Handle any SQL errors
+		} catch (SQLException se) {
+			throw new RuntimeException("A database error occured. "
+					+ se.getMessage());
+			// Clean up JDBC resources
+		} finally {
+			if (rs != null) {
+				try {
+					rs.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
+		}
+		return list;
+	}
+
+	@Override
+	public MemberVO findByPrimaryKeynoImg(String memberId) {
+		MemberVO memberVO = null;
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+
+		try {
+
+			Class.forName(driver);
+			con = DriverManager.getConnection(url, userid, passwd);
+			pstmt = con.prepareStatement(GET_ONE_STMT);
+
+			pstmt.setString(1,memberId);
+			
+			rs = pstmt.executeQuery();
+
+			while (rs.next()) {
+				memberVO = new MemberVO();
+				memberVO.setMemId(rs.getString("memId"));
+				memberVO.setMemSkill(rs.getString("memSkill"));
+				memberVO.setMemWantSkill(rs.getString("memWantSkill"));
+				memberVO.setMemPair(rs.getString("memPair"));
+				memberVO.setMemPsw(rs.getString("memPsw"));
+				memberVO.setMemPswHint(rs.getString("memPswHint"));
+				memberVO.setMemIdCard(rs.getString("memIdCard"));
+				memberVO.setMemSex(rs.getInt("memSex"));
+				memberVO.setMemImage(rs.getBytes("memImage"));
+				memberVO.setMemEmail(rs.getString("memEmail"));
+				memberVO.setMemPhone(rs.getString("memPhone"));
+				memberVO.setMemBirth(rs.getDate("memBirth"));
+				memberVO.setMemAdd(rs.getString("memAdd"));
+				memberVO.setMemText(rs.getString("memText"));
+				memberVO.setMemBank(rs.getString("memBank"));
+				memberVO.setMemBalance(rs.getInt("memBalance"));
+				memberVO.setMemBlock(rs.getInt("memBlock"));
+				memberVO.setMemStatus(rs.getInt("memStatus"));
+			}
+
+			// Handle any driver errors
+		} catch (ClassNotFoundException e) {
+			throw new RuntimeException("Couldn't load database driver. "
+					+ e.getMessage());
+			// Handle any SQL errors
+		} catch (SQLException se) {
+			throw new RuntimeException("A database error occured. "
+					+ se.getMessage());
+			// Clean up JDBC resources
+		} finally {
+			if (rs != null) {
+				try {
+					rs.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
+		}
+		return memberVO;
+		
 	}
 
 	

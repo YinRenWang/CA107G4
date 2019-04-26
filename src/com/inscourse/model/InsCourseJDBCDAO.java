@@ -15,8 +15,8 @@ public class InsCourseJDBCDAO implements InsCourseDAO_interface {
 	final String UPDATE_STMT = "UPDATE INSCOURSE SET TEACHERID=?,COURSEID=?,INSCLOC=?,INSCTYPE=?,INSCPEOPLE=?,INSCLANG=?,INSCPRICE=?,INSCCOURSER=?,INSCSTATUS=? WHERE INSCID=?";
 	final String DELETE_COURSE = "DELETE FROM INSCOURSE WHERE INSCID=?";
 	final String SEARCH_COURSE = "SELECT * FROM INSCOURSE WHERE INSCID=?";
+	final String SEARCH_TEACHERID = "SELECT * FROM INSCOURSE WHERE TEACHERID=?";
 	final String SEARCH_COURSEALL = "SELECT * FROM INSCOURSE";
-	
 	
 	@Override
 	public void insert(InsCourseVO insCourseVO) {
@@ -285,6 +285,72 @@ public class InsCourseJDBCDAO implements InsCourseDAO_interface {
 		// TODO Auto-generated method stub
 		return null;
 	}
+	
+	@Override
+	public List<InsCourseVO> findByTeacher(String teacherId) {
+		List<InsCourseVO> list = new ArrayList<InsCourseVO>();
+		InsCourseVO insCourseVO = null;
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+	
+		try {
+			Class.forName(driver);
+			con = DriverManager.getConnection(url, userid, passwd);
+			pstmt = con.prepareStatement(SEARCH_TEACHERID);
+
+			pstmt.setString(1,teacherId);
+
+			rs = pstmt.executeQuery();
+	
+
+			while (rs.next()) {
+				insCourseVO = new InsCourseVO();
+				insCourseVO.setInscId(rs.getString("inscId"));
+				insCourseVO.setCourseId(rs.getString("courseId"));
+				insCourseVO.setInscLoc(rs.getString("inscLoc"));
+				insCourseVO.setInscType(rs.getInt("inscType"));
+				insCourseVO.setInscPeople(rs.getInt("inscPeople"));
+				insCourseVO.setInscLang(rs.getString("inscLang"));
+				insCourseVO.setInscPrice(rs.getInt("inscPrice"));
+				insCourseVO.setInscCourser(rs.getString("inscCourser"));
+				insCourseVO.setInscStatus(rs.getInt("inscStatus"));
+				list.add(insCourseVO);
+			}
+			
+	
+			// Handle any SQL errors
+		} catch (SQLException se) {
+			throw new RuntimeException("A database error occured. "
+					+ se.getMessage());
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			if (rs != null) {
+				try {
+					rs.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
+		}
+		return list;
+	}
 
 	@Override
 	public List<InsCourseVO> getAll(Map<String, String[]> map) {
@@ -355,6 +421,8 @@ public class InsCourseJDBCDAO implements InsCourseDAO_interface {
 		return list;
 	}
 	
+
+	
 	
 	
 	
@@ -395,9 +463,8 @@ public class InsCourseJDBCDAO implements InsCourseDAO_interface {
 //		InsCourseJDBCDAO.delete("IC00001");
 		
 //		//查詢
-//		InsCourseVO InsCourseVO3 = InsCourseJDBCDAO.findByPrimaryKey("IC00001");
+//		InsCourseVO InsCourseVO3 = InsCourseJDBCDAO.findByTeacher("TC00001");
 //		System.out.println("InscId="+InsCourseVO3.getInscId());
-//		System.out.println("InscId="+InsCourseVO3.getTeacherId());
 //		System.out.println("CourseId="+InsCourseVO3.getCourseId());
 //		System.out.println("InscLoc="+InsCourseVO3.getInscLoc());
 //		System.out.println("InscType="+InsCourseVO3.getInscType());
@@ -408,20 +475,20 @@ public class InsCourseJDBCDAO implements InsCourseDAO_interface {
 //		System.out.println("InscStatus="+InsCourseVO3.getInscStatus());
 		
 		//查詢全部
-//		List<InsCourseVO> list = InsCourseJDBCDAO.getAll();
-//		for (InsCourseVO aEmp : list) {
-//			System.out.println("InscId="+aEmp.getInscId());
-//			System.out.println("InscId="+aEmp.getTeacherId());
-//			System.out.println("CourseId="+aEmp.getCourseId());
-//			System.out.println("InscLoc="+aEmp.getInscLoc());
-//			System.out.println("InscType="+aEmp.getInscType());
-//			System.out.println("InscPeople="+aEmp.getInscPeople());
-//			System.out.println("InscLang="+aEmp.getInscLang());
-//			System.out.println("InscPrice="+aEmp.getInscPrice());
-//			System.out.println("InscCourser="+aEmp.getInscCourser());
-//			System.out.println("InscStatus="+aEmp.getInscStatus());
-//			System.out.println();
-//		}
+		List<InsCourseVO> list = InsCourseJDBCDAO.findByTeacher("TC00001");
+		for (InsCourseVO aEmp : list) {
+			System.out.println("InscId="+aEmp.getInscId());
+			System.out.println("InscId="+aEmp.getTeacherId());
+			System.out.println("CourseId="+aEmp.getCourseId());
+			System.out.println("InscLoc="+aEmp.getInscLoc());
+			System.out.println("InscType="+aEmp.getInscType());
+			System.out.println("InscPeople="+aEmp.getInscPeople());
+			System.out.println("InscLang="+aEmp.getInscLang());
+			System.out.println("InscPrice="+aEmp.getInscPrice());
+			System.out.println("InscCourser="+aEmp.getInscCourser());
+			System.out.println("InscStatus="+aEmp.getInscStatus());
+			System.out.println();
+		}
 		
 		//複合查詢
 
@@ -430,8 +497,10 @@ public class InsCourseJDBCDAO implements InsCourseDAO_interface {
 		
 	}
 
+	
 
 
+	}
 
-}
+
 

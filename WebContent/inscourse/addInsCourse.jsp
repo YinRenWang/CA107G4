@@ -161,7 +161,6 @@ $(document).ready(function () {
                      
       </select>
 <form id="form1" action="<%= request.getContextPath()%>/CourseTypeServlet" method="GET">
-<input type="hidden" name="memName"  value="${param.memName}">
 <input type="hidden" name="action" value="updateCourse">
 <input type="hidden" name="courseTypeId"  id="selectValue" value="">
 </form> 
@@ -177,8 +176,10 @@ $(document).ready(function () {
 		</select>
   </div>
 </div>
-
-<form id="form2" action="<%= request.getContextPath()%>/CourseTypeServlet" method="GET">
+-${teacherId}-
+<form id="form2" action="<%= request.getContextPath()%>/InsCourseServlet" method="GET">
+<input type="hidden" name="action" value="insert">
+<input type="hidden" name="teacherId" value="${teacherId}">
 <input type="text" name="courseId" id=formvalue value="">
 	<div class="row">
     <div class="col-md-12">
@@ -219,14 +220,14 @@ $(document).ready(function () {
           <div class="form-group" id="inscpp" >
           <label class="control-label col-2">授課語言</label>
           <div class="col-4">
-            <input type="text" class="form-control" name="inscLang" placeholder="請輸入人數" value="">
+            <input type="text" class="form-control" name="inscLang" placeholder="請輸入上課語言" value="">
           </div>
          </div> 
          
           <div class="form-group" id="inscpp" >
           <label class="control-label col-2">課程大綱</label>
           <div class="col-8">
-           <textarea class="form-control" rows="5" name="teacherText" placeholder="介紹這堂課吧" value=""></textarea>
+           <textarea class="form-control" rows="5" name="inscCourser" placeholder="介紹這堂課吧" value=""></textarea>
           </div>
          </div> 
  <div class="d-flex justify-content-center"><input type="submit" class="btn btn-secondary" value="送出申請"></div>

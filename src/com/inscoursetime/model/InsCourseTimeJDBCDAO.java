@@ -141,8 +141,6 @@ public class InsCourseTimeJDBCDAO implements InsCourseTimeDAO_interface {
 			pstmt = con.prepareStatement(DELETE);
 			pstmt.setString(1, inscTimeId);
 			pstmt.executeUpdate();
-		
-			System.out.println("已刪除一筆資料");
 
 			// Handle any driver errors
 		} catch (ClassNotFoundException e) {

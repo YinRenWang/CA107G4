@@ -12,6 +12,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import com.course.model.CourseService;
 import com.course.model.CourseVO;
@@ -72,6 +73,7 @@ public class CourseReservationServlet extends HttpServlet {
 				crVO = gson.fromJson(req.getParameter("crVO"), CourseReservationVO.class);
 				// Web取資料
 			} else {
+				String inscTimeId = req.getParameter("inscTimeId").trim();
 				String teacherId = req.getParameter("teacherId").trim();
 				String memId = req.getParameter("memId").trim();
 				String inscId = req.getParameter("inscId").trim();
@@ -82,6 +84,7 @@ public class CourseReservationServlet extends HttpServlet {
 				Double crvTotalPrice = new Double(req.getParameter("crvTotalPrice"));
 
 				crVO = new CourseReservationVO();
+				crVO.setInscTimeId(inscTimeId);
 				crVO.setTeacherId(teacherId);
 				crVO.setMemId(memId);
 				crVO.setInscId(inscId);
@@ -100,7 +103,7 @@ public class CourseReservationServlet extends HttpServlet {
 			// 確認是否已被訂走
 			InsCourseTimeService insctSvc = new InsCourseTimeService();
 			List<InsCourseTimeVO> ictVO = insctSvc.findByKey(crVO.getInscTimeId());
-			if (ictVO.size() != 0) {
+			if (ictVO.size()!=0) {
 
 				// 開始新增資料
 				CourseReservationService crSvc = new CourseReservationService();
@@ -108,6 +111,7 @@ public class CourseReservationServlet extends HttpServlet {
 						crVO.getCrvStatus(), crVO.getClassStatus(), crVO.getTranStatus(), crVO.getCrvMFD(),
 						crVO.getCrvEXP(), crVO.getCrvLoc(), crVO.getCrvTotalTime(), crVO.getCrvTotalPrice(),
 						crVO.getCrvRate());
+				
 
 				// 刪除已無的時間
 				insctSvc.deleteInsCourseTime(crVO.getInscTimeId());

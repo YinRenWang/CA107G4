@@ -88,7 +88,7 @@ public class CourseTypeServlet extends HttpServlet {
 				req.setAttribute("errorMsgs", errorMsgs);
 				
 
-				try {
+//				try {
 					/***********************1.接收請求參數 - 輸入格式的錯誤處理*************************/
 					Integer courseTypeId=null;
 					String str = req.getParameter("courseTypeId").trim();
@@ -104,14 +104,14 @@ public class CourseTypeServlet extends HttpServlet {
 					
 					/***************************其他可能的錯誤處理**********************************/
 				} 
-				catch (Exception e) {
-					errorMsgs.add(e.getMessage());
-					RequestDispatcher failureView = req
-							.getRequestDispatcher("/insCourseServlet/insCourseDetails.jsp");
-					failureView.forward(req, res);
-				}
+//				catch (Exception e) {
+//					errorMsgs.add(e.getMessage());
+//					RequestDispatcher failureView = req
+//							.getRequestDispatcher("/inscourse/insCourseDetails.jsp");
+//					failureView.forward(req, res);
+//				}
 			
-		  }
+		  
 		
 		
 		

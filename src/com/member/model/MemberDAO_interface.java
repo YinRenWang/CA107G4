@@ -11,7 +11,9 @@ public interface MemberDAO_interface {
 	  public void editMember(MemberVO memberVO);
 	  public void editNoMember(MemberVO memberVO);
       public MemberVO findByPrimaryKey(String memberId);
+      public MemberVO findByPrimaryKeynoImg(String memberId);
       public List<MemberVO> getAll();
+      public List<MemberVO> getAllnoImg();
       //萬用複合查詢(傳入參數型態Map)(回傳 List)
 //      public List<MemberVO> getAll(Map<String, String[]> map); 
 	
