@@ -392,6 +392,12 @@ public class InsCourseDAO implements InsCourseDAO_interface {
 		return null;
 	}
 
+	@Override
+	public void updateStatus(InsCourseVO insCourseVO) {
+		// TODO Auto-generated method stub
+		
+	}
+
 	
 
 	

@@ -643,6 +643,12 @@ public class InsCourseJDBCDAO implements InsCourseDAO_interface {
 		
 	}
 
+	@Override
+	public void updateStatus(InsCourseVO insCourseVO) {
+		// TODO Auto-generated method stub
+		
+	}
+
 	
 
 

@@ -279,4 +279,10 @@ public class TeacherDAO implements TeacherDAO_interface {
 		
 	}
 
+	@Override
+	public TeacherVO findByMemId(String memId) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }

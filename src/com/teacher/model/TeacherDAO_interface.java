@@ -11,4 +11,5 @@ public interface TeacherDAO_interface {
 	public TeacherVO findByStatus(String memId);
 	public List<TeacherVO> getAll();
 	public List<TeacherVO> getAllStatus(Integer teacherStatus);
+	public TeacherVO findByMemId(String memId);
 }
