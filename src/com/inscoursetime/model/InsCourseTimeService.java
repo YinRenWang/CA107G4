@@ -16,9 +16,9 @@ public class InsCourseTimeService {
 		insCourseTimeVO.setInscId(inscId);
 		insCourseTimeVO.setInscMFD(inscMFD);
 		insCourseTimeVO.setInscEXP(inscEXP);
-		dao.insert(insCourseTimeVO);
-		
+		dao.insert(insCourseTimeVO);	
 	}
+	
 	public void updateInsCourseTime(String inscId, Timestamp inscMFD, Timestamp inscEXP) {
 		InsCourseTimeVO insCourseTimeVO = new InsCourseTimeVO();
 		insCourseTimeVO.setInscId(inscId);

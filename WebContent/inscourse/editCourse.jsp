@@ -1,10 +1,10 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<jsp:useBean id="inscCourseTimeSvc" scope="page" class="com.inscoursetime.model.InsCourseTimeService" />
-<jsp:useBean id="insCourseSvc" scope="page" class="com.inscourse.model.InsCourseService" />
-<jsp:useBean id="CourseSvc" scope="page" class="com.course.model.CourseService" />
-<jsp:useBean id="memberSvc" scope="page" class="com.member.model.MemberService" />
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %> 
+<jsp:useBean id="courseSvc" scope="page" class="com.coursetype.model.CourseTypeService" />
+<jsp:useBean id="memberVO"  scope="session" type="com.member.model.MemberVO" />
+<jsp:useBean id="teacherVO"  scope="session" type="com.teacher.model.TeacherVO" />
 <!doctype html>
 <html lang="en">
 <head>
@@ -20,19 +20,106 @@
 <link rel="stylesheet" type="text/css"
 	href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<link href="https://cdn.bootcss.com/limonte-sweetalert2/7.33.1/sweetalert2.css" rel="stylesheet">
+<script src="https://cdn.bootcss.com/limonte-sweetalert2/7.33.1/sweetalert2.all.min.js"></script>
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/2.0.0/jquery.min.js"></script>
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-
 <script 
 	src="http://code.jquery.com/jquery-2.1.4.min.js"></script>
-
 <script 
 	src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>	
 <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
 <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
     
+<style>
+
+
+body {
+    background: #fff;
+	font-family: 'Roboto', sans-serif;
+	color:#333;
+	line-height: 22px;	
+}
+h1, h2, h3, h4, h5, h6 {
+	font-family: 'Roboto Condensed', sans-serif;
+	font-weight: 400;
+	color:#111;
+	margin-top:5px;
+	margin-bottom:5px;
+}
+h1, h2, h3 {
+	text-transform:uppercase;
+}
+
+input.upload {
+    position: absolute;
+    top: 0;
+    right: 0;
+    margin: 0;
+    padding: 0;
+    font-size: 12px;
+    cursor: pointer;
+    opacity: 1;
+    filter: alpha(opacity=1);    
+}
+
+.form-inline .form-group{
+    margin-left: 0;
+    margin-right: 0;
+}
+.control-label {
+    color:#333333;
+}
+
+#addCourse{
+	margin-bottom:300px;
+}
+
+#back{
+position: relative;
+  top: -20px;
+  right: -600px;
+  background-color: white;
+  width: 500px;
+
+}
+</style>
+
+<script>
+$(document).ready(function () {
+
+	 $("#courseTypeId").change(function(){
+		 var selectValue=$(this).val();
+		 $('#selectValue').val(selectValue);
+		 $(this).attr("selected", "true");
+		 $('#form1').submit();
+		  });
+	 
+	 $("#inscType").change(function(){
+		 var inscTypeValue=$(this).val();
+		 console.log(inscTypeValue);
+		 if(inscTypeValue==0){
+			 $("#inscpp").css('display','none');	 
+		 }
+		 if(inscTypeValue==1){
+			 $("#inscpp").css('display','block');	 
+		 }
+		  });
+	 
+	 
+	 $("#courseId").change(function(){
+		 var selectValue2=$(this).val();
+		 $('#formvalue').val(selectValue2);
+		  });
+	 
+	 
+	 
+
+ });
+</script>
+  
 <title>WeShare | 最棒的教育共享平台</title>
 </head>
 <body>
@@ -54,84 +141,120 @@
       </nav>
     </div>	
 	<!-------------------------------------------------------------------------headerEnd------------------------------------------------------------------------->
- <div class="container" id="tourpackages-carousel">
-      <div class="row">
-        <div class="col-lg-12"><h1>課程列表 <a class="btn icon-btn btn-primary pull-right" href="#"><span class="glyphicon btn-glyphicon glyphicon-plus img-circle"></span> 新增課程</a></h1></div>
-	<c:forEach var="insCourseVO" items="${insCourseSvc.findByTeacher('TC00001')}">	
-        <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
-          <div class="thumbnail">
-              <div class="caption">
-                <div class='col-lg-12'>
-                    <span class="glyphicon glyphicon-credit-card"></span>
-                    <button type="button" class="glyphicon glyphicon-trash pull-right text-primary"></button>
-                </div>
+ <c:if test="${not empty errorMsgs}">
+<c:forEach var="message" items="${errorMsgs}">
+<script>
+Swal.fire(
+		 '請檢查內容',
+		  '${message}',
+		  'error'
+)
+</script>
+</c:forEach>
+</c:if>  
+
+
+ <div class="container" id="addCourse">
+   <h1 class="entry-title"><span>新增課程-課程資訊</span></h1>
+        <hr>
+ <div class="row">
+  <div class="col-md-6 mb-3">
+  	<label for="validationCustom03">課程分類:</label>
+      <select class="form-control form-control-lg" id="courseTypeId" >
+        <option value="" disabled selected>請選擇課程分類</option>
+          <option value="1">音樂</option>
+           <option value="2">語言</option>
+            <option value="3">運動</option>
+             <option value="4">藝術</option>
+              <option value="5">設計</option>
+               <option value="6">人文</option>
+                <option value="7">行銷</option>
+                 <option value="8">程式語言</option>
+                  <option value="9">投資理財</option>
+                   <option value="10">職場技能</option>
+                    <option value="11">手作</option>
+                     <option value="12">烹飪</option>
+                     
+      </select>
+<form id="form1" action="<%= request.getContextPath()%>/CourseTypeServlet" method="GET">
+<input type="hidden" name="action" value="updateCourse">
+<input type="hidden" name="courseTypeId"  id="selectValue" value="">
+</form> 
+  </div>
+  
+  <div class="col-md-6 mb-3">
+  	<label for="validationCustom04">課程類型:</label>
+     <select class="form-control form-control-lg" id="courseId" >
+    	 <option value=""  disabled selected >請選擇課程類型</option> 
+    	<c:forEach var="courseVO" items="${courseList}" >
+  		 <option value="${courseVO.courseId}">${courseVO.courseName}
+		</c:forEach>
+		</select>
+  </div>
+</div>
+
+<form id="form2" action="<%= request.getContextPath()%>/InsCourseServlet" method="GET">
+<input type="hidden" name="action" value="insert">
+<input type="hidden" name="teacherId" value="${teacherVO.teacherId}">
+<input type="hidden" name="courseId" id=formvalue value="">
+	<div class="row">
+    <div class="col-md-12">
                
-                <div class='col-lg-12 well well-add-card'>
-                    <h4> ${CourseSvc.findOneById(insCourseVO.courseId).courseName}</h4> 
-                </div>
-                <div class='col-lg-12'>
-                    <p>上課地區-${insCourseVO.inscLoc}</p> 
-                     <p class="text-muted">售價:${insCourseVO.inscPrice}</p> 
-                </div>
-                
-                <form id="form1" action="<%= request.getContextPath()%>/InsCourseTimeServlet" method="GET">
-                <input type="hidden" name="action"  value="getOne_For_Display">
-                <input type="hidden" name="inscId"  value="${insCourseVO.inscId}"> 
-                <input type="submit"class="showTime btn btn-primary btn-xs btn-update btn-add-card" value="上課時間">
-                </form>
-                
-                <form id="form2" action="<%= request.getContextPath()%>/InsCourseTimeServlet" method="GET">
-                <button type="button" class="btn btn-danger btn-xs btn-update btn-add-card">課程編輯</button>
-               </form>
-               
-            </div>
+    <div class="form-group">
+          <label class="control-label col-2">授課金額</label>
+          <div class="col-4">
+            <input type="number" class="form-control" name="inscPrice" id="inscPrice"  min="0"  placeholder="每小時/新台幣" value="">
           </div>
         </div>
-    </c:forEach>
+        <div id="back">
+    <%--   <img src="<%= request.getContextPath()%>/images/inscourse/addInscoure.jpg" width="600"  > --%>
       </div>
-      
-      <div class=row>
-      <div class=col-6>
-      <table >
-      	<thead>
-			<tr>
-				<th>筆數</th>
-				<th>開始時間:</th>
-				<th>結束時間:</th>
-			</tr>
-		</thead>
+        <div class="form-group">
+          <label class="control-label col-2">授課地點</label>
+          <div class="col-4">
+            <input type="text" class="form-control" name="inscLoc" id="inscLoc" value="${fn:substring(memberVO.memAdd,0,6)}" readonly="readonly">
+          </div>
+        </div>
+        
+        
+        
+         <div class="form-group">
+          <label class="control-label col-2">授課方式</label>
+          <div class="col-4">
+           <select class="form-control form-control-lg" name="inscType" id="inscType">
+        <option value="0">個人課程</option>
+          <option value="1">團體課程</option>
+          </select>
+		</div>
+	</div>	
 		
-	
-<tbody>	
-<div>
-<form>	
-
-<tr>
-<td class="rank"></td>
-<td><input class="start_dateTime" name="start_dateTime" type="text" value=""></td>
-<td><input class="end_dateTime" name="end_dateTime" type="text" value=""></td>
-<td><input type="button" class="add" value="新增"><input type="button" class="remove" value="刪除" disabled="disabled"></td>
-</tr>
-<input type="hidden" name="action"  value="insert">
-<input type="submit" class="remove" value="fuck">
-</form>
-</div></tbody>
-
-
-
-
-      
-      </table>
-      
-      
-      </div>
-      </div>
-
-      
-
+		 <div class="form-group" id="inscpp" style="display:none">
+          <label class="control-label col-2">上課人數</label>
+          <div class="col-4">
+            <input type="text" class="form-control" name="inscPeople" placeholder="請輸入人數" value="">
+          </div>
+         </div> 
+         
+          <div class="form-group" id="inscpp" >
+          <label class="control-label col-2">授課語言</label>
+          <div class="col-4">
+            <input type="text" class="form-control" name="inscLang" placeholder="請輸入上課語言" value="">
+          </div>
+         </div> 
+         
+          <div class="form-group" id="inscpp" >
+          <label class="control-label col-2">課程大綱</label>
+          <div class="col-8">
+           <textarea class="form-control" rows="5" name="inscCourser" placeholder="介紹這堂課吧" value=""></textarea>
+          </div>
+         </div> 
+ <div class="d-flex justify-content-center"><input type="submit" class="btn btn-secondary" value="下一步"></div>
+   
+  
     </div>
- 
-
+</div>
+</form>
+</div>
 	<!-------------------------------------------------------------------------footerStart------------------------------------------------------------------------->
 	<footer
 		class="section footer-classic context-dark bg-image footer navbar-fixed-bottom"

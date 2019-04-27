@@ -1,6 +1,8 @@
 package com.member.controller;
 
 import com.member.model.*;
+import com.teacher.model.TeacherService;
+import com.teacher.model.TeacherVO;
 
 import other.Check;
 
@@ -91,6 +93,13 @@ public class MemberServlet extends HttpServlet {
 					return;// 程式中斷
 				}
 				/*************************** 3.查詢完成,準備轉交(Send the Success view) *************/
+				TeacherService teacherSvc=new TeacherService();
+				TeacherVO teacherVO =teacherSvc.findOneById(memberVO.getMemId());
+				if(teacherVO==null) {
+					System.out.println("此帳號並非教師");
+				}else {
+					session.setAttribute("teacherVO", teacherVO);
+				}
 				session.setAttribute("memberVO", memberVO); // 資料庫取出的memberVO物件,存入req
 				String url ="/index.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url); // 成功轉交 loginSuccess.jsp

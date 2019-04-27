@@ -271,7 +271,7 @@ public class InsCourseDAO implements InsCourseDAO_interface {
 	}
 
 	@Override
-	public void updateStatus(InsCourseVO insCourseVO) {
+	public void updateStatus(Integer InscStatus,String memId) {
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		
@@ -279,8 +279,8 @@ public class InsCourseDAO implements InsCourseDAO_interface {
 			con = ds.getConnection();
 			pstmt = con.prepareStatement(UPDATE_STATUS);
 			
-			pstmt.setInt(1, insCourseVO.getInscStatus());
-			pstmt.setString(2, insCourseVO.getInscId());
+			pstmt.setInt(1,InscStatus);
+			pstmt.setString(2, memId);
 			pstmt.executeUpdate();
 			
 		}catch(SQLException se) {
@@ -379,6 +379,20 @@ public class InsCourseDAO implements InsCourseDAO_interface {
 		// TODO Auto-generated method stub
 		return null;
 	}
+
+	@Override
+	public InsCourseVO findByTeacherInscId(String inscId, String teacherId) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<InsCourseVO> getAllOn(Integer inscStatus) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	
 
 	
 

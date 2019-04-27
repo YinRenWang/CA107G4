@@ -10,7 +10,6 @@
 <jsp:useBean id="inscCourseTimeSvc" scope="page" class="com.inscoursetime.model.InsCourseTimeService" />
 <jsp:useBean id="courseReservationSvc" scope="page" class="com.coursereservation.model.CourseReservationService" />
 <jsp:useBean id="memberSvc" scope="page" class="com.member.model.MemberService" />
-<jsp:useBean id="memberVO"  scope="session" type="com.member.model.MemberVO" />
 
 <%
 	String inscid=request.getParameter("inscId");
@@ -41,6 +40,8 @@
 <!-- Bootstrap CSS -->
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" >
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.8.0/css/bootstrap-datepicker.css" >
+<link href="https://cdn.bootcss.com/limonte-sweetalert2/7.33.1/sweetalert2.css" rel="stylesheet">
+<script src="https://cdn.bootcss.com/limonte-sweetalert2/7.33.1/sweetalert2.all.min.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.0.0/jquery.min.js"></script>
 <script type="text/javascript" src="<%=request.getContextPath()%>/js/jquery-3.2.1.min.js"></script>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
@@ -595,7 +596,6 @@ input[type=radio].with-font:focus~label:before, input[type=checkbox].with-font:f
 		 
 		 $('#readyGo').click(function(){
 			 var error=$('#crvTotalPrice').val();
-			 
 			 if(error==0||error==null){
 				 alert("請選擇日期!");
 			 }else{
@@ -640,6 +640,7 @@ input[type=radio].with-font:focus~label:before, input[type=checkbox].with-font:f
   </nav>
 </div>
 <!----------------------------------------------------------------------------------------------------------------->
+  
 <nav aria-label="breadcrumb">
   <ol class="breadcrumb">
     <li class="breadcrumb-item"><a href="#">課程類型</a></li>
@@ -650,7 +651,19 @@ input[type=radio].with-font:focus~label:before, input[type=checkbox].with-font:f
 
 <!------ Include the above in your HEAD tag ---------->
 
-
+<c:if test="${not empty errorMsgs}">
+<c:forEach var="message" items="${errorMsgs}">
+<script>
+swal({
+    title: '注意',
+    text: '您尚未登入',
+    type: 'warning'
+  }).then(function() {
+      window.location.href = "<%=request.getContextPath()%>/member/loginMember.jsp";
+  })
+</script>
+</c:forEach>
+</c:if> 
 <form id="form1" action="<%= request.getContextPath()%>/InsCourseServlet" method="POST">
 <input type="hidden" name="action"  id="action" value="updateDate">
 <div class="content">
@@ -844,7 +857,7 @@ input[type=radio].with-font:focus~label:before, input[type=checkbox].with-font:f
  
 
 	  
-<form id="form2" action="<%= request.getContextPath()%>/coursereservation/coursereservation.do" method="GET">	
+<form id="form2" action="<%= request.getContextPath()%>/coursereservation/coursereservation.do" method="POST">	
  <input type="hidden" name="action" value="addOrder">     
  <input type="hidden" name="inscTimeId"  value="${inscTimeId}">
  <input type="hidden" name="memName"  value="${param.memName}">

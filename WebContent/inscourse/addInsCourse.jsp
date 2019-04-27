@@ -1,7 +1,10 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %> 
 <jsp:useBean id="courseSvc" scope="page" class="com.coursetype.model.CourseTypeService" />
+<jsp:useBean id="memberVO"  scope="session" type="com.member.model.MemberVO" />
+<jsp:useBean id="teacherVO"  scope="session" type="com.teacher.model.TeacherVO" />
 <!doctype html>
 <html lang="en">
 <head>
@@ -17,20 +20,22 @@
 <link rel="stylesheet" type="text/css"
 	href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<link href="https://cdn.bootcss.com/limonte-sweetalert2/7.33.1/sweetalert2.css" rel="stylesheet">
+<script src="https://cdn.bootcss.com/limonte-sweetalert2/7.33.1/sweetalert2.all.min.js"></script>
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/2.0.0/jquery.min.js"></script>
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-
 <script 
 	src="http://code.jquery.com/jquery-2.1.4.min.js"></script>
-
 <script 
 	src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>	
 <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
 <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
     
 <style>
+
+
 body {
     background: #fff;
 	font-family: 'Roboto', sans-serif;
@@ -136,7 +141,18 @@ $(document).ready(function () {
       </nav>
     </div>	
 	<!-------------------------------------------------------------------------headerEnd------------------------------------------------------------------------->
- 
+ <c:if test="${not empty errorMsgs}">
+<c:forEach var="message" items="${errorMsgs}">
+<script>
+Swal.fire(
+		 '請檢查內容',
+		  '${message}',
+		  'error'
+)
+</script>
+</c:forEach>
+</c:if>  
+
 
  <div class="container" id="addCourse">
    <h1 class="entry-title"><span>新增課程-課程資訊</span></h1>
@@ -176,11 +192,11 @@ $(document).ready(function () {
 		</select>
   </div>
 </div>
--${teacherId}-
+
 <form id="form2" action="<%= request.getContextPath()%>/InsCourseServlet" method="GET">
 <input type="hidden" name="action" value="insert">
-<input type="hidden" name="teacherId" value="${teacherId}">
-<input type="text" name="courseId" id=formvalue value="">
+<input type="hidden" name="teacherId" value="${teacherVO.teacherId}">
+<input type="hidden" name="courseId" id=formvalue value="">
 	<div class="row">
     <div class="col-md-12">
                
@@ -196,9 +212,11 @@ $(document).ready(function () {
         <div class="form-group">
           <label class="control-label col-2">授課地點</label>
           <div class="col-4">
-            <input type="text" class="form-control" name="inscLoc" id="inscLoc" placeholder="請輸入您的授課地點" value="">
+            <input type="text" class="form-control" name="inscLoc" id="inscLoc" value="${fn:substring(memberVO.memAdd,0,6)}" readonly="readonly">
           </div>
         </div>
+        
+        
         
          <div class="form-group">
           <label class="control-label col-2">授課方式</label>
@@ -230,7 +248,7 @@ $(document).ready(function () {
            <textarea class="form-control" rows="5" name="inscCourser" placeholder="介紹這堂課吧" value=""></textarea>
           </div>
          </div> 
- <div class="d-flex justify-content-center"><input type="submit" class="btn btn-secondary" value="送出申請"></div>
+ <div class="d-flex justify-content-center"><input type="submit" class="btn btn-secondary" value="下一步"></div>
    
   
     </div>

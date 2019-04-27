@@ -193,6 +193,7 @@ ul, ol {
             <li class="nav-item"> <a class="nav-link" href="<%= request.getContextPath()%>/member/loginMember.jsp">登入</a> </li>
             <li class="nav-item"> <a class="nav-link" href="<%= request.getContextPath()%>/member/addMember.jsp">註冊</a> </li>
             <li class="nav-item"> <a class="nav-link " href="<%= request.getContextPath()%>/member/listAllMember.jsp">關於我們</a> </li>
+            <li class="nav-item"> <a class="nav-link " href="<%= request.getContextPath()%>/insctime/addinscTime.jsp">${memberVO.memName}${teacherVO.teacherId}</a> </li>
           </ul>
         </div>
       </nav>

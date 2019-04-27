@@ -46,24 +46,29 @@ public class InsCourseService {
 	
 
 	
-	public void updateStatus(String inscId,Integer inscStatus) {
-
-		InsCourseVO insCourseVO = new InsCourseVO();
-		insCourseVO.setInscStatus(inscStatus);
-		dao.updateStatus(insCourseVO);
+	public void updateStatus(Integer inscStatus,String inscId) {
+		dao.updateStatus(inscStatus, inscId);
 	}
 	
 	public InsCourseVO findOneById(String inscId) {
 		return dao.findByPrimaryKey(inscId);
 	}
+	public InsCourseVO findByTeacherInscId(String courseId,String teacherId) {
+		return dao.findByTeacherInscId(courseId, teacherId);
+	}
+	
+	
 	public List<InsCourseVO> getAll(){
 		return dao.getAll();
+	}
+	public List<InsCourseVO> getAllOn(Integer inscStatus){
+		return dao.getAllOn(inscStatus);
 	}
 	public List<InsCourseVO> findByCourse(String courseId){
 		return dao.findByCourse(courseId);
 	}
 	public List<InsCourseVO> findByTeacher(String teacherId){
-		return dao.findByTeacher("TC00001");
+		return dao.findByTeacher(teacherId);
 	}
 	
 	public List<InsCourseVO> getAll(Map<String, String[]> map) {

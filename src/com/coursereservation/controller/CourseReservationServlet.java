@@ -24,6 +24,7 @@ import com.inscourse.model.InsCourseService;
 import com.inscourse.model.InsCourseVO;
 import com.inscoursetime.model.InsCourseTimeService;
 import com.inscoursetime.model.InsCourseTimeVO;
+import com.member.model.MemberVO;
 
 @WebServlet("/CourseReservationServlet")
 public class CourseReservationServlet extends HttpServlet {
@@ -66,16 +67,30 @@ public class CourseReservationServlet extends HttpServlet {
 
 		// 預約
 		if ("make_new_reservation".equals(action) || "addOrder".equals(action)) {
+			
 			synchronized(this) {
+			
 			CourseReservationVO crVO;
 			// Android取資料
 			if ("make_new_reservation".equals(action)) {
 				crVO = gson.fromJson(req.getParameter("crVO"), CourseReservationVO.class);
 				// Web取資料
 			} else {
+			
+				List<String> errorMsgs = new LinkedList<String>();
+				HttpSession session	=req.getSession();
+				MemberVO memberVO=(MemberVO) session.getAttribute("memberVO");
+				if(memberVO==null) {
+					errorMsgs.add("請先登入會員");
+					req.setAttribute("errorMsgs", errorMsgs); // 含有輸入格式錯誤的empVO物件,也存入req
+					String userSearch=(String) session.getAttribute("userSearch");
+					RequestDispatcher failureView = req.getRequestDispatcher("/inscourse/inscourse.do?"+userSearch);
+					failureView.forward(req, res);
+					return;
+				}
+				String memId = memberVO.getMemId();
 				String inscTimeId = req.getParameter("inscTimeId").trim();
 				String teacherId = req.getParameter("teacherId").trim();
-				String memId = req.getParameter("memId").trim();
 				String inscId = req.getParameter("inscId").trim();
 				Timestamp crvMFD = Timestamp.valueOf(req.getParameter("crvMFD").trim());
 				Timestamp crvEXP = Timestamp.valueOf(req.getParameter("crvEXP").trim());

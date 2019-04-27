@@ -3,6 +3,8 @@ package com.inscoursetime.controller;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.LinkedHashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
@@ -68,7 +70,6 @@ public class InsCourseTimeServlet extends HttpServlet {
 			// Store this set in the request scope, in case we need to
 			// send the ErrorPage view.
 			req.setAttribute("errorMsgs", errorMsgs);
-
 			try {
 				/*************************** 1.接收請求參數 - 輸入格式的錯誤處理 **********************/
 				String inscTimeId = req.getParameter("inscTimeId");
@@ -91,25 +92,54 @@ public class InsCourseTimeServlet extends HttpServlet {
 		if ("insert".equals(action)) {// 來自loginMember.jsp的請求
 
 			List<String> errorMsgs = new LinkedList<String>();
-			// Store this set in the request scope, in case we need to
+			List<String> successMsgs = new LinkedList<String>();
+			Set<String> inscMFDSet = new LinkedHashSet<String>();
+			Set<String> inscEXPSet = new LinkedHashSet<String>();
+			// Store this set in the request scope, in case we need td
 			// send the ErrorPage view.
 			req.setAttribute("errorMsgs", errorMsgs);
+			req.setAttribute("successMsgs", successMsgs);
 
 			try {
 				/*************************** 2.開始查詢資料 *****************************************/
 				InsCourseTimeService insCourseTimeSvc = new InsCourseTimeService();
 				String inscId = req.getParameter("inscId");
-				System.out.println(inscId);
-				String[] inscMFD = req.getParameterValues("start_dateTime");
-				String[] inscEXP = req.getParameterValues("end_dateTime");
-				for (int i = 0; i < inscMFD.length; i++) {
-					System.out.println(inscMFD[i]);
-					System.out.println(inscEXP[i]);
-					insCourseTimeSvc.insertInsCourseTime(inscId, java.sql.Timestamp.valueOf(inscMFD[i]), java.sql.Timestamp.valueOf(inscEXP[i]));
-					
+				if (inscId == null || (inscId.trim()).length() == 0) {
+					errorMsgs.add("請選擇	課程");
 				}
-	
+				String[] start_dateTime = req.getParameterValues("start_dateTime");
+				String[] end_dateTime = req.getParameterValues("end_dateTime");
+				for (int i = 0; i < start_dateTime.length; i++) {
+					if (start_dateTime[i] == null || (start_dateTime[i].trim()).length() == 0 || end_dateTime[i] == null
+							|| (end_dateTime[i].trim()).length() == 0) {
+						errorMsgs.add("開始時間與結束時間請勿請勿空白");
+						break;
+					}
+					if (start_dateTime[i].equals(end_dateTime[i])) {
+						errorMsgs.add("開始時間與結束時間請勿相同");
+						break;
+
+					} else {
+						inscMFDSet.add((start_dateTime[i] + ":00"));
+						inscEXPSet.add((end_dateTime[i] + ":00"));
+					}
+				}
+				String[] inscMFD = inscMFDSet.toArray(new String[inscMFDSet.size()]);
+				String[] inscEXP = inscEXPSet.toArray(new String[inscEXPSet.size()]);
+				for (int i = 0; i < inscMFD.length; i++) {
+				insCourseTimeSvc.insertInsCourseTime(inscId, java.sql.Timestamp.valueOf(inscMFD[i]),
+					java.sql.Timestamp.valueOf(inscEXP[i]));
+				}
+
+				// Send the use back to the form, if there were errors
+				if (!errorMsgs.isEmpty()) {
+					RequestDispatcher failureView = req.getRequestDispatcher("insctime/addinscTime.jsp");
+					failureView.forward(req, res);
+					return;// 程式中斷
+				}
+
 				/*************************** 3.新增完成,準備轉交(Send the Success view) *************/
+				successMsgs.add("完成新增課程時間");
 				String url = "insctime/addinscTime.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url); // 成功轉交 loginSuccess.jsp
 				successView.forward(req, res);
@@ -117,7 +147,7 @@ public class InsCourseTimeServlet extends HttpServlet {
 
 			} catch (Exception e) {
 				errorMsgs.add("無法取得資料:" + e.getMessage());
-				RequestDispatcher failureView = req.getRequestDispatcher("/member/loginMember.jsp");
+				RequestDispatcher failureView = req.getRequestDispatcher("insctime/addinscTime.jsp");
 				failureView.forward(req, res);
 			}
 

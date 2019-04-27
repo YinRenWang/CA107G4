@@ -157,8 +157,8 @@ $('.tabing ul li a').click(function(e) {
 }
 
 #krkr{
-  margin-top:7%; 
-  margin-bottom:7%; 
+ margin-top:7%; 
+margin-bottom:290px; 
 }
 
 .col-xs-12 .imgblob{
@@ -170,8 +170,16 @@ display: block;
 align-items:center;
 justify-content:center;
 
-
 }
+
+footer{
+    width: 100%;
+    height:300px;   /* footer的高度一定要是固定值*/ 
+    position:absolute;
+    bottom:0px;
+    left:0px;
+}
+
 
     </style>
     <title>WeShare | 最棒的教育共享平台</title>
@@ -196,25 +204,8 @@ justify-content:center;
     </div>	
     <!-------------------------------------------------------------------------headerEnd------------------------------------------------------------------------->
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<div class="container" id="krkr">
+<div id="krkr">
+<div class="container" >
 
 <%@ include file="pages/page1_ByCompositeQuery.file" %>
 	
@@ -225,7 +216,7 @@ justify-content:center;
 
 
 <c:forEach var="insCourseVO" items="${listEmps_ByCompositeQuery}" begin="<%=pageIndex%>" end="<%=pageIndex+rowsPerPage-1%>">
- <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/inscourse/inscourse.do" style="margin-bottom: 0px;">
+ <FORM METHOD="GET" ACTION="<%=request.getContextPath()%>/inscourse/inscourse.do" style="margin-bottom: 0px;">
 	<div class="one-row">
 
     <section class="col-xs-12 col-sm-6 col-md-12 ">
@@ -320,12 +311,7 @@ justify-content:center;
 </span></li>
 				</ul>
 			</div>
-	   
-
-
-
-
-
+	    
 
 			<span class="clearfix borda"></span>
 		</article>		
@@ -338,6 +324,8 @@ justify-content:center;
 	</c:forEach>
 
 <%@ include file="pages/page2_ByCompositeQuery.file" %>
+
+</div>
 
 </div>
 
