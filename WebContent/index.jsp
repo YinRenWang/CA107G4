@@ -44,7 +44,7 @@ body {
 圓角 border: 2px #fff solid;
     line-height: 60px;
     font-size: 14px;
-    background-image: url("img/blob/01.jpg");
+    background-image: url("<%=request.getContextPath()%>/images/blob/01.jpg");
     text-align: center;
     top: -7.5%;
     position: absolute;
@@ -186,14 +186,20 @@ ul, ol {
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"> <span class="navbar-toggler-icon"></span> </button>
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
           <ul class="navbar-nav mr-auto">
-            <li class="nav-item active"> <a class="nav-link" href="<%= request.getContextPath()%>/teacher/addTeacher.jsp">成為老師 <span class="sr-only">(current)</span></a> </li>
-            <li class="nav-item dropdown"> <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">探索課程</a>
+            <li class="nav-item active"> <a class="nav-link" href="<%= request.getContextPath()%>/teacher/joinTeacher.jsp">成為老師 <span class="sr-only">(current)</span></a> </li>
+            <li class="nav-item dropdown"> <a class="nav-link dropdown-toggle"  href="<%= request.getContextPath()%>/teacher/joinTeacher.jsp" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">探索課程</a>
               <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink"> <a class="dropdown-item" href="<%= request.getContextPath()%>/inscourse/listAllInsCourse.jsp">所有課程</a> <a class="dropdown-item" href="#">音樂</a> <a class="dropdown-item" href="#">語言</a> <a class="dropdown-item" href="#">運動</a> <a class="dropdown-item" href="#">藝術</a> <a class="dropdown-item" href="#">設計</a> <a class="dropdown-item" href="#">人文</a> <a class="dropdown-item" href="#">行銷</a> <a class="dropdown-item" href="#">程式語言</a> <a class="dropdown-item" href="#">投資理財</a> <a class="dropdown-item" href="#">職場技能</a> <a class="dropdown-item" href="#">手作</a> <a class="dropdown-item" href="#">烹飪</a> </div>
             </li>
             <li class="nav-item"> <a class="nav-link" href="<%= request.getContextPath()%>/member/loginMember.jsp">登入</a> </li>
             <li class="nav-item"> <a class="nav-link" href="<%= request.getContextPath()%>/member/addMember.jsp">註冊</a> </li>
             <li class="nav-item"> <a class="nav-link " href="<%= request.getContextPath()%>/member/listAllMember.jsp">關於我們</a> </li>
-            <li class="nav-item"> <a class="nav-link " href="<%= request.getContextPath()%>/insctime/addinscTime.jsp">${memberVO.memName}${teacherVO.teacherId}</a> </li>
+            
+            <form id="form1" action="<%= request.getContextPath()%>/MemberServlet" method="get">
+            <input type="hidden" name="inCludeVO"  value="member"> 
+            <input type="hidden" name="action" value="changeValue">
+            </form>	
+            <li class="nav-item"> <a class="nav-link " href="#" onclick="document.getElementById('form1').submit();return false;">${memberVO.memName}${teacherVO.teacherId}</a> </li>
+                 
           </ul>
         </div>
       </nav>
@@ -206,11 +212,11 @@ ul, ol {
       <li data-target="#carouselExampleIndicators" data-slide-to="4"></li>
     </ol>
     <div class="carousel-inner">
-      <div class="carousel-item active"> <img src="images/homePage/carosel_1.jpg" class="d-block w-100" alt="..."> </div>
-      <div class="carousel-item"> <img src="images/homePage/carosel_2.png" class="d-block w-100" alt="..."> </div>
-      <div class="carousel-item"> <img src="images/homePage/carosel_3.png" class="d-block w-100" alt="..."> </div>
-      <div class="carousel-item"> <img src="images/homePage/carosel_4.png" class="d-block w-100" alt="..."> </div>
-      <div class="carousel-item"> <img src="images/homePage/carosel_5.png" class="d-block w-100" alt="..."> </div>
+      <div class="carousel-item active"> <img src="<%=request.getContextPath()%>/images/homePage/carosel_1.jpg" class="d-block w-100" alt="..."> </div>
+      <div class="carousel-item"> <img src="<%=request.getContextPath()%>/images/homePage/carosel_2.png" class="d-block w-100" alt="..."> </div>
+      <div class="carousel-item"> <img src="<%=request.getContextPath()%>/images/homePage/carosel_3.png" class="d-block w-100" alt="..."> </div>
+      <div class="carousel-item"> <img src="<%=request.getContextPath()%>/images/homePage/carosel_4.png" class="d-block w-100" alt="..."> </div>
+      <div class="carousel-item"> <img src="<%=request.getContextPath()%>/images/homePage/carosel_5.png" class="d-block w-100" alt="..."> </div>
     </div>
     <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev"> <span class="carousel-control-prev-icon" aria-hidden="true"></span> <span class="sr-only">Previous</span> </a> <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next"> <span class="carousel-control-next-icon" aria-hidden="true"></span> <span class="sr-only">Next</span> </a> </div>
   <div class="search">
@@ -252,21 +258,21 @@ ul, ol {
   </div>
 </div>
 <div class="wrapCenter">
-  <div class="itemCenter"> <img src="images/homePage/handshake.png" width="60" height="60" alt=""/>
+  <div class="itemCenter"> <img src="<%=request.getContextPath()%>/images/homePage/handshake.png" width="60" height="60" alt=""/>
     <p class="col-xl-9">自由分享，您所擅長的技能。</p>
 
   </div>
-  <div class="itemCenter"> <img src="images/homePage/time-management.png" width="60" height="60" alt=""/>
+  <div class="itemCenter"> <img src="<%=request.getContextPath()%>/images/homePage/time-management.png" width="60" height="60" alt=""/>
     <p class="col-xl-9">隨意安排，您所空餘的時間。</p>
 
   </div>
-  <div class="itemCenter"> <img src="images/homePage/diploma.png" width="60" height="60" alt=""/>
+  <div class="itemCenter"> <img src="<%=request.getContextPath()%>/images/homePage/diploma.png" width="60" height="60" alt=""/>
     <p class="col-xl-9">保障安全，您所預約的課程。</p>
 
   </div>
 </div>
 <div class="cardPadding" >
-  <div class="cardPadding-title" > <img src="images/homePage/book.png" alt="" width="80" height="80"  />
+  <div class="cardPadding-title" > <img src="<%=request.getContextPath()%>/images/homePage/book.png" alt="" width="80" height="80"  />
     <h5>最受歡迎的課程</h5>
   </div>
   <div class="row">
@@ -274,68 +280,68 @@ ul, ol {
       <div class="course-deck" >
         <div class="card border-light mb-3" style="max-width: 23rem ;">
           <div class="card-header">Java</div>
-          <img src="images/homePage/course/course_01.png" class="img-fluid" alt="..."> </div>
+          <img src="<%=request.getContextPath()%>/images/homePage/course/course_01.png" class="img-fluid" alt="..."> </div>
       </div>
     </div>
     <div class="col-md-3">
       <div class="course-deck" >
         <div class="card border-light mb-3" style="max-width: 23rem;">
           <div class="card-header">Andriod</div>
-          <img src="images/homePage/course/course_01.png" class="img-fluid" alt="..."> </div>
+          <img src="<%=request.getContextPath()%>/images/homePage/course/course_01.png" class="img-fluid" alt="..."> </div>
       </div>
     </div>
     <div class="col-md-3">
       <div class="course-deck" >
         <div class="card border-light mb-3" style="max-width: 23rem;">
           <div class="card-header">SQL</div>
-          <img src="images/homePage/course/course_01.png" class="img-fluid" alt="..."> </div>
+          <img src="<%=request.getContextPath()%>/images/homePage/course/course_01.png" class="img-fluid" alt="..."> </div>
       </div>
     </div>
     <div class="col-md-3">
       <div class="course-deck" >
         <div class="card border-light mb-3" style="max-width: 23rem;">
           <div class="card-header">甜品</div>
-          <img src="images/homePage/course/course_01.png" class="img-fluid" alt="..."> </div>
+          <img src="<%=request.getContextPath()%>/images/homePage/course/course_01.png" class="img-fluid" alt="..."> </div>
       </div>
     </div>
     <div class="col-md-3">
       <div class="course-deck" >
         <div class="card border-light mb-3" style="max-width: 23rem;">
           <div class="card-header">烘焙</div>
-          <img src="images/homePage/course/course_01.png" class="img-fluid" alt="..."> </div>
+          <img src="<%=request.getContextPath()%>/images/homePage/course/course_01.png" class="img-fluid" alt="..."> </div>
       </div>
     </div>
     <div class="col-md-3">
       <div class="course-deck" >
         <div class="card border-light mb-3" style="max-width: 23rem;">
           <div class="card-header">貝斯</div>
-          <img src="images/homePage/course/course_01.png" class="img-fluid" alt="..."> </div>
+          <img src="<%=request.getContextPath()%>/images/homePage/course/course_01.png" class="img-fluid" alt="..."> </div>
       </div>
     </div>
     <div class="col-md-3">
       <div class="course-deck" >
         <div class="card border-light mb-3" style="max-width: 23rem;">
           <div class="card-header">吉他</div>
-          <img src="images/homePage/course/course_01.png" class="img-fluid" alt="..."> </div>
+          <img src="<%=request.getContextPath()%>/images/homePage/course/course_01.png" class="img-fluid" alt="..."> </div>
       </div>
     </div>
     <div class="col-md-3">
       <div class="course-deck" >
         <div class="card border-light mb-3" style="max-width: 23rem;">
           <div class="card-header">中文</div>
-          <img src="images/homePage/course/course_01.png" class="img-fluid" alt="..."> </div>
+          <img src="<%=request.getContextPath()%>/images/homePage/course/course_01.png" class="img-fluid" alt="..."> </div>
       </div>
     </div>
   </div>
 </div>
 <div class="cardPadding" style="padding-top: 0%">
-  <div class="cardPadding-title" > <img src="images/homePage/live.png" alt="" width="80" height="80"  />
+  <div class="cardPadding-title" > <img src="<%=request.getContextPath()%>/images/homePage/live.png" alt="" width="80" height="80"  />
     <h5>熱門直播</h5>
   </div>
   <div class="card-deck" >
     <div class="card">
       <div class="teacherImg" ></div>
-      <img src="images/homePage/course/course_01.png" class="card-img-top" alt="...">
+      <img src="<%=request.getContextPath()%>/images/homePage/course/course_01.png" class="card-img-top" alt="...">
       <div class="card-body">
         <h5 class="card-title">Card title</h5>
         <p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
@@ -343,7 +349,7 @@ ul, ol {
     </div>
     <div class="card">
       <div class="teacherImg" ></div>
-      <img src="images/homePage/course/course_02.png" class="card-img-top" alt="...">
+      <img src="<%=request.getContextPath()%>/images/homePage/course/course_02.png" class="card-img-top" alt="...">
       <div class="card-body">
         <h5 class="card-title">Card title</h5>
         <p class="card-text">This card has supporting text below as a natural lead-in to additional content.</p>
@@ -351,7 +357,7 @@ ul, ol {
     </div>
     <div class="card">
       <div class="teacherImg" ></div>
-      <img src="images/homePage/course/course_03.png" class="card-img-top" alt="...">
+      <img src="<%=request.getContextPath()%>/images/homePage/course/course_03.png" class="card-img-top" alt="...">
       <div class="card-body">
         <h5 class="card-title">Card title</h5>
         <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This card has even longer content than the first to show that equal height action.</p>
@@ -359,7 +365,7 @@ ul, ol {
     </div>
     <div class="card">
       <div class="teacherImg" ></div>
-      <img src="images/homePage/course/course_04.png" class="card-img-top" alt="...">
+      <img src="<%=request.getContextPath()%>/images/homePage/course/course_04.png" class="card-img-top" alt="...">
       <div class="card-body">
         <h5 class="card-title">Card title</h5>
         <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This card has even longer content than the first to show that equal height action.</p>

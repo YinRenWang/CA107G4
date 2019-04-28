@@ -55,7 +55,7 @@ public class InsCourseServlet extends HttpServlet {
 			req.setAttribute("errorMsgs", errorMsgs);
 
 			try {
-				String inscId = req.getParameter("inscId");
+				String inscId = req.getParameter("inscId"); 
 				if (inscId == null || (inscId.trim()).length() == 0) {
 					errorMsgs.add("請輸入課程編號");
 				}
@@ -258,7 +258,8 @@ public class InsCourseServlet extends HttpServlet {
 					insCourseSvc.addInsCourse(teacherId, courseId, inscLoc, inscType, inscPeople, inscLang, inscPrice,
 							inscCourser, inscStatus);
 
-					String url = "/insctime/addinscTime.jsp";
+					String url = "/member/viewAllMember.jsp";
+					req.setAttribute("inCludeVO", "teacher"); // 要導向的分頁
 					RequestDispatcher successView = req.getRequestDispatcher(url); // 新增成功後轉交listAllEmp.jsp
 					successView.forward(req, res);
 				}else {
@@ -475,12 +476,14 @@ public class InsCourseServlet extends HttpServlet {
 					inscStatus=0;
 				}	
 				insCourseSvc.updateStatus(inscStatus, inscId);
-				String url = "/insctime/addinscTime.jsp";
+				String url = "/member/viewAllMember.jsp";
+				req.setAttribute("inCludeVO", "teacher"); // 要導向的分頁
 				RequestDispatcher successView = req.getRequestDispatcher(url); // 新增成功後轉交listAllEmp.jsp
 				successView.forward(req, res);
 			}catch (Exception e) {
 				errorMsgs.add(e.getMessage());
-				RequestDispatcher failureView = req.getRequestDispatcher("/insctime/addinscTime.jsp");
+				req.setAttribute("inCludeVO", "teacher"); // 要導向的分頁
+				RequestDispatcher failureView = req.getRequestDispatcher("/member/viewAllMember.jsp");
 				failureView.forward(req, res);
 			}
 		}

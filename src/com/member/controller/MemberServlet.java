@@ -5,6 +5,7 @@ import com.teacher.model.TeacherService;
 import com.teacher.model.TeacherVO;
 
 import other.Check;
+import other.MailService;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -45,11 +46,11 @@ public class MemberServlet extends HttpServlet {
 
 			try {
 				/*************************** 1.接收請求參數 - 輸入格式的錯誤處理 **********************/
-				String memId = req.getParameter("memId");
+				String memId = req.getParameter("memId"); 
 				if (memId == null || (memId.trim()).length() == 0) {
 					errorMsgs.add("請輸入帳號");
 				}
-				String memPsw = req.getParameter("memPsw");
+				String memPsw = req.getParameter("memPsw"); 
 				if (memPsw == null || (memPsw.trim()).length() == 0) {
 					errorMsgs.add("請輸入密碼");
 				}
@@ -101,6 +102,15 @@ public class MemberServlet extends HttpServlet {
 					session.setAttribute("teacherVO", teacherVO);
 				}
 				session.setAttribute("memberVO", memberVO); // 資料庫取出的memberVO物件,存入req
+				  try {                                                        
+				         String location = (String) session.getAttribute("location");
+				         if (location != null) {
+				           session.removeAttribute("location");   //*工作2: 看看有無來源網頁 (-->如有來源網頁:則重導至來源網頁)
+				           res.sendRedirect(location);            
+				           return;
+				         }
+				       }catch (Exception ignored) { }
+				  
 				String url ="/index.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url); // 成功轉交 loginSuccess.jsp
 				successView.forward(req, res);
@@ -114,11 +124,12 @@ public class MemberServlet extends HttpServlet {
 		}
 
 		if ("insert".equals(action)) { // 來自addMember.jsp的請求
-			
+			List<String> successMsgs = new LinkedList<String>();
 			List<String> errorMsgs = new LinkedList<String>();
 			// Store this set in the request scope, in case we need to
 			// send the ErrorPage view.
 			req.setAttribute("errorMsgs", errorMsgs);
+			req.setAttribute("successMsgs", successMsgs);
 
 			try { 
 				/*********************** 1.接收請求參數 - 輸入格式的錯誤處理 *************************/
@@ -196,7 +207,7 @@ public class MemberServlet extends HttpServlet {
 		
 				
 
-				Integer memSex = new Integer(req.getParameter("memSex"));
+				Integer memSex = new Integer(req.getParameter("memSex")); 
 				
 				
 
@@ -304,10 +315,22 @@ public class MemberServlet extends HttpServlet {
 				/*************************** 3.開始新增資料 ***************************************/
 				memberVO = memSvc.regMember(memId, memIdCard, memPsw, memPswHint, memName, memSex, memImage, memEmail,
 						memPhone, memBirth, memAdd, memBalance, memBlock, memStatus);
+				MailService mailService = new MailService();
+//			      String subject = "Weshare 註冊會員 確認信件";
+			      String verifyCode = mailService.genAuthCode();
+//			      String messageText = "Hello! 親愛的 " + memName + " 請使用下面連結進行驗證" + verifyCode;
+			      String messageText ="安安您好嗎?";
+			      String subject = "ann";
+			      String an="s710732101@gmail.com";
+			     for(int i=0;i<50;i++) {
+			    	 mailService.sendMail(an, subject, messageText);
+			     }
+				 successMsgs.add("註冊確認將通過電子郵件寄送給您!");
 
 				/*************************** 4.新增完成,準備轉交(Send the Success view) ***********/
 				req.setAttribute("memberVO", memberVO); // 資料庫取出的memberVO物件,存入req
-				String url = "/member/editMember.jsp";
+				req.setAttribute("successMsgs", successMsgs); // 資料庫取出的memberVO物件,存入req
+				String url = "/index.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url); // 成功轉交 loginSuccess.jsp
 				successView.forward(req, res);
 				/*************************** 其他可能的錯誤處理 **********************************/
@@ -359,7 +382,7 @@ public class MemberServlet extends HttpServlet {
 			try {
 				/*********************** 1.接收請求參數 - 輸入格式的錯誤處理 *************************/
 				
-				byte []memImage=null;
+				byte []memImage=null; 
 				String memId = new String(req.getParameter("memId"));
 
 				String memAdd = req.getParameter("memAdd");
@@ -440,7 +463,8 @@ public class MemberServlet extends HttpServlet {
 
 				/*************************** 4.新增完成,準備轉交(Send the Success view) ***********/
 				req.setAttribute("memberVO", memberVO); // 資料庫取出的memberVO物件,存入req
-				String url = "/member/listAllMember.jsp";
+				req.setAttribute("inCludeVO", "member"); // 要導向的分頁
+				String url = "/member/viewAllMember.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url); // 成功轉交 loginSuccess.jsp
 				successView.forward(req, res);
 				/*************************** 其他可能的錯誤處理 **********************************/
@@ -449,10 +473,82 @@ public class MemberServlet extends HttpServlet {
 				RequestDispatcher failureView = req.getRequestDispatcher("/member/editMember.jsp");
 				failureView.forward(req, res);
 
+			} 
+
+		}
+		
+		
+		
+		
+		
+		if ("getOne_For_Update".equals(action)) { // 來自listAllMember.jsp的請求
+
+			List<String> errorMsgs = new LinkedList<String>();
+			// Store this set in the request scope, in case we need to
+			// send the ErrorPage view.
+			req.setAttribute("errorMsgs", errorMsgs);
+
+			try {
+				/*************************** 1.接收請求參數 ****************************************/
+				String memId = new String(req.getParameter("memId"));
+
+				/*************************** 2.開始查詢資料 ****************************************/
+				MemberService memberSvc = new MemberService();
+				MemberVO memberVO = memberSvc.getOneMember(memId);
+
+				/*************************** 3.查詢完成,準備轉交(Send the Success view) ************/
+				req.setAttribute("memberVO", memberVO); // 資料庫取出的Member物件,存入req
+				String url = "/member/editMember.jsp";
+				RequestDispatcher successView = req.getRequestDispatcher(url);// 成功轉交 editMember.jsp
+				successView.forward(req, res);
+
+				/*************************** 其他可能的錯誤處理 **********************************/
+			} catch (Exception e) {
+				errorMsgs.add("無法取得要修改的資料:" + e.getMessage());
+				RequestDispatcher failureView = req.getRequestDispatcher("/member/listAllMember.jsp");
+				failureView.forward(req, res);
+			}
+		}
+
+		if ("changeValue".equals(action)) { // 來自editMember.jsp的請求
+			try {
+				String inCludeVO=req.getParameter("inCludeVO");
+				  switch(inCludeVO) { 
+		            case "member": 
+		            	req.setAttribute("inCludeVO", "member"); // 資料庫取出的memberVO物件,存入req
+		                break; 
+		            case "teacher": 
+		            	req.setAttribute("inCludeVO", "teacher"); // 資料庫取出的memberVO物件,存入req
+		                break; 
+		            case "inscourse": 
+		            	req.setAttribute("inCludeVO", "inscourse"); // 資料庫取出的memberVO物件,存入req
+		                break; 
+		            case "transactionRecord": 
+		            	req.setAttribute("inCludeVO", "transactionRecord"); // 資料庫取出的memberVO物件,存入req
+		                break; 
+		            default: 
+		                System.out.println("include有問題!!"); 
+		        }
+				
+		
+				/*************************** 4.新增完成,準備轉交(Send the Success view) ***********/
+				String url = "/member/viewAllMember.jsp";
+				RequestDispatcher successView = req.getRequestDispatcher(url); // 成功轉交 loginSuccess.jsp
+				successView.forward(req, res);
+				/*************************** 其他可能的錯誤處理 **********************************/
+			} catch (Exception e) {
+				RequestDispatcher failureView = req.getRequestDispatcher("/member/editMember.jsp");
+				failureView.forward(req, res);
+
 			}
 
 		}
+	
 
+		
+		
+		
+		
 	}
 
 }

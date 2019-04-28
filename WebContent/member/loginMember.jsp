@@ -2,11 +2,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page import="com.member.model.*"%>
 
-<%
-  MemberVO memberVO = (MemberVO) request.getAttribute("memberVO"); 
-%>
-
-
 <!doctype html>
 <html lang="en">
 
@@ -22,6 +17,10 @@
 	href="<%=request.getContextPath()%>/css/G4.css ">
 <link rel="stylesheet" type="text/css"
 	href="<%=request.getContextPath()%>/css/login.css ">
+<link 
+	href="https://cdn.bootcss.com/limonte-sweetalert2/7.33.1/sweetalert2.css" rel="stylesheet">
+<script 
+	src="https://cdn.bootcss.com/limonte-sweetalert2/7.33.1/sweetalert2.all.min.js"></script>
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/2.0.0/jquery.min.js"></script>
 <title>WeShare | 最棒的教育共享平台</title>
@@ -56,6 +55,17 @@
 <div class="alert alert-danger" role="alert">${errorMsgs}</div>
 </c:forEach>
 </c:if>
+<c:if test="${not empty successMsgs}">
+<c:forEach var="success" items="${successMsgs}">
+<script>
+Swal.fire(
+		 '還差一步!',
+		 '${success}',
+		  'success'
+)
+</script>
+</c:forEach>
+</c:if> 
 					<form data-toggle="validator" role="form" method="post" action="member.do" >
 						<div class="row">
 							<div class="col-md-12">

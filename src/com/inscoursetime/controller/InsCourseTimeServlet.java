@@ -40,7 +40,7 @@ public class InsCourseTimeServlet extends HttpServlet {
 		if ("getOne_For_Display".equals(action)) {// 來自addInscTime.jsp的請求
 
 			List<String> errorMsgs = new LinkedList<String>();
-			// Store this set in the request scope, in case we need to
+			// Store this set in the request scope, in case we need to 
 			// send the ErrorPage view.
 			req.setAttribute("errorMsgs", errorMsgs);
 
@@ -52,8 +52,9 @@ public class InsCourseTimeServlet extends HttpServlet {
 				List<InsCourseTimeVO> timeList = insCourseTimeSvc.findByKey(inscId);
 				/*************************** 3.查詢完成,準備轉交(Send the Success view) *************/
 				req.setAttribute("timeList", timeList); // 資料庫取出的memberVO物件,存入req
-				String url = "insctime/addinscTime.jsp";
-				RequestDispatcher successView = req.getRequestDispatcher(url); // 成功轉交 loginSuccess.jsp
+				req.setAttribute("inCludeVO", "teacher"); // 要導向的分頁
+				String url = "/member/viewAllMember.jsp";
+				RequestDispatcher successView = req.getRequestDispatcher(url); // 新增成功後轉交listAllEmp.jsp
 				successView.forward(req, res);
 
 			} catch (Exception e) {
@@ -77,8 +78,9 @@ public class InsCourseTimeServlet extends HttpServlet {
 				InsCourseTimeService insCourseTimeSvc = new InsCourseTimeService();
 				insCourseTimeSvc.deleteInsCourseTime(inscTimeId);
 				/*************************** 3.查詢完成,準備轉交(Send the Success view) *************/
-				String url = "insctime/addinscTime.jsp";
-				RequestDispatcher successView = req.getRequestDispatcher(url); // 成功轉交 loginSuccess.jsp
+				String url = "/member/viewAllMember.jsp";
+				req.setAttribute("inCludeVO", "teacher"); // 要導向的分頁
+				RequestDispatcher successView = req.getRequestDispatcher(url); // 新增成功後轉交listAllEmp.jsp
 				successView.forward(req, res);
 
 			} catch (Exception e) {
@@ -133,15 +135,18 @@ public class InsCourseTimeServlet extends HttpServlet {
 
 				// Send the use back to the form, if there were errors
 				if (!errorMsgs.isEmpty()) {
-					RequestDispatcher failureView = req.getRequestDispatcher("insctime/addinscTime.jsp");
+					req.setAttribute("inCludeVO", "teacher"); // 要導向的分頁
+					String url = "/member/viewAllMember.jsp";
+					RequestDispatcher failureView = req.getRequestDispatcher(url);
 					failureView.forward(req, res);
 					return;// 程式中斷
 				}
 
 				/*************************** 3.新增完成,準備轉交(Send the Success view) *************/
 				successMsgs.add("完成新增課程時間");
-				String url = "insctime/addinscTime.jsp";
-				RequestDispatcher successView = req.getRequestDispatcher(url); // 成功轉交 loginSuccess.jsp
+				String url = "/member/viewAllMember.jsp";
+				req.setAttribute("inCludeVO", "teacher"); // 要導向的分頁
+				RequestDispatcher successView = req.getRequestDispatcher(url); // 新增成功後轉交listAllEmp.jsp
 				successView.forward(req, res);
 				
 

@@ -3,8 +3,6 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %> 
 <jsp:useBean id="courseSvc" scope="page" class="com.coursetype.model.CourseTypeService" />
-<jsp:useBean id="memberVO"  scope="session" type="com.member.model.MemberVO" />
-<jsp:useBean id="teacherVO"  scope="session" type="com.teacher.model.TeacherVO" />
 <!doctype html>
 <html lang="en">
 <head>

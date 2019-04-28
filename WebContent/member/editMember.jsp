@@ -2,12 +2,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page import="com.member.model.*"%>
 
-<%
-	MemberVO memberVO = (MemberVO) request.getAttribute("memberVO");
-	
-%>
-
-
 <!doctype html>
 <html lang="en">
 
@@ -40,7 +34,7 @@
 .acc-col {
 	min-height: 300px;
 	margin-top: 5%;
-	background-color: #ffffff;
+	background-color:#F4F9F4;
 	padding: 20px;
 	/*      border:#333 solid 1px;*/
 }
@@ -112,30 +106,12 @@ section>form>div {
 	box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.1);
 }
 
-.start {
-	margin-bottom: 25%;
-}
+
 </style>
 <title>WeShare | 最棒的教育共享平台</title>
 </head>
 <body>
-	<!-------------------------------------------------------------------------headerStart------------------------------------------------------------------------->
-<div class="header">
-      <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top"> <img src="<%= request.getContextPath()%>/images/icon/logo.png" width="80" height="60" alt=""/><a class="navbar-brand" href="<%= request.getContextPath()%>">教育共享平台</a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"> <span class="navbar-toggler-icon"></span> </button>
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-          <ul class="navbar-nav mr-auto">
-            <li class="nav-item active"> <a class="nav-link" href="#">成為老師 <span class="sr-only">(current)</span></a> </li>
-            <li class="nav-item dropdown"> <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">探索課程</a>
-              <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink"> <a class="dropdown-item" href="<%= request.getContextPath()%>/Inscourse/NewFile.jsp">所有課程</a> <a class="dropdown-item" href="#">音樂</a> <a class="dropdown-item" href="#">語言</a> <a class="dropdown-item" href="#">運動</a> <a class="dropdown-item" href="#">藝術</a> <a class="dropdown-item" href="#">設計</a> <a class="dropdown-item" href="#">人文</a> <a class="dropdown-item" href="#">行銷</a> <a class="dropdown-item" href="#">程式語言</a> <a class="dropdown-item" href="#">投資理財</a> <a class="dropdown-item" href="#">職場技能</a> <a class="dropdown-item" href="#">手作</a> <a class="dropdown-item" href="#">烹飪</a> </div>
-            </li>
-            <li class="nav-item"> <a class="nav-link" href="<%= request.getContextPath()%>/member/loginMember.jsp">登入</a> </li>
-            <li class="nav-item"> <a class="nav-link" href="<%= request.getContextPath()%>/member/addMember.jsp">註冊</a> </li>
-            <li class="nav-item"> <a class="nav-link " href="<%= request.getContextPath()%>/member/listAllMember.jsp">關於我們</a> </li>
-          </ul>
-        </div>
-      </nav>
-    </div>	
+
 	<!-------------------------------------------------------------------------headerEnd------------------------------------------------------------------------->
 		<c:if test="${not empty errorMsgs}">
 			<h4 style="color: red; text-align: center;">請修正以下錯誤:</h4>
@@ -146,32 +122,10 @@ section>form>div {
 			</ul>
 		</c:if>
 
-<FORM method="post" action="member.do" class="form-horizontal" name="form1" id="form1" enctype="multipart/form-data">	
+<FORM method="post" action="<%= request.getContextPath()%>/MemberServlet" class="form-horizontal" name="form1" id="form1" enctype="multipart/form-data">	
 	<div class="start">
 		<!-- UI - X Starts -->
 		<div class="ui-67">
-
-			<!-- Head Starts -->
-			<div class="ui-head bg-lblue">
-				<!-- Details -->
-				<div class="ui-details">
-					<!-- Name -->
-					<h3 id="name-header" >${memberVO.memName}</h3>
-					<!-- Designation -->
-					<h4>個人資料</h4>
-					
-
-				</div>
-				<!-- Image -->
-				<div class="ui-image">
-					
-					<!-- User Image -->
-<img src="<%=request.getContextPath()%>/member/DBGifReader.do?memId=${memberVO.memId}" alt="Profile Picture" 
-class="img-responsive"  name="memImage" width="120" height="120">
-
-				</div>
-			</div>
-			<!-- Head Ends -->
 
 			<!-- Content Starts -->
 			<div class="ui-content">
@@ -306,7 +260,7 @@ class="img-responsive"  name="memImage" width="120" height="120">
 <div class="col-5">	</div>
 <div class="col-2">		
 <input type="hidden" name="action" value="update"> 
-<input id="signUp" name="submit" type="submit" value="儲存修改"class="btn btn-success d-flex justify-content-end" style="align-center"> 
+<input id="signUp" name="submit" type="submit" value="儲存修改" class="btn btn-success d-flex justify-content-end" style="align-center"> 
 </div>	
 
 </div>
@@ -329,76 +283,8 @@ class="img-responsive"  name="memImage" width="120" height="120">
 		</div>
 		<!-- UI - X Ends -->
 	</div>
+
 	
-
-
-	<!-------------------------------------------------------------------------footerStart------------------------------------------------------------------------->
-	<footer
-		class="section footer-classic context-dark bg-image footer navbar-fixed-bottom"
-		style="background: #74b49b;">
-		<div class="container">
-			<div class="row row-30">
-				<div class="col-md-4 col-xl-5">
-					<div class="pr-xl-4">
-						<a href="index.html"></a>
-						<p class="reademe">我們是最佳的共享教育的平台，致力於在分享技能，保障交易，展現自我，使用戶得到最棒的學習體驗。</p>
-						<!-- Rights-->
-						<p class="rights">
-							<span>©  </span><span class="copyright-year">2018</span><span> </span><span>WeShare教育共享平台</span><span>. </span><span>©
-								All Rights Reserved. .</span>
-						</p>
-					</div>
-				</div>
-				<div class="col-md-4">
-					<h5 class="reademe">聯絡我們</h5>
-					<dl class="contact-list">
-						<dt>地址:</dt>
-						<dd>桃園市中壢區中大路300號</dd>
-					</dl>
-					<dl class="contact-list">
-						<dt>信箱:</dt>
-						<dd>
-							<a href="mailto:#">weshare@gmail.com</a>
-						</dd>
-					</dl>
-					<dl class="contact-list">
-						<dt>電話:</dt>
-						<dd>
-							<a href="tel:#">03-425-7387</a>
-						</dd>
-					</dl>
-				</div>
-				<div class="col-md-4 col-xl-3">
-					<h5 class="reademe2">關於</h5>
-					<ul class="nav-list">
-						<li><a href="#">關於我們</a></li>
-						<li><a href="#">團隊成員</a></li>
-						<li><a href="#">加入WeShare</a></li>
-						<li><a href="#">隱私權政策</a></li>
-						<li><a href="#">功能更新</a></li>
-					</ul>
-				</div>
-			</div>
-		</div>
-		<div class="row no-gutters social-container">
-			<div class="col">
-				<a class="social-inner" href="#"><span
-					class="icon mdi mdi-facebook"></span><span>Facebook</span></a>
-			</div>
-			<div class="col">
-				<a class="social-inner" href="#"><span
-					class="icon mdi mdi-instagram"></span><span>instagram</span></a>
-			</div>
-			<div class="col">
-				<a class="social-inner" href="#"><span
-					class="icon mdi mdi-twitter"></span><span>twitter</span></a>
-			</div>
-			<div class="col">
-				<a class="social-inner" href="#"><span
-					class="icon mdi mdi-youtube-play"></span><span>google</span></a>
-			</div>
-		</div>
-	</footer>
 	<!-------------------------------------------------------------------------footerEnd------------------------------------------------------------------------->
 	<!-- Optional JavaScript -->
 	<!-- jQuery first, then Popper.js, then Bootstrap JS -->

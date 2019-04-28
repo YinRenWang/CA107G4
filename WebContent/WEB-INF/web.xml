@@ -9,6 +9,45 @@
     <welcome-file>default.htm</welcome-file>
     <welcome-file>default.jsp</welcome-file>
   </welcome-file-list>
+  
+    <filter>
+    <filter-name>loginFilter</filter-name>
+    <filter-class>filters.LoginFilter</filter-class>
+  </filter>
+  <filter-mapping>
+    <filter-name>loginFilter</filter-name>
+    <url-pattern>/member/editMember.jsp</url-pattern>
+    <url-pattern>/member/viewAllMember.jsp</url-pattern>
+    <url-pattern>/teacher/addTeacher.jsp</url-pattern>
+    <dispatcher>REQUEST</dispatcher>
+    <dispatcher>FORWARD</dispatcher>
+    <dispatcher>INCLUDE</dispatcher>
+    <dispatcher>ERROR</dispatcher>
+    <dispatcher>ASYNC</dispatcher>
+  </filter-mapping>
+  
+   <filter>
+    <filter-name>TeacherFilter</filter-name>
+    <filter-class>filters.TeacherFilter</filter-class>
+  </filter>
+  <filter-mapping>
+    <filter-name>TeacherFilter</filter-name>
+    <url-pattern>/teacher/addInsCourse.jsp</url-pattern>
+    <url-pattern>/teacher/editCourse.jsp</url-pattern>
+    <url-pattern>/inscTime/addinscTime.jsp</url-pattern>
+    <dispatcher>REQUEST</dispatcher>
+    <dispatcher>FORWARD</dispatcher>
+    <dispatcher>INCLUDE</dispatcher>
+    <dispatcher>ERROR</dispatcher>
+    <dispatcher>ASYNC</dispatcher>
+  </filter-mapping>
+  
+  
+ 
+ 
+
+ 
+
   <servlet>
     <servlet-name>MemberServlet</servlet-name>
     <servlet-class>com.member.controller.MemberServlet</servlet-class>

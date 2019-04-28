@@ -330,9 +330,9 @@ footer{
 </div>
 
 
-
+</body>
     <!-------------------------------------------------------------------------footerStart------------------------------------------------------------------------->	
-    <footer class="section footer-classic context-dark bg-image" style="background: #74b49b;">
+    <footer class="section footer-classic context-dark bg-image" style="background: #74b49b;position: absolute or fixed;">
       <div class="container">
         <div class="row row-30">
           <div class="col-md-4 col-xl-5">
@@ -382,5 +382,5 @@ footer{
     <!-- jQuery first, then Popper.js, then Bootstrap JS --> 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script> 
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
-    </body>
+  
     </html>

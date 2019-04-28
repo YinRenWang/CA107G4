@@ -1,12 +1,9 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %> 
 <!doctype html>
 <html lang="en">
-
-
-<jsp:useBean id="memberVO"  scope="session" type="com.member.model.MemberVO" />
-
 
 <head>
 <!-- Required meta tags -->
@@ -166,8 +163,7 @@ $(function (){
                         <input type="hidden" name="memId"  value="${memberVO.memId}">
                         <input type="text" class="form-control" value="${memberVO.memName}" readonly="readonly">
                          <label for="Your_location">授課城市</label>
-                          <% String memAdd = memberVO.getMemAdd();%>
-                        <input type="text" class="form-control" name="teacherCity" value="<%=memAdd.substring(0,6)%>" readonly="readonly">
+                        <input type="text" class="form-control" name="teacherCity" value="${fn:substring(memberVO.memAdd,0,6)}" readonly="readonly">
                        
                         <br>
     
