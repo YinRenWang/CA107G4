@@ -12,6 +12,7 @@ public interface CourseReservationDAO_interface {
 	public List<CourseReservationVO> findByStatus(Integer xxxStatus);
 	public List<CourseReservationVO> findByRate(String inscId);
 	public List<CourseReservationVO> findByPrimaryKey(String xxxId); 
+	public List<CourseReservationVO> findByPrimaryKey(Integer classStatus,String xxxId);
 	public List<CourseReservationVO> getAll();
 	
 	//交易是簡單的

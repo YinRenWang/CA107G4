@@ -19,6 +19,7 @@
     <url-pattern>/member/editMember.jsp</url-pattern>
     <url-pattern>/member/viewAllMember.jsp</url-pattern>
     <url-pattern>/teacher/addTeacher.jsp</url-pattern>
+    <url-pattern>/coursereservation/allCourseUser.jsp</url-pattern>
     <dispatcher>REQUEST</dispatcher>
     <dispatcher>FORWARD</dispatcher>
     <dispatcher>INCLUDE</dispatcher>

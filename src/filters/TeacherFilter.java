@@ -27,7 +27,7 @@ public class TeacherFilter implements Filter {
 		Object teacherVO = session.getAttribute("teacherVO");
 		if (teacherVO == null) {
 			session.setAttribute("location", req.getRequestURI());
-			res.sendRedirect(req.getContextPath() + "/member/loginMember.jsp");
+			res.sendRedirect(req.getContextPath() + "/teacher/addTeacher.jsp");
 			return;
 		} else {
 			chain.doFilter(request, response);

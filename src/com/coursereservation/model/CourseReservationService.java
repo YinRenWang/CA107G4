@@ -1,6 +1,5 @@
 package com.coursereservation.model;
 
-import java.lang.reflect.Member;
 import java.sql.Date;
 import java.sql.Timestamp;
 import java.util.List;
@@ -70,6 +69,10 @@ public class CourseReservationService {
 	public List<CourseReservationVO> findByPrimaryKey(String xxxId){
 		return dao.findByPrimaryKey(xxxId);
 		
+	}
+	
+	public List<CourseReservationVO> findByPrimaryKey(Integer classStatus,String xxxId){
+		return dao.findByPrimaryKey(classStatus,xxxId);
 	}
 	public List<CourseReservationVO> getAll(){
 		return dao.getAll();
