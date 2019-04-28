@@ -36,6 +36,11 @@ public class InsCourseTimeService {
 		return dao.findByPrimaryKey(inscTimeId);
 		
 	}
+	
+	public InsCourseTimeVO findDateMinute(String startTime,String endTime,String inscId){
+		return dao.findDateMinute(startTime,endTime,inscId);
+		
+	}
 	public List<InsCourseTimeVO> getAll(){
 		return dao.getAll();
 		

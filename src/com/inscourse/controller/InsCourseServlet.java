@@ -237,7 +237,6 @@ public class InsCourseServlet extends HttpServlet {
 					}
 					// 課程預設為上架
 					Integer inscStatus = 0;
-
 					InsCourseVO insCourseVO = new InsCourseVO();
 					insCourseVO.setTeacherId(teacherId);
 					insCourseVO.setCourseId(courseId);
@@ -430,7 +429,6 @@ public class InsCourseServlet extends HttpServlet {
 				if (map.get(courseId) != null) {
 					String[] stringArray = map.get(courseId);
 					if (stringArray[0] == null || stringArray[0].trim().length() == 0) {
-						System.out.println("I just wanna sleep forever......");
 					} else {
 						CourseService courseSvc = new CourseService();
 						CourseVO courseVO = courseSvc.findByLike(stringArray[0]);

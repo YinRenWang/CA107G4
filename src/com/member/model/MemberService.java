@@ -155,5 +155,20 @@ public class MemberService {
     public List<MemberVO> getAll(){
     	return dao.getAll();
     }
+    
+    public MemberVO update1(Integer memBalance, Integer memBlock ,String memId) {
+		
+  		MemberVO memberVO = new MemberVO(); 
+  		
+  		memberVO.setMemBalance(memBalance);
+  		memberVO.setMemBlock(memBlock);
+  		memberVO.setMemId(memId);
+  		dao.update1(memberVO);
+  		
+  		return memberVO;
+  	}
+    
+    
+
     	
 }

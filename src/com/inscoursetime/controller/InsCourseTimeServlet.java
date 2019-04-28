@@ -101,8 +101,8 @@ public class InsCourseTimeServlet extends HttpServlet {
 			// send the ErrorPage view.
 			req.setAttribute("errorMsgs", errorMsgs);
 			req.setAttribute("successMsgs", successMsgs);
-
-			try {
+//
+//			try {
 				/*************************** 2.開始查詢資料 *****************************************/
 				InsCourseTimeService insCourseTimeSvc = new InsCourseTimeService();
 				String inscId = req.getParameter("inscId");
@@ -121,7 +121,12 @@ public class InsCourseTimeServlet extends HttpServlet {
 						errorMsgs.add("開始時間與結束時間請勿相同");
 						break;
 
+					}
+					if(insCourseTimeSvc.findDateMinute(start_dateTime[i], end_dateTime[i], inscId)!=null) {
+						errorMsgs.add("此日期時段已存在資料庫");				
+						break;
 					} else {
+						
 						inscMFDSet.add((start_dateTime[i] + ":00"));
 						inscEXPSet.add((end_dateTime[i] + ":00"));
 					}
@@ -129,10 +134,10 @@ public class InsCourseTimeServlet extends HttpServlet {
 				String[] inscMFD = inscMFDSet.toArray(new String[inscMFDSet.size()]);
 				String[] inscEXP = inscEXPSet.toArray(new String[inscEXPSet.size()]);
 				for (int i = 0; i < inscMFD.length; i++) {
-				insCourseTimeSvc.insertInsCourseTime(inscId, java.sql.Timestamp.valueOf(inscMFD[i]),
-					java.sql.Timestamp.valueOf(inscEXP[i]));
+					insCourseTimeSvc.insertInsCourseTime(inscId, java.sql.Timestamp.valueOf(inscMFD[i]),
+							java.sql.Timestamp.valueOf(inscEXP[i]));
 				}
-
+				
 				// Send the use back to the form, if there were errors
 				if (!errorMsgs.isEmpty()) {
 					req.setAttribute("inCludeVO", "teacher"); // 要導向的分頁
@@ -150,13 +155,14 @@ public class InsCourseTimeServlet extends HttpServlet {
 				successView.forward(req, res);
 				
 
-			} catch (Exception e) {
-				errorMsgs.add("無法取得資料:" + e.getMessage());
-				RequestDispatcher failureView = req.getRequestDispatcher("insctime/addinscTime.jsp");
-				failureView.forward(req, res);
-			}
+			} 
+//			catch (Exception e) {
+//				errorMsgs.add("無法取得資料:" + e.getMessage());
+//				RequestDispatcher failureView = req.getRequestDispatcher("insctime/addinscTime.jsp");
+//				failureView.forward(req, res);
+//			}
 
-		}
+		
 
 	}
 

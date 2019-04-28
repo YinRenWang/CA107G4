@@ -654,16 +654,14 @@ input[type=radio].with-font:focus~label:before, input[type=checkbox].with-font:f
 <c:if test="${not empty errorMsgs}">
 <c:forEach var="message" items="${errorMsgs}">
 <script>
-swal({
-    title: '注意',
-    text: '您尚未登入',
-    type: 'warning'
-  }).then(function() {
-      window.location.href = "<%=request.getContextPath()%>/member/loginMember.jsp";
-  })
+Swal.fire(
+		 '請檢查內容',
+		  '${message}',
+		  'warning'
+)
 </script>
 </c:forEach>
-</c:if> 
+</c:if>  
 <form id="form1" action="<%= request.getContextPath()%>/InsCourseServlet" method="POST">
 <input type="hidden" name="action"  id="action" value="updateDate">
 <div class="content">

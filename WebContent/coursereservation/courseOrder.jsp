@@ -85,10 +85,6 @@
         }
       }); 
    
-   
-   
-      
-
     });
     </script>
 <title>WeShare | 最棒的教育共享平台</title>

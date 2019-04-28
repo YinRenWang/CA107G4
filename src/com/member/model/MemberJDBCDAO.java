@@ -8,8 +8,8 @@ import java.util.*;
 public class MemberJDBCDAO implements MemberDAO_interface {
 	
 	String driver = "oracle.jdbc.driver.OracleDriver";
-	String url = "jdbc:oracle:thin:@localhost:1521:XE";
-//	String url = "jdbc:oracle:thin:@localhost:49161:XE";
+//	String url = "jdbc:oracle:thin:@localhost:1521:XE";
+	String url = "jdbc:oracle:thin:@localhost:49161:XE";
 	String userid = "WESHARE";
 	String passwd = "123456";
 	
@@ -34,6 +34,7 @@ public class MemberJDBCDAO implements MemberDAO_interface {
 			"UPDATE Member set memPsw=?,memImage=?,memAdd=? ,memText=?, memBank=?,memSkill=?, memWantSkill=? where  memId =? ";
 	private static final String NOIMG_MEMBER_STMT = 
 			"UPDATE Member set memPsw=?,memAdd=? ,memText=?, memBank=?,memSkill=?, memWantSkill=? where  memId =? ";
+	private static final String UPDATE1 = "UPDATE Member set memBalance=? ,memBlock=? where memId =? ";
 	@Override
 	public void insert(MemberVO memberVO) {
 		Connection con = null;
@@ -789,7 +790,92 @@ public class MemberJDBCDAO implements MemberDAO_interface {
 	}
 
 	
+	@Override
+	public void update1(MemberVO memberVO) {
+		Connection con = null;
+		PreparedStatement pstmt = null;
 
+		try {
+
+			Class.forName(driver);
+			con = DriverManager.getConnection(url, userid, passwd);
+			pstmt = con.prepareStatement(UPDATE1);
+			
+		
+			pstmt.setInt(1,memberVO.getMemBalance());
+			pstmt.setInt(2,memberVO.getMemBlock());
+			pstmt.setString(3,memberVO.getMemId());		
+
+			pstmt.executeUpdate();
+//			System.out.println("已修改一筆資料");
+
+			// Handle any driver errors
+		} catch (ClassNotFoundException e) {
+			throw new RuntimeException("Couldn't load database driver. "
+					+ e.getMessage());
+			// Handle any SQL errors
+		} catch (SQLException se) {
+			throw new RuntimeException("A database error occured. "
+					+ se.getMessage());
+			// Clean up JDBC resources
+		} finally {
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
+		}	
+	}
+
+	@Override
+	public void deduction(MemberVO memberVO, Connection con) {
+		PreparedStatement pstmt = null;
+
+		try {
+			pstmt = con.prepareStatement(UPDATE1);
+	
+			pstmt.setInt(1,memberVO.getMemBalance());
+			pstmt.setInt(2,memberVO.getMemBlock());
+			pstmt.setString(3,memberVO.getMemId());		
+
+			pstmt.executeUpdate();
+			// Handle any driver errors
+		}catch (SQLException se) {
+			if (con != null) {
+				try {
+					// 3●設定於當有exception發生時之catch區塊內
+					System.err.print("Transaction is being ");
+					System.err.println("rolled back-由-emp");
+					con.rollback();
+				} catch (SQLException excep) {
+					throw new RuntimeException("rollback error occured. "
+							+ excep.getMessage());
+				}
+			}
+			throw new RuntimeException("A database error occured. "
+					+ se.getMessage());
+			// Clean up JDBC resources
+		} finally {
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+		} 
+	
+		
+	}
 
 
 

@@ -25,6 +25,7 @@ import com.inscourse.model.InsCourseVO;
 import com.inscoursetime.model.InsCourseTimeService;
 import com.inscoursetime.model.InsCourseTimeVO;
 import com.member.model.MemberVO;
+import com.teacher.model.TeacherService;
 
 @WebServlet("/CourseReservationServlet")
 public class CourseReservationServlet extends HttpServlet {
@@ -74,6 +75,12 @@ public class CourseReservationServlet extends HttpServlet {
 			// Android取資料
 			if ("make_new_reservation".equals(action)) {
 				crVO = gson.fromJson(req.getParameter("crVO"), CourseReservationVO.class);
+				String memId = crVO.getMemId();
+				String teacherId = crVO.getMemId();
+				TeacherService teacherSvc=new TeacherService();
+				if(teacherSvc.findOneById(teacherId).getMemId().equals(memId)) {
+					System.out.println("錯誤處理請鼎鈞自己處理^o<");
+				}
 				// Web取資料
 			} else {
 			
@@ -83,20 +90,39 @@ public class CourseReservationServlet extends HttpServlet {
 				if(memberVO==null) {
 					errorMsgs.add("請先登入會員");
 					req.setAttribute("errorMsgs", errorMsgs); // 含有輸入格式錯誤的empVO物件,也存入req
+					String userSearch=req.getContextPath()+"/inscourse/inscourse.do?"+(String) session.getAttribute("userSearch");
+					session.setAttribute("location", userSearch);
+					res.sendRedirect(req.getContextPath() + "/member/loginMember.jsp");
+					return;
+				}
+				String memId = memberVO.getMemId();
+				String teacherId = req.getParameter("teacherId").trim();
+				TeacherService teacherSvc=new TeacherService();
+				if(teacherSvc.findOneById(teacherId).getMemId().equals(memId)) {
+					errorMsgs.add("您不能訂購自己的課程...");
+					req.setAttribute("errorMsgs", errorMsgs); // 含有輸入格式錯誤的empVO物件,也存入req
 					String userSearch=(String) session.getAttribute("userSearch");
 					RequestDispatcher failureView = req.getRequestDispatcher("/inscourse/inscourse.do?"+userSearch);
 					failureView.forward(req, res);
 					return;
+					
 				}
-				String memId = memberVO.getMemId();
 				String inscTimeId = req.getParameter("inscTimeId").trim();
-				String teacherId = req.getParameter("teacherId").trim();
 				String inscId = req.getParameter("inscId").trim();
 				Timestamp crvMFD = Timestamp.valueOf(req.getParameter("crvMFD").trim());
 				Timestamp crvEXP = Timestamp.valueOf(req.getParameter("crvEXP").trim());
 				String crvLoc = req.getParameter("crvLoc").trim();
 				Double crvTotalTime = new Double(req.getParameter("crvTotalTime"));
 				Double crvTotalPrice = new Double(req.getParameter("crvTotalPrice"));
+				if(memberVO.getMemBalance()<crvTotalPrice.intValue()) {
+					errorMsgs.add("您的餘額不足");
+					req.setAttribute("errorMsgs", errorMsgs); // 含有輸入格式錯誤的empVO物件,也存入req
+					String userSearch=(String) session.getAttribute("userSearch");
+					RequestDispatcher failureView = req.getRequestDispatcher("/inscourse/inscourse.do?"+userSearch);
+					failureView.forward(req, res);
+					return;
+					
+				}
 
 				crVO = new CourseReservationVO();
 				crVO.setInscTimeId(inscTimeId);
@@ -122,14 +148,11 @@ public class CourseReservationServlet extends HttpServlet {
 
 				// 開始新增資料
 				CourseReservationService crSvc = new CourseReservationService();
-				crSvc.addCourseReservation(crVO.getTeacherId(), crVO.getMemId(), crVO.getInscId(), crVO.getTeamId(),
+				crSvc.insertWithMemberWithRecod(crVO.getTeacherId(), crVO.getMemId(), crVO.getInscId(), crVO.getTeamId(),
 						crVO.getCrvStatus(), crVO.getClassStatus(), crVO.getTranStatus(), crVO.getCrvMFD(),
 						crVO.getCrvEXP(), crVO.getCrvLoc(), crVO.getCrvTotalTime(), crVO.getCrvTotalPrice(),
-						crVO.getCrvRate());
+						crVO.getCrvRate(),crVO.getInscTimeId());
 				
-
-				// 刪除已無的時間
-				insctSvc.deleteInsCourseTime(crVO.getInscTimeId());
 				// 新增成功
 				// Android處理
 				if ("make_new_reservation".equals(action)) {
