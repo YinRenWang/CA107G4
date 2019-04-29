@@ -34,14 +34,14 @@ public class CourseReservationServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
 		doPost(req, res);
 	}
-
+ 
 	protected void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
 
 		Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd HH:mm:ss").create();
 		req.setCharacterEncoding("UTF-8");
 		res.setContentType("text/plain; charset=UTF-8");
 		PrintWriter out = res.getWriter();
-
+ 
 		String action = req.getParameter("action");
 		System.out.println(action);
 
@@ -81,8 +81,8 @@ public class CourseReservationServlet extends HttpServlet {
 				if(teacherSvc.findOneById(teacherId).getMemId().equals(memId)) {
 					System.out.println("錯誤處理請鼎鈞自己處理^o<");
 				}
-				// Web取資料
-			} else {
+				// Web取資料  
+			} else { 
 			
 				List<String> errorMsgs = new LinkedList<String>();
 				HttpSession session	=req.getSession();
@@ -90,8 +90,8 @@ public class CourseReservationServlet extends HttpServlet {
 				if(memberVO==null) {
 					errorMsgs.add("請先登入會員");
 					req.setAttribute("errorMsgs", errorMsgs); // 含有輸入格式錯誤的empVO物件,也存入req
-					String userSearch=req.getContextPath()+"/inscourse/inscourse.do?"+(String) session.getAttribute("userSearch");
-					session.setAttribute("location", userSearch);
+					String location=req.getContextPath()+"/inscourse/inscourse.do?"+(String) session.getAttribute("userSearch");
+					session.setAttribute("location", location);
 					res.sendRedirect(req.getContextPath() + "/member/loginMember.jsp");
 					return;
 				}
@@ -188,7 +188,7 @@ public class CourseReservationServlet extends HttpServlet {
 			}	
 
 		
-
+	
 		// 取消
 		if ("cancel_my_reservation".equals(action)) {
 		}

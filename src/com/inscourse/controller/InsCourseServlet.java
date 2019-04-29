@@ -85,7 +85,7 @@ public class InsCourseServlet extends HttpServlet {
 				String url = "/Inscourse/listOneInsCourse.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url);
 				successView.forward(req, res);
-
+ 
 			} catch (Exception e) {
 				errorMsgs.add("無法取得資料:" + e.getMessage());
 				RequestDispatcher failureView = req.getRequestDispatcher("/Inscourse/select_page.jsp");
@@ -113,7 +113,7 @@ public class InsCourseServlet extends HttpServlet {
 				RequestDispatcher failureView = req.getRequestDispatcher("/emp/listAllEmp.jsp");
 				failureView.forward(req, res);
 			}
-		}
+		} 
 
 		if ("update".equals(action)) {
 
@@ -409,7 +409,7 @@ public class InsCourseServlet extends HttpServlet {
 			HttpSession session=req.getSession();
 			req.setAttribute("errorMsgs", errorMsgs);
 			Map<String, String[]> map = req.getParameterMap();
-			try {
+
 				if (req.getParameter("whichPage") == null) {
 					HashMap<String, String[]> map1 = new HashMap<String, String[]>(req.getParameterMap());
 					session.setAttribute("map", map1);
@@ -431,19 +431,12 @@ public class InsCourseServlet extends HttpServlet {
 					InsCourseService insCourseSvc = new InsCourseService();
 					List<InsCourseVO> list = insCourseSvc.getAll(map);
 					session.setAttribute("listEmps_ByCompositeQuery", list); // 資料庫取出的list物件,存入request
-					RequestDispatcher successView = req.getRequestDispatcher("/inscourse/listEmps_ByCompositeQuery.jsp"); // 成功轉交listEmps_ByCompositeQuery.jsp
-					successView.forward(req, res);
 				}
 				RequestDispatcher successView = req.getRequestDispatcher("/inscourse/listEmps_ByCompositeQuery.jsp"); // 成功轉交listEmps_ByCompositeQuery.jsp
 				successView.forward(req, res);
 		
-			} catch (Exception e) {
-				errorMsgs.add(e.getMessage());
-				RequestDispatcher failureView = req.getRequestDispatcher("/index.jsp");
-				failureView.forward(req, res);
-			}
+			} 
 
-		}
 		
 		
 		if ("updateStatus".equals(action)) {

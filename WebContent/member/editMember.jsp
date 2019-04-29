@@ -21,8 +21,6 @@
 	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 <link rel="stylesheet" type="text/css"
 	href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-<link rel="stylesheet" type="text/css"
-	href="https://bootswatch.com/paper/bootstrap.min.css">
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/2.0.0/jquery.min.js"></script>
 <script
@@ -104,6 +102,16 @@ section>form>div {
 	margin: 0px auto;
 	border: 4px solid #fff;
 	box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.1);
+}
+.ui-content{
+margin-bottom:5%;
+}
+.col-sm-8 col-md-8 col-lg-8 col-lg-offset-2 acc-col{
+background-color:#F4F9F4;
+}
+.row{
+width:100%;
+	
 }
 
 

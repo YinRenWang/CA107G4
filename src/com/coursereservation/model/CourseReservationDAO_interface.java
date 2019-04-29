@@ -9,6 +9,7 @@ import com.withdrawalrecord.model.WithdrawalRecordVO;
 public interface CourseReservationDAO_interface {
 	public void insert(CourseReservationVO courseReservationVO);
 	public void update(CourseReservationVO courseReservationVO);
+	public CourseReservationVO findByPK(String crvId);
 	public List<CourseReservationVO> findByStatus(Integer xxxStatus);
 	public List<CourseReservationVO> findByRate(String inscId);
 	public List<CourseReservationVO> findByPrimaryKey(String xxxId); 

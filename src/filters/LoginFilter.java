@@ -21,7 +21,7 @@ public class LoginFilter implements Filter {
 
 		HttpServletRequest req = (HttpServletRequest) request;
 		HttpServletResponse res = (HttpServletResponse) response;
-		// 【取得 session】
+		// 【取得 session】 
 		HttpSession session = req.getSession();
 		// 【從 session 判斷此user是否登入過】
 		Object memberVO = session.getAttribute("memberVO");

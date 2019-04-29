@@ -97,8 +97,10 @@ p
 }
 
 #tourpackages-carousel{
- margin-bottom:500px;
+ margin-bottom:10%;
+ width:100%;
 }    
+
 
 </style>
 <script>
@@ -143,10 +145,10 @@ Swal.fire(
 		  
 <div class="container" id="tourpackages-carousel">
       <div class="row">
-        <div class="col-lg-12"><h1>課程資訊-課程時間<a class="btn icon-btn btn-primary pull-right" href="http://localhost:8081/CA107G4/inscourse/addInsCourse.jsp" target="_self">
-        <span  id="close" class="glyphicon btn-glyphicon glyphicon-plus img-circle" ></span>新增課程</a></h1></div>      
+        <div class="col-lg-12"><a class="btn icon-btn btn-primary pull-right" href="http://localhost:8081/CA107G4/inscourse/addInsCourse.jsp" target="_self">
+        <span  id="close" class="glyphicon btn-glyphicon glyphicon-plus img-circle" ></span>新增課程</a></div>      
 	<c:forEach var="insCourseVO" items="${insCourseSvc.findByTeacher(teacherVO.teacherId)}">	
-        <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
+        <div class="col-lg-4">
           <div class="thumbnail">
               <div class="caption">
                 <div class='col-lg-12'>

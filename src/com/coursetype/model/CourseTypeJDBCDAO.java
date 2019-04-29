@@ -47,7 +47,7 @@ public class CourseTypeJDBCDAO implements CourseTypeDAO_interface {
 			throw new RuntimeException("A database error occured. "
 					+ se.getMessage());
 		} finally {
-			if (pstmt != null) {
+			if (pstmt != null) { 
 				try {
 					pstmt.close();
 				} catch (SQLException se) {

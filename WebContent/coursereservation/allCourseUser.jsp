@@ -1,10 +1,9 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-
-<jsp:useBean id="memberSvc" scope="page" class="com.member.model.MemberService" />
 <jsp:useBean id="teacherSvc" scope="page" class="com.teacher.model.TeacherService" />
 <jsp:useBean id="CourseReservationSvc" scope="page" class="com.coursereservation.model.CourseReservationService" />
+
 <%int pagado=0; %>
 <%int pendiente=0; %>
 <%int cancelado=0; %>
@@ -35,6 +34,9 @@
 	src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>	
 <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
 <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     
 <style>
 body {
@@ -145,6 +147,10 @@ width:100%;
 margin-bottom:280px;
 }
 
+#down{
+padding-top:20px;
+}
+
 
 
 </style>
@@ -174,9 +180,7 @@ $(document).ready(function () {
 	 $("#select1").change(function(){
 		 $('#form1').submit();
 		  });
-	 $("#select2").change(function(){
-		 $('#form2').submit();
-		  });
+	 $("#basicModal").modal({show: true});
 
 
  });
@@ -186,69 +190,107 @@ $(document).ready(function () {
 </head>
 <body>
 	<!-------------------------------------------------------------------------headerStart------------------------------------------------------------------------->
-<div class="header">
-      <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top"> <img src="<%= request.getContextPath()%>/images/icon/logo.png" width="80" height="60" alt=""/><a class="navbar-brand" href="<%= request.getContextPath()%>">教育共享平台</a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"> <span class="navbar-toggler-icon"></span> </button>
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-          <ul class="navbar-nav mr-auto">
-            <li class="nav-item active"> <a class="nav-link" href="#">成為老師 <span class="sr-only">(current)</span></a> </li>
-            <li class="nav-item dropdown"> <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">探索課程</a>
-              <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink"> <a class="dropdown-item" href="<%= request.getContextPath()%>/Inscourse/NewFile.jsp">所有課程</a> <a class="dropdown-item" href="#">音樂</a> <a class="dropdown-item" href="#">語言</a> <a class="dropdown-item" href="#">運動</a> <a class="dropdown-item" href="#">藝術</a> <a class="dropdown-item" href="#">設計</a> <a class="dropdown-item" href="#">人文</a> <a class="dropdown-item" href="#">行銷</a> <a class="dropdown-item" href="#">程式語言</a> <a class="dropdown-item" href="#">投資理財</a> <a class="dropdown-item" href="#">職場技能</a> <a class="dropdown-item" href="#">手作</a> <a class="dropdown-item" href="#">烹飪</a> </div>
-            </li>
-            <li class="nav-item"> <a class="nav-link" href="<%= request.getContextPath()%>/member/loginMember.jsp">登入</a> </li>
-            <li class="nav-item"> <a class="nav-link" href="<%= request.getContextPath()%>/member/addMember.jsp">註冊</a> </li>
-            <li class="nav-item"> <a class="nav-link " href="<%= request.getContextPath()%>/member/listAllMember.jsp">關於我們</a> </li>
-          </ul>
-        </div>
-      </nav>
-    </div>	
 	<!-------------------------------------------------------------------------headerEnd------------------------------------------------------------------------->
 <div class="container" >
 	<div class="row">
 		<section class="content" id="mytable">
-			<h1>預約資訊</h1>--${memberVO.memId}-->--${teacherVO.teacherId}--
-			<div class="col-12">
+			<div class="col-8">
 				<div class="panel panel-default" >
 					<div class="panel-body">
 						<div class="pull-right">
 							<div class="btn-group">
 								<button type="button" class="btn btn-success btn-filter" data-target="pagado">您預定的</button>
 								<button type="button" class="btn btn-warning btn-filter" data-target="pendiente">您收到的</button>
+								<button type="button" class="btn btn-default btn-filter" data-target="all">所有狀態</button>
 							</div>
 						</div>
 						<div class="table-container">
 							<table class="table table-filter">
 								<tbody>
-						<%-- 	<form id="form1" action="<%= request.getContextPath()%>/TeacherServlet" method="GET">
-								<input type="hidden" name="action"  id="action" value="updateStatus">
-								<input type="hidden" name="teacherId"  value="${teacherVO0.teacherId}">
-								<select size="1" name="teacherStatus" id="select1">
-          									<option value="1"> 已審核
-         									 <option value="2"> 已停權
-         									 <option value="0"> 待審核
-       							</select>
-       							</form> --%>		
+									
 					<c:forEach var="listMember" items="${CourseReservationSvc.findByPrimaryKey((1),(memberVO.memId))}">	
-						--${listMember.teacherId}--
 									<tr data-status="pagado">
 										<td>
 											<div class="media">
-												<a href="#" class="pull-left">
-											
+												<div class="pull-left">
 													<img src="<%=request.getContextPath()%>/member/DBGifReader.do?memId=${teacherSvc.findOneById(listMember.teacherId).memId}" 
 													 											width="120" height="120"class="media-photo">
-												</a>
-												<div class="media-body" style="inline-block;">
-													<h4 class="title">
+												</div>
+												<div class="media-body" >
+													<h5 class="title">
+													<A href="<%= request.getContextPath()%>/coursereservation/courseOrder.jsp?crvId=${listMember.crvId}">
+													
+														<span class="pull-right pagado">檢視詳情</span>
+														<span class="pull-right pagado">
+			<img src="<%=request.getContextPath()%>/teacher/DBGifReader_VER2.do?memId=${teacherVO0.memId}" width="120" height="120"class="media-photo"></span>
+													</a>
+													</h5>
+													<h5 class="title">老師姓名：
 														${memberSvc.getOneMember(teacherSvc.findOneById(listMember.teacherId).memId).memName}			
-													</h4>
-													<h5 class="summary">教育程度-${teacherVO0.teacherEdu}</h5>
-												
-													<h5 class="summary">個人介紹-${teacherVO0.teacherText}</h5>
-													
-													<h5 class="summary">上課時間-${listMember.crvMFD}~${listMember.crvEXP}</h5>
-													
-													<h5 class="summary">價格-${listMember.crvTotalPrice}</h5>
+													</h5>
+													<h5 class="summary">
+														<span class="pull-center pagado">上課時間：</span>
+													<span class="pull-center pagado">
+													 <fmt:formatDate value="${listMember.crvMFD}" pattern="yyyy年M月dd日 HH時mm分"/>-
+													 <fmt:formatDate value="${listMember.crvEXP}" pattern="HH時mm分"/></span>
+														</h5>
+												<h5 class="summary">
+													<span class="pull-right pagado">
+													<c:choose>
+    												<c:when test="${listMember.classStatus==1}">
+													 已上課
+   													</c:when>
+    												<c:otherwise>
+    												未上課
+    												</c:otherwise>
+													</c:choose></span>
+													<span class="pull-right pagado">課程狀態：</span>
+														</h5>	
+												</div>
+											</div>
+										</td>
+									</tr>
+							</c:forEach>
+							
+							
+							<c:forEach var="listMember" items="${CourseReservationSvc.findByPrimaryKey((1),(teacherVO.teacherId))}">	
+									<tr data-status="pendiente">
+										<td>
+											<div class="media">
+												<div class="pull-left">
+													<img src="<%=request.getContextPath()%>/member/DBGifReader.do?memId=${listMember.memId}" 
+													 											width="120" height="120"class="media-photo">
+												</div>
+												<div class="media-body" >
+													<h5 class="title">
+													<A href="<%= request.getContextPath()%>/coursereservation/courseOrder.jsp?crvId=${listMember.crvId}">
+														
+														<span class="pull-right pendiente">檢視詳情</span>
+														<span class="pull-right pendiente">
+			<img src="<%=request.getContextPath()%>/teacher/DBGifReader_VER2.do?memId=${teacherVO0.memId}" width="120" height="120"class="media-photo"></span>
+													</a>
+													</h5>
+													<h5 class="title">學生姓名：
+														${memberSvc.getOneMember(listMember.memId).memName}			
+													</h5>
+													<h5 class="summary">
+														<span class="pull-center pendiente">上課時間：</span>
+													<span class="pull-center pendiente">
+													 <fmt:formatDate value="${listMember.crvMFD}" pattern="yyyy年M月dd日 HH時mm分"/>-
+													 <fmt:formatDate value="${listMember.crvEXP}" pattern="HH時mm分"/></span>
+														</h5>
+												<h5 class="summary">
+													<span class="pull-right pendiente">
+													<c:choose>
+    												<c:when test="${listMember.classStatus==1}">
+													 已上課
+   													</c:when>
+    												<c:otherwise>
+    												未上課
+    												</c:otherwise>
+													</c:choose></span>
+													<span class="pull-right pendiente">課程狀態：</span>
+														</h5>	
 												</div>
 											</div>
 										</td>
@@ -257,48 +299,7 @@ $(document).ready(function () {
 							
 							
 							
-							<c:forEach var="teacherVO0" items="${teacherSvc.getAllStatus(0)}">	
-							<input type="hidden" name="inscType"  value="${param.inscType}">		
-									<tr data-status="pendiente">
-										<td>
-								<form id="form2" action="<%= request.getContextPath()%>/TeacherServlet" method="GET">
-								<input type="hidden" name="action"  id="action" value="updateStatus">
-								<input type="hidden" name="teacherId"  value="${teacherVO0.teacherId}">		
-										<select size="1" name="teacherStatus" id="select2">
-          									<option value="0"> 待審核
-         									 <option value="1"> 已審核
-         									 <option value="2"> 已停權
-       									</select>
-       							</form>		
-       							
-										</td>
-										<td>
-											<a href="javascript:;" class="star">
-												<i class="glyphicon glyphicon-star"></i>
-											</a>
-										</td>
-										<td>
-											<div class="media">
-												<a href="#" class="pull-left">
-													<img src="<%=request.getContextPath()%>/member/DBGifReader.do?memId=${teacherVO0.memId}" 
-													 											width="120" height="120"class="media-photo">
-												</a>
-												<div class="media-body" style="inline-block;">
-													<h4 class="title">
-														${memberSvc.getOneMember(teacherVO0.memId).memName}
-														<span class="pull-right pendiente">文件證明</span>
-														<span class="pull-right pendiente">
-			<img src="<%=request.getContextPath()%>/teacher/DBGifReader_VER2.do?memId=${teacherVO0.memId}" width="120" height="120"class="media-photo"></span>
-													</h4>
-													
-													<h5 class="summary">教育程度-${teacherVO0.teacherEdu}</h5>
-												
-													<h5 class="summary">個人介紹-${teacherVO0.teacherText}</h5>
-												</div>
-											</div>
-										</td>
-									</tr>
-							</c:forEach>	
+					
 							
 											
 								</tbody>
@@ -313,76 +314,36 @@ $(document).ready(function () {
 				</div>
 			</div>
 		</section>
+		<c:if test="${openModal!=null}">
+
+<div class="modal fade" id="basicModal" tabindex="-1" role="dialog" aria-labelledby="basicModal" aria-hidden="true">
+	<div class="modal-dialog modal-lg">
+		<div class="modal-content">
+				
+			<div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h3 class="modal-title" id="myModalLabel">The Bootstrap modal-header</h3>
+            </div>
+			
+			<div class="modal-body">
+<!-- =========================================以下為原listOneEmp.jsp的內容========================================== -->
+               <jsp:include page="/coursereservation/courseOrder.jsp" />
+<!-- =========================================以上為原listOneEmp.jsp的內容========================================== -->
+			</div>
+			
+			<div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary">Save changes</button>
+            </div>
 		
+		</div>
+	</div>
+</div>
+ </c:if>
 	</div>
 </div>
 	<!-------------------------------------------------------------------------footerStart------------------------------------------------------------------------->
-	<footer
-		class="section footer-classic context-dark bg-image footer navbar-fixed-bottom"
-		style="background: #74b49b;">
-		<div class="container">
-			<div class="row row-30">
-				<div class="col-md-4 col-xl-5">
-					<div class="pr-xl-4">
-						<a href="index.html"></a>
-						<p class="reademe">我們是最佳的共享教育的平台，致力於在分享技能，保障交易，展現自我，使用戶得到最棒的學習體驗。</p>
-						<!-- Rights-->
-						<p class="rights">
-							<span>©  </span><span class="copyright-year">2018</span><span> </span><span>WeShare教育共享平台</span><span>. </span><span>©
-								All Rights Reserved. .</span>
-						</p>
-					</div>
-				</div>
-				<div class="col-md-4">
-					<h5 class="reademe">聯絡我們</h5>
-					<dl class="contact-list">
-						<dt>地址:</dt>
-						<dd>桃園市中壢區中大路300號</dd>
-					</dl>
-					<dl class="contact-list">
-						<dt>信箱:</dt>
-						<dd>
-							<a href="mailto:#">weshare@gmail.com</a>
-						</dd>
-					</dl>
-					<dl class="contact-list">
-						<dt>電話:</dt>
-						<dd>
-							<a href="tel:#">03-425-7387</a>
-						</dd>
-					</dl>
-				</div>
-				<div class="col-md-4 col-xl-3">
-					<h5 class="reademe2">關於</h5>
-					<ul class="nav-list">
-						<li><a href="#">關於我們</a></li>
-						<li><a href="#">團隊成員</a></li>
-						<li><a href="#">加入WeShare</a></li>
-						<li><a href="#">隱私權政策</a></li>
-						<li><a href="#">功能更新</a></li>
-					</ul>
-				</div>
-			</div>
-		</div>
-		<div class="row no-gutters social-container">
-			<div class="col">
-				<a class="social-inner" href="#"><span
-					class="icon mdi mdi-facebook"></span><span>Facebook</span></a>
-			</div>
-			<div class="col">
-				<a class="social-inner" href="#"><span
-					class="icon mdi mdi-instagram"></span><span>instagram</span></a>
-			</div>
-			<div class="col">
-				<a class="social-inner" href="#"><span
-					class="icon mdi mdi-twitter"></span><span>twitter</span></a>
-			</div>
-			<div class="col">
-				<a class="social-inner" href="#"><span
-					class="icon mdi mdi-youtube-play"></span><span>google</span></a>
-			</div>
-		</div>
-	</footer>
+
 	<!-------------------------------------------------------------------------footerEnd------------------------------------------------------------------------->
 	<!-- Optional JavaScript -->
 	<!-- jQuery first, then Popper.js, then Bootstrap JS -->

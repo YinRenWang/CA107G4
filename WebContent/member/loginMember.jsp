@@ -103,8 +103,8 @@ Swal.fire(
 						</div>
 						<div class="row">
 							<div class="checkbox checkbox-primary">
-								<input id="checkbox_remember" type="checkbox" name="remember">
-								<label for="checkbox_remember">記住我的帳號</label>
+								<input id="checkbox_remember" type="checkbox" name="remember" checked >
+								<label for="checkbox_remember">記住我的登入</label>
 							</div>
 						</div>
 						<div class="row">

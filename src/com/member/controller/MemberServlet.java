@@ -38,7 +38,7 @@ public class MemberServlet extends HttpServlet {
 
 		if ("login".equals(action)) {// 來自loginMember.jsp的請求
 
-			List<String> errorMsgs = new LinkedList<String>();
+			List<String> errorMsgs = new LinkedList<String>(); 
 			// Store this set in the request scope, in case we need to
 			// send the ErrorPage view.
 			req.setAttribute("errorMsgs", errorMsgs);
@@ -105,7 +105,6 @@ public class MemberServlet extends HttpServlet {
 				  try {                                                        
 				         String location = (String) session.getAttribute("location");
 				         if (location != null) {
-				           session.removeAttribute("location");   //*工作2: 看看有無來源網頁 (-->如有來源網頁:則重導至來源網頁)
 				           res.sendRedirect(location);            
 				           return;
 				         }
@@ -132,7 +131,7 @@ public class MemberServlet extends HttpServlet {
 			req.setAttribute("errorMsgs", errorMsgs);
 			
 
-			try {
+			try { 
 				/*********************** 1.接收請求參數 - 輸入格式的錯誤處理 *************************/
 				String userMemId=req.getParameter("memId");
 				String userVerifyCode=req.getParameter("verifyCode");

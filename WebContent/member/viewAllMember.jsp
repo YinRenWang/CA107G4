@@ -7,6 +7,7 @@
 <jsp:useBean id="CourseSvc" scope="page" class="com.course.model.CourseService" />
 <jsp:useBean id="memberSvc" scope="page" class="com.member.model.MemberService" />
 
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -168,11 +169,22 @@ footer{
           <ul class="navbar-nav mr-auto">
             <li class="nav-item active"> <a class="nav-link" href="#">成為老師 <span class="sr-only">(current)</span></a> </li>
             <li class="nav-item dropdown"> <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">探索課程</a>
-              <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink"> <a class="dropdown-item" href="<%= request.getContextPath()%>/Inscourse/NewFile.jsp">所有課程</a> <a class="dropdown-item" href="#">音樂</a> <a class="dropdown-item" href="#">語言</a> <a class="dropdown-item" href="#">運動</a> <a class="dropdown-item" href="#">藝術</a> <a class="dropdown-item" href="#">設計</a> <a class="dropdown-item" href="#">人文</a> <a class="dropdown-item" href="#">行銷</a> <a class="dropdown-item" href="#">程式語言</a> <a class="dropdown-item" href="#">投資理財</a> <a class="dropdown-item" href="#">職場技能</a> <a class="dropdown-item" href="#">手作</a> <a class="dropdown-item" href="#">烹飪</a> </div>
-            </li>
-            <li class="nav-item"> <a class="nav-link" href="<%= request.getContextPath()%>/member/loginMember.jsp">登入</a> </li>
-            <li class="nav-item"> <a class="nav-link" href="<%= request.getContextPath()%>/member/addMember.jsp">註冊</a> </li>
+              <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink"> <a class="dropdown-item" href="<%= request.getContextPath()%>/inscourse/inscourse.do?courseId=&inscLoc=&action=listEmps_ByCompositeQuery">所有課程</a> <a class="dropdown-item" href="#">音樂</a> <a class="dropdown-item" href="#">語言</a> <a class="dropdown-item" href="#">運動</a> <a class="dropdown-item" href="#">藝術</a> <a class="dropdown-item" href="#">設計</a> <a class="dropdown-item" href="#">人文</a> <a class="dropdown-item" href="#">行銷</a> <a class="dropdown-item" href="#">程式語言</a> <a class="dropdown-item" href="#">投資理財</a> <a class="dropdown-item" href="#">職場技能</a> <a class="dropdown-item" href="#">手作</a> <a class="dropdown-item" href="#">烹飪</a> </div>
+            </li>           
+                <c:choose>
+    			<c:when test="${memberVO.memSex>=0}">
+				            <li class="nav-item"> <a class="nav-link " href="#" onclick="document.getElementById('loginOut').submit();return false;">${memberVO.memName}</a> </li> 
+				            <li class="nav-item"> <a class="nav-link" href="<%= request.getContextPath()%>/member/loginMember.jsp">登出</a> </li>
+   				</c:when>
+    			<c:otherwise>
+    		    <li class="nav-item"> <a class="nav-link" href="<%= request.getContextPath()%>/member/addMember.jsp">註冊</a> </li>
+    			</c:otherwise>
+				</c:choose>
             <li class="nav-item"> <a class="nav-link " href="<%= request.getContextPath()%>/member/listAllMember.jsp">關於我們</a> </li>
+              <form id="loginOut" action="<%= request.getContextPath()%>/MemberServlet" method="get">
+            <input type="hidden" name="inCludeVO"  value="member"> 
+            <input type="hidden" name="action" value="changeValue">
+            </form>	
           </ul>
         </div>
       </nav>
@@ -210,12 +222,25 @@ Swal.fire(
 				<div class="profile-usertitle">
 					<div class="profile-usertitle-name">
 						${memberVO.memName}
+						
 					</div>
-					<div class="profile-usertitle-job">
+					<div class="profile-usertitle-name">
 					 <c:choose> 
  					 <c:when test="${teacherVO.teacherStatus==1}">老師</c:when> 
   					 <c:otherwise>學生 </c:otherwise> 
 					</c:choose> 
+					</div>
+						<div class="profile-usertitle-job">
+<c:choose>
+    <c:when test="${memberVO.memStatus==1}">
+	 會員已驗證
+    </c:when>
+    <c:when test="${memberVO.memStatus==0}">
+ 	 會員待驗證
+    </c:when>
+    <c:otherwise>
+    </c:otherwise>
+</c:choose>						
 					</div>
 				<div class="profile-usertitle-img" >
 					<img style="display:block; margin:auto;" src="<%=request.getContextPath()%>/member/DBGifReader.do?memId=${memberVO.memId}" alt="Profile Picture" 
@@ -275,11 +300,10 @@ Swal.fire(
     <c:when test="${inCludeVO=='teacher'}">
   <%@ include file="/insctime/addinscTime.jsp"%>
     </c:when>
-      <c:when test="${inCludeVO==inscourse}">
-
+      <c:when test="${inCludeVO=='inscourse'}">
+ <%@ include file="/coursereservation/allCourseUser.jsp"%>
     </c:when>
-      <c:when test="${inCludeVO==transactionRecord}">
-
+      <c:when test="${inCludeVO=='transactionRecord'}">
     </c:when>
     <c:otherwise>
     </c:otherwise>

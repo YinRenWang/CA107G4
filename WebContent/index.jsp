@@ -186,23 +186,29 @@ ul, ol {
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"> <span class="navbar-toggler-icon"></span> </button>
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
           <ul class="navbar-nav mr-auto">
-            <li class="nav-item active"> <a class="nav-link" href="<%= request.getContextPath()%>/teacher/joinTeacher.jsp">成為老師 <span class="sr-only">(current)</span></a> </li>
-            <li class="nav-item dropdown"> <a class="nav-link dropdown-toggle"  href="<%= request.getContextPath()%>/teacher/joinTeacher.jsp" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">探索課程</a>
-              <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink"> <a class="dropdown-item" href="<%= request.getContextPath()%>/inscourse/listAllInsCourse.jsp">所有課程</a> <a class="dropdown-item" href="#">音樂</a> <a class="dropdown-item" href="#">語言</a> <a class="dropdown-item" href="#">運動</a> <a class="dropdown-item" href="#">藝術</a> <a class="dropdown-item" href="#">設計</a> <a class="dropdown-item" href="#">人文</a> <a class="dropdown-item" href="#">行銷</a> <a class="dropdown-item" href="#">程式語言</a> <a class="dropdown-item" href="#">投資理財</a> <a class="dropdown-item" href="#">職場技能</a> <a class="dropdown-item" href="#">手作</a> <a class="dropdown-item" href="#">烹飪</a> </div>
-            </li>
-            <li class="nav-item"> <a class="nav-link" href="<%= request.getContextPath()%>/member/loginMember.jsp">登入</a> </li>
-            <li class="nav-item"> <a class="nav-link" href="<%= request.getContextPath()%>/member/addMember.jsp">註冊</a> </li>
+            <li class="nav-item active"> <a class="nav-link" href="#">成為老師 <span class="sr-only">(current)</span></a> </li>
+            <li class="nav-item dropdown"> <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">探索課程</a>
+              <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink"> <a class="dropdown-item" href="<%= request.getContextPath()%>/inscourse/inscourse.do?courseId=&inscLoc=&action=listEmps_ByCompositeQuery">所有課程</a> <a class="dropdown-item" href="#">音樂</a> <a class="dropdown-item" href="#">語言</a> <a class="dropdown-item" href="#">運動</a> <a class="dropdown-item" href="#">藝術</a> <a class="dropdown-item" href="#">設計</a> <a class="dropdown-item" href="#">人文</a> <a class="dropdown-item" href="#">行銷</a> <a class="dropdown-item" href="#">程式語言</a> <a class="dropdown-item" href="#">投資理財</a> <a class="dropdown-item" href="#">職場技能</a> <a class="dropdown-item" href="#">手作</a> <a class="dropdown-item" href="#">烹飪</a> </div>
+            </li>           
+                <c:choose>
+    			<c:when test="${memberVO.memSex>=0}">
+				            <li class="nav-item"> <a class="nav-link " href="#" onclick="document.getElementById('loginOut').submit();return false;">${memberVO.memName}</a> </li> 
+				            <li class="nav-item"> <a class="nav-link" href="<%= request.getContextPath()%>/member/loginMember.jsp">登出</a> </li>
+   				</c:when>
+    			<c:otherwise>
+    		    <li class="nav-item"> <a class="nav-link" href="<%= request.getContextPath()%>/member/addMember.jsp">註冊</a> </li>
+    			</c:otherwise>
+				</c:choose>
             <li class="nav-item"> <a class="nav-link " href="<%= request.getContextPath()%>/member/listAllMember.jsp">關於我們</a> </li>
-            
-            <form id="form1" action="<%= request.getContextPath()%>/MemberServlet" method="get">
+              <form id="loginOut" action="<%= request.getContextPath()%>/MemberServlet" method="get">
             <input type="hidden" name="inCludeVO"  value="member"> 
             <input type="hidden" name="action" value="changeValue">
             </form>	
-            <li class="nav-item"> <a class="nav-link " href="#" onclick="document.getElementById('form1').submit();return false;">${memberVO.memName}${teacherVO.teacherId}</a> </li>
-                 
           </ul>
         </div>
       </nav>
+       
+  
   <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
     <ol class="carousel-indicators">
       <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
@@ -280,56 +286,56 @@ ul, ol {
       <div class="course-deck" >
         <div class="card border-light mb-3" style="max-width: 23rem ;">
           <div class="card-header">Java</div>
-          <img src="<%=request.getContextPath()%>/images/homePage/course/course_01.png" class="img-fluid" alt="..."> </div>
+          <img src="<%=request.getContextPath()%>/images/homePage/course/java.png" class="img-fluid" alt="..."> </div>
       </div>
     </div>
     <div class="col-md-3">
       <div class="course-deck" >
         <div class="card border-light mb-3" style="max-width: 23rem;">
-          <div class="card-header">Andriod</div>
-          <img src="<%=request.getContextPath()%>/images/homePage/course/course_01.png" class="img-fluid" alt="..."> </div>
+          <div class="card-header">Android</div>
+          <img src="<%=request.getContextPath()%>/images/homePage/course/android.png" class="img-fluid" alt="..."> </div>
       </div>
     </div>
     <div class="col-md-3">
       <div class="course-deck" >
         <div class="card border-light mb-3" style="max-width: 23rem;">
           <div class="card-header">SQL</div>
-          <img src="<%=request.getContextPath()%>/images/homePage/course/course_01.png" class="img-fluid" alt="..."> </div>
+          <img src="<%=request.getContextPath()%>/images/homePage/course/sql.png" class="img-fluid" alt="..."> </div>
+      </div>
+    </div>
+    <div class="col-md-3">
+      <div class="course-deck" >
+        <div class="card border-light mb-3" style="max-width: 23rem;">
+          <div class="card-header">Python</div>
+          <img src="<%=request.getContextPath()%>/images/homePage/course/python.png" class="img-fluid" alt="..."> </div>
       </div>
     </div>
     <div class="col-md-3">
       <div class="course-deck" >
         <div class="card border-light mb-3" style="max-width: 23rem;">
           <div class="card-header">甜品</div>
-          <img src="<%=request.getContextPath()%>/images/homePage/course/course_01.png" class="img-fluid" alt="..."> </div>
+          <img src="<%=request.getContextPath()%>/images/homePage/course/honey.png" class="img-fluid" alt="..."> </div>
       </div>
     </div>
     <div class="col-md-3">
       <div class="course-deck" >
         <div class="card border-light mb-3" style="max-width: 23rem;">
-          <div class="card-header">烘焙</div>
-          <img src="<%=request.getContextPath()%>/images/homePage/course/course_01.png" class="img-fluid" alt="..."> </div>
-      </div>
-    </div>
-    <div class="col-md-3">
-      <div class="course-deck" >
-        <div class="card border-light mb-3" style="max-width: 23rem;">
-          <div class="card-header">貝斯</div>
-          <img src="<%=request.getContextPath()%>/images/homePage/course/course_01.png" class="img-fluid" alt="..."> </div>
+          <div class="card-header">鋼琴</div>
+          <img src="<%=request.getContextPath()%>/images/homePage/course/piano.png" class="img-fluid" alt="..."> </div>
       </div>
     </div>
     <div class="col-md-3">
       <div class="course-deck" >
         <div class="card border-light mb-3" style="max-width: 23rem;">
           <div class="card-header">吉他</div>
-          <img src="<%=request.getContextPath()%>/images/homePage/course/course_01.png" class="img-fluid" alt="..."> </div>
+          <img src="<%=request.getContextPath()%>/images/homePage/course/guitar.png" class="img-fluid" alt="..."> </div>
       </div>
     </div>
     <div class="col-md-3">
       <div class="course-deck" >
         <div class="card border-light mb-3" style="max-width: 23rem;">
-          <div class="card-header">中文</div>
-          <img src="<%=request.getContextPath()%>/images/homePage/course/course_01.png" class="img-fluid" alt="..."> </div>
+          <div class="card-header">日文</div>
+          <img src="<%=request.getContextPath()%>/images/homePage/course/japan.png" class="img-fluid" alt="..."> </div>
       </div>
     </div>
   </div>

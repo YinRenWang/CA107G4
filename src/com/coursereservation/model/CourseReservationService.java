@@ -111,5 +111,10 @@ public class CourseReservationService {
 		return courseReservationVO;
 
 	}
+	
+	public CourseReservationVO findByPK(String crvId) {
+		return dao.findByPK(crvId);
+		
+	}
 
-}
+} 
