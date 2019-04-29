@@ -263,7 +263,7 @@
 								<script type="text/javascript">
 									function Magic() {
 										document.getElementById("memId").value = "weshare08";
-										document.getElementById("memEmail").value = "weshare@gmail.com";
+										document.getElementById("memEmail").value = "zxe841123@gmail.com";
 										document.getElementById("memPsw").value = "a123456";
 										document.getElementById("memPswHint").value = "a987654";
 										document.getElementById("memName").value = "大衛海鮮";

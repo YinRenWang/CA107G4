@@ -12,6 +12,7 @@ public interface MemberDAO_interface {
 	  public void editMember(MemberVO memberVO);
 	  public void editNoMember(MemberVO memberVO);
       public void update1(MemberVO memberVO);
+      public void updateStatus(String memId);
       public MemberVO findByPrimaryKey(String memberId);
       public MemberVO findByPrimaryKeynoImg(String memberId);
       public List<MemberVO> getAll();

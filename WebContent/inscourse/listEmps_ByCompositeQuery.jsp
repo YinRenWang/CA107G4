@@ -5,8 +5,7 @@
 <%-- 萬用複合查詢-可由客戶端select_page.jsp隨意增減任何想查詢的欄位 --%>
 <%-- 此頁只作為複合查詢時之結果練習，可視需要再增加分頁、送出修改、刪除之功能--%>
 
-<jsp:useBean id="listEmps_ByCompositeQuery" scope="request" type="java.util.List<InsCourseVO>" /> <!-- 於EL此行可省略 -->
-
+<jsp:useBean id="listEmps_ByCompositeQuery" scope="session" type="java.util.List<InsCourseVO>" /> <!-- 於EL此行可省略 -->
 <jsp:useBean id="memberSvc" scope="page" class="com.member.model.MemberService" />
 <jsp:useBean id="teacherSvc" scope="page" class="com.teacher.model.TeacherService" />
 <jsp:useBean id="courseSvc" scope="page" class="com.course.model.CourseService" />

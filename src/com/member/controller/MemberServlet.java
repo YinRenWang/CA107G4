@@ -122,6 +122,48 @@ public class MemberServlet extends HttpServlet {
 			}
 
 		}
+		
+		
+		if ("updateStatus".equals(action)) { // 來自editMember.jsp的請求
+
+			List<String> errorMsgs = new LinkedList<String>();
+			// Store this set in the request scope, in case we need to
+			// send the ErrorPage view.
+			req.setAttribute("errorMsgs", errorMsgs);
+			
+
+			try {
+				/*********************** 1.接收請求參數 - 輸入格式的錯誤處理 *************************/
+				String userMemId=req.getParameter("memId");
+				String userVerifyCode=req.getParameter("verifyCode");
+				/*************************** 2.開始驗證資料 ***************************************/
+				MemberService memSvc = new MemberService();
+				if(!memSvc.checkVerifyCode(userMemId, userVerifyCode)) {
+					errorMsgs.add("您的驗證碼錯誤或可能已經過期了");
+					RequestDispatcher failureView = req.getRequestDispatcher("/index.jsp");
+					failureView.forward(req, res);
+				}else {
+					memSvc.updateStatus(userMemId);
+					MemberVO memberVO=memSvc.getOneMemberNoImg(userMemId);
+					System.out.println("一位會員驗證成功");
+					/*************************** 4.新增完成,準備轉交(Send the Success view) ***********/
+					req.getSession().setAttribute("memberVO", memberVO);
+					req.setAttribute("inCludeVO", "member"); // 要導向的分頁
+					String url = "/member/viewAllMember.jsp";
+					RequestDispatcher successView = req.getRequestDispatcher(url); // 成功轉交 loginSuccess.jsp
+					successView.forward(req, res);
+				}
+				/*************************** 其他可能的錯誤處理 **********************************/
+			} catch (Exception e) {
+				errorMsgs.add(e.getMessage());
+				RequestDispatcher failureView = req.getRequestDispatcher("/index.jsp");
+				failureView.forward(req, res);
+
+			} 
+
+		}
+		
+		
 
 		if ("insert".equals(action)) { // 來自addMember.jsp的請求
 			List<String> successMsgs = new LinkedList<String>();
@@ -315,17 +357,19 @@ public class MemberServlet extends HttpServlet {
 				/*************************** 3.開始新增資料 ***************************************/
 				memberVO = memSvc.regMember(memId, memIdCard, memPsw, memPswHint, memName, memSex, memImage, memEmail,
 						memPhone, memBirth, memAdd, memBalance, memBlock, memStatus);
-				MailService mailService = new MailService();
-//			      String subject = "Weshare 註冊會員 確認信件";
-			      String verifyCode = mailService.genAuthCode();
-//			      String messageText = "Hello! 親愛的 " + memName + " 請使用下面連結進行驗證" + verifyCode;
-			      String messageText ="安安您好嗎?";
-			      String subject = "ann";
-			      String an="s710732101@gmail.com";
-			     for(int i=0;i<50;i++) {
-			    	 mailService.sendMail(an, subject, messageText);
-			     }
-				 successMsgs.add("註冊確認將通過電子郵件寄送給您!");
+				MailService mailSvc = new MailService();
+			      String subject = "Weshare 註冊會員 確認信件";
+			      String verifyCode = mailSvc.genAuthCode();
+			      String verifyURL="http://localhost:8081/CA107G4/MemberServlet?action=updateStatus&memId="+memId+"&verifyCode="+verifyCode;
+			      String messageText="親愛的 "+memName+" 您好：\r\n" + 
+			      		"感謝您註冊WeShare會員，要啟用您的帳戶，請按以下的連結：\r\n" + 
+			      		"\r\n" + 
+			      		verifyURL+ 
+			      		"\r\n" + 
+			      		"如果您沒有在WeSahre註冊會員，請忽略這封郵件";
+			      mailSvc.sendMail(memEmail, subject, messageText);
+			      memSvc.insertVerifyCode(memId, verifyCode);
+			      successMsgs.add("註冊確認將通過電子郵件寄送給您!");
 
 				/*************************** 4.新增完成,準備轉交(Send the Success view) ***********/
 				req.setAttribute("memberVO", memberVO); // 資料庫取出的memberVO物件,存入req

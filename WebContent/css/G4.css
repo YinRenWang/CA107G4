@@ -49,14 +49,7 @@
         margin-top: 15%;
     }
 
-    .section{
-        background: #74b49b;
-        position: absolute;
-        bottom: 0;
-        left: 0;
-        right: 0;
-        
-    }
+ 
     .context-dark, .bg-gray-dark, .bg-primary {
     color: rgba(255, 255, 255, 0.8);
 }

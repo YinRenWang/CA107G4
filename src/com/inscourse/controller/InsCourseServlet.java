@@ -45,8 +45,6 @@ public class InsCourseServlet extends HttpServlet {
 
 		req.setCharacterEncoding("UTF-8");
 		res.setContentType("text/plain; charset=UTF-8");
-		PrintWriter out = res.getWriter();
-
 		String action = req.getParameter("action");
 		
 
@@ -408,22 +406,13 @@ public class InsCourseServlet extends HttpServlet {
 		if ("listEmps_ByCompositeQuery".equals(action)) { // 來自select_page.jsp的複合查詢請求
 			String courseId = "courseId";
 			List<String> errorMsgs = new LinkedList<String>();
-			// Store this set in the request scope, in case we need to
-			// send the ErrorPage view.
+			HttpSession session=req.getSession();
 			req.setAttribute("errorMsgs", errorMsgs);
-
+			Map<String, String[]> map = req.getParameterMap();
 			try {
-
-				/*************************** 1.將輸入資料轉為Map **********************************/
-				// 採用Map<String,String[]> getParameterMap()的方法
-				// 注意:an immutable java.util.Map
-				Map<String, String[]> map = req.getParameterMap();
-//				HttpSession session = req.getSession();
-//				System.out.println(session);
-//				Map<String, String[]> map = (Map<String, String[]>)session.getAttribute("map");
 				if (req.getParameter("whichPage") == null) {
 					HashMap<String, String[]> map1 = new HashMap<String, String[]>(req.getParameterMap());
-					req.setAttribute("map", map1);
+					session.setAttribute("map", map1);
 					map = map1;
 				}
 				if (map.get(courseId) != null) {
@@ -437,19 +426,17 @@ public class InsCourseServlet extends HttpServlet {
 						// 將查詢結果重新放回put內
 						map.put("courseId", ans);
 					}
-
 				}
-
-				/*************************** 2.開始複合查詢 ***************************************/
-				InsCourseService insCourseSvc = new InsCourseService();
-				List<InsCourseVO> list = insCourseSvc.getAll(map);
-
-				/*************************** 3.查詢完成,準備轉交(Send the Success view) ************/
-				req.setAttribute("listEmps_ByCompositeQuery", list); // 資料庫取出的list物件,存入request
+				if(session.getAttribute("listEmps_ByCompositeQuery")==null) {
+					InsCourseService insCourseSvc = new InsCourseService();
+					List<InsCourseVO> list = insCourseSvc.getAll(map);
+					session.setAttribute("listEmps_ByCompositeQuery", list); // 資料庫取出的list物件,存入request
+					RequestDispatcher successView = req.getRequestDispatcher("/inscourse/listEmps_ByCompositeQuery.jsp"); // 成功轉交listEmps_ByCompositeQuery.jsp
+					successView.forward(req, res);
+				}
 				RequestDispatcher successView = req.getRequestDispatcher("/inscourse/listEmps_ByCompositeQuery.jsp"); // 成功轉交listEmps_ByCompositeQuery.jsp
 				successView.forward(req, res);
-
-				/*************************** 其他可能的錯誤處理 **********************************/
+		
 			} catch (Exception e) {
 				errorMsgs.add(e.getMessage());
 				RequestDispatcher failureView = req.getRequestDispatcher("/index.jsp");

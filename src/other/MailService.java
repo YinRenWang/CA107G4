@@ -77,7 +77,7 @@ public String genAuthCode() {
 		//產生一個八位數亂數
 	
 		String right=new String();
-		for(int i=0;i<8;i++) {
+		for(int i=0;i<15;i++) {
 			int eight=(int)(Math.random()*62);
 			right+=cx[eight];
 		}

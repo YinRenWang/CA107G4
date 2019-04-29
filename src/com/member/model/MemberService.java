@@ -3,13 +3,16 @@ package com.member.model;
 import java.sql.Date;
 import java.util.List;
 
+import redis.clients.jedis.Jedis;
+
 public class MemberService {
 	
 	private MemberDAO_interface dao;
+	private MemberJedis jedis;
 
 	public MemberService() {
 		dao = new MemberJDBCDAO();
-
+		jedis =new MemberJedis();
 	}
 	
 	public MemberVO addMember(String memId, String memSkill, String memWantSkill, String memPair, String memIdCard, String memPsw,
@@ -168,7 +171,16 @@ public class MemberService {
   		return memberVO;
   	}
     
+    public void insertVerifyCode(String memId,String verifyCode) {
+    	jedis.insertVerifyCode(memId, verifyCode);
+    }
     
+    public boolean checkVerifyCode(String userMemId,String userVerifyCode) {
+    	return jedis.checkVerifyCode(userMemId, userVerifyCode);
+    }
 
+    public void updateStatus(String memId) {
+    	dao.updateStatus(memId);
+    }
     	
 }

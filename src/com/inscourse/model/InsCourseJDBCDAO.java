@@ -392,7 +392,7 @@ public class InsCourseJDBCDAO implements InsCourseDAO_interface {
 	public List<InsCourseVO> getAll(Map<String, String[]> map) {
 		List<InsCourseVO> list = new ArrayList<InsCourseVO>();
 		InsCourseVO insCourseVO = null;
-
+ 
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;

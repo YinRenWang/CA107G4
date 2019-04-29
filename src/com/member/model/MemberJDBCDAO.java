@@ -35,6 +35,7 @@ public class MemberJDBCDAO implements MemberDAO_interface {
 	private static final String NOIMG_MEMBER_STMT = 
 			"UPDATE Member set memPsw=?,memAdd=? ,memText=?, memBank=?,memSkill=?, memWantSkill=? where  memId =? ";
 	private static final String UPDATE1 = "UPDATE Member set memBalance=? ,memBlock=? where memId =? ";
+	private static final String UPDATE_STATUS = "UPDATE Member set memStatus=1  where memId =? ";
 	@Override
 	public void insert(MemberVO memberVO) {
 		Connection con = null;
@@ -187,6 +188,48 @@ public class MemberJDBCDAO implements MemberDAO_interface {
 			pstmt.executeUpdate();
 			System.out.println("已修改一筆資料");
 
+			// Handle any driver errors
+		} catch (ClassNotFoundException e) {
+			throw new RuntimeException("Couldn't load database driver. "
+					+ e.getMessage());
+			// Handle any SQL errors
+		} catch (SQLException se) {
+			throw new RuntimeException("A database error occured. "
+					+ se.getMessage());
+			// Clean up JDBC resources
+		} finally {
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
+		}
+		
+
+	}
+	
+	@Override
+	public void updateStatus(String memId){
+		Connection con = null;
+		PreparedStatement pstmt = null;
+
+		try {
+
+			Class.forName(driver);
+			con = DriverManager.getConnection(url, userid, passwd);
+			pstmt = con.prepareStatement(UPDATE_STATUS);
+			
+			pstmt.setString(1,memId);
+			pstmt.executeUpdate();
 			// Handle any driver errors
 		} catch (ClassNotFoundException e) {
 			throw new RuntimeException("Couldn't load database driver. "
@@ -876,6 +919,7 @@ public class MemberJDBCDAO implements MemberDAO_interface {
 	
 		
 	}
+
 
 
 
