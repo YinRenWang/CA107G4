@@ -208,7 +208,7 @@ $(document).ready(function () {
 							<table class="table table-filter">
 								<tbody>
 									
-					<c:forEach var="listMember" items="${CourseReservationSvc.findByPrimaryKey((1),(memberVO.memId))}">	
+					<c:forEach var="listMember" items="${CourseReservationSvc.findByPrimaryKey((memberVO.memId))}">	
 									<tr data-status="pagado">
 										<td>
 											<div class="media">
@@ -253,7 +253,7 @@ $(document).ready(function () {
 							</c:forEach>
 							
 							
-							<c:forEach var="listMember" items="${CourseReservationSvc.findByPrimaryKey((1),(teacherVO.teacherId))}">	
+							<c:forEach var="listMember" items="${CourseReservationSvc.findByPrimaryKey((teacherVO.teacherId))}">	
 									<tr data-status="pendiente">
 										<td>
 											<div class="media">
