@@ -149,10 +149,12 @@ public class CourseReservationServlet extends HttpServlet {
 
 				// 開始新增資料
 				CourseReservationService crSvc = new CourseReservationService();
-				crSvc.insertWithMemberWithRecod(crVO.getTeacherId(), crVO.getMemId(), crVO.getInscId(), crVO.getTeamId(),
+				CourseReservationVO crVO2=crSvc.insertWithMemberWithRecod(crVO.getTeacherId(), crVO.getMemId(), crVO.getInscId(), crVO.getTeamId(),
 						crVO.getCrvStatus(), crVO.getClassStatus(), crVO.getTranStatus(), crVO.getCrvMFD(),
 						crVO.getCrvEXP(), crVO.getCrvLoc(), crVO.getCrvTotalTime(), crVO.getCrvTotalPrice(),
 						crVO.getCrvRate(),crVO.getInscTimeId());
+				//放入新增的主鍵
+				crVO.setCrvId(crVO2.getCrvId());
 				
 				// 新增成功
 				// Android處理

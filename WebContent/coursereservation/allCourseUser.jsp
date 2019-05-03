@@ -3,6 +3,7 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <jsp:useBean id="teacherSvc" scope="page" class="com.teacher.model.TeacherService" />
 <jsp:useBean id="CourseReservationSvc" scope="page" class="com.coursereservation.model.CourseReservationService" />
+<jsp:useBean id="QRCode" scope="page" class="other.QRCode" />
 
 <%int pagado=0; %>
 <%int pendiente=0; %>
@@ -222,7 +223,8 @@ $(document).ready(function () {
 													
 														<span class="pull-right pagado">檢視詳情</span>
 														<span class="pull-right pagado">
-			<img src="<%=request.getContextPath()%>/teacher/DBGifReader_VER2.do?memId=${teacherVO0.memId}" width="120" height="120"class="media-photo"></span>
+			<img src="data:image/png;base64, ${QRCode.qrcodeGo(listMember.crvId)}" width="120" height="120" class="media-photo"></span>
+			
 													</a>
 													</h5>
 													<h5 class="title">老師姓名：
@@ -267,7 +269,7 @@ $(document).ready(function () {
 														
 														<span class="pull-right pendiente">檢視詳情</span>
 														<span class="pull-right pendiente">
-			<img src="<%=request.getContextPath()%>/teacher/DBGifReader_VER2.do?memId=${teacherVO0.memId}" width="120" height="120"class="media-photo"></span>
+			<img src="data:image/png;base64, ${QRCode.qrcodeGo(listMember.crvId)}" width="120" height="120"class="media-photo"></span>
 													</a>
 													</h5>
 													<h5 class="title">學生姓名：

@@ -12,6 +12,7 @@
 <jsp:useBean id="memberSvc" scope="page" class="com.member.model.MemberService" />
 <jsp:useBean id="teacherSvc" scope="page" class="com.teacher.model.TeacherService" />
 <jsp:useBean id="courseSvc" scope="page" class="com.course.model.CourseService" />
+<<jsp:useBean id="QRCode" scope="page" class="other.QRCode" />
 
     <!doctype html>  
     <html lang="en">  

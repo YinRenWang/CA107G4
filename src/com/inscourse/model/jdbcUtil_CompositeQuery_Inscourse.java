@@ -15,7 +15,7 @@ public class jdbcUtil_CompositeQuery_Inscourse {
 
 		String aCondition = null;
 
-		if ("courseId".equals(columnName)|| "inscType".equals(columnName)) // 用於其他
+		if ("courseId".equals(columnName)|| "inscType".equals(columnName)|| "inscStatus".equals(columnName)) // 用於其他
 			aCondition = columnName + "=" + value;
 		else if ("inscLoc".equals(columnName)) // 用於varchar
 			aCondition = columnName + " LIKE '%" + value + "%'";

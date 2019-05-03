@@ -17,6 +17,6 @@ public interface CourseReservationDAO_interface {
 	public List<CourseReservationVO> getAll();
 	
 	//交易是簡單的
-	public void insertWithMemberWithRecod(CourseReservationVO courseReservationVO,MemberVO memberVO,WithdrawalRecordVO withdrawalRecordVO,InsCourseTimeVO insCourseTimeVO);
+	public CourseReservationVO insertWithMemberWithRecod(CourseReservationVO courseReservationVO,MemberVO memberVO,WithdrawalRecordVO withdrawalRecordVO,InsCourseTimeVO insCourseTimeVO);
 
 }

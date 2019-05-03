@@ -16,6 +16,7 @@
 <jsp:useBean id="teacherSvc" scope="page" class="com.teacher.model.TeacherService" />
 <jsp:useBean id="insCourseSvc" scope="page" class="com.inscourse.model.InsCourseService" />
 <jsp:useBean id="courseSvc" scope="page" class="com.course.model.CourseService" />
+<jsp:useBean id="QRCode" scope="page" class="other.QRCode" />
 <!doctype html>
 <html lang="en">
 
@@ -132,12 +133,16 @@
             <div class="card">
                 <div class="card-body p-0">
                     <div class="row p-5">
-                        <div class="col-md-6">             	
+                        <div class="col-8">         
+
    <p class="font-weight-bold mb-4">上課地點 <p class="mb-1"> ${memberSvc.getOneMember(teacherSvc.findOneById(courseReservationVO.teacherId).memId).memAdd}</p></p>
   <p><input type="hidden" id="addr" value=" ${memberSvc.getOneMember(teacherSvc.findOneById(courseReservationVO.teacherId).memId).memAdd}">
-      <div id="map" style="width:1000px; height:400px; margin:0px auto;" ></div>
-
+      <div id="map" style="width:700px; height:400px; margin:0px auto;" ></div>
  						</div>
+ 						
+ 						<div class="col-2">
+ 						<p class="font-weight-bold mb-4">QRCode條碼<p class="mb-1"></p>
+ 						<img src="data:image/png;base64, ${QRCode.qrcodeGo(courseReservationVO.crvId)}" width="300px" height="300px" class="media-photo">	
                         </div>
 
                         <div class="col-md-6 text-right">

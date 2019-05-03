@@ -156,7 +156,7 @@ Swal.fire(
                           <form action="<%= request.getContextPath()%>/InsCourseServlet" method="GET">
                   <input type="hidden" name="inscId"  value="${insCourseVO.inscId}"> 
                 <input type="hidden" name="action"  value="updateStatus">
-                 <input type="submit" class="glyphicon glyphicon-trash pull-right text-primary" value="<c:if test="${insCourseVO.inscStatus==0}">下架</c:if><c:if test="${insCourseVO.inscStatus==1}">上架</c:if>">
+                 <input type="submit" class="glyphicon glyphicon-trash pull-right text-primary" value="<c:if test="${insCourseVO.inscStatus==0}">下架中</c:if><c:if test="${insCourseVO.inscStatus==1}">上架中</c:if>">
                </form>
                 </div>
                

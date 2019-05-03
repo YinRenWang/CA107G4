@@ -23,8 +23,8 @@ import com.withdrawalrecord.model.WithdrawalRecordVO;
 public class CourseReservationJDBCDAO implements CourseReservationDAO_interface {
 	static CourseReservationJDBCDAO dao=new CourseReservationJDBCDAO();
 	String driver = "oracle.jdbc.driver.OracleDriver";
-//	String url = "jdbc:oracle:thin:@localhost:1521:XE";
-	String url = "jdbc:oracle:thin:@localhost:49161:XE";
+	String url = "jdbc:oracle:thin:@localhost:1521:XE";
+//	String url = "jdbc:oracle:thin:@localhost:49161:XE";
 	String userid = "WESHARE";
 	String passwd = "123456";
 	
@@ -512,7 +512,7 @@ public class CourseReservationJDBCDAO implements CourseReservationDAO_interface 
 	}
 
 	@Override
-	public void insertWithMemberWithRecod(CourseReservationVO courseReservationVO, MemberVO memberVO,WithdrawalRecordVO withdrawalRecordVO,InsCourseTimeVO inscoursetimeVO) {
+	public CourseReservationVO insertWithMemberWithRecod(CourseReservationVO courseReservationVO, MemberVO memberVO,WithdrawalRecordVO withdrawalRecordVO,InsCourseTimeVO inscoursetimeVO) {
 		Connection con = null;
 		PreparedStatement pstmt = null;
 
@@ -570,6 +570,7 @@ public class CourseReservationJDBCDAO implements CourseReservationDAO_interface 
 				// 2●設定於 pstm.executeUpdate()之後
 				con.commit();
 				con.setAutoCommit(true);
+				courseReservationVO.setCrvId(crvId);
 				System.out.println("訂單編號"+crvId+"購買人"+memberVO.getMemName()+"已扣了"+dollar+"剩餘"+memberVO.getMemBalance());
 				
 
@@ -611,6 +612,7 @@ public class CourseReservationJDBCDAO implements CourseReservationDAO_interface 
 
 	
 		}
+		return courseReservationVO;
 	}
 
 	@Override
