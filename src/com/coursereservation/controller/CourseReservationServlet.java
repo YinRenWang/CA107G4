@@ -98,6 +98,7 @@ public class CourseReservationServlet extends HttpServlet {
 				String memId = memberVO.getMemId();
 				String teacherId = req.getParameter("teacherId").trim();
 				TeacherService teacherSvc=new TeacherService();
+				
 				if(teacherSvc.findOneById(teacherId).getMemId().equals(memId)) {
 					errorMsgs.add("您不能訂購自己的課程...");
 					req.setAttribute("errorMsgs", errorMsgs); // 含有輸入格式錯誤的empVO物件,也存入req

@@ -236,6 +236,7 @@ footer{
 <c:forEach var="teacherVO" items="${teacherSvc.getAll()}">
 
 <c:if test="${teacherVO.teacherId==insCourseVO.teacherId}"> 
+<a href="<%=request.getContextPath()%>/member/viewAsMember.jsp?memId=${teacherVO.memId}">
 <img class="imgblob" src="<%=request.getContextPath()%>/member/DBGifReader.do?memId=${teacherVO.memId}" width="160" height="160" "/></a>
  </c:if>
 </c:forEach>

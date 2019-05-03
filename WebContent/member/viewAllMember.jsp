@@ -259,7 +259,9 @@ Swal.fire(
 							<i class="glyphicon glyphicon-member"></i>
 							個人資料 </a>
 						</li>
-						<li id="teacher" >
+		
+<c:if test="${!empty teacherVO}">
+							<li id="teacher" >
 							<form id="form2" action="<%= request.getContextPath()%>/MemberServlet" method="get">
 								<input type="hidden" name="inCludeVO"  value="teacher"> 
 								<input type="hidden" name="action" value="changeValue">
@@ -268,6 +270,7 @@ Swal.fire(
 							<i class="glyphicon glyphicon-teacher"></i>
 							課程管理 </a>
 						</li>
+</c:if> 
 						<li id="inscourse" >
 							<form id="form3" action="<%= request.getContextPath()%>/MemberServlet" method="get">
 								<input type="hidden" name="inCludeVO"  value="inscourse"> 

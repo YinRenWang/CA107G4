@@ -249,7 +249,8 @@ justify-content:center;
 <c:forEach var="teacherVO" items="${teacherSvc.getAll()}">
 
 <c:if test="${teacherVO.teacherId==insCourseVO.teacherId}"> 
-<img class="imgblob" src="<%=request.getContextPath()%>/member/DBGifReader.do?memId=${teacherVO.memId}" width="160" height="160" "/></a>
+
+<img class="imgblob" src="<%=request.getContextPath()%>/member/DBGifReader.do?memId=${teacherVO.memId}" width="160" height="160" />
  </c:if>
 </c:forEach>
 			</div>

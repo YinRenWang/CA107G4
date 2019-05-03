@@ -96,9 +96,7 @@ public class MemberServlet extends HttpServlet {
 				/*************************** 3.查詢完成,準備轉交(Send the Success view) *************/
 				TeacherService teacherSvc=new TeacherService();
 				TeacherVO teacherVO =teacherSvc.findOneById(memberVO.getMemId());
-				if(teacherVO==null) {
-					System.out.println("此帳號並非教師");
-				}else {
+				if(teacherVO.getTeacherId()!=null) {
 					session.setAttribute("teacherVO", teacherVO);
 				}
 				session.setAttribute("memberVO", memberVO); // 資料庫取出的memberVO物件,存入req
@@ -113,13 +111,47 @@ public class MemberServlet extends HttpServlet {
 				String url ="/index.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url); // 成功轉交 loginSuccess.jsp
 				successView.forward(req, res);
+				return;
 
 			} catch (Exception e) {
 				errorMsgs.add("無法取得資料:" + e.getMessage());
 				RequestDispatcher failureView = req.getRequestDispatcher("/member/loginMember.jsp");
 				failureView.forward(req, res);
+				return;
 			}
 
+		}
+		
+		
+		if ("logout".equals(action)) { // 來自listAllMember.jsp的請求
+
+			List<String> errorMsgs = new LinkedList<String>();
+			HttpSession session=req.getSession();
+			// Store this set in the request scope, in case we need to
+			// send the ErrorPage view.
+			req.setAttribute("errorMsgs", errorMsgs);
+		
+
+			try {
+				/*************************** 1.清除登入資訊 ****************************************/
+				session.removeAttribute("memberVO");
+				TeacherVO teacherVO=(TeacherVO) session.getAttribute("teacherVO");
+				if(teacherVO!=null) {
+					session.removeAttribute("teacherVO");
+					System.out.println("老師"+teacherVO.getMemId()+"已登出");
+					
+				}
+				/*************************** 3.查詢完成,準備轉交(Send the Success view) ************/
+				String url = "/index.jsp";
+				RequestDispatcher successView = req.getRequestDispatcher(url);// 成功轉交 editMember.jsp
+				successView.forward(req, res);
+
+				/*************************** 其他可能的錯誤處理 **********************************/
+			} catch (Exception e) {
+				errorMsgs.add("無法取得要修改的資料:" + e.getMessage());
+				RequestDispatcher failureView = req.getRequestDispatcher("/member/listAllMember.jsp");
+				failureView.forward(req, res);
+			}
 		}
 		
 		
@@ -181,7 +213,6 @@ public class MemberServlet extends HttpServlet {
 				} else if (!memId.trim().matches(memIdReg)) { // 以下練習正則(規)表示式(regular-expression)
 					errorMsgs.add("會員帳號：請以半形輸入，6-12個英、數字組合");
 				}
-			
 
 				String memEmail = req.getParameter("memEmail");
 				String memEmailReg = "^[a-z0-9A-Z]+[- | a-z0-9A-Z . _]+@([a-z0-9A-Z]+(-[a-z0-9A-Z]+)?\\.)+[a-z]{2,}$";
@@ -191,9 +222,6 @@ public class MemberServlet extends HttpServlet {
 					errorMsgs.add("電子郵件：請輸入有效的手機號碼或電子郵件");
 				}
 	
-			
-				
-
 				String memPsw = req.getParameter("memPsw");
 				String memPswReg ="^[(a-zA-Z0-9_)]{6,12}$";
 				if (memPsw == null || memPsw.trim().length() == 0) {
@@ -203,9 +231,6 @@ public class MemberServlet extends HttpServlet {
 					errorMsgs.add("會員密碼：請輸入6 位數以上，開頭必須為英文不得有中文");
 				}
 
-			
-				
-
 				String memPswHint = req.getParameter("memPswHint");
 				if (memPswHint == null || memPswHint.trim().length() == 0) {
 					errorMsgs.add("會員提示：請勿空白");
@@ -214,7 +239,6 @@ public class MemberServlet extends HttpServlet {
 					memPswHint="";
 				}
 		
-
 				String memName = req.getParameter("memName");
 				String memNameReg = "^[(\u4e00-\u9fa5)(a-zA-Z)]{2,10}$";
 				if (memName == null || memName.trim().length() == 0) {
@@ -222,8 +246,7 @@ public class MemberServlet extends HttpServlet {
 				} else if (!memName.trim().matches(memNameReg)) { // 以下練習正則(規)表示式(regular-expression)
 					errorMsgs.add("姓名: 只能是中、英文字母 , 且長度必需在2到10之間");
 				}
-			
-				
+					
 
 				String memIdCard = req.getParameter("memIdCard").toUpperCase();
 				String memIdCardReg = "^[A-Z]{1}[0-9]{9}$";
@@ -365,7 +388,7 @@ public class MemberServlet extends HttpServlet {
 			      		"\r\n" + 
 			      		verifyURL+ 
 			      		"\r\n" + 
-			      		"如果您沒有在WeSahre註冊會員，請忽略這封郵件";
+			      		"如果您沒有在WeSahre註冊會員，請忽略這封郵件。";
 			      mailSvc.sendMail(memEmail, subject, messageText);
 			      memSvc.insertVerifyCode(memId, verifyCode);
 			      successMsgs.add("註冊確認將通過電子郵件寄送給您!");

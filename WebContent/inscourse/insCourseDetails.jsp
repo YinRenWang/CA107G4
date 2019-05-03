@@ -511,7 +511,6 @@ input[type=radio].with-font:focus~label:before, input[type=checkbox].with-font:f
     color: #fff;
     border: 1px solid #063bb3;
 }
-
 	.teachName{
 		padding-left: 20px;
 		padding-top: 10px;
@@ -528,13 +527,10 @@ input[type=radio].with-font:focus~label:before, input[type=checkbox].with-font:f
 		
 	}
 	
-
-
     .badge-pill{
     font-size: 18px;
     margin-bottom:5px: 
     }
-
     .box-title{
     font-size: 20px; 
     }
@@ -567,13 +563,11 @@ input[type=radio].with-font:focus~label:before, input[type=checkbox].with-font:f
              }
     
 	
-
 @media screen and (min-width: 768px) {
 .itemCenter {
 }
 .itemCenter {
     width: calc(100% / 3 - 20px);
-
 }
 }
 	
@@ -582,8 +576,8 @@ input[type=radio].with-font:focus~label:before, input[type=checkbox].with-font:f
 </head>
 
 <script type="text/javascript">
-
 	$(document).ready(function(){
+     		
 		 $('#inputSuccess').change(function(){
 			 $('#form1').submit();
 		 })
@@ -615,13 +609,13 @@ input[type=radio].with-font:focus~label:before, input[type=checkbox].with-font:f
              del_star.style.backgroundPosition=-del_move+"px 0px";
              del_star.style.left=del_move+"px";
          }
-	
 		 
-
 	});
-	
 </script>
-<body>
+ 
+
+
+<body >
 <!------------------------------------------------------首頁頭------------------------------------------------------>
 <div class="header">
       <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top"> <img src="<%= request.getContextPath()%>/images/icon/logo.png" width="80" height="60" alt=""/><a class="navbar-brand" href="<%= request.getContextPath()%>">教育共享平台</a>
@@ -651,7 +645,6 @@ input[type=radio].with-font:focus~label:before, input[type=checkbox].with-font:f
       </nav>
     </div>	
 <!----------------------------------------------------------------------------------------------------------------->
-  
 <nav aria-label="breadcrumb">
   <ol class="breadcrumb">
     <li class="breadcrumb-item"><a href="#">課程類型</a></li>
@@ -659,6 +652,39 @@ input[type=radio].with-font:focus~label:before, input[type=checkbox].with-font:f
     <li class="breadcrumb-item active" aria-current="page">${param.courseName}</li>
   </ol>
 </nav>
+
+
+   <script>
+    
+    var MyPoint = "/GrabCourseWS/";
+    var host = window.location.host;
+    var path = window.location.pathname;
+    var webCtx = path.substring(0, path.indexOf('/', 1));
+    var endPointURL = "ws://" + window.location.host + webCtx + MyPoint;
+    
+	var statusOutput = document.getElementById("statusOutput");
+	var webSocket;
+	
+	function connect() {
+		// 建立 websocket 物件
+		webSocket = new WebSocket(endPointURL);
+		
+		webSocket.onopen = function(event) {
+			 webSocket.send("${inscTimeId}");
+		};
+
+		webSocket.onmessage = function(event) {
+			var jsonObj = JSON.parse(event.data);
+		};
+
+		webSocket.onclose = function(event) {
+		
+		};
+	}
+	function disconnect() {
+		webSocket.close();
+	}
+</script> 
 
 <!------ Include the above in your HEAD tag ---------->
 
@@ -673,6 +699,7 @@ Swal.fire(
 </script>
 </c:forEach>
 </c:if>  
+
 <form id="form1" action="<%= request.getContextPath()%>/InsCourseServlet" method="POST">
 <input type="hidden" name="action"  id="action" value="updateDate">
 <div class="content">
@@ -681,7 +708,8 @@ Swal.fire(
     <div class="row">
       <div class="col-lg-8 col-md-8 col-sm-7 col-xs-12">
         <div class="box d-flex" id="tc1">
-          <div class="tcimg"><img src="<%=request.getContextPath()%>/member/DBGifReader.do?memId=${param.memId}" width="120" height="120" alt=""/> </div>
+          <div class="tcimg"><a href="<%=request.getContextPath()%>/member/viewAsMember.jsp?memId=${param.memId}">
+          <img src="<%=request.getContextPath()%>/member/DBGifReader.do?memId=${param.memId}" width="120" height="120" alt=""/></a></div>
           <div class="teachName">
             <h4>${param.memName}</h4>
 <input type="hidden" name="memName"  value="${param.memName}">
@@ -797,7 +825,6 @@ Swal.fire(
 <input type="text" class="form-control"  name="inputSuccess" id="inputSuccess"  >  <!-- f_date1見第30行  -->
 
 <script>
-
         $.datetimepicker.setLocale('zh'); // kr ko ja en
         $('#inputSuccess').datetimepicker({
            theme: '',          //theme: 'dark',
@@ -821,14 +848,14 @@ Swal.fire(
 
 
 <form id="form3" action="<%= request.getContextPath()%>/InsCourseServlet" method="POST"> 
-<input type="hidden" name="action"  id="action" value="updateTime"> 
+<input type="hidden" name="action"  id="action" value="updateTime" > 
 <div class="row">	
  <c:forEach var="inscCourseTimeVO" items="${list}">	
  
 <div class="col-1"></div>
 <div class="col-5">
 <div class="form-check">
-<input class="form-check-input" type="radio" name="inscDate" value="${inscCourseTimeVO.inscTimeId}" />
+<input class="form-check-input" type="radio" name="inscDate" id="${inscCourseTimeVO.inscTimeId}" value="${inscCourseTimeVO.inscTimeId}"  />
 <label class="form-check-label" for="exampleRadios1">
    				 <fmt:formatDate value="${inscCourseTimeVO.inscMFD}" pattern="HH:mm"/>
     			 <fmt:formatDate value="${inscCourseTimeVO.inscEXP}" pattern="HH:mm"/>			 
@@ -956,7 +983,7 @@ Swal.fire(
         <div class="pr-xl-4"><a href="index.html"></a>
           <p class="reademe">我們是最佳的共享教育的平台，致力於在分享技能，保障交易，展現自我，使用戶得到最棒的學習體驗。</p>
           <!-- Rights-->
-          <p class="rights"><span>©  </span><span class="copyright-year">2018</span><span> </span><span>WeShare教育共享平台</span><span>. </span><span>© All Rights Reserved.
+          <p class="rights"><span>©  </span><span class="copyright-year">2018</span><span> </span><span>WeShare教育共享平台</span><span>. </span><span>© All Rights Reserved.
             .</span></p>
         </div>
       </div>
@@ -994,14 +1021,6 @@ Swal.fire(
     <div class="col"><a class="social-inner" href="#"><span class="icon mdi mdi-youtube-play"></span><span>google</span></a></div>
   </div>
 </footer>
-	
- 
-         
-         
-
-<!-----------------------------------------------------------------------------------------------------------------> 
-<!-- Optional JavaScript --> 
-<!-- jQuery first, then Popper.js, then Bootstrap JS --> 
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script> 
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>

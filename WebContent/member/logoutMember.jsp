@@ -8,10 +8,9 @@
 </head>
 <body>
 	<form  method="get" action="<%= request.getContextPath()%>/MemberServlet" >
-								<input type="hidden" name="action" value="updateStatus"> 
-								<input type="hidden" name="memId" value="${param.memId}">
-								<input type="hidden" name="verifyCode" value="${param.verifyCode}">  
+								<input type="hidden" name="action" value="logout"> 
 								<input type="submit" class="btn btn-primary btn-lg btn-block">
-	</form>
+					</form>
 </body>
 </html>
+

@@ -252,7 +252,7 @@ $(document).ready(function () {
 									</tr>
 							</c:forEach>
 							
-							
+							<c:if test="${!empty teacherVO}">
 							<c:forEach var="listMember" items="${CourseReservationSvc.findByPrimaryKey((teacherVO.teacherId))}">	
 									<tr data-status="pendiente">
 										<td>
@@ -296,7 +296,7 @@ $(document).ready(function () {
 										</td>
 									</tr>
 							</c:forEach>
-							
+							</c:if> 
 							
 							
 					

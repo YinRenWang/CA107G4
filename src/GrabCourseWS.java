@@ -1,3 +1,5 @@
+
+
 import java.io.IOException;
 import java.util.Collection;
 import java.util.Collections;
@@ -16,16 +18,10 @@ import javax.websocket.Session;
 import javax.websocket.server.PathParam;
 import javax.websocket.server.ServerEndpoint;
 
-import com.google.gson.Gson;
-import com.websocketchat.model.ChatMessage;
-import com.websocketchat.model.State;
-
-
-
 @ServerEndpoint("/GrabCourseWS/{userName}")
 public class GrabCourseWS {
 	private static final Set<Session> connectedSessions = Collections.synchronizedSet(new HashSet<>());
-	Gson gson = new Gson();
+
 
 	@OnOpen
 	public void onOpen(@PathParam("userName") String userName, Session userSession) throws IOException {
