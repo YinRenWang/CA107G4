@@ -408,6 +408,46 @@ public class MemberServlet extends HttpServlet {
 
 		}
 
+		
+		if ("reverify".equals(action)) { // 來自listAllMember.jsp的請求
+			List<String> errorMsgs = new LinkedList<String>();
+			// Store this set in the request scope, in case we need to
+			// send the ErrorPage view.
+			req.setAttribute("errorMsgs", errorMsgs);
+			try {
+				MemberService memSvc = new MemberService();
+				MailService mailSvc = new MailService();
+				String memId = req.getParameter("memId");
+				MemberVO memberVO=new MemberVO();
+				memberVO = memSvc.getOneMember(memId);
+				
+			      String subject = "Weshare 註冊會員 確認信件";
+			      String verifyCode = mailSvc.genAuthCode();
+			      String verifyURL="http://localhost:8081/CA107G4/MemberServlet?action=updateStatus&memId="+memId+"&verifyCode="+verifyCode;
+			      String messageText="親愛的 "+memberVO.getMemName()+" 您好：\r\n" + 
+			      		"感謝您註冊WeShare會員，要啟用您的帳戶，請按以下的連結：\r\n" + 
+			      		"\r\n" + 
+			      		verifyURL+ 
+			      		"\r\n" + 
+			      		"如果您沒有在WeSahre註冊會員，請忽略這封郵件。";
+			      mailSvc.sendMail(memberVO.getMemEmail(), subject, messageText);
+			      memSvc.insertVerifyCode(memId, verifyCode);
+				/*************************** 4.新增完成,準備轉交(Send the Success view) ***********/
+				String url = "/back-end/index.jsp";
+				RequestDispatcher successView = req.getRequestDispatcher(url); // 成功轉交 loginSuccess.jsp
+				successView.forward(req, res);
+				return;
+				/*************************** 其他可能的錯誤處理 **********************************/
+			} catch (Exception e) {
+				errorMsgs.add("無法取得要修改的資料:" + e.getMessage());
+				RequestDispatcher failureView = req.getRequestDispatcher("/member/listAllMember.jsp");
+				failureView.forward(req, res);
+				return;
+			}
+		}
+		
+		
+		
 		if ("getOne_For_Update".equals(action)) { // 來自listAllMember.jsp的請求
 
 			List<String> errorMsgs = new LinkedList<String>();
@@ -567,12 +607,14 @@ public class MemberServlet extends HttpServlet {
 				String url = "/member/editMember.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url);// 成功轉交 editMember.jsp
 				successView.forward(req, res);
+				return;
 
 				/*************************** 其他可能的錯誤處理 **********************************/
 			} catch (Exception e) {
 				errorMsgs.add("無法取得要修改的資料:" + e.getMessage());
 				RequestDispatcher failureView = req.getRequestDispatcher("/member/listAllMember.jsp");
 				failureView.forward(req, res);
+				return;
 			}
 		}
 

@@ -257,7 +257,7 @@ ul, ol {
       </div>
       <div class="col-1">
         <div class="d-flex justify-content-around" id="df4">
-        <input type="hidden" name="inscStatus" value="1">
+        <input type="hidden" name="inscStatus" value="0">
         <input type="hidden" name="action" value="listEmps_ByCompositeQuery">
           <input class="btn btn-success"  type="submit" height="30" id="sbtn" value="搜尋">
         </div>

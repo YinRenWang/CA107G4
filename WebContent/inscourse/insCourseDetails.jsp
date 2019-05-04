@@ -670,11 +670,12 @@ input[type=radio].with-font:focus~label:before, input[type=checkbox].with-font:f
 		webSocket = new WebSocket(endPointURL);
 		
 		webSocket.onopen = function(event) {
-			 webSocket.send("${inscTimeId}");
+			 console.log('连接成功', e)
+		        ws.send('我发送消息给服务端'); // 客户端与服务器端通信
 		};
 
 		webSocket.onmessage = function(event) {
-			var jsonObj = JSON.parse(event.data);
+			 console.log('服务器端返回：', e.data)
 		};
 
 		webSocket.onclose = function(event) {

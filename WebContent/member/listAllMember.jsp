@@ -68,6 +68,7 @@
 
 <table>
 	<tr>
+		<th>圖片</th>
 		<th>帳號</th>
 		<th>姓名</th>
 		<th>身份證字號</th>
@@ -78,12 +79,8 @@
 		<th>專長</th>
 		<th>想學的</th>
 		<th>會員配對</th>
-		<th>密碼</th>
-		<th>提示密碼</th>
 		<th>性別</th>
-		<th>圖片</th>
 		<th>介紹</th>
-		<th>銀行帳號</th>
 		<th>剩餘點數</th>
 		<th>預扣點數</th>
 		<th>狀態</th>
@@ -93,13 +90,14 @@
 	<c:forEach var="memberVO" items="${list}" begin="<%=pageIndex%>" end="<%=pageIndex+rowsPerPage-1%>">
 		
 		<tr>
+			<td><img src="<%=request.getContextPath()%>/member/DBGifReader.do?memId=${memberVO.memId}" width="120" height="120"></td>
 			<td>${memberVO.memId}</td>
 			<td>${memberVO.memName}</td>
 			<td>${memberVO.memIdCard}</td>
 			<td>${memberVO.memEmail}</td>
 			<td>${memberVO.memPhone}</td>
-			<td>${memberVO.memAdd}</td>
 			<td>${memberVO.memBirth}</td>
+			<td>${memberVO.memAdd}</td>
 <td>
 <c:forEach var="courseVO" items="${courseSvc.getAll()}">
 <c:if test="${memberVO.memSkill==courseVO.courseId}"> 
@@ -117,24 +115,36 @@
 </td>
 			
 			<td>${memberVO.memPair}</td>
-			<td>${memberVO.memPsw}</td>
-			<td>${memberVO.memPswHint}</td>
-			<td>${memberVO.memSex}</td>
-			<td><img src="<%=request.getContextPath()%>/member/DBGifReader.do?memId=${memberVO.memId}" width="226" height="225"></td>
-			<td>${memberVO.memText}</td>
-			<td>${memberVO.memBank}</td>
-			<td>${memberVO.memBalance}</td>
-			<td>${memberVO.memBlock}</td>
-			<td>${memberVO.memStatus}</td>
+<td>		
+ <c:choose>
+<c:when test="${memberVO.memSex==0}">
+男性
+</c:when>
+<c:otherwise>
+女性
+</c:otherwise>
+</c:choose>		
+</td>	
 			
-			<td>
-			  <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/member/member.do" style="margin-bottom: 0px;">
+			<td>${memberVO.memText}</td>
+			<td>${memberVO.memBalance}</td>
+			<td>${memberVO.memBlock}</td>		
+<td>		
+ <c:choose>
+<c:when test="${memberVO.memStatus==0}">
+  <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/member/member.do" style="margin-bottom: 0px;">
 			      
 			      <input type="hidden" name="memId"  value="${memberVO.memId}">
-			     <input type="hidden" name="action"	value="getOne_For_Update">
-			      <input type="submit" value="修改">
+			     <input type="hidden" name="action"	value="reverify">
+			      <input type="submit" value="寄送">
 			 </FORM>
-			</td>
+</c:when>
+<c:otherwise>
+已驗證
+</c:otherwise>
+</c:choose>		
+</td>			
+	
 		</tr>
 	</c:forEach>
 </table>

@@ -6,7 +6,7 @@
     <meta charset="UTF-8">
     <meta content='IE=edge' http-equiv='X-UA-Compatible'/>
     <meta content='width=device-width, initial-scale=1, maximum-scale=1' name='viewport'/>
-    <title>jQuery sidebar-nav: Responsive Admin Menu Demo</title>
+    <title>Weshare 教育平台 || 後台管理系統</title>
     <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <link href='css/SidebarNav.min.css' media='all' rel='stylesheet' type='text/css'/>
@@ -22,7 +22,7 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="#">Brand</a>
+            <a class="navbar-brand" href="#">Weshare 教育平台</a>
           </div>
           <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="sidebar-menu">
