@@ -47,8 +47,6 @@ public class CourseReservationServlet extends HttpServlet {
 
 		// 我的預約
 		if ("find_my_reservation".equals(action)) {
-			
-
 			String param = req.getParameter("param");
 			CourseReservationService crSvc = new CourseReservationService();
 			List<CourseReservationVO> crList = crSvc.findByPrimaryKey(param);
@@ -63,14 +61,11 @@ public class CourseReservationServlet extends HttpServlet {
 				crVO.setInscId(courseVO.getCourseName());
 			}
 			out.print(gson.toJson(crList));
-
 		}
 
 		// 預約
 		if ("make_new_reservation".equals(action) || "addOrder".equals(action)) {
-			
 			synchronized(this) {
-			
 			CourseReservationVO crVO;
 			// Android取資料
 			if ("make_new_reservation".equals(action)) {
@@ -85,11 +80,12 @@ public class CourseReservationServlet extends HttpServlet {
 			} else { 
 			
 				List<String> errorMsgs = new LinkedList<String>();
+				List<String> errorMsgsAlert = new LinkedList<String>();
 				HttpSession session	=req.getSession();
 				MemberVO memberVO=(MemberVO) session.getAttribute("memberVO");
 				if(memberVO==null) {
-					errorMsgs.add("請先登入會員");
-					req.setAttribute("errorMsgs", errorMsgs); // 含有輸入格式錯誤的empVO物件,也存入req
+					errorMsgsAlert.add("請先登入會員");
+					session.setAttribute("errorMsgsAlert", errorMsgsAlert); // 含有輸入格式錯誤的empVO物件,也存入req
 					String location=req.getContextPath()+"/inscourse/inscourse.do?"+(String) session.getAttribute("userSearch");
 					session.setAttribute("location", location);
 					res.sendRedirect(req.getContextPath() + "/member/loginMember.jsp");
@@ -124,7 +120,6 @@ public class CourseReservationServlet extends HttpServlet {
 					return;
 					
 				}
-
 				crVO = new CourseReservationVO();
 				crVO.setInscTimeId(inscTimeId);
 				crVO.setTeacherId(teacherId);
