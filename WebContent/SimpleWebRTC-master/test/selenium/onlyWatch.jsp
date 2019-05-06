@@ -1,7 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<jsp:useBean id="memberSvc" scope="page" class="com.member.model.MemberService" />
 <!DOCTYPE html>
 <html>
     <head>
@@ -40,23 +39,20 @@
         <button id="screenShareButton"></button>
         <p id="subTitle"></p>
         <form id="createRoom">
-            <input  type="hidden" id="sessionInput" value="${teacherVO.teacherId}"/>
-            <button type="submit">開始直播</button>
+            <input id="sessionInput"/>
+            <button type="submit">Create it!</button>
         </form>
-        <div class="videoContainer">
-            <video id="localVideo" style="weight: 600px;" oncontextmenu="return false;"></video>
-            <div id="localVolume" class="volume_bar"></div>
-        </div>
+        
         <div id="remotes"></div>
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js"></script>
+        <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js"></script>
         <script src="<%=request.getContextPath()%>/SimpleWebRTC-master/out/simplewebrtc-with-adapter.bundle.js"></script>
         <script>
             // grab the room from the URL
             var room = location.search && location.search.split('?')[1];
             // create our webrtc connection
             var webrtc = new SimpleWebRTC({
-                // the id/element dom element that will hold "our" video
-                localVideoEl: 'localVideo',
+                
+            	
                 // the id/element dom element that will hold remote videos
                 remoteVideosEl: '',
                 // immediately ask for camera access
@@ -64,13 +60,15 @@
                 debug: false,
                 detectSpeakingEvents: true
             });
-
+            
+            
             // when it's ready, join if we got a room from the URL
             webrtc.on('readyToCall', function () {
-                // you can name it anything
                 if (room) webrtc.joinRoom(room);
+                // you can name it anything
             });
-
+            webrtc.on('localScreen' , function(){});
+          
             function showVolume(el, volume) {
                 if (!el) return;
                 if (volume < -45) { // vary between -45 and -20
@@ -117,16 +115,13 @@
                 //console.log('own volume', volume);
                 showVolume(document.getElementById('localVolume'), volume);
             });
-
             // Since we use this twice we put it here
             function setRoom(name) {
                 $('form').remove();
                 $('h1').text(name);
                 $('#subTitle').text('Link to join: ' + location.href);
                 $('body').addClass('active');
-                $('h1').text('${memberSvc.getOneMember(teacherVO.memId).memName}的直播間');
             }
-
             if (room) {
                 setRoom(room);
             } else {
@@ -134,7 +129,7 @@
                     var val = $('#sessionInput').val().toLowerCase().replace(/\s/g, '-').replace(/[^A-Za-z0-9_\-]/g, '');
                     webrtc.createRoom(val, function (err, name) {
                         console.log(' create room cb', arguments);
-
+                    
                         var newUrl = location.pathname + '?' + name;
                         if (!err) {
                             history.replaceState({foo: 'bar'}, null, newUrl);
@@ -143,10 +138,9 @@
                             console.log(err);
                         }
                     });
-                    return false;
+                    return false;          
                 });
             }
-
             var button = $('#screenShareButton'),
                 setButton = function (bool) {
                     button.text(bool ? 'share screen' : 'stop sharing');
@@ -154,9 +148,7 @@
             webrtc.on('localScreenStopped', function () {
                 setButton(true);
             });
-
             setButton(true);
-
             button.click(function () {
                 if (webrtc.getLocalScreen()) {
                     webrtc.stopScreenShare();
@@ -169,12 +161,12 @@
                             setButton(false);
                         }
                     });
-
+                    
                 }
             });
         </script>
-    </div>
-    <div class="col-sm" onload="connect();" onunload="disconnect();">
+        </div>
+         <div class="col-sm" onload="connect();" onunload="disconnect();">
       <h1> Chat Room </h1>
 	    <h3 id="statusOutput" class="statusOutput"></h3>
         <textarea id="messagesArea" class="panel message-area" readonly ></textarea>
@@ -268,4 +260,6 @@
 	}
     
 </script>
+        </div>
+        </div>
 </html>
