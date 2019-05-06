@@ -9,8 +9,7 @@
     <welcome-file>default.htm</welcome-file>
     <welcome-file>default.jsp</welcome-file>
   </welcome-file-list>
-  
-    <filter>
+  <filter>
     <filter-name>loginFilter</filter-name>
     <filter-class>filters.LoginFilter</filter-class>
   </filter>
@@ -26,8 +25,7 @@
     <dispatcher>ERROR</dispatcher>
     <dispatcher>ASYNC</dispatcher>
   </filter-mapping>
-  
-   <filter>
+  <filter>
     <filter-name>TeacherFilter</filter-name>
     <filter-class>filters.TeacherFilter</filter-class>
   </filter>
@@ -42,13 +40,6 @@
     <dispatcher>ERROR</dispatcher>
     <dispatcher>ASYNC</dispatcher>
   </filter-mapping>
-  
-  
- 
- 
-
- 
-
   <servlet>
     <servlet-name>MemberServlet</servlet-name>
     <servlet-class>com.member.controller.MemberServlet</servlet-class>
@@ -81,9 +72,7 @@
     <servlet-name>CourseReservationServlet</servlet-name>
     <url-pattern>/coursereservation/coursereservation.do</url-pattern>
   </servlet-mapping>
-  
-  
-    <servlet>
+  <servlet>
     <servlet-name>TeacherServlet</servlet-name>
     <servlet-class>com.teacher.controller.TeacherServlet</servlet-class>
   </servlet>
@@ -91,7 +80,7 @@
     <servlet-name>TeacherServlet</servlet-name>
     <url-pattern>/teacher/teacher.do</url-pattern>
   </servlet-mapping>
-    <servlet>
+  <servlet>
     <servlet-name>DBGifReader_VER2</servlet-name>
     <servlet-class>com.teacher.controller.DBGifReader_VER2</servlet-class>
   </servlet>

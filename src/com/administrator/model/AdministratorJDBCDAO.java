@@ -11,7 +11,8 @@ import java.util.List;
 public class AdministratorJDBCDAO implements AdministratorDAO_interface{
 	    
 		String driver = "oracle.jdbc.driver.OracleDriver";
-		String url = "jdbc:oracle:thin:@localhost:1521:XE";
+//		String url = "jdbc:oracle:thin:@localhost:1521:XE";
+		String url = "jdbc:oracle:thin:@localhost:49161:XE";
 		String userid = "WESHARE";
 		String passwd = "123456";
 		

@@ -73,7 +73,7 @@ public class MemberServlet extends HttpServlet {
 						
 						// Send the use back to the form, if there were errors
 						if (!errorMsgs.isEmpty()) {
-							memberVO.setMemPsw(null);//帳號保留,密碼清空
+							memberVO.setMemPsw(null);//帳號保留,密碼清空 
 							req.setAttribute("memberVO", memberVO); // 含有輸入格式錯誤的empVO物件,也存入req
 							RequestDispatcher failureView = req
 									.getRequestDispatcher("/member/loginMember.jsp");
