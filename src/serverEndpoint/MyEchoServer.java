@@ -11,18 +11,25 @@ import javax.websocket.OnError;
 import javax.websocket.OnClose;
 import javax.websocket.CloseReason;
 
-@ServerEndpoint("/MyEchoServer/{myName}/{myRoom}")
+@ServerEndpoint("/MyEchoServer/{teacherId}")
 public class MyEchoServer {
 	
 private static final Set<Session> allSessions = Collections.synchronizedSet(new HashSet<Session>());
-	
+private static final HashMap<String,Integer> map = new<String,Integer>HashMap();	
 	@OnOpen
-	public void onOpen(@PathParam("myName") String myName, @PathParam("myRoom") int myRoom, Session userSession) throws IOException {
+	public void onOpen(@PathParam("teacherId") String teacherId,Session userSession) throws IOException {
 		allSessions.add(userSession);
-		System.out.println(userSession.getId() + ": 已連線");
-		System.out.println(myName + ": 已連線");
-		System.out.println(myRoom + ": 房號");
-//		userSession.getBasicRemote().sendText("WebSocket 連線成功");
+		if(map.containsKey(teacherId.toLowerCase())) {
+			Integer count=map.get(teacherId.toLowerCase());
+			count++;
+			map.put(teacherId, count);
+
+		}else {
+			map.put(teacherId.toLowerCase(), new Integer(0));
+
+			
+		}
+
 	}
 
 	
@@ -31,19 +38,32 @@ private static final Set<Session> allSessions = Collections.synchronizedSet(new 
 		for (Session session : allSessions) {
 			if (session.isOpen())
 				session.getAsyncRemote().sendText(message);
+			
 		}
 		System.out.println("Message received: " + message);
 	}
 	
 	@OnError
 	public void onError(Session userSession, Throwable e){
-//		e.printStackTrace();
+
 	}
 	
 	@OnClose
-	public void onClose(Session userSession, CloseReason reason) {
+	public void onClose(Session userSession, CloseReason reason,@PathParam("teacherId") String teacherId) {
 		allSessions.remove(userSession);
-		System.out.println(userSession.getId() + ": Disconnected: " + Integer.toString(reason.getCloseCode().getCode()));
+		
+		if(map.containsKey(teacherId.toLowerCase())) {
+			Integer count=map.get(teacherId.toLowerCase());
+			count--;
+			map.put(teacherId, count);
+			if(count<=0) {
+				map.remove(teacherId.toLowerCase());
+			}
+
+			
+		}
+	
+		
 	}
 
  

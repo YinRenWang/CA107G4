@@ -30,7 +30,7 @@
             }
         </style>
     </head>
-    <body >
+    <body  onload="connect();">
     <div class="container">
   <div class="row">
    <div class="col-sm">
@@ -166,7 +166,7 @@
             });
         </script>
         </div>
-         <div class="col-sm" onload="connect();" onunload="disconnect();">
+         <div class="col-sm" onunload="disconnect();">
       <h1> Chat Room </h1>
 	    <h3 id="statusOutput" class="statusOutput"></h3>
         <textarea id="messagesArea" class="panel message-area" readonly ></textarea>
@@ -187,7 +187,7 @@
     
 <script>
     
-    var MyPoint = "/MyEchoServer/peter/309";
+    var MyPoint = "/MyEchoServer/tc00001";
     var host = window.location.host;
     var path = window.location.pathname;
     var webCtx = path.substring(0, path.indexOf('/', 1));

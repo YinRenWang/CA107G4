@@ -105,7 +105,7 @@
         <div class="CustomCard hoverCustomCard">
             <div class="CustomCardheader text-white btn-primary">
                 <h5 class="col pt-2"><strong>${memberSvc.getOneMember(teacherVO.memId).memName}的直播間</strong></h5>
-                <i id="count" class="far pt-2 pr-3 fa-heart float-right pointer" style="position:absolute;right:0;top:0"
+                <i class="far pt-2 pr-3 fa-heart float-right pointer" style="position:absolute;right:0;top:0"
                 >在線觀看人數</i>
             </div>
             <div class="avatar">
@@ -147,7 +147,6 @@
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js"></script>
         <script src="<%=request.getContextPath()%>/SimpleWebRTC-master/out/simplewebrtc-with-adapter.bundle.js"></script>
         <script>
-        	var count=0;
       
             // grab the room from the URL
             var room = location.search && location.search.split('?')[1];
@@ -185,8 +184,6 @@
                 }
             });
             webrtc.on('videoAdded', function (video, peer) {
-            	count++;
-            	document.getElementById('count').innerHTML = "在線觀看人數"+" "+count;
                 console.log('video added', peer);
                 var remotes = document.getElementById('remotes');
                 if (remotes) {
@@ -206,8 +203,6 @@
                 }
             });
             webrtc.on('videoRemoved', function (video, peer) {
-            	count--;
-            	document.getElementById('count').innerHTML = "在線觀看人數"+count;
                 console.log('video removed ', peer);
                 var remotes = document.getElementById('remotes');
                 var el = document.getElementById('container_' + webrtc.getDomId(peer));
@@ -220,7 +215,6 @@
                 showVolume(document.getElementById('localVolume'), volume);
             });
 
-            
             // Since we use this twice we put it here
             function setRoom(name) {
                 $('form').remove();
@@ -241,7 +235,6 @@
                         if (!err) {
                             history.replaceState({foo: 'bar'}, null, newUrl);
                             setRoom(name);
-                          
                         } else {
                             console.log(err);
                         }
@@ -294,16 +287,13 @@
 			var messagesArea = document.getElementById("messagesArea");
 	        var jsonObj = JSON.parse(event.data);
 	        var message = jsonObj.userName + ": " + jsonObj.message + "\r\n";
-	        var showCount = jsonObj.showCount;
 	        messagesArea.value = messagesArea.value + message;
 	        messagesArea.scrollTop = messagesArea.scrollHeight;
-	        alert(showCount);
 		};
 
 		webSocket.onclose = function(event) {
-			var teacherId = document.getElementById("messagesArea");
-		     var jsonObj = {"teacherId" : userName, "message" : message};
-		        webSocket.send(JSON.stringify(jsonObj));
+			 var teacherId=${teacherVO.teacherId};
+			
 		};
 	}
 	
