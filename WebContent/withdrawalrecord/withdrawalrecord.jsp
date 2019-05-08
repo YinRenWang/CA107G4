@@ -31,8 +31,7 @@
 	src="https://ajax.googleapis.com/ajax/libs/jquery/2.0.0/jquery.min.js"></script>
 <link rel="stylesheet" type="text/css" href="css/G4.css">
 
-<link rel="stylesheet"
-	href="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/6.10.3/sweetalert2.css" />
+
 
 <!--引用SweetAlert2.js-->
 <script
@@ -80,7 +79,7 @@
 				<jsp:useBean id="memberSvc" scope="page"
 					class="com.member.model.MemberService" />
 			</ul>
-			<a class="text-dark">餘額:</a>${memberSvc.getOneMember(withdrawalrecordVO.memid).memBalance}<a
+			<a class="text-dark">餘額:</a>${memberSvc.getOneMember(memberVO.memId).memBalance}<a
 				class="text-dark" id="wepoint"></a>
 		</div>
 	</nav>
@@ -118,8 +117,8 @@
 						<input type="hidden" name="action" value="findByKey">
 						<button class="btn btn-primary" type="submit">查看交易紀錄</button>
 					</ul>
-<!-- 					//抓會員帳號 -->
-					<input type="hidden" name="wrnum" value="weshare02">    <%-- "${param.memId}" --%>
+<!-- <--------------------------------------------------sessionID--------------> 
+					<input type="hidden" name="wrnum" value="${memberVO.memId}">   
 
 
 				</FORM>
@@ -127,7 +126,7 @@
 			<!-- ---------------------表單-------------------------- -->
 
 
-			<%--    <jsp:useBean id="withdrawalRecordSvc" scope="page" class="com.withdrawalrecord.model.WithdrawalRecordService" /> --%>
+		 
 
 			<div class="col-md-8 order-md-1">
 				<FORM METHOD="GET"
@@ -149,6 +148,7 @@
 
 								<label for="Memid">會員帳號</label> <input type="text"
 									class="form-control" id="MEMID" name="memid"
+									value="${memberVO.memId}" readonly="readonly"
 									placeholder="請輸入會員帳號"
 									value="<%=(withdrawalRecordVO == null) ? "" : withdrawalRecordVO.getMemid()%>" />
 
@@ -162,10 +162,7 @@
 						</div>
 					</div>
 					<div class="row">
-						<div class="col-md-4 mb-3">
-							<label for="date">到期日</label> <input class="form-control"
-								type="date" id="wrtime" name="wrtime" page[end_date]="">
-						</div>
+					
 						<div class=" col-md-4 mb-3">
 							<label for="cc-cvv">CVV</label> <input type="text"
 								class="form-control" id="cc-cvv" name="cc-cvv"
@@ -180,9 +177,8 @@
 
 					<input type="hidden" name="action" value="insert">
 
-					<button class="btn btn-primary btn-lg btn-block" type="submit"
-						id="submit">付款</button>
-
+					<input type="hidden" name="wrnum" value="${memberVO.memId}">
+                    <input type="submit" id="pay" value="付款" class="btn btn-primary btn-lg btn-block" data-disable-with="find" />
 
 					<input id="magic" name="magic" type="button" onclick="Magic()"
 						class="btn btn-link">
@@ -288,22 +284,55 @@
 		integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
 		crossorigin="anonymous"></script>
 	<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+	
+	<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+ <!--引用jQuery -->
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js" type="text/javascript"></script>
+<!--     引用SweetAlert2.js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.0.0/sweetalert2.all.js"></script>
 
 	<script type="text/javascript">
 		function Magic() {
-			document.getElementById("MEMID").value = "weshare01";
+			
 			document.getElementById("wrmoney").value = "6000";
 			document.getElementById("cc-name").value = "447708570857";
 			document.getElementById("cc-cvv").value = "957";
 		}
 
-		//        $(function () {
-		//             $(#submit).click(function () {
-		//                 //alert範例
-		//                 swal("已成功付款", "請至檢查您的餘額", "success");},100000);
+	
+// 		//自訂預設值
+// 		swal.setDefaults({
+// 		    confirmButtonText: "確定",
+// 		    cancelButtonText: "取消"
+// 		});
+// 		swal.resetDefaults();//清空自訂預設值
 
-		//             setTimeout(function(){window.location.reload(); },2000);
-		//         });
+// 		$(function () {
+// 		    $("#pay").click(function () {
+// 		        //confirm dialog範例
+// 		        swal({ 
+// 		            title: "將會進行扣款!",
+// 		            html: "按下確定後進行儲值，並產生訂單明細",
+// 		            type: "question",
+// 		            showCancelButton: true//顯示取消按鈕
+// 		        }).then(
+// 		            function (result) {
+// 		                if (result.value) {
+// 		                    //使用者按下「確定」要做的事
+// 		                    swal("完成!", "交易已完成交易", "success")
+// 		                    $("#pay").submit();
+		                    
+// 		                } else if (result.dismiss === "cancel")  
+// 		                {
+// 		                     //使用者按下「取消」要做的事
+// 		                    swal("取消", "已取消交易", "error");
+// 		                }//end else  
+// 		            });//end then 
+// 		    });
+// 		});
+
+		
+	
 	</script>
 
 </body>

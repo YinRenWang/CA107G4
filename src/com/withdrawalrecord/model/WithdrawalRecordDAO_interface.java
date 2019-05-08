@@ -4,7 +4,7 @@ import java.util.*;
 
 public interface WithdrawalRecordDAO_interface {
 
-	public void insert(WithdrawalRecordVO withdrawalRecordVO);
+	public WithdrawalRecordVO insert(WithdrawalRecordVO withdrawalRecordVO);
 
 	public void update(WithdrawalRecordVO withdrawalRecordVO);
 //	       public void delete(String withdrawalRecordVO);
@@ -14,9 +14,9 @@ public interface WithdrawalRecordDAO_interface {
 	public List<WithdrawalRecordVO> getAll();
 
 	public WithdrawalRecordVO findByPrimaryKey(String withdrawalRecordVO);
-
-//	       public Set<WithdrawalRecordVO> getEmpsByDeptno(Integer deptno);
 	
 	public void insert2(WithdrawalRecordVO withdrawalRecordVO, java.sql.Connection con);
+
+//	       public Set<WithdrawalRecordVO> getEmpsByDeptno(Integer deptno);
 
 }

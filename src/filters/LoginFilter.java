@@ -26,11 +26,13 @@ public class LoginFilter implements Filter {
 		// 【從 session 判斷此user是否登入過】
 		Object memberVO = session.getAttribute("memberVO");
 		if (memberVO == null) {
+	
 			session.setAttribute("location", req.getRequestURI());
 			res.sendRedirect(req.getContextPath() + "/member/loginMember.jsp");
 			return;
 		} else {
 			chain.doFilter(request, response);
+		
 		}
 	}
 }

@@ -219,25 +219,22 @@ Swal.fire(
   <div class="container" id="body">
     <div class="row profile">
     	<div class="col-md-3">
+    	<br>
 			<div class="profile-sidebar">
 				<div class="profile-usertitle">
 					<div class="profile-usertitle-name">
-						${memberVO.memName}
-						
-					</div>
-					<div class="profile-usertitle-name">
 					 <c:choose> 
- 					 <c:when test="${teacherVO.teacherStatus==1}">老師</c:when> 
-  					 <c:otherwise>學生 </c:otherwise> 
+ 					 <c:when test="${teacherVO.teacherStatus==1}">${memberVO.memName} 老師 </c:when> 
+  					 <c:otherwise>${memberVO.memName} 學生 </c:otherwise> 
 					</c:choose> 
 					</div>
 						<div class="profile-usertitle-job">
 <c:choose>
     <c:when test="${memberVO.memStatus==1}">
-	 會員已驗證
+	 會員信箱 已驗證
     </c:when>
     <c:when test="${memberVO.memStatus==0}">
- 	 會員待驗證
+ 	 會員信箱 待驗證
     </c:when>
     <c:otherwise>
     </c:otherwise>
@@ -283,7 +280,7 @@ Swal.fire(
 						</li>
 						<li id="record" >
 						<form id="form4" action="<%= request.getContextPath()%>/MemberServlet" method="get">
-								<input type="hidden" name="inCludeVO"  value="inscourse"> 
+								<input type="hidden" name="inCludeVO"  value="transactionRecord"> 
 								<input type="hidden" name="action" value="changeValue">
 							</form>	
 							<a href="#" onclick="document.getElementById('form4').submit();return false;">	
@@ -308,6 +305,7 @@ Swal.fire(
  <%@ include file="/coursereservation/allCourseUser.jsp"%>
     </c:when>
       <c:when test="${inCludeVO=='transactionRecord'}">
+  <%@ include file="/withdrawalrecord/withdrawalrecord_findbykey.jsp"%>     
     </c:when>
     <c:otherwise>
     </c:otherwise>

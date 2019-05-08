@@ -5,6 +5,8 @@
 <c:if test="${not empty listEmps_ByCompositeQuery}" >
 <c:remove var="listEmps_ByCompositeQuery" scope="session"/>
 </c:if>
+<jsp:useBean id="teacherSvc" scope="page" class="com.teacher.model.TeacherService" />
+<jsp:useBean id="memberSvc" scope="page" class="com.member.model.MemberService" />
 <html lang="en">
 <head>
 <!-- Required meta tags -->
@@ -12,7 +14,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <!-- Bootstrap CSS -->
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-
+<link href="https://cdn.bootcss.com/limonte-sweetalert2/7.33.1/sweetalert2.css" rel="stylesheet">
+<script src="https://cdn.bootcss.com/limonte-sweetalert2/7.33.1/sweetalert2.all.min.js"></script>
+<script src="https://code.jquery.com/jquery-1.11.1.min.js"></script>
 <style type="text/css">
 body {
 	margin:auto;
@@ -40,13 +44,13 @@ body {
     display: inline;
 }
 .teacherImg {
-    width: 60px;
-    height: 60px;
-    border-radius: 30px;
-圓角 border: 2px #fff solid;
+    width: 120px;
+    height: 120px;
+     background-size:cover;
+    border-radius: 60px;
+	border: 2px #fff solid;
     line-height: 60px;
     font-size: 14px;
-    background-image: url("<%=request.getContextPath()%>/images/blob/01.jpg");
     text-align: center;
     top: -7.5%;
     position: absolute;
@@ -182,16 +186,24 @@ ul, ol {
 </style>
 <title>WeShare | 最棒的教育共享平台</title>
 </head>
-<body>
+<body onLoad="connect();">
 <div class="header">
       <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top"> <img src="<%= request.getContextPath()%>/images/icon/logo.png" width="80" height="60" alt=""/><a class="navbar-brand" href="<%= request.getContextPath()%>">教育共享平台</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"> <span class="navbar-toggler-icon"></span> </button>
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
           <ul class="navbar-nav mr-auto">
-            <li class="nav-item active"> <a class="nav-link" href="<%= request.getContextPath()%>/teacher/joinTeacher.jsp">成為老師 <span class="sr-only">(current)</span></a> </li>
+           <c:choose>
+    		<c:when test="${!empty teacherVO}">
+    			<li class="nav-item"> <a class="nav-link" id="openLive" href="<%= request.getContextPath()%>//SimpleWebRTC-master/test/selenium/index.jsp" onclick="sendMessage();">現場直播</a> </li>
+           </c:when>
+           <c:otherwise>
+           <li class="nav-item active"> <a class="nav-link" href="<%= request.getContextPath()%>/teacher/joinTeacher.jsp">成為老師 <span class="sr-only">(current)</span></a> </li>
             <li class="nav-item dropdown"> <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">探索課程</a>
               <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink"> <a class="dropdown-item" href="<%= request.getContextPath()%>/inscourse/inscourse.do?courseId=&inscLoc=&action=listEmps_ByCompositeQuery">所有課程</a> <a class="dropdown-item" href="#">音樂</a> <a class="dropdown-item" href="#">語言</a> <a class="dropdown-item" href="#">運動</a> <a class="dropdown-item" href="#">藝術</a> <a class="dropdown-item" href="#">設計</a> <a class="dropdown-item" href="#">人文</a> <a class="dropdown-item" href="#">行銷</a> <a class="dropdown-item" href="#">程式語言</a> <a class="dropdown-item" href="#">投資理財</a> <a class="dropdown-item" href="#">職場技能</a> <a class="dropdown-item" href="#">手作</a> <a class="dropdown-item" href="#">烹飪</a> </div>
-            </li>           
+            </li>  
+           </c:otherwise>
+         </c:choose>  
+                     
                 <c:choose>
     			<c:when test="${!empty memberVO}">
 				            <li class="nav-item"> <a class="nav-link " href="#" onclick="document.getElementById('viewAllMember').submit();return false;">${memberVO.memName}</a> </li> 
@@ -210,7 +222,7 @@ ul, ol {
           </ul>
         </div>
       </nav>
-       
+   </div>    
   
   <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
     <ol class="carousel-indicators">
@@ -266,7 +278,7 @@ ul, ol {
 </FORM> 
 
   </div>
-</div>
+
 <div class="wrapCenter">
   <div class="itemCenter"> <img src="<%=request.getContextPath()%>/images/homePage/handshake.png" width="60" height="60" alt=""/>
     <p class="col-xl-9">自由分享，您所擅長的技能。</p>
@@ -349,38 +361,19 @@ ul, ol {
     <h5>熱門直播</h5>
   </div>
   <div class="card-deck" >
+  <c:forEach var="teacherVO" items="${teacherSvc.getAllStatus(1)}">		
     <div class="card">
-      <div class="teacherImg" ></div>
-      <img src="<%=request.getContextPath()%>/images/homePage/course/course_01.png" class="card-img-top" alt="...">
+      <div class="teacherImg" style="background-image:url(<%=request.getContextPath()%>/member/DBGifReader.do?memId=${teacherVO.memId});"></div>
       <div class="card-body">
-        <h5 class="card-title">Card title</h5>
+      <br>
+       <br>
+       <br>
+        <br>
+        <h4 class="card-title">${memberSvc.getOneMember(teacherVO.memId).memName}</h4>
         <p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
       </div>
     </div>
-    <div class="card">
-      <div class="teacherImg" ></div>
-      <img src="<%=request.getContextPath()%>/images/homePage/course/course_02.png" class="card-img-top" alt="...">
-      <div class="card-body">
-        <h5 class="card-title">Card title</h5>
-        <p class="card-text">This card has supporting text below as a natural lead-in to additional content.</p>
-      </div>
-    </div>
-    <div class="card">
-      <div class="teacherImg" ></div>
-      <img src="<%=request.getContextPath()%>/images/homePage/course/course_03.png" class="card-img-top" alt="...">
-      <div class="card-body">
-        <h5 class="card-title">Card title</h5>
-        <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This card has even longer content than the first to show that equal height action.</p>
-      </div>
-    </div>
-    <div class="card">
-      <div class="teacherImg" ></div>
-      <img src="<%=request.getContextPath()%>/images/homePage/course/course_04.png" class="card-img-top" alt="...">
-      <div class="card-body">
-        <h5 class="card-title">Card title</h5>
-        <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This card has even longer content than the first to show that equal height action.</p>
-      </div>
-    </div>
+ </c:forEach>
   </div>
 </div>
 	
@@ -434,8 +427,49 @@ ul, ol {
     <div class="col"><a class="social-inner" href="#"><span class="icon mdi mdi-youtube-play"></span><span>google</span></a></div>
   </div>
 </footer>
-<!-- Optional JavaScript --> 
-<!-- jQuery first, then Popper.js, then Bootstrap JS --> 
+ 
+<script>
+		var MyPoint = "/LiveStreamWS";
+		var host = window.location.host;
+		var path = window.location.pathname;
+		var webCtx = path.substring(0, path.indexOf('/', 1));
+		var endPointURL = "ws://" + window.location.host + webCtx + MyPoint;
+
+		var webSocket;
+		var myID;
+
+		function connect() {
+			// 建立 websocket 物件
+			webSocket = new WebSocket(endPointURL);
+
+			webSocket.onmessage = function(event) {
+				var data = event.data;
+
+				if(data=='open'){
+					swal({
+						  title: '<span class="title">有一則新的直播開始囉！</span>',
+						  html: '<span class="text"><a href="http://localhost:8081/CA107G4/SimpleWebRTC-master/test/selenium/onlyWatch.jsp?tc00001">觀看直播</a></span>'
+						});
+				}
+			};
+
+			webSocket.onerror = function(event) {
+				console.log("Error ", event);
+			}
+
+			webSocket.onclose = function(event) {
+			
+			};
+		}
+
+		function sendMessage() {
+			webSocket.send('open');
+		}
+
+		function disconnect() {
+			webSocket.close();
+		}
+	</script>
 
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script> 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script> 

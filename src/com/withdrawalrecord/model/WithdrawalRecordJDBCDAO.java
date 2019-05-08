@@ -7,72 +7,89 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.*;
 
+import com.mysql.jdbc.Statement;
+
 
 
 
 
 public class WithdrawalRecordJDBCDAO implements WithdrawalRecordDAO_interface {
 	String driver = "oracle.jdbc.driver.OracleDriver";
-//	String url = "jdbc:oracle:thin:@localhost:1521:XE";
 	String url = "jdbc:oracle:thin:@localhost:49161:XE";
 	String userid = "WESHARE";
 	String passwd = "123456";
 
-	private static final String INSERT_WITHDRAWALRECORD = "INSERT INTO WithdrawalRecord (wrnum,memid,wrmoney,wrtime) VALUES (('WI'||LPAD(to_char(WITHDRAWALRECORD_seq.NEXTVAL), 5, '0')), ?, ?, ?)";
+	private static final String INSERT_WITHDRAWALRECORD = "INSERT INTO WithdrawalRecord VALUES (('WI'||LPAD(to_char(WITHDRAWALRECORD_seq.NEXTVAL), 5, '0')), ?, ?, ?)";
 
 	private static final String GET_ONE_STMT = "SELECT * FROM WITHDRAWALRECORD where WRNUM=?";
 
 	private static final String UPDATE = "UPDATE WITHDRAWALRECORD set memid=?, wrmoney=?, wrtime=? where wrnum = ?";
 
+	private static final String INSERT_2="INSERT INTO WithdrawalRecord (wrnum,memid,wrmoney,wrtime) VALUES (('WI'||LPAD(to_char(WITHDRAWALRECORD_seq.NEXTVAL), 5, '0')), ?, ?, to_date( to_char( sysdate, 'dd-mm-yy' ), 'dd-mm-yy' ) )";
+	
 	private static final String GET_ALL_STMT = 
 			"SELECT wrnum,memid,wrmoney,wrtime FROM WITHDRAWALRECORD ORDER BY WRMONEY DESC";
 	private static final String GET_ALL_STMT1 = 
 			"SELECT * FROM WITHDRAWALRECORD where (case when memid=? then 1 else 0 end+ case when wrnum=? then 1 else 0 end)>=1 ORDER BY WRNUM DESC";
-	private static final String INSERT_2="INSERT INTO WithdrawalRecord (wrnum,memid,wrmoney,wrtime) VALUES (('WI'||LPAD(to_char(WITHDRAWALRECORD_seq.NEXTVAL), 5, '0')), ?, ?, to_date( to_char( sysdate, 'dd-mm-yy' ), 'dd-mm-yy' ) )";
 //	private static final String GET_Emps_ByDeptno_STMT = "SELECT wrnum,memid,to_char(wrtime,'yyyy-mm-dd') wrtime,sal,FROM WITHDRAWALRECORD where memid = ? order by wrnum";		
 //	
 	@Override
-	public void insert(WithdrawalRecordVO withdrawalRecordVO) {
+	public WithdrawalRecordVO insert(WithdrawalRecordVO withdrawalRecordVO) {
 		Connection con = null;
 		PreparedStatement pstmt = null;
-
+		
 		try {
 
 			Class.forName(driver);
 			con = DriverManager.getConnection(url, userid, passwd);
-			pstmt = con.prepareStatement(INSERT_WITHDRAWALRECORD);
-
+			con.setAutoCommit(false);
+			pstmt = con.prepareStatement(INSERT_2,Statement.RETURN_GENERATED_KEYS);
 			pstmt.setString(1, withdrawalRecordVO.getMemid());
 			pstmt.setInt(2, withdrawalRecordVO.getWrmoney());
 			pstmt.setDate(3, withdrawalRecordVO.getWrtime());
-
 			pstmt.executeUpdate();
+           
+	    	//掘取對應的自增主鍵值
+					String wrnum = null;
+					ResultSet rs = pstmt.getGeneratedKeys();
+					if (rs.next()) {
+						wrnum = rs.getString(1);
+						System.out.println("自增主鍵值= " + wrnum +"(剛新增成功的主編號");
+					} else {
+						System.out.println("未取得自增主鍵值");
+					}
+					con.commit();
+					con.setAutoCommit(true);
+					withdrawalRecordVO.setWrnum(wrnum);
+				// Handle any driver errors
+			} catch (ClassNotFoundException e) {
+				throw new RuntimeException("Couldn't load database driver. "
+						+ e.getMessage());
+				// Handle any SQL errors
+			} catch (SQLException se) {
+				throw new RuntimeException("A database error occured. "
+						+ se.getMessage());
+				// Clean up JDBC resources
+			} finally {
+				if (pstmt != null) {
+					try {
+						pstmt.close();
+					} catch (SQLException se) {
+						se.printStackTrace(System.err);
+					}
+				}
+				if (con != null) {
+					try {
+						con.close();
+					} catch (Exception e) {
+						e.printStackTrace(System.err);
+					}
+				}
+			}
+		return withdrawalRecordVO;
+		
 
-			// Handle any driver errors
-		} catch (ClassNotFoundException e) {
-			throw new RuntimeException("Couldn't load database driver. " + e.getMessage());
-			// Handle any SQL errors
-		} catch (SQLException se) {
-			throw new RuntimeException("A database error occured. " + se.getMessage());
-			// Clean up JDBC resources
-		} finally {
-			if (pstmt != null) {
-				try {
-					pstmt.close();
-				} catch (SQLException se) {
-					se.printStackTrace(System.err);
-				}
-			}
-			if (con != null) {
-				try {
-					con.close();
-				} catch (Exception e) {
-					e.printStackTrace(System.err);
-				}
-			}
 		}
-
-	}
 
 	@Override
 	public void update(WithdrawalRecordVO withdrawalRecordVO) {
@@ -371,65 +388,7 @@ public class WithdrawalRecordJDBCDAO implements WithdrawalRecordDAO_interface {
 		return list;
 
 	}
-//------------------------------------------------------------------------------------------
-	public static void main(String[] args) {
-
-		WithdrawalRecordJDBCDAO dao = new WithdrawalRecordJDBCDAO();
-
-//
-
-
-
-//		WithdrawalRecordVO WithdrawalRecordVO2 = new WithdrawalRecordVO();
-//
-//		WithdrawalRecordVO2.setMemid("weshare01");
-//		WithdrawalRecordVO2.setWrmoney(900);
-//		WithdrawalRecordVO2.setWrtime(java.sql.Date.valueOf("2019-03-25"));
-//		WithdrawalRecordVO2.setWrnum("WI00004");
-//		dao.update(WithdrawalRecordVO2);
-//		System.out.println("---------------------");
-//
-
-		WithdrawalRecordVO WithdrawalRecordVO3 = dao.findByPrimaryKey("WI00003");
-		System.out.print(WithdrawalRecordVO3.getWrnum() + ",");
-		System.out.print(WithdrawalRecordVO3.getMemid() + ",");
-		System.out.print(WithdrawalRecordVO3.getWrmoney() + ",");
-		System.out.println(WithdrawalRecordVO3.getWrtime());
-////
-//		System.out.println("---------------------");
-//
-//	
-//
-//		
-//		  List<WithdrawalRecordVO> list = dao.getAll();
-//	   for (WithdrawalRecordVO aWithdrawalRecord : list) {
-//		System.out.print(aWithdrawalRecord.getWrnum() + ",");
-//		System.out.print(aWithdrawalRecord.getMemid() + ",");
-//		System.out.print(aWithdrawalRecord.getWrmoney() + ",");
-//		System.out.println(aWithdrawalRecord.getWrtime());
-//		System.out.println("---------------------");
-//	}
-		
-		
-
-	   
-//		List<WithdrawalRecordVO> list = dao.findByKey("weshare01");
-//		for (WithdrawalRecordVO withdrawalRecordVO3 : list) {
-//			System.out.println(withdrawalRecordVO3.getWrnum()+ ",");
-//			System.out.println(withdrawalRecordVO3.getMemid()+ ",");
-//			System.out.println(withdrawalRecordVO3.getWrmoney()+ ",");
-//			System.out.println(withdrawalRecordVO3.getWrtime()+ ",");
-			
-//			System.out.println("---------------------");
-		
-
 	
-
-
-
-
-	}
-
 	@Override
 	public void insert2(WithdrawalRecordVO withdrawalRecordVO, Connection con) {
 
@@ -472,4 +431,66 @@ public class WithdrawalRecordJDBCDAO implements WithdrawalRecordDAO_interface {
 	
 	
 	}
+	
+//------------------------------------------------------------------------------------------
+	public static void main(String[] args) {
+
+		WithdrawalRecordJDBCDAO dao = new WithdrawalRecordJDBCDAO();
+
+//
+
+
+
+		WithdrawalRecordVO WithdrawalRecordVO2 = new WithdrawalRecordVO();
+
+		WithdrawalRecordVO2.setMemid("weshare03");
+		WithdrawalRecordVO2.setWrmoney(900000);
+		WithdrawalRecordVO2.setWrtime(java.sql.Date.valueOf("2019-03-25"));
+		WithdrawalRecordVO2.setWrnum("WI00004");
+		dao.update(WithdrawalRecordVO2);
+		System.out.println("---------------------");
+//
+
+//		WithdrawalRecordVO WithdrawalRecordVO3 = dao.findByPrimaryKey("WI00003");
+//		System.out.print(WithdrawalRecordVO3.getWrnum() + ",");
+//		System.out.print(WithdrawalRecordVO3.getMemid() + ",");
+//		System.out.print(WithdrawalRecordVO3.getWrmoney() + ",");
+//		System.out.println(WithdrawalRecordVO3.getWrtime());
+////
+//		System.out.println("---------------------");
+//
+//	
+//
+//		
+//		  List<WithdrawalRecordVO> list = dao.getAll();
+//	   for (WithdrawalRecordVO aWithdrawalRecord : list) {
+//		System.out.print(aWithdrawalRecord.getWrnum() + ",");
+//		System.out.print(aWithdrawalRecord.getMemid() + ",");
+//		System.out.print(aWithdrawalRecord.getWrmoney() + ",");
+//		System.out.println(aWithdrawalRecord.getWrtime());
+//		System.out.println("---------------------");
+//	}
+		
+		
+
+	   
+//		List<WithdrawalRecordVO> list = dao.findByKey("weshare01");
+//		for (WithdrawalRecordVO withdrawalRecordVO3 : list) {
+//			System.out.println(withdrawalRecordVO3.getWrnum()+ ",");
+//			System.out.println(withdrawalRecordVO3.getMemid()+ ",");
+//			System.out.println(withdrawalRecordVO3.getWrmoney()+ ",");
+//			System.out.println(withdrawalRecordVO3.getWrtime()+ ",");
+			
+//			System.out.println("---------------------");
+		
+
+	
+
+
+
+
+	}
+	
+	
+
 }

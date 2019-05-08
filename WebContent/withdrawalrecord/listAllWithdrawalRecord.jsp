@@ -72,7 +72,7 @@
 	<!-------------------------------------------------------------------------headerEnd------------------------------------------------------------------------->
 	<div class="container">
 	<div class="p-4">
-		<h3>交易紀錄</h3>
+		<h6>交易紀錄</h6>
 		<table class="table table-bordered track_tbl">
 			<thead>
 				<tr>
@@ -92,6 +92,7 @@
 				<tbody>
 					<tr class="active">
 						<td class="track_dot"><span class="track_line"></span></td>
+					
 						<td>${withdrawalRecordVO.wrnum}</td>
 						<td>${withdrawalRecordVO.memid}</td>
 						<td>${withdrawalRecordVO.wrmoney}</td>

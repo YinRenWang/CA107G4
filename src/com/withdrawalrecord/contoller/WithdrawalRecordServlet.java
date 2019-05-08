@@ -1,6 +1,7 @@
-package com.withdrawalrecord.contoller;
+ package com.withdrawalrecord.contoller;
 
 import java.io.*;
+import java.sql.Date;
 import java.util.*;
 
 import javax.servlet.*;
@@ -135,43 +136,7 @@ public class WithdrawalRecordServlet extends HttpServlet {
 			/*************************** 1.接收請求參數 ****************************************/
 			String wrnum = new String(req.getParameter("wrnum"));
 
-//						String wrnum = req.getParameter("wrnum");
-//			if (wrnum == null || (wrnum.trim()).length() == 0) {
-//				errorMsgs.add("請輸入會員編號");
-//			}
-//			// Send the use back to the form, if there were errors
-//			if (!errorMsgs.isEmpty()) {
-//				RequestDispatcher failureView = req.getRequestDispatcher("/withdrawalrecord/select_page.jsp");
-//				failureView.forward(req, res);
-//				return;// 程式中斷
-//			}
-//			if (!wrnum.matches("WI[0-9]{5}")) {
-//				errorMsgs.add("課程編號格式錯誤");
-//			}
-//			if (!errorMsgs.isEmpty()) {
-//				RequestDispatcher failureView = req.getRequestDispatcher("/withdrawalrecord/select_page.jsp");
-//				failureView.forward(req, res);
-//				return;
-//			}
-//
-////						String wrnum = null;
-////						try {
-////							wrnum = new String(str);
-////						} catch (Exception e) {
-////							errorMsgs.add("會員編號格式不正確");
-////						}
-//			// Send the use back to the form, if there were errors
-//			if (!errorMsgs.isEmpty()) {
-//				RequestDispatcher failureView = req.getRequestDispatcher("/withdrawalrecord/select_page.jsp");
-//				failureView.forward(req, res);
-//				return;// 程式中斷
-//			}
-////
-//			WithdrawalRecordService withdrawalRecordSvc = new WithdrawalRecordService();
-//			WithdrawalRecordVO withdrawalRecordVO = withdrawalRecordSvc.getOneWithdrawalRecord(wrnum);
-//			if (withdrawalRecordVO == null) {
-//				errorMsgs.add("查無資料");
-//			}
+
 
 			/*************************** 2.開始查詢資料 ****************************************/
 			WithdrawalRecordService withdrawalRecordSvc1 = new WithdrawalRecordService();
@@ -203,12 +168,8 @@ public class WithdrawalRecordServlet extends HttpServlet {
 				/*************************** 1.接收請求參數 - 輸入格式的錯誤處理 **********************/
 				String memid = req.getParameter("memid");
 
-				String memidReg = "^[(\u4e00-\u9fa5)(a-zA-Z0-9_)]{2,10}$";
-				if (memid == null || memid.trim().length() == 0) {
-					errorMsgs.add("會員帳號請勿空白");
-				} else if (!memid.trim().matches(memidReg)) { // 以下練習正則(規)表示式(regular-expression)
-					errorMsgs.add("會員帳號: 只能是中、英文字母、數字和_ , 且長度必需在2到10之間");
-				}
+				
+				
 
 				Integer wrmoney = null;
 				try {
@@ -221,12 +182,7 @@ public class WithdrawalRecordServlet extends HttpServlet {
 //				
 
 				java.sql.Date wrtime = null;
-				try {
-					wrtime = java.sql.Date.valueOf(req.getParameter("wrtime").trim());
-				} catch (IllegalArgumentException e) {
-					wrtime = new java.sql.Date(System.currentTimeMillis());
-					errorMsgs.add("請輸入日期!");
-				}
+				
 
 				WithdrawalRecordVO withdrawalRecordVO = new WithdrawalRecordVO();
 
@@ -243,29 +199,34 @@ public class WithdrawalRecordServlet extends HttpServlet {
 
 				/*************************** 2.開始新增資料 *****************************************/
 				WithdrawalRecordService withdrawalRecordSvc = new WithdrawalRecordService();
-				withdrawalRecordVO = withdrawalRecordSvc.addWithdrawalRecord(memid, wrmoney, wrtime);
+				WithdrawalRecordVO	withdrawalRecordVO1 = withdrawalRecordSvc.addWithdrawalRecord(withdrawalRecordVO.getMemid(),
+				withdrawalRecordVO.getWrmoney(), new Date(new GregorianCalendar().getTimeInMillis()));
 
+				withdrawalRecordVO.setWrnum(withdrawalRecordVO1.getWrnum());
+				
+				
 				MemberService memberSvc = new MemberService();
 				MemberVO membe = memberSvc.getOneMember(req.getParameter("memid"));
 
 				int blance = membe.getMemBalance();
   
 				System.out.println("blance");
-				int wrmoney1 = withdrawalRecordVO.getWrmoney();
+				int wrmoney1 = withdrawalRecordVO1.getWrmoney();
 
 				int allmoney = blance + wrmoney1;
 
 //				membe.setMemBalance(allmoney);
 				memberSvc.update1(allmoney, membe.getMemBlock(), membe.getMemId());
-
+				
+				System.out.println("666:" + withdrawalRecordVO1.getWrnum());
 				System.out.println(allmoney);
 
 				/*************************** 3.修改完成,準備轉交(Send the Success view) *************/
 				
-				req.setAttribute("withdrawalRecordVO",withdrawalRecordVO);
+				req.setAttribute("withdrawalRecordVO",withdrawalRecordVO1);
 				
 				
-				String url = "/withdrawalrecord/findOneByKey.jsp";
+				String url = "/withdrawalrecord/withdrawalrecord_findbykey.jsp";
 			    
 				RequestDispatcher successView = req.getRequestDispatcher(url); // 新增成功後轉交listAllEmp.jsp
 				successView.forward(req, res);

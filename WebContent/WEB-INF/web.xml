@@ -26,21 +26,7 @@
     <dispatcher>ERROR</dispatcher>
     <dispatcher>ASYNC</dispatcher>
   </filter-mapping>
-  <filter>
-    <filter-name>TeacherFilter</filter-name>
-    <filter-class>filters.TeacherFilter</filter-class>
-  </filter>
-  <filter-mapping>
-    <filter-name>TeacherFilter</filter-name>
-    <url-pattern>/inscourse/addInsCourse.jsp</url-pattern>
-    <url-pattern>/inscourse/editCourse.jsp</url-pattern>
-    <url-pattern>/inscTime/addinscTime.jsp</url-pattern>
-    <dispatcher>REQUEST</dispatcher>
-    <dispatcher>FORWARD</dispatcher>
-    <dispatcher>INCLUDE</dispatcher>
-    <dispatcher>ERROR</dispatcher>
-    <dispatcher>ASYNC</dispatcher>
-  </filter-mapping>
+
   <servlet>
     <servlet-name>MemberServlet</servlet-name>
     <servlet-class>com.member.controller.MemberServlet</servlet-class>
