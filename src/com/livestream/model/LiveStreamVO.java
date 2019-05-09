@@ -9,6 +9,7 @@ public class LiveStreamVO implements Serializable {
 	private Timestamp lsDate;
 	private Integer lsViewNum;
 	private byte[] lsContent;
+	
 	public String getLsId() {
 		return lsId;
 	}
@@ -39,4 +40,6 @@ public class LiveStreamVO implements Serializable {
 	public void setLsContent(byte[] lsContent) {
 		this.lsContent = lsContent;
 	}
+	
+	
 }

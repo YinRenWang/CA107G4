@@ -1,7 +1,8 @@
 eclipse.preferences.version=1
 encoding//WebContent/css/registered.css=UTF-8
-encoding//WebContent/inscourse/insCourseDetails.jsp=UTF-8
+encoding//WebContent/inscourse/insCourseDetails_back.jsp=UTF-8
 encoding//WebContent/member/addMember.jsp=UTF-8
 encoding//WebContent/member/loginMember.jsp=UTF-8
+encoding//src/Test.java=BIG5
 encoding//src/other/MailService.java=BIG5
 encoding/<project>=UTF-8

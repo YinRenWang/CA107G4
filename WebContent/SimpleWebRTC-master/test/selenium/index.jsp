@@ -10,7 +10,9 @@
         <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
         <link rel="stylesheet" href="<%=request.getContextPath()%>/SimpleWebRTC-master/css/styles.css" type="text/css"/>
- <link href="<%=request.getContextPath()%>/css/G4.css" rel="stylesheet" type="text/css">
+ 		<link href="<%=request.getContextPath()%>/css/G4.css" rel="stylesheet" type="text/css">
+ 		<link href="//fonts.googleapis.com/css?family=Roboto:300,400,500,700" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="<%=request.getContextPath()%>/SimpleWebRTC-master/css/main.css" type="text/css"/>
          <style>
          
             .videoContainer {
@@ -96,7 +98,7 @@
   text-align: center;
 }
 
-.btn{ border-radius: 50%; width:30px; height:30px; line-height:18px;  }
+.btn{ width:100px; height:30px; line-height:18px;  }
 
 html{
 background:#f4f9f4}
@@ -148,6 +150,7 @@ background:#f4f9f4}
   	 <div class="col col-sm-12">
         <div class="CustomCard hoverCustomCard">
             <div class="CustomCardheader text-white btn-primary">
+            <input  type="hidden" id="myvalue" value="${teacherVO.teacherId}"/>
                 <h5 class="col pt-2"><strong>${memberSvc.getOneMember(teacherVO.memId).memName}的直播間</strong></h5>
                 <i id="count" class="far pt-2 pr-3 fa-heart float-right pointer" style="position:absolute;right:0;top:0"
                 >在線觀看人數 0</i>
@@ -157,27 +160,24 @@ background:#f4f9f4}
             </div>
             <div class="info">
                 <div class="desc">${teacherVO.teacherText}</div>
-                <footer class="blockquote-footer float-left">
- <form id="createRoom">
-            <input  type="hidden" id="sessionInput" value="${teacherVO.teacherId}"/>
-            <button type="submit" class="badge badge-primary">開始直播</button>
-        	</form>
-</footer>
-            </div>
-            <div class="bottom mx-auto">
-                <a class="btn btn-secondary btn-twitter btn-sm">
-                    <i class="fas fa-user-lock text-white pointer"></i>
-                </a>
-                <a class="btn btn-primary btn-sm mx-2" rel="publisher">
-                    <i class="fas fa-globe-africa text-white pointer"></i>
-                </a>
-                <a class="btn btn-warning btn-sm" rel="publisher">
-                    <i class="fas fa-exclamation-circle text-white pointer"></i>
-                </a>
-                <a class="btn btn-danger btn-sm ml-2" rel="publisher" href="https://plus.google.com/shahnuralam">
-                    <i class="fas fa-trash-alt text-white pointer"></i>
-                </a>
-            </div>
+                </div>  
+                
+<form id="createRoom">
+<input  type="hidden" id="sessionInput" value="${teacherVO.teacherId}"/>
+<button type="submit" class="badge badge-primary" id="start">開始直播</button>
+</form>
+      
+<div class="bottom mx-auto">
+ <video id="recorded" playsinline loop></video>
+        <button  class="btn btn-danger" id="record" >開始錄影</button>
+        <button id="play" class="btn btn-success" >播放</button>
+        <button id="download" class="btn btn-secondary">儲存錄影內容</button>
+        
+         <div style="display:none">
+        <p>Echo cancellation: <input type="checkbox" id="echoCancellation"></p>
+        <div id="errorMsg"></div>
+    	</div>
+</div>
         </div>
     </div>
     	
@@ -190,6 +190,8 @@ background:#f4f9f4}
         <div id="remotes"></div>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js"></script>
         <script src="<%=request.getContextPath()%>/SimpleWebRTC-master/out/simplewebrtc-with-adapter.bundle.js"></script>
+        <script src="https://webrtc.github.io/adapter/adapter-latest.js"></script>
+		<script src="<%=request.getContextPath()%>/SimpleWebRTC-master/out/main.js"></script>
         <script>
         	var count=0;
             // grab the room from the URL
@@ -393,24 +395,16 @@ background:#f4f9f4}
 		};
 
 		webSocket.onclose = function(event) {
-			var teacherId = document.getElementById("messagesArea");
-		     var jsonObj = {"teacherId" : userName, "message" : message};
+			var teacherID = document.getElementById("messagesArea");
+		     var jsonObj = {"teacherID" : userName, "message" : message};
 		        webSocket.send(JSON.stringify(jsonObj));
 		};
 	}
-	
-	
+
 	var inputUserName = document.getElementById("userName");
 	inputUserName.focus();
 	
 	function sendMessage() {
-	    var userName = inputUserName.value.trim();
-	    if (userName === ""){
-	        alert ("使用者名稱請勿空白!");
-	        inputUserName.focus();	
-			return;
-	    }
-	    
 	    var inputMessage = document.getElementById("message");
 	    var message = inputMessage.value.trim();
 	    

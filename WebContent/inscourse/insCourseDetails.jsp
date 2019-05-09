@@ -572,58 +572,25 @@ input[type=radio].with-font:focus~label:before, input[type=checkbox].with-font:f
 }
 	
 </style>
+
 <title>WeShare | 最棒的教育共享平台</title>
 </head>
 
-<script type="text/javascript">
-	$(document).ready(function(){
-     		
-		 $('#inputSuccess').change(function(){
-			 $('#form1').submit();
-		 })
-		 
-		 $(":radio").click(function(){
-			 var inscid=$(this).val();
-			 $('#inscTimeId').val(inscid);
-			 $('#form3').submit();
-			  });
-		 
-		 $('#readyGo').click(function(){
-			 var error=$('#crvTotalPrice').val();
-			 if(error==0||error==null){
-				 Swal.fire(
-						 '請檢查內容',
-						  '請選擇日期',
-						  'warning'
-				)
-			 }
-			 else{
-				 $('#form2').submit();
-			 }
-		 })
-	        //表示後台選取的星數(1代表0.5)
-	     window.onload=showStar(${point});
-         function showStar(n){
-             var con_wid=document.getElementById("star_con").offsetWidth;
-             var del_star=document.getElementById("del_star");
-             console.log(con_wid);
-             
-     //透明星星移動的像素
-             var del_move=(n*con_wid)/10;
-             
-             del_star.style.backgroundPosition=-del_move+"px 0px";
-             del_star.style.left=del_move+"px";
-         }
-		 
-	});
-</script>
- 
 
-
-<body >
+<body>
 <!------------------------------------------------------首頁頭------------------------------------------------------>
-<div class="header">
-      <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top"> <img src="<%= request.getContextPath()%>/images/icon/logo.png" width="80" height="60" alt=""/><a class="navbar-brand" href="<%= request.getContextPath()%>">教育共享平台</a>
+<div class="header" onload="connect();">
+  <h1> Chat Room </h1>
+	    <h3 id="statusOutput" class="statusOutput"></h3>
+        <textarea id="messagesArea" class="panel message-area" readonly ></textarea>
+        <div class="panel input-area">
+            <input id="userName" class="text-field" type="text" placeholder="使用者名稱"/>
+            <input id="message"  class="text-field" type="text" placeholder="訊息" onkeydown="if (event.keyCode == 13) sendMessage();"/>
+            <input type="submit" id="sendMessage" class="button" value="送出" onclick="sendMessage();"/>
+		    <input type="button" id="connect"     class="button" value="連線" onclick="connect();"/>
+		    <input type="button" id="disconnect"  class="button" value="離線" onclick="disconnect();"/>
+	    </div>
+      <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top" > <img src="<%= request.getContextPath()%>/images/icon/logo.png" width="80" height="60" alt=""/><a class="navbar-brand" href="<%= request.getContextPath()%>">教育共享平台</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"> <span class="navbar-toggler-icon"></span> </button>
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
           <ul class="navbar-nav mr-auto">
@@ -651,301 +618,83 @@ input[type=radio].with-font:focus~label:before, input[type=checkbox].with-font:f
       </nav>
     </div>	
 <!----------------------------------------------------------------------------------------------------------------->
-<nav aria-label="breadcrumb">
-  <ol class="breadcrumb">
-    <li class="breadcrumb-item"><a href="#">課程類型</a></li>
-    <li class="breadcrumb-item"><a href="#">程式語言</a></li>
-    <li class="breadcrumb-item active" aria-current="page">${param.courseName}</li>
-  </ol>
-</nav>
 
-<c:if test="${not empty errorMsgs}">
-<c:forEach var="message" items="${errorMsgs}">
-<script>
-Swal.fire(
-		 '請檢查內容',
-		  '${message}',
-		  'warning'
-)
+<script type="text/javascript">
+
+var MyPoint = "/Test/Peter/xxx";
+var host = window.location.host;
+var path = window.location.pathname;
+var webCtx = path.substring(0, path.indexOf('/', 1));
+var endPointURL = "ws://" + window.location.host + webCtx + MyPoint;
+
+var statusOutput = document.getElementById("statusOutput");
+var webSocket;
+
+function connect() {
+	// 建立 websocket 物件
+	webSocket = new WebSocket(endPointURL);
+	
+	webSocket.onopen = function(event) {
+		updateStatus("WebSocket 成功連線");
+		document.getElementById('sendMessage').disabled = false;
+		document.getElementById('connect').disabled = true;
+		document.getElementById('disconnect').disabled = false;
+	};
+
+	webSocket.onmessage = function(event) {
+		var messagesArea = document.getElementById("messagesArea");
+        var jsonObj = JSON.parse(event.data);
+        var message = jsonObj.userName + ": " + jsonObj.message + "\r\n";
+        messagesArea.value = messagesArea.value + message;
+        messagesArea.scrollTop = messagesArea.scrollHeight;
+	};
+
+	webSocket.onclose = function(event) {
+		updateStatus("WebSocket 已離線");
+	};
+}
+
+
+var inputUserName = document.getElementById("userName");
+inputUserName.focus();
+
+function sendMessage() {
+    var userName = inputUserName.value.trim();
+    if (userName === ""){
+        alert ("使用者名稱請勿空白!");
+        inputUserName.focus();	
+		return;
+    }
+    
+    var inputMessage = document.getElementById("message");
+    var message = inputMessage.value.trim();
+    
+    if (message === ""){
+        alert ("訊息請勿空白!");
+        inputMessage.focus();	
+    }else{
+        var jsonObj = {"userName" : userName, "message" : message};
+        webSocket.send(JSON.stringify(jsonObj));
+        inputMessage.value = "";
+        inputMessage.focus();
+    }
+}
+
+
+function disconnect () {
+	webSocket.close();
+	document.getElementById('sendMessage').disabled = true;
+	document.getElementById('connect').disabled = false;
+	document.getElementById('disconnect').disabled = true;
+}
+
+
+function updateStatus(newStatus) {
+	statusOutput.innerHTML = newStatus;
+}
+
 </script>
-</c:forEach>
-</c:if>  
-
-<form id="form1" action="<%= request.getContextPath()%>/InsCourseServlet" method="POST">
-<input type="hidden" name="action"  id="action" value="updateDate">
-<div class="content">
-
-  <div class="container">
-    <div class="row">
-      <div class="col-lg-8 col-md-8 col-sm-7 col-xs-12">
-        <div class="box d-flex" id="tc1">
-          <div class="tcimg"><a href="<%=request.getContextPath()%>/member/viewAsMember.jsp?memId=${param.memId}">
-          <img src="<%=request.getContextPath()%>/member/DBGifReader.do?memId=${param.memId}" width="120" height="120" alt=""/></a></div>
-          <div class="teachName">
-            <h4>${param.memName}</h4>
-<input type="hidden" name="memName"  value="${param.memName}">
-<input type="hidden" name="teacherId" value="${param.teacherId}"> 
-<input type="hidden" name="memId"  value="${param.memId}">    
-
-       
- 		 <div id="star_con" class="star-vote">
-            <span id="add_star" class="add-star"></span>
-            <span id="del_star" class="del-star"></span>
-        </div>  
-	      <img src="http://localhost:8081/CA107G4/images/inscourse/connection.png" width="180" height="45" class="fakeimg"/> </div>
- 
-			<span><h5 class="howPeople">${really}(${howPeople}人評分)</h5></span>
-        </div>
-		  
-        <div class="box">
-          <h3 class="box-title" badge badge-light>科目</h3>
-
-          <div class="accordion" id="heading">
-
-
-            <div class="card">
-              <div class="card-header" >
-                <h2 class="mb-0">
-                  <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne" value=""> ${param.courseName}</button>
-                </h2>
-              </div>
-              <div  class="collapse show" aria-labelledby="headingOne" data-parent="#accordionExample">
-                <div class="card-body">
-                    <p><span class="badge badge-pill badge-info">類型</span>
-              	<c:if test="${param.inscType==0}">
-              		個人課程
-              	</c:if>
-              	<c:if test="${param.inscType==1}">
-              		團體課程
-              	</c:if>
-                    <p/>
-                   <p><span class="badge badge-pill badge-success">地點</span>${param.inscLoc} <p/>
-                   <p> <span class="badge badge-pill badge-primary">授課語言</span>${param.inscLang}<p/>
-                   <p> <span class="badge badge-pill badge-warning">價錢</span>$${param.inscPrice}元(每小時)<p/>
-                   <p> <span class="badge badge-pill badge-secondary">課程大綱</span>${param.inscCourser}<p/>
-                   
-<input type="hidden" name="inscType"  value="${param.inscType}">   
-<input type="hidden" name="inscLoc"  value="${param.inscLoc}"> 
-<input type="hidden" name="inscLang"  value="${param.inscLang}">    
-<input type="hidden" name="inscPrice"  value="${param.inscPrice}">    
-<input type="hidden" name="inscCourser"  value="${param.inscCourser}">  
-                   
-                 </div>
-              </div>
-            </div>
-
-
-          </div>
-        </div>
-        <div class="box">
-
-          <h3 class="box-title">關於</h3>
-          <p>${param.teacherText}</p>
-<input type="hidden" name="teacherText"  value="${param.teacherText}">    
-           <h3 class="box-title">學歷</h3>
-          <p>${param.teacherEdu}</p>
-<input type="hidden" name="teacherEdu"  value="${param.teacherEdu}">    
-
-        </div>
-
-
-       <div class="box">
-          <h3 class="box-title">對他的評價</h3>
-
-
-
-        <div class="container">
-    <div class="row text-center"> 
- <c:forEach var="courseReservationVO" end="2" items="${courseReservationSvc.findByRate(param.inscId)}">	    
-                    <div class="col-sm-6 col-md-4">                                                                     
-                        <div class="testimonial-box">                           
-                           <img src="<%=request.getContextPath()%>/member/DBGifReader.do?memId=${courseReservationVO.memId}" width="120" height="120" alt=""/>
-                            <div class="ratings-icons">
-                                <span class="glyphicon glyphicon-star"></span>
-                                <span class="glyphicon glyphicon-star"></span>
-                                <span class="glyphicon glyphicon-star"></span>
-                                <span class="glyphicon glyphicon-star"></span>
-                                <span class="glyphicon glyphicon-star"></span>
-                            </div>
-                            <h4>${memberSvc.getOneMember(courseReservationVO.memId).memName}</h4>
-                            <p>${courseReservationVO.crvRate}</p> 
-                        </div>                  
-                    </div>                           
- </c:forEach>                   
-                </div>
-		</div>
-       </div>       
-        
-        
-        
-        
-
-        
-        
-   </div>
- <div class="col-lg-4 col-md-4 col-sm-5 col-xs-12">
-
-<input type="hidden" name="inscId"  value="${param.inscId}">   	
-      
-		
-<div class="contatiner" id="insctime">
-<div class="row">
-<div class="col-12">
-<div class="datePicker">
-<span class="badge badge-primary">請選擇日期</span>
-<input type="text" class="form-control"  name="inputSuccess" id="inputSuccess"  >  <!-- f_date1見第30行  -->
-
-<script>
-        $.datetimepicker.setLocale('zh'); // kr ko ja en
-        $('#inputSuccess').datetimepicker({
-           theme: '',          //theme: 'dark',
-           timepicker: false,   //timepicker: false,
-           step: 1,            //step: 60 (這是timepicker的預設間隔60分鐘)
-	       format: 'Y-m-d',
-           //disabledDates:    ['2017/06/08','2017/06/09','2017/06/10'], // 去除特定不含
-           //startDate:	        '2017/07/10',  // 起始日
-           minDate:           '-1970-01-01', // 去除今日(不含)之前
-           //maxDate:           '+1970-01-01'  // 去除今日(不含)之後
-        });
-</script>
-</div>
-</div>
-
-<div class="timePicker">
-</div>	
-
-</form>	
-</div>	
-
-
-<form id="form3" action="<%= request.getContextPath()%>/InsCourseServlet" method="POST"> 
-<input type="hidden" name="action"  id="action" value="updateTime" > 
-<div class="row">	
- <c:forEach var="inscCourseTimeVO" items="${list}">	
- 
-<div class="col-1"></div>
-<div class="col-5">
-<div class="form-check">
-<input class="form-check-input" type="radio" name="inscDate" id="${inscCourseTimeVO.inscTimeId}" value="${inscCourseTimeVO.inscTimeId}"  />
-<label class="form-check-label" for="exampleRadios1">
-   				 <fmt:formatDate value="${inscCourseTimeVO.inscMFD}" pattern="HH:mm"/>
-    			 <fmt:formatDate value="${inscCourseTimeVO.inscEXP}" pattern="HH:mm"/>			 
-</label>
-
-</div>
-</div>
-
- </c:forEach>
- </div>
- 
-<input type="hidden" name="inscTimeId"  id="inscTimeId" value="">
-<input type="hidden" name="memName"  value="${param.memName}">
-<input type="hidden" name="teacherId" value="${param.teacherId}"> 
-<input type="hidden" name="memId"  value="${param.memId}">    
-<input type="hidden" name="inscType"  value="${param.inscType}">   
-<input type="hidden" name="inscLoc"  value="${param.inscLoc}"> 
-<input type="hidden" name="inscLang"  value="${param.inscLang}">    
-<input type="hidden" name="inscPrice"  value="${param.inscPrice}">    
-<input type="hidden" name="inscCourser"  value="${param.inscCourser}">  
-<input type="hidden" name="teacherText"  value="${param.teacherText}"> 
-<input type="hidden" name="teacherEdu"  value="${param.teacherEdu}">   
-<input type="hidden" name="inscId"  value="${param.inscId}">  
- 
-</form>
-
-  
-</div>
-		  
- 
-
-   
-	  
-
- 
-
-	  
-<form id="form2" action="<%= request.getContextPath()%>/coursereservation/coursereservation.do" method="POST">	
- <input type="hidden" name="action" value="addOrder">     
- <input type="hidden" name="inscTimeId"  value="${inscTimeId}">
- <input type="hidden" name="memName"  value="${param.memName}">
-<input type="hidden" name="teacherId" value="${param.teacherId}"> 
-<input type="hidden" name="memId"  value="${memberVO.memId}"> 
- <input type="hidden" name="inscId"  value="${param.inscId}">
-<input type="hidden" name="crvMFD"  value="${inscMFD}">
- <input type="hidden" name="crvEXP"  value="${inscEXP}">
-  <input type="hidden" name="crvLoc"  value="${param.inscLoc}">
-    <input type="hidden" name="TotalTime"  value="${param.crvTotalTime}">
-      <input type="hidden" name="TotalPrice"  value="${param.crvTotalPrice}">
-        <div class="widget">
-          <h4 class="widget-title">預訂課程</h4>
-          
-        <div class="summary-block">
-            <div class="summary-content">
-              <div class="summary-head">
-                <h5 class="summary-title">上課時段</h5>
-              </div>
-              <div class="summary-price">
-                <p class="summary-text">
-<fmt:formatDate value="${inscMFD}" pattern="yyyy-MM-dd"/>
-<fmt:formatDate value="${inscMFD}" pattern="HH:mm"/>-
-<fmt:formatDate value="${inscEXP}" pattern="HH:mm"/>
-                </p>
-            </div>
-          </div>
-                 
-          <div class="summary-block">
-            <div class="summary-content">
-              <div class="summary-head">
-                <h5 class="summary-title">價格</h5>
-              </div>
-              <div class="summary-price">
-                <p class="summary-text">
-                $<c:out value="${crvPrice}" default="0"/></p>
-                 <input type="hidden" name="crvTotalTime"  id="crvTotalTime" value="<c:out value="${crvTotalTime}"/>">  
-                <span class="summary-small-text pull-right">元(總計小時)</span> </div>
-            </div>
-          </div>
-          <div class="summary-block">
-            <div class="summary-content">
-              <div class="summary-head">
-                <h5 class="summary-title">手續費</h5>
-              </div>
-              <div class="summary-price">
-                <p class="summary-text">
-                $<c:out value="${crvTax}" default="0"/>
-                </p>
-                <span class="summary-small-text pull-right">手續費(10%)</span> </div>
-            </div>
-          </div>
-          <div class="summary-block">
-            <div class="summary-content">
-              <div class="summary-head">
-                <h5 class="summary-title">總金額</h5>
-              </div>
-              <div class="summary-price">
-                <p class="summary-text" >
-                $<c:out value="${crvTotalPrice}" default="0"/>
-                <input type="hidden" name="crvTotalPrice"  id="crvTotalPrice" value="<c:out value="${crvTotalPrice}" />">     
-                </p>
-                <span class="summary-small-text pull-right">元</span> </div>
-            </div>
-          </div><br>
-
-
-
-            <div class="d-flex justify-content-center" id="orderSumit"><input type="button" id="readyGo"  class="btn btn-success" value="送出預定 "></div>
-
-        </div>
-        
-        
- </form>       
-      </div>
-    </div>
-  
-
-  </div>
-</div>
-
+<jsp:include page="/inscourse/B.jsp"></jsp:include>
 <!------------------------------------------------------首頁尾------------------------------------------------------>
 <footer class="section footer-classic context-dark bg-image" style="background: #74b49b;">
   <div class="container">

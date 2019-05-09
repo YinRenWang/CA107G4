@@ -11,21 +11,21 @@ import javax.websocket.OnError;
 import javax.websocket.OnClose;
 import javax.websocket.CloseReason;
 
-@ServerEndpoint("/MyEchoServer/{teacherId}")
+@ServerEndpoint("/MyEchoServer/{teacherID}")
 public class MyEchoServer {
 	
 private static final Set<Session> allSessions = Collections.synchronizedSet(new HashSet<Session>());
 private static final HashMap<String,Integer> map = new<String,Integer>HashMap();	
 	@OnOpen
-	public void onOpen(@PathParam("teacherId") String teacherId,Session userSession) throws IOException {
+	public void onOpen(@PathParam("teacherID") String teacherID,Session userSession) throws IOException {
 		allSessions.add(userSession);
-		if(map.containsKey(teacherId.toLowerCase())) {
-			Integer count=map.get(teacherId.toLowerCase());
+		if(map.containsKey(teacherID.toLowerCase())) {
+			Integer count=map.get(teacherID.toLowerCase());
 			count++;
-			map.put(teacherId, count);
+			map.put(teacherID, count);
 
 		}else {
-			map.put(teacherId.toLowerCase(), new Integer(0));
+			map.put(teacherID.toLowerCase(), new Integer(0));
 
 			
 		}
@@ -49,15 +49,15 @@ private static final HashMap<String,Integer> map = new<String,Integer>HashMap();
 	}
 	
 	@OnClose
-	public void onClose(Session userSession, CloseReason reason,@PathParam("teacherId") String teacherId) {
+	public void onClose(Session userSession, CloseReason reason,@PathParam("teacherID") String teacherID) {
 		allSessions.remove(userSession);
 		
-		if(map.containsKey(teacherId.toLowerCase())) {
-			Integer count=map.get(teacherId.toLowerCase());
+		if(map.containsKey(teacherID.toLowerCase())) {
+			Integer count=map.get(teacherID.toLowerCase());
 			count--;
-			map.put(teacherId, count);
+			map.put(teacherID, count);
 			if(count<=0) {
-				map.remove(teacherId.toLowerCase());
+				map.remove(teacherID.toLowerCase());
 			}
 
 			

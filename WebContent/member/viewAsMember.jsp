@@ -5,6 +5,8 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <jsp:useBean id="memberSvc" scope="page" class="com.member.model.MemberService" />
 <jsp:useBean id="courseSvc" scope="page" class="com.course.model.CourseService" />
+<jsp:useBean id="teacherSvc" scope="page" class="com.teacher.model.TeacherService" />
+<jsp:useBean id="liveStreamSvc" scope="page" class="com.livestream.model.LiveStreamService" />
 
 <!doctype html>
 <html lang="en">
@@ -311,6 +313,22 @@ opacity:0.9;
         <h4>個人介紹</h4>
         <p>
       ${memberSvc.getOneMember(param.memId).memText}
+        </p>
+      </div>
+      
+             <div class="bs-callout bs-callout-danger">
+        <h4>歷史直播</h4>
+        <p>
+      
+<c:forEach var="liveStreamVO" items="${liveStreamSvc.getAll(teacherSvc.findOneById(param.memId).teacherId)}">
+<h5>直播日期:<fmt:formatDate value="${liveStreamVO.lsDate}" pattern="yyyy年MM月dd日"/></h5>
+<h5>觀看次數:${liveStreamVO.lsViewNum}次</h5>
+
+<video width="320" height="240"  src="http://localhost:8081/CA107G4/WebmDBServlet?lsId=${liveStreamVO.lsId}" controls="controls">
+您的瀏覽器不支援Video標籤QQ
+</video>
+</c:forEach>      
+      
         </p>
       </div>
       

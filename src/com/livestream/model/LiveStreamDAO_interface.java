@@ -8,4 +8,5 @@ public interface LiveStreamDAO_interface {
 	public void delete(String lsId);
 	public LiveStreamVO findByPrimaryKey(String lsId);
 	public List<LiveStreamVO> getAll();
+	public List<LiveStreamVO> getAll(String teacherId);
 }

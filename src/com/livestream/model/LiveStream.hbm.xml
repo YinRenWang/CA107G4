@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+    <class name="com.livestream.model.LiveStreamVO" table="LiveStream" >
+        
+        <id name="lsId" column="lsId">
+           <generator class="generator.LiveStreamGenerator"/> 
+        </id>
+   
+        <property name="teacherId" column="teacherId" />
+        <property name="lsDate" column="lsDate" />
+        <property name="lsViewNum" column="lsViewNum" />
+        <property name="lsContent" column="lsContent" />
+        
+    </class>
+</hibernate-mapping>
