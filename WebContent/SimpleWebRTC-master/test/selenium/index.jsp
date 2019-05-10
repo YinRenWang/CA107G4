@@ -164,6 +164,7 @@ background:#f4f9f4}
                 
 <form id="createRoom">
 <input  type="hidden" id="sessionInput" value="${teacherVO.teacherId}"/>
+<input type="hidden" id="errorMsg" value=""/>
 <button type="submit" class="badge badge-primary" id="start">開始直播</button>
 </form>
       

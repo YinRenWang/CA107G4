@@ -49,6 +49,10 @@ public class LiveStreamService {
 		return dao.getAll(teacherId);
 	}
 
+	public LiveStreamVO getLastVideo(String teacherId){
+		return dao.getLastVideo(teacherId);
+	}
+	
 	public LiveStreamVO update(LiveStreamVO liveStreamVO) {
 		dao.update(liveStreamVO);
 		return liveStreamVO;

@@ -9,4 +9,5 @@ public interface LiveStreamDAO_interface {
 	public LiveStreamVO findByPrimaryKey(String lsId);
 	public List<LiveStreamVO> getAll();
 	public List<LiveStreamVO> getAll(String teacherId);
+	public LiveStreamVO getLastVideo(String teacherId);
 }

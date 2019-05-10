@@ -8,7 +8,6 @@ import java.util.*;
 public class LiveStreamDAO implements LiveStreamDAO_interface {
 	
 	private static final String GET_ALL_STMT = "from LiveStreamVO order by lsId";
-	private static final String GET_ALL_TEACHERID = "from LiveStreamVO order by lsId";
 
 	@Override
 	public void insert(LiveStreamVO liveStreamVO) {
@@ -97,6 +96,32 @@ public class LiveStreamDAO implements LiveStreamDAO_interface {
 		}
 		return list;
 	}
+	
+	@Override
+	public LiveStreamVO getLastVideo(String teacherId) {
+		List<LiveStreamVO> list = null;
+		LiveStreamVO liveStreamVO = null;
+		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+		try {
+			session.beginTransaction();
+			Query<LiveStreamVO> query = session.createQuery("from LiveStreamVO where teacherId=?0 and LsContent is not null");
+			query.setParameter(0, teacherId);
+			list = query.getResultList();
+			int count=list.size();
+			if(count!=0) {
+				count--;
+				liveStreamVO=list.get(count);
+			}
+		
+		
+			session.getTransaction().commit();
+		} catch (RuntimeException ex) {
+			session.getTransaction().rollback();
+			throw ex;
+		}
+		return liveStreamVO;
+	}
+	
 	public static void main(String[] args) {
 
 		LiveStreamDAO dao = new LiveStreamDAO();
@@ -122,12 +147,12 @@ public class LiveStreamDAO implements LiveStreamDAO_interface {
 //		dao.delete("LV00001");
 
 		// 查詢
-//		LiveStreamVO liveStreamVO3 = dao.findByPrimaryKey("LV00001");
-//		System.out.print(liveStreamVO3.getLsId() + ",");
-//		System.out.print(liveStreamVO3.getTeacherId() + ",");
-//		System.out.print(liveStreamVO3.getLsDate() + ",");
-//		System.out.print(liveStreamVO3.getLsViewNum() + ",");
-//		System.out.println("---------------------");
+		LiveStreamVO liveStreamVO3 = dao.getLastVideo("TC00003");
+		System.out.print(liveStreamVO3.getLsId() + ",");
+		System.out.print(liveStreamVO3.getTeacherId() + ",");
+		System.out.print(liveStreamVO3.getLsDate() + ",");
+		System.out.print(liveStreamVO3.getLsViewNum() + ",");
+		System.out.println("---------------------");
 
 //		// 查詢
 //		List<LiveStreamVO> list = dao.getAll();
@@ -143,6 +168,8 @@ public class LiveStreamDAO implements LiveStreamDAO_interface {
 		
 
 	}
+
+
 
 
 }

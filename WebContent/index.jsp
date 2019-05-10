@@ -7,6 +7,7 @@
 </c:if>
 <jsp:useBean id="teacherSvc" scope="page" class="com.teacher.model.TeacherService" />
 <jsp:useBean id="memberSvc" scope="page" class="com.member.model.MemberService" />
+<jsp:useBean id="LiveStreamSvc" scope="page" class="com.livestream.model.LiveStreamService" />
 <html lang="en">
 <head>
 <!-- Required meta tags -->
@@ -361,7 +362,7 @@ ul, ol {
     <h5>熱門直播</h5>
   </div>
   <div class="card-deck" >
-  <c:forEach var="teacherVO" items="${teacherSvc.getAllStatus(1)}">		
+  <c:forEach var="teacherVO" items="${teacherSvc.getAllStatus(1)}">	
     <div class="card">
       <div class="teacherImg" style="background-image:url(<%=request.getContextPath()%>/member/DBGifReader.do?memId=${teacherVO.memId});"></div>
       <div class="card-body">
@@ -370,9 +371,20 @@ ul, ol {
        <br>
         <br>
         <h4 class="card-title">${memberSvc.getOneMember(teacherVO.memId).memName}</h4>
-        <p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+        <p class="card-text">
+        <c:forEach var="liveStreamVO" items="${LiveStreamSvc.getAll(teacherVO.teacherId)}">
+        <c:if test="${not empty LiveStreamSvc.getLastVideo(teacherVO.teacherId)}" >
+<video width="320" height="160"  src="http://localhost:8081/CA107G4/WebmDBServlet?lsId=${liveStreamVO.lsId}" controls="controls">
+您的瀏覽器不支援Video標籤QQ
+</video>
+</c:if>
+        </c:forEach>
+        
+        
+        </p>
       </div>
     </div>
+ 
  </c:forEach>
   </div>
 </div>
@@ -448,7 +460,7 @@ ul, ol {
 				if(data=='open'){
 					swal({
 						  title: '<span class="title">有一則新的直播開始囉！</span>',
-						  html: '<span class="text"><a href="http://localhost:8081/CA107G4/SimpleWebRTC-master/test/selenium/onlyWatch.jsp?tc00001">觀看直播</a></span>'
+						  html: '<span class="text"><a href="http://172.20.10.2:8081/CA107G4/SimpleWebRTC-master/test/selenium/onlyWatch.jsp?tc00001">觀看直播</a></span>'
 						});
 				}
 			};
