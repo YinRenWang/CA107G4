@@ -278,15 +278,41 @@ Swal.fire(
 							<i class="glyphicon glyphicon-inscourse"></i>
 							預約資訊</a>
 						</li>
-						<li id="record" >
+
+<c:if test="${!empty teacherVO}">						
+							<li id="goods" >
 						<form id="form4" action="<%= request.getContextPath()%>/MemberServlet" method="get">
-								<input type="hidden" name="inCludeVO"  value="transactionRecord"> 
+								<input type="hidden" name="inCludeVO"  value="goods"> 
 								<input type="hidden" name="action" value="changeValue">
 							</form>	
 							<a href="#" onclick="document.getElementById('form4').submit();return false;">	
 							<i class="glyphicon glyphicon-transactionRecord"></i>
+							商品管理 </a>
+						</li>
+</c:if> 
+
+							<li id="goodsOrder" >
+						<form id="form5" action="<%= request.getContextPath()%>/MemberServlet" method="get">
+								<input type="hidden" name="inCludeVO"  value="goodsOrder"> 
+								<input type="hidden" name="action" value="changeValue">
+							</form>	
+							<a href="#" onclick="document.getElementById('form5').submit();return false;">	
+							<i class="glyphicon glyphicon-transactionRecord"></i>
+							訂單資訊 </a>
+						</li>
+						
+						<li id="record" >
+						<form id="form6" action="<%= request.getContextPath()%>/MemberServlet" method="get">
+								<input type="hidden" name="inCludeVO"  value="transactionRecord"> 
+								<input type="hidden" name="action" value="changeValue">
+							</form>	
+							<a href="#" onclick="document.getElementById('form6').submit();return false;">	
+							<i class="glyphicon glyphicon-transactionRecord"></i>
 							交易紀錄 </a>
 						</li>
+						
+						
+						
 					</ul>
 				</div>
 				<!-- END MENU -->
@@ -306,6 +332,12 @@ Swal.fire(
     </c:when>
       <c:when test="${inCludeVO=='transactionRecord'}">
   <%@ include file="/front-end/withdrawalrecord/withdrawalrecord_findbykey.jsp"%>     
+    </c:when>
+     <c:when test="${inCludeVO=='goods'}">
+  <%@ include file="/front-end/goods/listAllGoods.jsp"%>     
+    </c:when>
+     <c:when test="${inCludeVO=='goodsOrder'}">
+  <%@ include file="/front-end/goodsorder/select_order.jsp"%>     
     </c:when>
     <c:otherwise>
     </c:otherwise>

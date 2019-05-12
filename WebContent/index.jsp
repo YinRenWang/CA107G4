@@ -195,7 +195,7 @@ ul, ol {
           <ul class="navbar-nav mr-auto">
               <li class="nav-item"> <a class="nav-link" href="<%= request.getContextPath()%>/front-end/member/addMember.jsp">探索課程</a> </li>
               <li class="nav-item"> <a class="nav-link" href="<%= request.getContextPath()%>/front-end/member/addMember.jsp">揪團上課</a> </li>
-               <li class="nav-item"> <a class="nav-link" href="<%= request.getContextPath()%>/front-end/member/addMember.jsp">教材商城</a> </li>
+               <li class="nav-item"> <a class="nav-link" href="<%= request.getContextPath()%>/front-end/goods/good_home.jsp">教材商城</a> </li>
            <c:choose>
     		<c:when test="${!empty teacherVO}">
     			<li class="nav-item"> <a class="nav-link" id="openLive" href="<%= request.getContextPath()%>//SimpleWebRTC-master/test/selenium/index.jsp" onclick="sendMessage();">現場直播</a> </li>
@@ -211,12 +211,33 @@ ul, ol {
                 		<c:when test="${!empty teacherVO}">
 			 <li class="nav-item"> <a class="nav-link " href="<%= request.getContextPath()%>/front-end/member/listAllMember.jsp">我的好友</a> </li>		                   
 			<li class="nav-item dropdown"> <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" >${memberVO.memName}</a>
+             <form id="viewAllMember" action="<%= request.getContextPath()%>/MemberServlet" method="get">
+            	<input type="hidden" name="inCludeVO"  value="member"> 
+            	<input type="hidden" name="action" value="changeValue">
+            </form>	
               <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink"> <a class="dropdown-item" onclick="document.getElementById('viewAllMember').submit();return false;">個人資料</a> 
-              <a class="dropdown-item" href="<%= request.getContextPath()%>/MemberServlet?action=logout">課程管理</a>
-              <a class="dropdown-item" href="<%= request.getContextPath()%>/MemberServlet?action=logout">預約資訊</a>
-              <a class="dropdown-item" href="<%= request.getContextPath()%>/MemberServlet?action=logout">交易紀錄</a>
+             
+             <form id="form2" action="<%= request.getContextPath()%>/MemberServlet" method="get">
+					<input type="hidden" name="inCludeVO"  value="teacher"> 
+					<input type="hidden" name="action" value="changeValue">
+			</form>	
+ 			<a class="dropdown-item" href="<%= request.getContextPath()%>/MemberServlet?action=logout" onclick="document.getElementById('form2').submit();return false;">課程管理</a>
+ 				<form id="form3" action="<%= request.getContextPath()%>/MemberServlet" method="get">
+								<input type="hidden" name="inCludeVO"  value="inscourse"> 
+								<input type="hidden" name="action" value="changeValue">
+							</form>	
+              <a class="dropdown-item" href="<%= request.getContextPath()%>/MemberServlet?action=logout" onclick="document.getElementById('form3').submit();return false;">預約資訊</a>
+              <form id="form6" action="<%= request.getContextPath()%>/MemberServlet" method="get">
+								<input type="hidden" name="inCludeVO"  value="transactionRecord"> 
+								<input type="hidden" name="action" value="changeValue">
+							</form>	
+              <a class="dropdown-item" href="<%= request.getContextPath()%>/MemberServlet?action=logout" onclick="document.getElementById('form6').submit();return false;">交易紀錄</a>
              <a class="dropdown-item" href="<%= request.getContextPath()%>/MemberServlet?action=logout">直播管理</a>
-              <a class="dropdown-item" href="<%= request.getContextPath()%>/MemberServlet?action=logout">訂單記錄</a>    
+             <form id="form5" action="<%= request.getContextPath()%>/MemberServlet" method="get">
+								<input type="hidden" name="inCludeVO"  value="goodsOrder"> 
+								<input type="hidden" name="action" value="changeValue">
+							</form>	
+              <a class="dropdown-item" href="<%= request.getContextPath()%>/MemberServlet?action=logout" onclick="document.getElementById('form5').submit();return false;">訂單資訊</a>    
               <a class="dropdown-item" href="<%= request.getContextPath()%>/MemberServlet?action=logout">登出</a>
                  </div>
             </li>  
@@ -224,10 +245,26 @@ ul, ol {
     			<c:when test="${!empty memberVO}">
 			 <li class="nav-item"> <a class="nav-link " href="<%= request.getContextPath()%>/front-end/member/listAllMember.jsp">我的好友</a> </li>		                   
 			<li class="nav-item dropdown"> <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" >${memberVO.memName}</a>
+              <form id="viewAllMember" action="<%= request.getContextPath()%>/MemberServlet" method="get">
+            	<input type="hidden" name="inCludeVO"  value="member"> 
+            	<input type="hidden" name="action" value="changeValue">
+            </form>	
               <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink"> <a class="dropdown-item" onclick="document.getElementById('viewAllMember').submit();return false;">個人資料</a> 
-              <a class="dropdown-item" href="<%= request.getContextPath()%>/MemberServlet?action=logout">預約資訊</a>
-              <a class="dropdown-item" href="<%= request.getContextPath()%>/MemberServlet?action=logout">交易紀錄</a>
-              <a class="dropdown-item" href="<%= request.getContextPath()%>/MemberServlet?action=logout">訂單記錄</a>    
+              <form id="form3" action="<%= request.getContextPath()%>/MemberServlet" method="get">
+				<input type="hidden" name="inCludeVO"  value="inscourse"> 
+				<input type="hidden" name="action" value="changeValue">
+			</form>	
+              <a class="dropdown-item" href="<%= request.getContextPath()%>/MemberServlet?action=logout" onclick="document.getElementById('form3').submit();return false;">預約資訊</a>
+       <form id="form6" action="<%= request.getContextPath()%>/MemberServlet" method="get">
+								<input type="hidden" name="inCludeVO"  value="transactionRecord"> 
+								<input type="hidden" name="action" value="changeValue">
+							</form>	
+              <a class="dropdown-item" href="<%= request.getContextPath()%>/MemberServlet?action=logout" onclick="document.getElementById('form6').submit();return false;">交易紀錄</a>
+             <form id="form5" action="<%= request.getContextPath()%>/MemberServlet" method="get">
+								<input type="hidden" name="inCludeVO"  value="goodsOrder"> 
+								<input type="hidden" name="action" value="changeValue">
+							</form>	
+              <a class="dropdown-item" href="<%= request.getContextPath()%>/MemberServlet?action=logout" onclick="document.getElementById('form5').submit();return false;">訂單資訊</a>
               <a class="dropdown-item" href="<%= request.getContextPath()%>/MemberServlet?action=logout">登出</a>
                  </div>
             </li>  
@@ -235,18 +272,12 @@ ul, ol {
    				
    		
    				
-   				
-   				
     			<c:otherwise>
     			<li class="nav-item"> <a class="nav-link" href="<%= request.getContextPath()%>/front-end/member/loginMember.jsp">登入</a> </li>
     		    <li class="nav-item"> <a class="nav-link" href="<%= request.getContextPath()%>/front-end/member/addMember.jsp">註冊</a> </li>
     			</c:otherwise>
 				</c:choose>
-            <li class="nav-item"> <a class="nav-link " href="<%= request.getContextPath()%>/front-end/member/listAllMember.jsp">關於我們</a> </li>
-              <form id="viewAllMember" action="<%= request.getContextPath()%>/MemberServlet" method="get">
-            <input type="hidden" name="inCludeVO"  value="member"> 
-            <input type="hidden" name="action" value="changeValue">
-            </form>	
+            <li class="nav-item"> <a class="nav-link">關於我們</a> </li>
           </ul>
         </div>
       </nav>
@@ -274,7 +305,7 @@ ul, ol {
     </div>
      
       
-<FORM METHOD="get" ACTION="<%=request.getContextPath()%>/inscourse/inscourse.do" name="form1">
+<FORM METHOD="get" ACTION="<%=request.getContextPath()%>/inscourse/inscourse.do" >
  <div class="row">
       <div class="col-5">
         <div class="d-flex justify-content-around" id="df1">

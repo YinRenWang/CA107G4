@@ -22,8 +22,6 @@ public class MemberDAO implements MemberDAO_interface {
 		}
 	}
 	
-	private static byte[] img=null;
-	
 	private static final String INSERT_STMT = 
 		  "INSERT INTO Member(memId,memIdCard,memPsw,memPswHint,memName,memSex,memImage,memEmail,memPhone,memBirth,memAdd,memText,memBank,memBalance,memBlock,memStatus,memPair,memSkill,memWantSkill) "
 		+ "VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,null,null,null)";

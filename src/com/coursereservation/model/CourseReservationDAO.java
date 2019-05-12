@@ -17,10 +17,13 @@ import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.sql.DataSource;
 
+import com.inscoursetime.model.InsCourseTimeDAO;
 import com.inscoursetime.model.InsCourseTimeJDBCDAO;
 import com.inscoursetime.model.InsCourseTimeVO;
+import com.member.model.MemberDAO;
 import com.member.model.MemberJDBCDAO;
 import com.member.model.MemberVO;
+import com.withdrawalrecord.model.WithdrawalRecordDAO;
 import com.withdrawalrecord.model.WithdrawalRecordJDBCDAO;
 import com.withdrawalrecord.model.WithdrawalRecordVO;
 
@@ -522,18 +525,18 @@ public class CourseReservationDAO implements CourseReservationDAO_interface {
 				}
 				rs.close();
 				//先刪除時間
-				InsCourseTimeJDBCDAO dao1 =new InsCourseTimeJDBCDAO();
+				InsCourseTimeDAO dao1 =new InsCourseTimeDAO();
 				dao1.delete(courseReservationVO.getInscTimeId());
 				
 				// 再同時修改餘額
-				MemberJDBCDAO dao2= new MemberJDBCDAO();
+				MemberDAO dao2= new MemberDAO();
 				Integer dollar=courseReservationVO.getCrvTotalPrice().intValue();
 				Integer balance=memberVO.getMemBalance();
 				memberVO.setMemBalance(balance-dollar);
 				dao2.deduction(memberVO,con);
 				
 				//再同時新增交易紀錄
-				WithdrawalRecordJDBCDAO dao3=new WithdrawalRecordJDBCDAO();
+				WithdrawalRecordDAO dao3=new WithdrawalRecordDAO();
 				withdrawalRecordVO.setMemid(memberVO.getMemId());
 				withdrawalRecordVO.setWrmoney(-dollar);
 				dao3.insert2(withdrawalRecordVO, con);

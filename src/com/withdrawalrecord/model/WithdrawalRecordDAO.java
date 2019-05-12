@@ -30,9 +30,6 @@ public class WithdrawalRecordDAO implements WithdrawalRecordDAO_interface {
 		}
 	}
 
-
-	private static final String INSERT_WITHDRAWALRECORD = "INSERT INTO WithdrawalRecord VALUES (('WI'||LPAD(to_char(WITHDRAWALRECORD_seq.NEXTVAL), 5, '0')), ?, ?, ?)";
-
 	private static final String GET_ONE_STMT = "SELECT * FROM WITHDRAWALRECORD where WRNUM=?";
 
 	private static final String UPDATE = "UPDATE WITHDRAWALRECORD set memid=?, wrmoney=?, wrtime=? where wrnum = ?";

@@ -21,11 +21,12 @@
   </filter>
   <filter-mapping>
     <filter-name>loginFilter</filter-name>
-    <url-pattern>/member/editMember.jsp</url-pattern>
-    <url-pattern>/member/viewAllMember.jsp</url-pattern>
+    <url-pattern>/front-end/member/editMember.jsp</url-pattern>
+    <url-pattern>/front-end/member/viewAllMember.jsp</url-pattern>
     <url-pattern>/teacher/addTeacher.jsp</url-pattern>
-    <url-pattern>/coursereservation/allCourseUser.jsp</url-pattern>
+    <url-pattern>/front-end/coursereservation/allCourseUser.jsp</url-pattern>
     <url-pattern>/SimpleWebRTC-master/test/selenium/index.jsp</url-pattern>
+    <url-pattern>/front-end/goodsdetail/Detail.jsp</url-pattern>
     <dispatcher>REQUEST</dispatcher>
     <dispatcher>FORWARD</dispatcher>
     <dispatcher>INCLUDE</dispatcher>
@@ -80,4 +81,66 @@
     <servlet-name>DBGifReader_VER2</servlet-name>
     <url-pattern>/teacher/DBGifReader_VER2.do</url-pattern>
   </servlet-mapping>
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+    <servlet>
+    <servlet-name>GoodsServlet</servlet-name>
+    <servlet-class>com.goods.controller.GoodsServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>GoodsServlet</servlet-name>
+    <url-pattern>/goods/goods.do</url-pattern>
+  </servlet-mapping>
+  
+  <servlet>
+    <servlet-name>GoodsOrderServlet</servlet-name>
+    <servlet-class>com.goodsorder.controller.GoodsOrderServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>GoodsOrderServlet</servlet-name>
+    <url-pattern>/goodsorder/goodsorder.do</url-pattern>
+  </servlet-mapping>
+    
+	<servlet>
+    <servlet-name>GoodsDetailServlet</servlet-name>
+    <servlet-class>com.goodsdetails.controller.GoodsServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>GoodsDetailServlet</servlet-name>
+    <url-pattern>/goodsdetail/goodsdetail.do</url-pattern>
+  </servlet-mapping> 
+ 
+  <servlet>
+    <servlet-name>DBGifReaderGoods</servlet-name>
+    <servlet-class>com.goods.controller.DBGifReaderGoods</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>DBGifReaderGoods</servlet-name>
+    <url-pattern>/goods/DBGifReaderGoods.do</url-pattern>
+  </servlet-mapping>
+  
+  <servlet>
+    <servlet-name>UpImage</servlet-name>
+    <servlet-class>com.goods.controller.UpImage</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>UpImage</servlet-name>
+    <url-pattern>/goods/UpImage.do</url-pattern>
+  </servlet-mapping>
+  
+  
+  
+  
+  
+  
+  
 </web-app>
