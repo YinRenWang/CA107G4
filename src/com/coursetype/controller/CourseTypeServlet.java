@@ -97,7 +97,7 @@ public class CourseTypeServlet extends HttpServlet {
 					CourseService cSvc = new CourseService();
 					List<CourseVO>courseList =cSvc.findByCourseType(courseTypeId);
 					/***************************3.新增完成,準備轉交(Send the Success view)***********/
-					String url = "/inscourse/addInsCourse.jsp";
+					String url = "/front-end/inscourse/addInsCourse.jsp";
 					req.setAttribute("courseList", courseList); 
 					RequestDispatcher successView = req.getRequestDispatcher(url); // 
 					successView.forward(req, res);				

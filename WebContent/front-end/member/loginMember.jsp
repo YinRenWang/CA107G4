@@ -73,7 +73,7 @@ Swal.fire(
 </script>
 </c:forEach>
 </c:if> 
-					<form data-toggle="validator" role="form" method="post" action="member.do" >
+					<form data-toggle="validator" role="form" method="post" action="<%=request.getContextPath()%>/MemberServlet" >
 						<div class="row">
 							<div class="col-md-12">
 								<div class="form-group">
@@ -122,7 +122,7 @@ Swal.fire(
 						</div>
 					</form>
 					<div class="clear"></div>
-					<i class="fa fa-user fa-fw"></i> 還沒有帳號嗎? <a href="<%=request.getContextPath()%>/member/addMember.jsp">註冊</a><br>
+					<i class="fa fa-user fa-fw"></i> 還沒有帳號嗎? <a href="<%=request.getContextPath()%><%=request.getContextPath()%>/front-end/member/addMember.jsp">註冊</a><br>
 
 					<i class="fa fa-undo fa-fw"></i> 忘記密碼了嗎? <a href="#">重置密碼</a><br>
 				</div>

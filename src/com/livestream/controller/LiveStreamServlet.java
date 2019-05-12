@@ -47,8 +47,6 @@ public class LiveStreamServlet extends HttpServlet {
 				LiveStreamService liveStreamSvc=new LiveStreamService();
 				String teacherId=req.getParameter("teacherId").toUpperCase();
 				String count=req.getParameter("lsViewNum");
-				System.out.println("servlet的"+teacherId);
-				
 				Integer lsViewNum=null;
 				lsViewNum=Integer.valueOf(count);
 				System.out.println(lsViewNum);

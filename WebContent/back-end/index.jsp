@@ -189,10 +189,10 @@
       <div class="col-sm-12" style="min-width:80%;">
 <c:choose> 
   <c:when test="${inCludeVO=='member'}">
-    <%@ include file="/member/listAllMember.jsp"%>
+    <%@ include file="/back-end/member/listAllMember.jsp"%>
     </c:when> 
     <c:when test="${inCludeVO=='teacher'}">
-  <%@ include file="/teacher/allTeacher.jsp"%>
+  <%@ include file="/back-end/teacher/allTeacher.jsp"%>
     </c:when>
       <c:when test="${inCludeVO=='inscourse'}">
     </c:when>

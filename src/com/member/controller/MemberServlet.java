@@ -56,7 +56,7 @@ public class MemberServlet extends HttpServlet {
 				}
 				// Send the use back to the form, if there were errors
 				if (!errorMsgs.isEmpty()) {
-					RequestDispatcher failureView = req.getRequestDispatcher("/member/loginMember.jsp");
+					RequestDispatcher failureView = req.getRequestDispatcher("/front-end/member/loginMember.jsp");
 					failureView.forward(req, res);
 					return;// 程式中斷
 				}
@@ -76,20 +76,20 @@ public class MemberServlet extends HttpServlet {
 							memberVO.setMemPsw(null);//帳號保留,密碼清空 
 							req.setAttribute("memberVO", memberVO); // 含有輸入格式錯誤的empVO物件,也存入req
 							RequestDispatcher failureView = req
-									.getRequestDispatcher("/member/loginMember.jsp");
+									.getRequestDispatcher("/front-end/member/loginMember.jsp");
 							failureView.forward(req, res);
 							return;
 						}
 					}
 				} catch (NullPointerException npe) {
-					RequestDispatcher failureView = req.getRequestDispatcher("/member/loginMember.jsp");
+					RequestDispatcher failureView = req.getRequestDispatcher("/front-end/member/loginMember.jsp");
 					failureView.forward(req, res);
 
 				}
 
 				// Send the use back to the form, if there were errors
 				if (!errorMsgs.isEmpty()) {
-					RequestDispatcher failureView = req.getRequestDispatcher("/member/loginMember.jsp");
+					RequestDispatcher failureView = req.getRequestDispatcher("/front-end/member/loginMember.jsp");
 					failureView.forward(req, res);
 					return;// 程式中斷
 				}
@@ -115,7 +115,7 @@ public class MemberServlet extends HttpServlet {
 
 			} catch (Exception e) {
 				errorMsgs.add("無法取得資料:" + e.getMessage());
-				RequestDispatcher failureView = req.getRequestDispatcher("/member/loginMember.jsp");
+				RequestDispatcher failureView = req.getRequestDispatcher("/front-end/member/loginMember.jsp");
 				failureView.forward(req, res);
 				return;
 			}
@@ -149,7 +149,7 @@ public class MemberServlet extends HttpServlet {
 				/*************************** 其他可能的錯誤處理 **********************************/
 			} catch (Exception e) {
 				errorMsgs.add("無法取得要修改的資料:" + e.getMessage());
-				RequestDispatcher failureView = req.getRequestDispatcher("/member/listAllMember.jsp");
+				RequestDispatcher failureView = req.getRequestDispatcher("/front-end/member/listAllMember.jsp");
 				failureView.forward(req, res);
 			}
 		}
@@ -180,7 +180,7 @@ public class MemberServlet extends HttpServlet {
 					/*************************** 4.新增完成,準備轉交(Send the Success view) ***********/
 					req.getSession().setAttribute("memberVO", memberVO);
 					req.setAttribute("inCludeVO", "member"); // 要導向的分頁
-					String url = "/member/viewAllMember.jsp";
+					String url = "/front-end/member/viewAllMember.jsp";
 					RequestDispatcher successView = req.getRequestDispatcher(url); // 成功轉交 loginSuccess.jsp
 					successView.forward(req, res);
 				}
@@ -323,7 +323,7 @@ public class MemberServlet extends HttpServlet {
 				// Send the use back to the form, if there were errors
 				if (!errorMsgs.isEmpty()) {
 					req.setAttribute("memberVO", memberVO); // 含有輸入格式錯誤的member物件,也存入req
-					RequestDispatcher failureView = req.getRequestDispatcher("/member/addMember.jsp");
+					RequestDispatcher failureView = req.getRequestDispatcher("/front-end/member/addMember.jsp");
 					failureView.forward(req, res);
 					return;
 				}
@@ -363,7 +363,7 @@ public class MemberServlet extends HttpServlet {
 
 					} catch (NullPointerException npe) {
 						req.setAttribute("memberVO", memberVO); // 含有輸入格式錯誤的member物件,也存入req
-						RequestDispatcher failureView = req.getRequestDispatcher("/member/addMember.jsp");
+						RequestDispatcher failureView = req.getRequestDispatcher("/front-end/member/addMember.jsp");
 						failureView.forward(req, res);
 						return;
 					}
@@ -371,7 +371,7 @@ public class MemberServlet extends HttpServlet {
 				// Send the use back to the form, if there were errors
 				if (!errorMsgs.isEmpty()) {
 					req.setAttribute("memberVO", memberVO); // 含有輸入格式錯誤的member物件,也存入req
-					RequestDispatcher failureView = req.getRequestDispatcher("/member/addMember.jsp");
+					RequestDispatcher failureView = req.getRequestDispatcher("/front-end/member/addMember.jsp");
 					failureView.forward(req, res);
 					return;
 				}
@@ -402,7 +402,7 @@ public class MemberServlet extends HttpServlet {
 				/*************************** 其他可能的錯誤處理 **********************************/
 			} catch (Exception e) {
 				errorMsgs.add(e.getMessage());
-				RequestDispatcher failureView = req.getRequestDispatcher("/member/addMember.jsp");
+				RequestDispatcher failureView = req.getRequestDispatcher("/front-end/member/addMember.jsp");
 				failureView.forward(req, res);
 			}
 
@@ -440,7 +440,7 @@ public class MemberServlet extends HttpServlet {
 				/*************************** 其他可能的錯誤處理 **********************************/
 			} catch (Exception e) {
 				errorMsgs.add("無法取得要修改的資料:" + e.getMessage());
-				RequestDispatcher failureView = req.getRequestDispatcher("/member/listAllMember.jsp");
+				RequestDispatcher failureView = req.getRequestDispatcher("/front-end/member/listAllMember.jsp");
 				failureView.forward(req, res);
 				return;
 			}
@@ -465,14 +465,14 @@ public class MemberServlet extends HttpServlet {
 
 				/*************************** 3.查詢完成,準備轉交(Send the Success view) ************/
 				req.setAttribute("memberVO", memberVO); // 資料庫取出的Member物件,存入req
-				String url = "/member/editMember.jsp";
+				String url = "/front-end/member/editMember.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url);// 成功轉交 editMember.jsp
 				successView.forward(req, res);
 
 				/*************************** 其他可能的錯誤處理 **********************************/
 			} catch (Exception e) {
 				errorMsgs.add("無法取得要修改的資料:" + e.getMessage());
-				RequestDispatcher failureView = req.getRequestDispatcher("/member/listAllMember.jsp");
+				RequestDispatcher failureView = req.getRequestDispatcher("/front-end/member/listAllMember.jsp");
 				failureView.forward(req, res);
 			}
 		}
@@ -554,7 +554,7 @@ public class MemberServlet extends HttpServlet {
 				// Send the use back to the form, if there were errors
 				if (!errorMsgs.isEmpty()) {
 					req.setAttribute("memberVO", memberVO); // 含有輸入格式錯誤的empVO物件,也存入req
-					RequestDispatcher failureView = req.getRequestDispatcher("/member/editMember.jsp");
+					RequestDispatcher failureView = req.getRequestDispatcher("/front-end/member/editMember.jsp");
 					failureView.forward(req, res);
 					return;
 				}
@@ -570,13 +570,13 @@ public class MemberServlet extends HttpServlet {
 				/*************************** 4.新增完成,準備轉交(Send the Success view) ***********/
 				req.setAttribute("memberVO", memberVO); // 資料庫取出的memberVO物件,存入req
 				req.setAttribute("inCludeVO", "member"); // 要導向的分頁
-				String url = "/member/viewAllMember.jsp";
+				String url = "/front-end/member/viewAllMember.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url); // 成功轉交 loginSuccess.jsp
 				successView.forward(req, res);
 				/*************************** 其他可能的錯誤處理 **********************************/
 			} catch (Exception e) {
 				errorMsgs.add(e.getMessage());
-				RequestDispatcher failureView = req.getRequestDispatcher("/member/editMember.jsp");
+				RequestDispatcher failureView = req.getRequestDispatcher("/front-end/member/editMember.jsp");
 				failureView.forward(req, res);
 
 			} 
@@ -604,7 +604,7 @@ public class MemberServlet extends HttpServlet {
 
 				/*************************** 3.查詢完成,準備轉交(Send the Success view) ************/
 				req.setAttribute("memberVO", memberVO); // 資料庫取出的Member物件,存入req
-				String url = "/member/editMember.jsp";
+				String url = "/front-end/member/editMember.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url);// 成功轉交 editMember.jsp
 				successView.forward(req, res);
 				return;
@@ -612,7 +612,7 @@ public class MemberServlet extends HttpServlet {
 				/*************************** 其他可能的錯誤處理 **********************************/
 			} catch (Exception e) {
 				errorMsgs.add("無法取得要修改的資料:" + e.getMessage());
-				RequestDispatcher failureView = req.getRequestDispatcher("/member/listAllMember.jsp");
+				RequestDispatcher failureView = req.getRequestDispatcher("/front-end/member/listAllMember.jsp");
 				failureView.forward(req, res);
 				return;
 			}
@@ -640,12 +640,12 @@ public class MemberServlet extends HttpServlet {
 				
 		
 				/*************************** 4.新增完成,準備轉交(Send the Success view) ***********/
-				String url = "/member/viewAllMember.jsp";
+				String url = "/front-end/member/viewAllMember.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url); // 成功轉交 loginSuccess.jsp
 				successView.forward(req, res);
 				/*************************** 其他可能的錯誤處理 **********************************/
 			} catch (Exception e) {
-				RequestDispatcher failureView = req.getRequestDispatcher("/member/editMember.jsp");
+				RequestDispatcher failureView = req.getRequestDispatcher("/front-end/member/editMember.jsp");
 				failureView.forward(req, res);
 
 			}

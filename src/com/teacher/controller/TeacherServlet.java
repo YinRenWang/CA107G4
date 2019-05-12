@@ -73,7 +73,7 @@ public class TeacherServlet extends HttpServlet {
 				
 					// Send the use back to the form, if there were errors
 					if (!errorMsgs.isEmpty()) {
-						RequestDispatcher failureView = req.getRequestDispatcher("/teacher/addTeacher.jsp");
+						RequestDispatcher failureView = req.getRequestDispatcher("/front-end/teacher/addTeacher.jsp");
 						failureView.forward(req, res);
 						return;// 程式中斷
 					}
@@ -100,14 +100,14 @@ public class TeacherServlet extends HttpServlet {
 						errorMsgs.add("您目前被停權中，請聯絡我們");
 					}
 					
-					RequestDispatcher failureView = req.getRequestDispatcher("/teacher/addTeacher.jsp");
+					RequestDispatcher failureView = req.getRequestDispatcher("/front-end/teacher/addTeacher.jsp");
 					failureView.forward(req, res);
 				}
 
 			} 
 			catch (Exception e) {
 				errorMsgs.add("無法取得資料:" + e.getMessage());
-				RequestDispatcher failureView = req.getRequestDispatcher("/teacher/addTeacher.jsp");
+				RequestDispatcher failureView = req.getRequestDispatcher("/front-end/teacher/addTeacher.jsp");
 				failureView.forward(req, res);
 			}
 			

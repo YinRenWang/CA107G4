@@ -211,11 +211,11 @@ ul, ol {
 				            <li class="nav-item"> <a class="nav-link" href="<%= request.getContextPath()%>/MemberServlet?action=logout">登出</a> </li>
    				</c:when>
     			<c:otherwise>
-    			<li class="nav-item"> <a class="nav-link" href="<%= request.getContextPath()%>/member/loginMember.jsp">登入</a> </li>
-    		    <li class="nav-item"> <a class="nav-link" href="<%= request.getContextPath()%>/member/addMember.jsp">註冊</a> </li>
+    			<li class="nav-item"> <a class="nav-link" href="<%= request.getContextPath()%>/front-end/member/loginMember.jsp">登入</a> </li>
+    		    <li class="nav-item"> <a class="nav-link" href="<%= request.getContextPath()%>/front-end/member/addMember.jsp">註冊</a> </li>
     			</c:otherwise>
 				</c:choose>
-            <li class="nav-item"> <a class="nav-link " href="<%= request.getContextPath()%>/member/listAllMember.jsp">關於我們</a> </li>
+            <li class="nav-item"> <a class="nav-link " href="<%= request.getContextPath()%>/front-end/member/listAllMember.jsp">關於我們</a> </li>
               <form id="viewAllMember" action="<%= request.getContextPath()%>/MemberServlet" method="get">
             <input type="hidden" name="inCludeVO"  value="member"> 
             <input type="hidden" name="action" value="changeValue">

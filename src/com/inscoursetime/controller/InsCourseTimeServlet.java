@@ -53,13 +53,13 @@ public class InsCourseTimeServlet extends HttpServlet {
 				/*************************** 3.查詢完成,準備轉交(Send the Success view) *************/
 				req.setAttribute("timeList", timeList); // 資料庫取出的memberVO物件,存入req
 				req.setAttribute("inCludeVO", "teacher"); // 要導向的分頁
-				String url = "/member/viewAllMember.jsp";
+				String url = "/front-end/member/viewAllMember.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url); // 新增成功後轉交listAllEmp.jsp
 				successView.forward(req, res);
 
 			} catch (Exception e) {
 				errorMsgs.add("無法取得資料:" + e.getMessage());
-				RequestDispatcher failureView = req.getRequestDispatcher("/member/loginMember.jsp");
+				RequestDispatcher failureView = req.getRequestDispatcher("/front-end/member/loginMember.jsp");
 				failureView.forward(req, res);
 			}
 
@@ -78,14 +78,14 @@ public class InsCourseTimeServlet extends HttpServlet {
 				InsCourseTimeService insCourseTimeSvc = new InsCourseTimeService();
 				insCourseTimeSvc.deleteInsCourseTime(inscTimeId);
 				/*************************** 3.查詢完成,準備轉交(Send the Success view) *************/
-				String url = "/member/viewAllMember.jsp";
+				String url = "/front-end/member/viewAllMember.jsp";
 				req.setAttribute("inCludeVO", "teacher"); // 要導向的分頁
 				RequestDispatcher successView = req.getRequestDispatcher(url); // 新增成功後轉交listAllEmp.jsp
 				successView.forward(req, res);
 
 			} catch (Exception e) {
 				errorMsgs.add("無法取得資料:" + e.getMessage());
-				RequestDispatcher failureView = req.getRequestDispatcher("/member/loginMember.jsp");
+				RequestDispatcher failureView = req.getRequestDispatcher("/front-end/member/loginMember.jsp");
 				failureView.forward(req, res);
 			}
 
@@ -141,7 +141,7 @@ public class InsCourseTimeServlet extends HttpServlet {
 				// Send the use back to the form, if there were errors
 				if (!errorMsgs.isEmpty()) {
 					req.setAttribute("inCludeVO", "teacher"); // 要導向的分頁
-					String url = "/member/viewAllMember.jsp";
+					String url = "/front-end/member/viewAllMember.jsp";
 					RequestDispatcher failureView = req.getRequestDispatcher(url);
 					failureView.forward(req, res);
 					return;// 程式中斷
@@ -149,7 +149,7 @@ public class InsCourseTimeServlet extends HttpServlet {
 
 				/*************************** 3.新增完成,準備轉交(Send the Success view) *************/
 				successMsgs.add("完成新增課程時間");
-				String url = "/member/viewAllMember.jsp";
+				String url = "/front-end/member/viewAllMember.jsp";
 				req.setAttribute("inCludeVO", "teacher"); // 要導向的分頁
 				RequestDispatcher successView = req.getRequestDispatcher(url); // 新增成功後轉交listAllEmp.jsp
 				successView.forward(req, res);

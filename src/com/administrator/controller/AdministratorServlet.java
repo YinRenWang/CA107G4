@@ -37,7 +37,6 @@ public class AdministratorServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
 		req.setCharacterEncoding("UTF-8");
 		res.setContentType("text/plain; charset=UTF-8");
-		PrintWriter out = res.getWriter();
 		String action = req.getParameter("action");
 
 		//登入
@@ -60,7 +59,7 @@ public class AdministratorServlet extends HttpServlet {
 			}
 				// Send the use back to the form, if there were errors
 				if (!errorMsgs.isEmpty()) {
-					RequestDispatcher failureView = req.getRequestDispatcher("/back-end/loginAdministrator.jsp");
+					RequestDispatcher failureView = req.getRequestDispatcher("/back-end/login.jsp");
 					failureView.forward(req, res);
 					return;// 程式中斷
 				}
@@ -76,7 +75,7 @@ public class AdministratorServlet extends HttpServlet {
 						admVO.setAdmPsw(null);//帳號保留,密碼清空
 						req.setAttribute("admVO", admVO); // 含有輸入格式錯誤的empVO物件,也存入req
 						RequestDispatcher failureView = req
-								.getRequestDispatcher("/back-end/loginAdministrator.jsp");
+								.getRequestDispatcher("/back-end/login.jsp");
 						failureView.forward(req, res);
 						return;
 					}
@@ -88,21 +87,21 @@ public class AdministratorServlet extends HttpServlet {
 						admVO.setAdmPsw(null);//帳號保留,密碼清空
 						req.setAttribute("admVO", admVO); // 含有輸入格式錯誤的empVO物件,也存入req
 						RequestDispatcher failureView = req
-								.getRequestDispatcher("/back-end/loginAdministrator.jsp");
+								.getRequestDispatcher("/back-end/login.jsp");
 						failureView.forward(req, res);
 						return;
 					}
 				}
 			} 
 			catch (NullPointerException npe) {
-				RequestDispatcher failureView = req.getRequestDispatcher("/back-end/loginAdministrator.jsp");
+				RequestDispatcher failureView = req.getRequestDispatcher("/back-end/login.jsp");
 				failureView.forward(req, res);
 				return;// 程式中斷
 			}
 
 			// Send the use back to the form, if there were errors
 			if (!errorMsgs.isEmpty()) {
-				RequestDispatcher failureView = req.getRequestDispatcher("/back-end/loginAdministrator.jsp");
+				RequestDispatcher failureView = req.getRequestDispatcher("/back-end/login.jsp");
 				failureView.forward(req, res);
 				return;// 程式中斷
 			}
@@ -117,7 +116,7 @@ public class AdministratorServlet extends HttpServlet {
 		} 
 		catch (Exception e) {
 		errorMsgs.add("無法取得資料:" + e.getMessage());
-		RequestDispatcher failureView = req.getRequestDispatcher("/back-end/loginAdministrator.jsp");
+		RequestDispatcher failureView = req.getRequestDispatcher("/back-end/login.jsp");
 			failureView.forward(req, res);
 			return;
 		}		
@@ -136,14 +135,14 @@ public class AdministratorServlet extends HttpServlet {
 				/*************************** 1.清除登入資訊 ****************************************/
 				session.removeAttribute("admVO");
 				/*************************** 3.查詢完成,準備轉交(Send the Success view) ************/
-				String url = "/back-end/loginAdministrator.jsp";
+				String url = "/back-end/login.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url);// 成功轉交 editMember.jsp
 				successView.forward(req, res);
 
 				/*************************** 其他可能的錯誤處理 **********************************/
 			} catch (Exception e) {
 				errorMsgs.add("無法取得要修改的資料:" + e.getMessage());
-				RequestDispatcher failureView = req.getRequestDispatcher("/back-end/loginAdministrator.jsp");
+				RequestDispatcher failureView = req.getRequestDispatcher("/back-end/login.jsp");
 				failureView.forward(req, res);
 			}
 		}

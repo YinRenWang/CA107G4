@@ -296,16 +296,16 @@ Swal.fire(
             <div class="profile-content">
 <c:choose>
     <c:when test="${inCludeVO=='member'}">
-   <%@ include file="/member/editMember.jsp"%>
+   <%@ include file="/front-end/member/editMember.jsp"%>
     </c:when>
     <c:when test="${inCludeVO=='teacher'}">
-  <%@ include file="/insctime/addinscTime.jsp"%>
+  <%@ include file="/front-end/insctime/addinscTime.jsp"%>
     </c:when>
       <c:when test="${inCludeVO=='inscourse'}">
- <%@ include file="/coursereservation/allCourseUser.jsp"%>
+ <%@ include file="/front-end/coursereservation/allCourseUser.jsp"%>
     </c:when>
       <c:when test="${inCludeVO=='transactionRecord'}">
-  <%@ include file="/withdrawalrecord/withdrawalrecord_findbykey.jsp"%>     
+  <%@ include file="/front-end/withdrawalrecord/withdrawalrecord_findbykey.jsp"%>     
     </c:when>
     <c:otherwise>
     </c:otherwise>

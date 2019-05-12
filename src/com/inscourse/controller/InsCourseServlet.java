@@ -58,7 +58,7 @@ public class InsCourseServlet extends HttpServlet {
 					errorMsgs.add("請輸入課程編號");
 				}
 				if (!errorMsgs.isEmpty()) {
-					RequestDispatcher failureView = req.getRequestDispatcher("/Inscourse/select_page.jsp");
+					RequestDispatcher failureView = req.getRequestDispatcher("/front-end/Inscourse/select_page.jsp");
 					failureView.forward(req, res);
 					return;
 				}
@@ -66,7 +66,7 @@ public class InsCourseServlet extends HttpServlet {
 					errorMsgs.add("課程編號格式錯誤");
 				}
 				if (!errorMsgs.isEmpty()) {
-					RequestDispatcher failureView = req.getRequestDispatcher("/Inscourse/select_page.jsp");
+					RequestDispatcher failureView = req.getRequestDispatcher("/front-end/Inscourse/select_page.jsp");
 					failureView.forward(req, res);
 					return;
 				}
@@ -77,18 +77,18 @@ public class InsCourseServlet extends HttpServlet {
 					errorMsgs.add("查無資料");
 				}
 				if (!errorMsgs.isEmpty()) {
-					RequestDispatcher failureView = req.getRequestDispatcher("/Inscourse/select_page.jsp");
+					RequestDispatcher failureView = req.getRequestDispatcher("/front-end/Inscourse/select_page.jsp");
 					failureView.forward(req, res);
 				}
 
 				req.setAttribute("insCourseVO", insCourseVO);
-				String url = "/Inscourse/listOneInsCourse.jsp";
+				String url = "/front-end/Inscourse/listOneInsCourse.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url);
 				successView.forward(req, res);
  
 			} catch (Exception e) {
 				errorMsgs.add("無法取得資料:" + e.getMessage());
-				RequestDispatcher failureView = req.getRequestDispatcher("/Inscourse/select_page.jsp");
+				RequestDispatcher failureView = req.getRequestDispatcher("/front-end/Inscourse/select_page.jsp");
 				failureView.forward(req, res);
 			}
 		}
@@ -97,24 +97,20 @@ public class InsCourseServlet extends HttpServlet {
 			List<String> errorMsgs = new LinkedList<String>();
 			req.setAttribute("erroMsgs", errorMsgs);
 
-			try {
+		
 				String inscId = req.getParameter("inscId");
 
 				InsCourseService insCourseSvc = new InsCourseService();
 				InsCourseVO insCourseVO = insCourseSvc.findOneById(inscId);
 
 				req.setAttribute("insCourseVO", insCourseVO);
-				String url = "/Inscourse/update_InsCourse_input.jsp";
+				String url = "/front-end/Inscourse/update_InsCourse_input.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url);
 				successView.forward(req, res);
 
-			} catch (Exception e) {
-				errorMsgs.add("無法取得要修改的資料:" + e.getMessage());
-				RequestDispatcher failureView = req.getRequestDispatcher("/emp/listAllEmp.jsp");
-				failureView.forward(req, res);
-			}
-		} 
-
+			} 
+	
+		
 		if ("update".equals(action)) {
 
 			List<String> errorMsgs = new LinkedList<String>();
@@ -172,7 +168,7 @@ public class InsCourseServlet extends HttpServlet {
 
 				if (!errorMsgs.isEmpty()) {
 					req.setAttribute("insCourseVO", insCourseVO);
-					RequestDispatcher failureView = req.getRequestDispatcher("/Inscourse/update_insCourse_input.jsp");
+					RequestDispatcher failureView = req.getRequestDispatcher("/front-end/Inscourse/update_insCourse_input.jsp");
 					failureView.forward(req, res);
 					return;
 				}
@@ -182,13 +178,13 @@ public class InsCourseServlet extends HttpServlet {
 						inscPrice, inscCourser, inscStatus);
 
 				req.setAttribute("insCourseVO", insCourseVO);
-				String url = "/Inscourse/listOneInsCourse.jsp";
+				String url = "/front-end/Inscourse/listOneInsCourse.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url);
 				successView.forward(req, res);
 
 			} catch (Exception e) {
 				errorMsgs.add("修改資料失敗:" + e.getMessage());
-				RequestDispatcher failureView = req.getRequestDispatcher("/Inscourse/update_InsCourse_input.jsp");
+				RequestDispatcher failureView = req.getRequestDispatcher("/front-end/Inscourse/update_InsCourse_input.jsp");
 				failureView.forward(req, res);
 			}
 		}
@@ -248,20 +244,20 @@ public class InsCourseServlet extends HttpServlet {
 
 					if (!errorMsgs.isEmpty()) {
 						req.setAttribute("insCourseVO", insCourseVO);
-						RequestDispatcher failureView = req.getRequestDispatcher("/inscourse/addInsCourse.jsp");
+						RequestDispatcher failureView = req.getRequestDispatcher("/front-end/inscourse/addInsCourse.jsp");
 						failureView.forward(req, res);
 						return;
 					}
 					insCourseSvc.addInsCourse(teacherId, courseId, inscLoc, inscType, inscPeople, inscLang, inscPrice,
 							inscCourser, inscStatus);
 
-					String url = "/member/viewAllMember.jsp";
+					String url = "/front-end/member/viewAllMember.jsp";
 					req.setAttribute("inCludeVO", "teacher"); // 要導向的分頁
 					RequestDispatcher successView = req.getRequestDispatcher(url); // 新增成功後轉交listAllEmp.jsp
 					successView.forward(req, res);
 				}else {
 					errorMsgs.add("您已經有相同的課程了");
-					RequestDispatcher failureView = req.getRequestDispatcher("/inscourse/addInsCourse.jsp");
+					RequestDispatcher failureView = req.getRequestDispatcher("/front-end/inscourse/addInsCourse.jsp");
 					failureView.forward(req, res);
 					return;
 				}
@@ -291,19 +287,19 @@ public class InsCourseServlet extends HttpServlet {
 					errorMsgs.add("查無資料");
 				}
 				if (!errorMsgs.isEmpty()) {
-					RequestDispatcher failureView = req.getRequestDispatcher("/inscourse/insCourseDetails.jsp");
+					RequestDispatcher failureView = req.getRequestDispatcher("/front-end/inscourse/insCourseDetails.jsp");
 					failureView.forward(req, res);
 					return;
 				}
 				req.setAttribute("insCourseVO", insCourseVO);
 				session.setAttribute("userSearch", userSearch);//保存使用者搜尋結果
-				String url = "/inscourse/insCourseDetails.jsp";
+				String url = "/front-end/inscourse/insCourseDetails.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url);
 				successView.forward(req, res);
 
 			} catch (Exception e) {
 				errorMsgs.add("無法取得資料:" + e.getMessage());
-				RequestDispatcher failureView = req.getRequestDispatcher("/inscourse/insCourseDetails.jsp");
+				RequestDispatcher failureView = req.getRequestDispatcher("/front-end/inscourse/insCourseDetails.jsp");
 				failureView.forward(req, res);
 			}
 		}
@@ -326,15 +322,7 @@ public class InsCourseServlet extends HttpServlet {
 				java.sql.Date inputSuccess2 = new java.sql.Date(cal.getTimeInMillis());
 				String startTime = inputSuccess.toString();
 				String endTime = inputSuccess2.toString();
-
-				String teacherId = req.getParameter("teacherId").trim();
-
-				String memId = req.getParameter("memId").trim();
-
-				String memName = req.getParameter("memName").trim();
-
 				String inscId = req.getParameter("inscId").trim();
-
 				String inscLoc = req.getParameter("inscLoc").trim();
 
 				InsCourseTimeService insCourseTimvc = new InsCourseTimeService();
@@ -344,13 +332,13 @@ public class InsCourseServlet extends HttpServlet {
 				req.setAttribute("inscId", inscId);
 				req.setAttribute("inscLoc", inscLoc);
 				req.setAttribute("list", list);
-				String url = "/inscourse/insCourseDetails.jsp";
+				String url = "/front-end/inscourse/insCourseDetails.jsp";
 
 				RequestDispatcher successView = req.getRequestDispatcher(url); // 新增成功後轉交listAllEmp.jsp
 				successView.forward(req, res);
 			} catch (Exception e) {
 				errorMsgs.add(e.getMessage());
-				RequestDispatcher failureView = req.getRequestDispatcher("/inscourse/insCourseDetails.jsp");
+				RequestDispatcher failureView = req.getRequestDispatcher("/front-end/inscourse/insCourseDetails.jsp");
 				failureView.forward(req, res);
 			}
 		}
@@ -391,14 +379,14 @@ public class InsCourseServlet extends HttpServlet {
 				req.setAttribute("crvTotalTime", crvTotalTime);
 				req.setAttribute("inscMFD", inscMFD);
 				req.setAttribute("inscEXP", inscEXP);
-				String url = "/inscourse/insCourseDetails.jsp";
+				String url = "/front-end/inscourse/insCourseDetails.jsp";
 
 				RequestDispatcher successView = req.getRequestDispatcher(url); // 新增成功後轉交listAllEmp.jsp
 				successView.forward(req, res);
 
 			} catch (Exception e) {
 				errorMsgs.add(e.getMessage());
-				RequestDispatcher failureView = req.getRequestDispatcher("/inscourse/insCourseDetails.jsp");
+				RequestDispatcher failureView = req.getRequestDispatcher("/front-end/inscourse/insCourseDetails.jsp");
 				failureView.forward(req, res);
 			}
 		}
@@ -432,7 +420,7 @@ public class InsCourseServlet extends HttpServlet {
 					List<InsCourseVO> list = insCourseSvc.getAll(map);
 					session.setAttribute("listEmps_ByCompositeQuery", list); // 資料庫取出的list物件,存入request
 				}
-				RequestDispatcher successView = req.getRequestDispatcher("/inscourse/listEmps_ByCompositeQuery.jsp"); // 成功轉交listEmps_ByCompositeQuery.jsp
+				RequestDispatcher successView = req.getRequestDispatcher("/front-end/inscourse/listEmps_ByCompositeQuery.jsp"); // 成功轉交listEmps_ByCompositeQuery.jsp
 				successView.forward(req, res);
 		
 			} 
@@ -454,14 +442,14 @@ public class InsCourseServlet extends HttpServlet {
 					inscStatus=0;
 				}	
 				insCourseSvc.updateStatus(inscStatus, inscId);
-				String url = "/member/viewAllMember.jsp";
+				String url = "/front-end/member/viewAllMember.jsp";
 				req.setAttribute("inCludeVO", "teacher"); // 要導向的分頁
 				RequestDispatcher successView = req.getRequestDispatcher(url); // 新增成功後轉交listAllEmp.jsp
 				successView.forward(req, res);
 			}catch (Exception e) {
 				errorMsgs.add(e.getMessage());
 				req.setAttribute("inCludeVO", "teacher"); // 要導向的分頁
-				RequestDispatcher failureView = req.getRequestDispatcher("/member/viewAllMember.jsp");
+				RequestDispatcher failureView = req.getRequestDispatcher("/front-end/member/viewAllMember.jsp");
 				failureView.forward(req, res);
 			}
 		}

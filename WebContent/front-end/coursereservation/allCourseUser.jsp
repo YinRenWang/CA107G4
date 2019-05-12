@@ -19,7 +19,7 @@
 <link rel="stylesheet"
 	href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
 <link rel="stylesheet" type="text/css"
-	href="<%=request.getContextPath()%>/css/G4.css ">
+	href="<%=request.getContextPath()%>/front-end/css/G4.css">
 <link rel="stylesheet" type="text/css"
 	href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
@@ -329,7 +329,7 @@ $(document).ready(function () {
 			
 			<div class="modal-body">
 <!-- =========================================以下為原listOneEmp.jsp的內容========================================== -->
-               <jsp:include page="/coursereservation/courseOrder.jsp" />
+               <jsp:include page="/front-end/coursereservation/courseOrder.jsp" />
 <!-- =========================================以上為原listOneEmp.jsp的內容========================================== -->
 			</div>
 			

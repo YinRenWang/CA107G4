@@ -1,9 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-
-
-
 <!DOCTYPE html>
 <html>
 <head>
@@ -118,7 +115,7 @@ $(document).ready(function(){
 });
 </script>
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
-<title>DateTimePicker.jsp</title></head>
+<title>Wesahe || 最棒的教育共享平台 </title></head>
 <body>
 <c:if test="${not empty errorMsgs}">
 <c:forEach var="message" items="${errorMsgs}">
@@ -158,7 +155,7 @@ Swal.fire(
                           <form action="<%= request.getContextPath()%>/InsCourseServlet" method="GET">
                   <input type="hidden" name="inscId"  value="${insCourseVO.inscId}"> 
                 <input type="hidden" name="action"  value="updateStatus">
-                 <input type="submit" class="glyphicon glyphicon-trash pull-right text-primary" value="<c:if test="${insCourseVO.inscStatus==0}">下架中</c:if><c:if test="${insCourseVO.inscStatus==1}">上架中</c:if>">
+                 <input type="submit" class="glyphicon glyphicon-trash pull-right text-primary" value="<c:if test="${insCourseVO.inscStatus==0}">上架中</c:if><c:if test="${insCourseVO.inscStatus==1}">下架中</c:if>">
                </form>
                 </div>
                
