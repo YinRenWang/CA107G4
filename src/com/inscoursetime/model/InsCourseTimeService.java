@@ -8,7 +8,7 @@ public class InsCourseTimeService {
 	private InsCourseTimeDAO_interface dao;
 	
 	public InsCourseTimeService() {
-		dao=new InsCourseTimeJDBCDAO();
+		dao=new InsCourseTimeDAO();
 	}
 	
 	public void insertInsCourseTime(String inscId, Timestamp inscMFD, Timestamp inscEXP) {

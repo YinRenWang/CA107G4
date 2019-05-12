@@ -1,6 +1,7 @@
 package com.coursetype.model;
 
 import java.sql.Connection;
+import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -12,25 +13,28 @@ import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.sql.DataSource;
 
-public class CourseTypeDAO implements CourseTypeDAO_interface {
-	
-	private static DataSource ds = null;
-	static {
-		try {
-			Context ctx = new InitialContext();
-			ds = (DataSource)ctx.lookup("java:comp/env/jdbc/TestDB");
-		} catch (NamingException e) {
-			e.printStackTrace();
-		}
-	}
+import com.course.model.CourseJDBCDAO;
+import com.course.model.CourseVO;
 
+
+
+public class CourseTypeDAO implements CourseTypeDAO_interface {	private static DataSource ds = null;
+
+static {
+	try {
+		Context ctx = new InitialContext();
+		ds = (DataSource) ctx.lookup("java:comp/env/jdbc/TestDB");
+	} catch (NamingException e) {
+		e.printStackTrace();
+	}
+}
+	
 	final String INSERT_STMT = "INSERT INTO COURSETYPE VALUES(CourseType_seq.NEXTVAL,?)";
 	final String UPDATE_STMT = "UPDATE COURSETYPE SET COURSETYPENAME=? WHERE COURSETYPEID=?";
 	final String DELETE_COURSETYPE = "DELETE FROM COURSETYPE WHERE COURSETYPEID=?";
 	final String SEARCH_COURSETYPE = "SELECT * FROM COURSETYPE WHERE COURSETYPEID=?";
 	final String SEARCH_COURSEALL = "SELECT * FROM COURSETYPE";
 	
-
 	@Override
 	public void insert(CourseTypeVO courseTypeVO) {
 		Connection con = null;
@@ -43,11 +47,13 @@ public class CourseTypeDAO implements CourseTypeDAO_interface {
 			pstmt.setString(1, courseTypeVO.getCourseTypeName());
 			pstmt.executeUpdate();
 			
-		}catch(SQLException se) {
+			
+		}
+		catch (SQLException se) {
 			throw new RuntimeException("A database error occured. "
 					+ se.getMessage());
-		}finally {
-			if (pstmt != null) {
+		} finally {
+			if (pstmt != null) { 
 				try {
 					pstmt.close();
 				} catch (SQLException se) {
@@ -79,10 +85,12 @@ public class CourseTypeDAO implements CourseTypeDAO_interface {
 			
 			pstmt.executeUpdate();
 			
-		}catch(SQLException se) {
+			
+		}
+		catch (SQLException se) {
 			throw new RuntimeException("A database error occured. "
 					+ se.getMessage());
-		}finally {
+		} finally {
 			if (pstmt != null) {
 				try {
 					pstmt.close();
@@ -116,10 +124,10 @@ public class CourseTypeDAO implements CourseTypeDAO_interface {
 			pstmt.executeUpdate();
 			
 			
-		}catch(SQLException se) {
+		}catch (SQLException se) {
 			throw new RuntimeException("A database error occured. "
 					+ se.getMessage());
-		}finally {
+		} finally {
 			if (pstmt != null) {
 				try {
 					pstmt.close();
@@ -157,17 +165,11 @@ public class CourseTypeDAO implements CourseTypeDAO_interface {
 			}
 			return courseTypeVO;
 			
-		}catch(SQLException se) {
+			
+		} catch (SQLException se) {
 			throw new RuntimeException("A database error occured. "
 					+ se.getMessage());
-		}finally {
-			if (rs != null) {
-				try {
-					rs.close();
-				} catch (SQLException se) {
-					se.printStackTrace(System.err);
-				}
-			}
+		} finally {
 			if (pstmt != null) {
 				try {
 					pstmt.close();
@@ -183,18 +185,19 @@ public class CourseTypeDAO implements CourseTypeDAO_interface {
 				}
 			}
 		}
-		
 	}
 
 	@Override
 	public List<CourseTypeVO> getAll() {
-		List<CourseTypeVO> list = new ArrayList<>();
+		List<CourseTypeVO> list = new ArrayList<CourseTypeVO>();
 		CourseTypeVO CourseTypeVO = null;
-		
+
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
+
 		try {
+
 			con = ds.getConnection();
 			pstmt = con.prepareStatement(SEARCH_COURSEALL);
 			rs = pstmt.executeQuery();
@@ -206,17 +209,18 @@ public class CourseTypeDAO implements CourseTypeDAO_interface {
 				list.add(CourseTypeVO);
 			}
 
-			
-		}catch(SQLException se) {
+
+		} catch (SQLException se) {
 			throw new RuntimeException("A database error occured. "
 					+ se.getMessage());
-		}finally {
+		} finally {
 			if (rs != null) {
 				try {
 					rs.close();
 				} catch (SQLException se) {
 					se.printStackTrace(System.err);
 				}
+			}
 			if (pstmt != null) {
 				try {
 					pstmt.close();
@@ -234,6 +238,38 @@ public class CourseTypeDAO implements CourseTypeDAO_interface {
 		}
 		return list;
 	}
-
-}
+	public static void main(String args[]) {
+			
+			CourseTypeDAO courseTypeJDBCDAO = new CourseTypeDAO();
+			
+			
+			
+	//		//新增
+	//		CourseTypeVO courseTypeVO1 =new CourseTypeVO();
+	//		courseTypeVO1.setCourseTypeName("GGC");
+	//		courseTypeJDBCDAO.insert(courseTypeVO1);
+			
+	//		//修改
+	//		CourseTypeVO courseTypeVO2 = new CourseTypeVO();
+	//		courseTypeVO2.setCourseTypeId(7);
+	//		courseTypeVO2.setCourseTypeName("行笑");
+	//		courseTypeJDBCDAO.update(courseTypeVO2);
+			
+	//		//刪除
+	//		courseTypeJDBCDAO.delete(5);
+			
+	//		//查詢
+	//		CourseTypeVO courseTypeVO3 = courseTypeJDBCDAO.findByPrimaryKey(9);
+	//		System.out.println(courseTypeVO3.getCourseTypeId());
+	//		System.out.println(courseTypeVO3.getCourseTypeName());
+			
+			//查詢全部
+			List<CourseTypeVO> list = courseTypeJDBCDAO.getAll();
+			for (CourseTypeVO aEmp : list) {
+				System.out.println(aEmp.getCourseTypeId() + ",");
+				System.out.println(aEmp.getCourseTypeName());
+				System.out.println();
+		}
+	
+	}
 }

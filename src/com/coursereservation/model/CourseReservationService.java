@@ -16,7 +16,7 @@ public class CourseReservationService {
 	private CourseReservationDAO_interface dao;
 
 	public CourseReservationService() {
-		dao = new CourseReservationJDBCDAO();
+		dao = new CourseReservationDAO();
 
 	}
 	

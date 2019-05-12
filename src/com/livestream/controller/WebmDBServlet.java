@@ -11,7 +11,7 @@ import javax.servlet.http.*;
 public class WebmDBServlet extends HttpServlet {
 	
 	String driver = "oracle.jdbc.driver.OracleDriver";
-	String url = "jdbc:oracle:thin:@localhost:1521:XE";
+	String url = "jdbc:oracle:thin:@localhost:49161:XE";
 	String userid = "WESHARE";
 	String passwd = "123456";
 	private static final String SELECT_STMT = "SELECT lsContent FROM LiveStream WHERE lsId = ?";

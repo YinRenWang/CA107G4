@@ -6,7 +6,7 @@ public class TeacherService {
 	private TeacherDAO_interface dao;
 	
 	public TeacherService(){
-		dao = new TeacherJDBCDAO();
+		dao = new TeacherDAO();
 	}
 	
 	public void addTeacher(String memId, Integer teacherStatus, String teacherCity, String teacherEdu,byte[] diplomaImg, String teacherText) {

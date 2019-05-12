@@ -771,17 +771,5 @@ public class CourseReservationJDBCDAO implements CourseReservationDAO_interface 
 //					System.out.println();
 //				}
 //			
-		
-		
-	
-
 	}
-
-
-	
-	
-
-	
-
-
 }

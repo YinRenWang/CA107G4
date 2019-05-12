@@ -193,23 +193,50 @@ ul, ol {
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"> <span class="navbar-toggler-icon"></span> </button>
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
           <ul class="navbar-nav mr-auto">
+              <li class="nav-item"> <a class="nav-link" href="<%= request.getContextPath()%>/front-end/member/addMember.jsp">探索課程</a> </li>
+              <li class="nav-item"> <a class="nav-link" href="<%= request.getContextPath()%>/front-end/member/addMember.jsp">揪團上課</a> </li>
+               <li class="nav-item"> <a class="nav-link" href="<%= request.getContextPath()%>/front-end/member/addMember.jsp">教材商城</a> </li>
            <c:choose>
     		<c:when test="${!empty teacherVO}">
     			<li class="nav-item"> <a class="nav-link" id="openLive" href="<%= request.getContextPath()%>//SimpleWebRTC-master/test/selenium/index.jsp" onclick="sendMessage();">現場直播</a> </li>
            </c:when>
            <c:otherwise>
            <li class="nav-item active"> <a class="nav-link" href="<%= request.getContextPath()%>/teacher/joinTeacher.jsp">成為老師 <span class="sr-only">(current)</span></a> </li>
-            <li class="nav-item dropdown"> <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">探索課程</a>
-              <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink"> <a class="dropdown-item" href="<%= request.getContextPath()%>/inscourse/inscourse.do?courseId=&inscLoc=&action=listEmps_ByCompositeQuery">所有課程</a> <a class="dropdown-item" href="#">音樂</a> <a class="dropdown-item" href="#">語言</a> <a class="dropdown-item" href="#">運動</a> <a class="dropdown-item" href="#">藝術</a> <a class="dropdown-item" href="#">設計</a> <a class="dropdown-item" href="#">人文</a> <a class="dropdown-item" href="#">行銷</a> <a class="dropdown-item" href="#">程式語言</a> <a class="dropdown-item" href="#">投資理財</a> <a class="dropdown-item" href="#">職場技能</a> <a class="dropdown-item" href="#">手作</a> <a class="dropdown-item" href="#">烹飪</a> </div>
-            </li>  
+         
            </c:otherwise>
          </c:choose>  
                      
+                     
                 <c:choose>
-    			<c:when test="${!empty memberVO}">
-				            <li class="nav-item"> <a class="nav-link " href="#" onclick="document.getElementById('viewAllMember').submit();return false;">${memberVO.memName}</a> </li> 
-				            <li class="nav-item"> <a class="nav-link" href="<%= request.getContextPath()%>/MemberServlet?action=logout">登出</a> </li>
+                		<c:when test="${!empty teacherVO}">
+			 <li class="nav-item"> <a class="nav-link " href="<%= request.getContextPath()%>/front-end/member/listAllMember.jsp">我的好友</a> </li>		                   
+			<li class="nav-item dropdown"> <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" >${memberVO.memName}</a>
+              <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink"> <a class="dropdown-item" onclick="document.getElementById('viewAllMember').submit();return false;">個人資料</a> 
+              <a class="dropdown-item" href="<%= request.getContextPath()%>/MemberServlet?action=logout">課程管理</a>
+              <a class="dropdown-item" href="<%= request.getContextPath()%>/MemberServlet?action=logout">預約資訊</a>
+              <a class="dropdown-item" href="<%= request.getContextPath()%>/MemberServlet?action=logout">交易紀錄</a>
+             <a class="dropdown-item" href="<%= request.getContextPath()%>/MemberServlet?action=logout">直播管理</a>
+              <a class="dropdown-item" href="<%= request.getContextPath()%>/MemberServlet?action=logout">訂單記錄</a>    
+              <a class="dropdown-item" href="<%= request.getContextPath()%>/MemberServlet?action=logout">登出</a>
+                 </div>
+            </li>  
    				</c:when>
+    			<c:when test="${!empty memberVO}">
+			 <li class="nav-item"> <a class="nav-link " href="<%= request.getContextPath()%>/front-end/member/listAllMember.jsp">我的好友</a> </li>		                   
+			<li class="nav-item dropdown"> <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" >${memberVO.memName}</a>
+              <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink"> <a class="dropdown-item" onclick="document.getElementById('viewAllMember').submit();return false;">個人資料</a> 
+              <a class="dropdown-item" href="<%= request.getContextPath()%>/MemberServlet?action=logout">預約資訊</a>
+              <a class="dropdown-item" href="<%= request.getContextPath()%>/MemberServlet?action=logout">交易紀錄</a>
+              <a class="dropdown-item" href="<%= request.getContextPath()%>/MemberServlet?action=logout">訂單記錄</a>    
+              <a class="dropdown-item" href="<%= request.getContextPath()%>/MemberServlet?action=logout">登出</a>
+                 </div>
+            </li>  
+   				</c:when>
+   				
+   		
+   				
+   				
+   				
     			<c:otherwise>
     			<li class="nav-item"> <a class="nav-link" href="<%= request.getContextPath()%>/front-end/member/loginMember.jsp">登入</a> </li>
     		    <li class="nav-item"> <a class="nav-link" href="<%= request.getContextPath()%>/front-end/member/addMember.jsp">註冊</a> </li>

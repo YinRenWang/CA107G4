@@ -6,7 +6,7 @@ public class CourseTypeService {
 	private CourseTypeDAO_interface dao;
 	
 	public CourseTypeService() {
-		dao = new CourseTypeJDBCDAO();
+		dao = new CourseTypeDAO();
 	}
 	
 	public void addCourseType(Integer courseTypeId, String courseTypeName) {

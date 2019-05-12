@@ -11,7 +11,7 @@ public class MemberService {
 	private MemberJedis jedis;
 
 	public MemberService() {
-		dao = new MemberJDBCDAO();
+		dao = new MemberDAO();
 		jedis =new MemberJedis();
 	}
 	

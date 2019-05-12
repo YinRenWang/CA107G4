@@ -7,7 +7,7 @@ public class InsCourseService {
 	private InsCourseDAO_interface dao;
 
 	public InsCourseService() {
-		dao = new InsCourseJDBCDAO();
+		dao = new InsCourseDAO();
 	}
 
 	public void addInsCourse(String teacherId, String courseId, String inscLoc, Integer inscType,

@@ -7,7 +7,7 @@ public class AdministratorService {
 	private AdministratorDAO_interface dao;
 	
 	public AdministratorService() {
-		dao = new AdministratorJDBCDAO();
+		dao = new AdministratorDAO();
 
 	}
 	
