@@ -13,7 +13,9 @@
   <%}%>  
 
 <br><br>
-
+	<br>	<br>	<br>	<br>	<br>	<br>	<br>	<br>	<br>	<br><br>
+		<br>	<br>	<br>	<br>	<br>	<br>	<br>	<br>	<br>	<br><br>
+			<br>	<br>	<br>	<br>	
   <%if (pageNumber>1) {%>
     <FORM METHOD="post" ACTION="<%=request.getRequestURI()%>">   
        <select size="1" name="whichPage">
@@ -24,3 +26,4 @@
        <input type="submit" value="確定" >  
     </FORM>
   <%}%>
+  

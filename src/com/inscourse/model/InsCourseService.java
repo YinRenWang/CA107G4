@@ -75,4 +75,9 @@ public class InsCourseService {
 		return dao.getAll(map);
 	}
 
+	public void updateStatus(String inscId,Integer inscStatus) {
+		InsCourseVO insCourseVO = new InsCourseVO();
+		insCourseVO.setInscStatus(inscStatus);
+		dao.updateStatus(insCourseVO);
+	}
 }

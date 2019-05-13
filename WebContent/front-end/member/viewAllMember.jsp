@@ -158,7 +158,7 @@ footer{
 </style>
 
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
-<title>DateTimePicker.jsp</title></head>
+<title>${memberVO.memName}的個人資料</title></head>
 
 	<!-------------------------------------------------------------------------headerStart------------------------------------------------------------------------->
 
@@ -311,6 +311,18 @@ Swal.fire(
 							交易紀錄 </a>
 						</li>
 						
+<c:if test="${!empty teacherVO}">						
+							<li id="liveStream" >
+						<form id="form7" action="<%= request.getContextPath()%>/MemberServlet" method="get">
+								<input type="hidden" name="inCludeVO"  value="liveStream"> 
+								<input type="hidden" name="action" value="changeValue">
+							</form>	
+							<a href="#" onclick="document.getElementById('form7').submit();return false;">	
+							<i class="glyphicon glyphicon-transactionRecord"></i>
+							直播管理 </a>
+						</li>
+</c:if> 
+						
 						
 						
 					</ul>
@@ -338,6 +350,9 @@ Swal.fire(
     </c:when>
      <c:when test="${inCludeVO=='goodsOrder'}">
   <%@ include file="/front-end/goodsorder/select_order.jsp"%>     
+    </c:when>
+         <c:when test="${inCludeVO=='liveStream'}">
+  <%@ include file="/front-end/livestream/allLiveStreamUser.jsp"%>     
     </c:when>
     <c:otherwise>
     </c:otherwise>

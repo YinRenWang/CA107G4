@@ -56,8 +56,24 @@ public class LiveStreamServlet extends HttpServlet {
 				java.sql.Timestamp lsDate=java.sql.Timestamp.valueOf(strDate);
 				System.out.println(lsDate);
 				liveStreamSvc.insert(teacherId, lsDate, lsViewNum, null);
-			
+			}
+		
+		if ("delete".equals(action)) {// 來自addInscTime.jsp的請求
 
+			List<String> errorMsgs = new LinkedList<String>();
+			// Store this set in the request scope, in case we need to 
+			// send the ErrorPage view.
+			req.setAttribute("errorMsgs", errorMsgs);
+				/*************************** 1.接收請求參數 - 輸入格式的錯誤處理 **********************/
+				LiveStreamService liveStreamSvc=new LiveStreamService();
+				String lsId=req.getParameter("lsId").toUpperCase();
+				liveStreamSvc.delete(lsId);
+				
+				/*************************** 4.新增完成,準備轉交(Send the Success view) ***********/
+				req.setAttribute("inCludeVO", "liveStream"); // 要導向的分頁
+				String url = "/front-end/member/viewAllMember.jsp";
+				RequestDispatcher successView = req.getRequestDispatcher(url); // 成功轉交 loginSuccess.jsp
+				successView.forward(req, res);
 			}
 			
 

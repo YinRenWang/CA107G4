@@ -193,7 +193,7 @@ ul, ol {
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"> <span class="navbar-toggler-icon"></span> </button>
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
           <ul class="navbar-nav mr-auto">
-              <li class="nav-item"> <a class="nav-link" href="<%= request.getContextPath()%>/front-end/member/addMember.jsp">探索課程</a> </li>
+              <li class="nav-item"> <a class="nav-link" href="<%= request.getContextPath()%>/inscourse/inscourse.do?courseId=&inscLoc=&inscStatus=0&action=listEmps_ByCompositeQuery">探索課程</a> </li>
               <li class="nav-item"> <a class="nav-link" href="<%= request.getContextPath()%>/front-end/member/addMember.jsp">揪團上課</a> </li>
                <li class="nav-item"> <a class="nav-link" href="<%= request.getContextPath()%>/front-end/goods/good_home.jsp">教材商城</a> </li>
            <c:choose>
@@ -221,23 +221,39 @@ ul, ol {
 					<input type="hidden" name="inCludeVO"  value="teacher"> 
 					<input type="hidden" name="action" value="changeValue">
 			</form>	
- 			<a class="dropdown-item" href="<%= request.getContextPath()%>/MemberServlet?action=logout" onclick="document.getElementById('form2').submit();return false;">課程管理</a>
+ 			<a class="dropdown-item" onclick="document.getElementById('form2').submit();return false;">課程管理</a>
  				<form id="form3" action="<%= request.getContextPath()%>/MemberServlet" method="get">
 								<input type="hidden" name="inCludeVO"  value="inscourse"> 
 								<input type="hidden" name="action" value="changeValue">
 							</form>	
-              <a class="dropdown-item" href="<%= request.getContextPath()%>/MemberServlet?action=logout" onclick="document.getElementById('form3').submit();return false;">預約資訊</a>
+              <a class="dropdown-item"onclick="document.getElementById('form3').submit();return false;">預約資訊</a>
+              
+                <form id="form4" action="<%= request.getContextPath()%>/MemberServlet" method="get">
+								<input type="hidden" name="inCludeVO"  value="goods"> 
+								<input type="hidden" name="action" value="changeValue">
+							</form>	
+              <a class="dropdown-item" onclick="document.getElementById('form4').submit();return false;">商品管理</a>
+              
+                 <form id="form5" action="<%= request.getContextPath()%>/MemberServlet" method="get">
+								<input type="hidden" name="inCludeVO"  value="goodsOrder"> 
+								<input type="hidden" name="action" value="changeValue">
+							</form>	
+              <a class="dropdown-item" onclick="document.getElementById('form5').submit();return false;">訂單資訊</a>
+              
+              
               <form id="form6" action="<%= request.getContextPath()%>/MemberServlet" method="get">
 								<input type="hidden" name="inCludeVO"  value="transactionRecord"> 
 								<input type="hidden" name="action" value="changeValue">
 							</form>	
-              <a class="dropdown-item" href="<%= request.getContextPath()%>/MemberServlet?action=logout" onclick="document.getElementById('form6').submit();return false;">交易紀錄</a>
-             <a class="dropdown-item" href="<%= request.getContextPath()%>/MemberServlet?action=logout">直播管理</a>
-             <form id="form5" action="<%= request.getContextPath()%>/MemberServlet" method="get">
-								<input type="hidden" name="inCludeVO"  value="goodsOrder"> 
+              <a class="dropdown-item"  onclick="document.getElementById('form6').submit();return false;">交易紀錄</a>
+            
+
+ 			 <form id="form7" action="<%= request.getContextPath()%>/MemberServlet" method="get">
+								<input type="hidden" name="inCludeVO"  value="liveStream"> 
 								<input type="hidden" name="action" value="changeValue">
 							</form>	
-              <a class="dropdown-item" href="<%= request.getContextPath()%>/MemberServlet?action=logout" onclick="document.getElementById('form5').submit();return false;">訂單資訊</a>    
+              <a class="dropdown-item" onclick="document.getElementById('form7').submit();return false;">直播管理</a>
+              
               <a class="dropdown-item" href="<%= request.getContextPath()%>/MemberServlet?action=logout">登出</a>
                  </div>
             </li>  
@@ -255,16 +271,17 @@ ul, ol {
 				<input type="hidden" name="action" value="changeValue">
 			</form>	
               <a class="dropdown-item" href="<%= request.getContextPath()%>/MemberServlet?action=logout" onclick="document.getElementById('form3').submit();return false;">預約資訊</a>
+         <form id="form5" action="<%= request.getContextPath()%>/MemberServlet" method="get">
+								<input type="hidden" name="inCludeVO"  value="goodsOrder"> 
+								<input type="hidden" name="action" value="changeValue">
+							</form>	
+              <a class="dropdown-item" href="<%= request.getContextPath()%>/MemberServlet?action=logout" onclick="document.getElementById('form5').submit();return false;">訂單資訊</a>
        <form id="form6" action="<%= request.getContextPath()%>/MemberServlet" method="get">
 								<input type="hidden" name="inCludeVO"  value="transactionRecord"> 
 								<input type="hidden" name="action" value="changeValue">
 							</form>	
               <a class="dropdown-item" href="<%= request.getContextPath()%>/MemberServlet?action=logout" onclick="document.getElementById('form6').submit();return false;">交易紀錄</a>
-             <form id="form5" action="<%= request.getContextPath()%>/MemberServlet" method="get">
-								<input type="hidden" name="inCludeVO"  value="goodsOrder"> 
-								<input type="hidden" name="action" value="changeValue">
-							</form>	
-              <a class="dropdown-item" href="<%= request.getContextPath()%>/MemberServlet?action=logout" onclick="document.getElementById('form5').submit();return false;">訂單資訊</a>
+           
               <a class="dropdown-item" href="<%= request.getContextPath()%>/MemberServlet?action=logout">登出</a>
                  </div>
             </li>  
@@ -420,7 +437,10 @@ ul, ol {
     <h5>熱門直播</h5>
   </div>
   <div class="card-deck" >
+  
   <c:forEach var="teacherVO" items="${teacherSvc.getAllStatus(1)}">	
+  <c:if test="${not empty LiveStreamSvc.getLastVideo(teacherVO.teacherId)}">
+  <c:set var="liveStreamVO" value="${LiveStreamSvc.getLastVideo(teacherVO.teacherId)}" scope="page" />
     <div class="card">
       <div class="teacherImg" style="background-image:url(<%=request.getContextPath()%>/member/DBGifReader.do?memId=${teacherVO.memId});"></div>
       <div class="card-body">
@@ -430,19 +450,31 @@ ul, ol {
         <br>
         <h4 class="card-title">${memberSvc.getOneMember(teacherVO.memId).memName}</h4>
         <p class="card-text">
-        <c:forEach var="liveStreamVO" items="${LiveStreamSvc.getAll(teacherVO.teacherId)}">
-        <c:if test="${not empty LiveStreamSvc.getLastVideo(teacherVO.teacherId)}" >
-<video width="320" height="160"  src="http://localhost:8081/CA107G4/WebmDBServlet?lsId=${liveStreamVO.lsId}" controls="controls">
+        
+       
+
+<video width="320" height="160" id="${liveStreamVO.lsId}"  src="http://localhost:8081/CA107G4/WebmDBServlet?lsId=${liveStreamVO.lsId}" controls="controls"  muted>
 您的瀏覽器不支援Video標籤QQ
 </video>
-</c:if>
-        </c:forEach>
+
+
+<script>
+$('#${liveStreamVO.lsId}').mousemove(function(e){
+	document.getElementById('${liveStreamVO.lsId}').play();
+	});
+	
+$('#${liveStreamVO.lsId}').mouseout(function(e){
+	document.getElementById('${liveStreamVO.lsId}').pause();
+	});
+
+</script>
+  
         
         
         </p>
       </div>
     </div>
- 
+ </c:if>
  </c:forEach>
   </div>
 </div>
@@ -539,6 +571,11 @@ ul, ol {
 		function disconnect() {
 			webSocket.close();
 		}
+		
+		
+		
+	
+		
 	</script>
 
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script> 

@@ -77,7 +77,7 @@
 			</c:forEach>
 			
 		</table>
-	
+
 		<%@ include file="page2.file"%>
 		
 	</div>

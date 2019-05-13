@@ -26,7 +26,6 @@
     <url-pattern>/teacher/addTeacher.jsp</url-pattern>
     <url-pattern>/front-end/coursereservation/allCourseUser.jsp</url-pattern>
     <url-pattern>/SimpleWebRTC-master/test/selenium/index.jsp</url-pattern>
-    <url-pattern>/front-end/goodsdetail/Detail.jsp</url-pattern>
     <dispatcher>REQUEST</dispatcher>
     <dispatcher>FORWARD</dispatcher>
     <dispatcher>INCLUDE</dispatcher>

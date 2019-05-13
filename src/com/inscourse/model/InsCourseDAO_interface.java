@@ -17,5 +17,6 @@ public interface InsCourseDAO_interface {
 	public List<InsCourseVO> getAllOn(Integer inscStatus);
 	public List<InsCourseVO> findByCourse(String courseId);
     //萬用複合查詢(傳入參數型態Map)(回傳 List)
-    public List<InsCourseVO> getAll(Map<String, String[]> map); 
+    public List<InsCourseVO> getAll(Map<String, String[]> map);
+	public List<InsCourseVO> findClassName(String str);
 }

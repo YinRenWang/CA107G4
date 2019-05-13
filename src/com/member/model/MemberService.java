@@ -182,5 +182,11 @@ public class MemberService {
     public void updateStatus(String memId) {
     	dao.updateStatus(memId);
     }
+    public MemberVO findMemName(String memName) {
+    	return dao.findMemName(memName);
+    }
+    public MemberVO getOnepicture(byte[] memImage) {
+    	return dao.findByPrimaryKey(memImage);
+    }
     	
 }

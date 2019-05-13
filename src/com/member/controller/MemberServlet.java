@@ -640,6 +640,9 @@ public class MemberServlet extends HttpServlet {
 		            case "goodsOrder": 
 		            	req.setAttribute("inCludeVO", "goodsOrder"); // 資料庫取出的memberVO物件,存入req
 		                break; 
+		            case "liveStream": 
+		            	req.setAttribute("inCludeVO", "liveStream"); // 資料庫取出的memberVO物件,存入req
+		                break; 
 		            default: 
 		                System.out.println("include有問題!!"); 
 		        }
