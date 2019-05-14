@@ -20,6 +20,7 @@ import com.goods.model.GoodsVO;
 import com.goodsdetails.model.GoodsDetailsVO;
 import com.goodsorder.model.GoodsOrderService;
 import com.goodsorder.model.GoodsOrderVO;
+import com.member.model.MemberVO;
 
 @WebServlet("/GoodsOrderServlet")
 @MultipartConfig
@@ -42,7 +43,14 @@ public class GoodsOrderServlet extends HttpServlet {
 //			try {
 				/*************************** 1.接收請求參數 - 輸入格式的錯誤處理 **********************/
 
-				String memId = req.getParameter("memId");
+			MemberVO memberVO=(MemberVO) session.getAttribute("memberVO");
+			if(memberVO==null) {
+				String location=req.getContextPath()+"/front-end/goods/check_order.jsp";
+				session.setAttribute("location", location);
+				res.sendRedirect(req.getContextPath()+"/front-end/member/loginMember.jsp");
+				return;
+			}
+				String memId = memberVO.getMemId();
 				Double goodTotalPricexx  = Double.valueOf(req.getParameter("goodTotalPrice"));
 				Integer goodTotalPrice=goodTotalPricexx.intValue();
 				String buyerName = req.getParameter("buyerName");

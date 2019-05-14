@@ -119,12 +119,13 @@ System.out.println("結帳");
 					Integer quantity = order.getQuantity();
 					total += (price * quantity);
 				}
-
+				String userBuy = req.getQueryString();
 				String totalPrice = String.valueOf(total);
-				req.setAttribute("totalPrice", totalPrice);
+				req.getSession().setAttribute("totalPrice", totalPrice);
 				String url = "/front-end/goods/check_order.jsp";
 				RequestDispatcher rd = req.getRequestDispatcher(url);
 				rd.forward(req, res);
+				return;
 			}
 					
 //------------------------------------新增商品上架----------------------------------------
@@ -202,7 +203,6 @@ System.out.println("結帳");
 //------------------------------------更新商品----------------------------------------
 
 			if ("updateGood".equals(action)) {
-	System.out.println("進入updateGood");
 				/*************************** 1.接收請求參數 - 輸入格式的錯誤處理 **********************/
 				String goodId = req.getParameter("goodId");
 				String teacherId = req.getParameter("teacherId");
@@ -243,10 +243,9 @@ System.out.println("結帳");
 				GoodsVO goodVO = goodsSvc.updateGood(goodVO_Old);
 				System.out.println(goodVO);
 				/*************************** 3.修改完成,準備轉交(Send the Success view) ***********/
-				req.setAttribute("goodVO", goodVO);
-				String url = "/front-end/goods/listAllGoods.jsp";
-				
-				RequestDispatcher successView = req.getRequestDispatcher(url);
+				req.setAttribute("inCludeVO", "goods"); // 資料庫取出的memberVO物件,存入req
+				String url = "/front-end/member/viewAllMember.jsp";
+				RequestDispatcher successView = req.getRequestDispatcher(url); // 成功轉交 loginSuccess.jsp
 				successView.forward(req, res);
 			}
 			
@@ -332,7 +331,7 @@ System.out.println("結帳");
 				/*************************** 3.查詢完成,準備轉交(Send the Success view) ************/
 				req.setAttribute("goodVO", goodVO); // 資料庫取出的goodVO物件,存入req
 
-				String url = "/goods/update_Good_input.jsp";
+				String url = "/front-end/goods/update_Good_input.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url);// 成功轉交 update_Good_input.jsp
 				successView.forward(req, res);
 				} catch (Exception e) {
@@ -347,10 +346,9 @@ System.out.println("結帳");
 			
 //--------------------返回商城首頁------------------------------------------
 			if("go_home_page".equals(action)) {
-				System.out.println("返回商城首頁");
 				String url = "/front-end/goods/good_home.jsp";
-				RequestDispatcher successView = req.getRequestDispatcher(url);
-				successView.forward(req, res);
+				res.sendRedirect(req.getContextPath()+url);
+				return;
 			}
 
 		}

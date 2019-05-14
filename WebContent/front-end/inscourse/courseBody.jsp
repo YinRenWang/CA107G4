@@ -9,6 +9,7 @@
 <jsp:useBean id="now" scope="page" class="java.util.Date" />  
 <jsp:useBean id="inscCourseTimeSvc" scope="page" class="com.inscoursetime.model.InsCourseTimeService" />
 <jsp:useBean id="courseReservationSvc" scope="page" class="com.coursereservation.model.CourseReservationService" />
+
 <jsp:useBean id="memberSvc" scope="page" class="com.member.model.MemberService" />
 
 <%
@@ -626,8 +627,8 @@ input[type=radio].with-font:focus~label:before, input[type=checkbox].with-font:f
 <!----------------------------------------------------------------------------------------------------------------->
 <nav aria-label="breadcrumb">
   <ol class="breadcrumb">
-    <li class="breadcrumb-item"><a href="#">課程類型</a></li>
-    <li class="breadcrumb-item"><a href="#">程式語言</a></li>
+    <li class="breadcrumb-item"><a >課程類型</a></li>
+<li class="breadcrumb-item"><a >${param.courseTypeName}</a></li> 
     <li class="breadcrumb-item active" aria-current="page">${param.courseName}</li>
   </ol>
 </nav>
@@ -701,7 +702,9 @@ Swal.fire(
 <input type="hidden" name="inscLoc"  value="${param.inscLoc}"> 
 <input type="hidden" name="inscLang"  value="${param.inscLang}">    
 <input type="hidden" name="inscPrice"  value="${param.inscPrice}">    
-<input type="hidden" name="inscCourser"  value="${param.inscCourser}">  
+<input type="hidden" name="inscCourser"  value="${param.inscCourser}">
+<input type="hidden" name="courseTypeName"  value="${param.courseTypeName}">
+<input type="hidden" name="courseName"  value="${param.courseName}">
                    
                  </div>
               </div>

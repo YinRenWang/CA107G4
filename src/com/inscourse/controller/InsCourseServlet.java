@@ -79,17 +79,20 @@ public class InsCourseServlet extends HttpServlet {
 				if (!errorMsgs.isEmpty()) {
 					RequestDispatcher failureView = req.getRequestDispatcher("/front-end/Inscourse/select_page.jsp");
 					failureView.forward(req, res);
+					return;
 				}
 
 				req.setAttribute("insCourseVO", insCourseVO);
 				String url = "/front-end/Inscourse/listOneInsCourse.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url);
 				successView.forward(req, res);
+				return;
  
 			} catch (Exception e) {
 				errorMsgs.add("無法取得資料:" + e.getMessage());
 				RequestDispatcher failureView = req.getRequestDispatcher("/front-end/Inscourse/select_page.jsp");
 				failureView.forward(req, res);
+				return;
 			}
 		}
 
@@ -107,6 +110,7 @@ public class InsCourseServlet extends HttpServlet {
 				String url = "/front-end/Inscourse/update_InsCourse_input.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url);
 				successView.forward(req, res);
+				return;
 
 			} 
 	
@@ -181,6 +185,7 @@ public class InsCourseServlet extends HttpServlet {
 				String url = "/front-end/Inscourse/listOneInsCourse.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url);
 				successView.forward(req, res);
+				return;
 
 			} catch (Exception e) {
 				errorMsgs.add("修改資料失敗:" + e.getMessage());
@@ -255,6 +260,7 @@ public class InsCourseServlet extends HttpServlet {
 					req.setAttribute("inCludeVO", "teacher"); // 要導向的分頁
 					RequestDispatcher successView = req.getRequestDispatcher(url); // 新增成功後轉交listAllEmp.jsp
 					successView.forward(req, res);
+					return;
 				}else {
 					errorMsgs.add("您已經有相同的課程了");
 					RequestDispatcher failureView = req.getRequestDispatcher("/front-end/inscourse/addInsCourse.jsp");
@@ -296,11 +302,13 @@ public class InsCourseServlet extends HttpServlet {
 				String url = "/front-end/inscourse/insCourseDetails.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url);
 				successView.forward(req, res);
+				return;
 
 			} catch (Exception e) {
 				errorMsgs.add("無法取得資料:" + e.getMessage());
 				RequestDispatcher failureView = req.getRequestDispatcher("/front-end/inscourse/insCourseDetails.jsp");
 				failureView.forward(req, res);
+				return;
 			}
 		}
 
@@ -333,13 +341,14 @@ public class InsCourseServlet extends HttpServlet {
 				req.setAttribute("inscLoc", inscLoc);
 				req.setAttribute("list", list);
 				String url = "/front-end/inscourse/insCourseDetails.jsp";
-
 				RequestDispatcher successView = req.getRequestDispatcher(url); // 新增成功後轉交listAllEmp.jsp
 				successView.forward(req, res);
+				return;
 			} catch (Exception e) {
 				errorMsgs.add(e.getMessage());
 				RequestDispatcher failureView = req.getRequestDispatcher("/front-end/inscourse/insCourseDetails.jsp");
 				failureView.forward(req, res);
+				return;
 			}
 		}
 
@@ -383,11 +392,13 @@ public class InsCourseServlet extends HttpServlet {
 
 				RequestDispatcher successView = req.getRequestDispatcher(url); // 新增成功後轉交listAllEmp.jsp
 				successView.forward(req, res);
+				return;
 
 			} catch (Exception e) {
 				errorMsgs.add(e.getMessage());
 				RequestDispatcher failureView = req.getRequestDispatcher("/front-end/inscourse/insCourseDetails.jsp");
 				failureView.forward(req, res);
+				return;
 			}
 		}
 
@@ -422,6 +433,7 @@ public class InsCourseServlet extends HttpServlet {
 				}
 				RequestDispatcher successView = req.getRequestDispatcher("/front-end/inscourse/listEmps_ByCompositeQuery.jsp"); // 成功轉交listEmps_ByCompositeQuery.jsp
 				successView.forward(req, res);
+				return;
 		
 			} 
 
@@ -446,11 +458,13 @@ public class InsCourseServlet extends HttpServlet {
 				req.setAttribute("inCludeVO", "teacher"); // 要導向的分頁
 				RequestDispatcher successView = req.getRequestDispatcher(url); // 新增成功後轉交listAllEmp.jsp
 				successView.forward(req, res);
+				return;
 			}catch (Exception e) {
 				errorMsgs.add(e.getMessage());
 				req.setAttribute("inCludeVO", "teacher"); // 要導向的分頁
 				RequestDispatcher failureView = req.getRequestDispatcher("/front-end/member/viewAllMember.jsp");
 				failureView.forward(req, res);
+				return;
 			}
 		}
 
