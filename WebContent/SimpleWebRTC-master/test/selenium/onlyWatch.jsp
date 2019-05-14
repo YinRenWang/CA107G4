@@ -168,12 +168,7 @@ background:#f4f9f4}
             </div>
             <div class="info">
                 <div class="desc">${teacherVO.teacherText}</div>
-                <footer class="blockquote-footer float-left">
- <form id="createRoom">
-            <input  type="hidden" id="sessionInput" value="${teacherVO.teacherId}"/>
-            <button type="submit" class="badge badge-primary">開始直播</button>
-        	</form>
-</footer>
+
             </div>
             <div class="bottom mx-auto">
                 <a class="btn btn-secondary btn-twitter btn-sm">
@@ -318,7 +313,6 @@ background:#f4f9f4}
     var webCtx = path.substring(0, path.indexOf('/', 1));
     var endPointURL = "ws://" + window.location.host + webCtx + MyPoint;
     
-	var statusOutput = document.getElementById("statusOutput");
 	var webSocket;
 	
 	function connect() {
@@ -326,10 +320,7 @@ background:#f4f9f4}
 		webSocket = new WebSocket(endPointURL);
 		
 		webSocket.onopen = function(event) {
-			updateStatus("WebSocket 成功連線");
 			document.getElementById('sendMessage').disabled = false;
-			document.getElementById('connect').disabled = true;
-			document.getElementById('disconnect').disabled = false;
 		};
 
 		webSocket.onmessage = function(event) {
@@ -341,7 +332,6 @@ background:#f4f9f4}
 		};
 
 		webSocket.onclose = function(event) {
-			updateStatus("WebSocket 已離線");
 		};
 	}
 	
@@ -371,18 +361,6 @@ background:#f4f9f4}
 	    }
 	}
 
-	
-	function disconnect () {
-		webSocket.close();
-		document.getElementById('sendMessage').disabled = true;
-		document.getElementById('connect').disabled = false;
-		document.getElementById('disconnect').disabled = true;
-	}
-
-	
-	function updateStatus(newStatus) {
-		statusOutput.innerHTML = newStatus;
-	}
     
 </script>
         

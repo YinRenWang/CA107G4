@@ -48,6 +48,7 @@ downloadButton.addEventListener('click', () => {
   const blob = new Blob(recordedBlobs, {type: 'video/webm'});	 
 	  var xhr = new XMLHttpRequest();
 	  xhr.open('POST', 'http://localhost:8081/CA107G4/UploadWebmServlet', true);
+//	  xhr.open('POST', 'https://ca107g4.tk/CA107G4/UploadWebmServlet', true);
 	  xhr.onload = function(e) { console.log("loaded"); };
 	  xhr.onreadystatechange = function(){
 	      console.log("state: " + xhr.readyState);
@@ -126,6 +127,7 @@ function stopRecording() {
 	 $.ajax({
 		 type: "POST",
 		 url: "http://localhost:8081/CA107G4/LiveStreamServlet",
+//		 url: "https://ca107g4.tk/CA107G4/LiveStreamServlet",
 		 data: creatQueryString($(this).val(), ""),
 		 dataType: "json",
 		 success: function (data){

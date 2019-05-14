@@ -51,15 +51,26 @@ public class GoodsOrderServlet extends HttpServlet {
 				return;
 			}
 				String memId = memberVO.getMemId();
-				Double goodTotalPricexx  = Double.valueOf(req.getParameter("goodTotalPrice"));
-				Integer goodTotalPrice=goodTotalPricexx.intValue();
+				
+				Integer goodTotalPrice=0;				
+				try {
+					Double goodTotalPricexx  = Double.valueOf(req.getParameter("goodTotalPrice"));
+				goodTotalPrice=goodTotalPricexx.intValue();
+				}catch(NumberFormatException e) {
+					errorMsgs.add("價格請填數字.");
+				}
 				String buyerName = req.getParameter("buyerName");
 				String county = req.getParameter("county");
 				String district = req.getParameter("district");
 				String address = req.getParameter("address");
 				System.out.println(county+district+address);
 				String buyerAddress = county+district+address;
-				String buyerPhone = req.getParameter("buyerPhone");
+				
+				String buyerPhone = req.getParameter("buyerPhone");				
+				String phoneReg = "^09[0-9]{8}$";
+				if(!buyerPhone.trim().matches(phoneReg)) { //以下練習正則(規)表示式(regular-expression)
+					errorMsgs.add("電話號碼: 請輸入正確格式");
+	            }
 				Integer goodOrdStatus = 1;
 								
 				GoodsOrderVO orderVO = new GoodsOrderVO();
@@ -79,7 +90,13 @@ public class GoodsOrderServlet extends HttpServlet {
 					goodsDetailsVO.setGoodAmount(goodsVO.getQuantity());
 					detailsList.add(goodsDetailsVO);	
 				}
-				
+				// Send the use back to the form, if there were errors
+				if (!errorMsgs.isEmpty()) {
+					req.setAttribute("orderVO", orderVO); // 含有輸入格式錯誤的member物件,也存入req
+					RequestDispatcher failureView = req.getRequestDispatcher("front-end/goods/check_order.jsp");
+					failureView.forward(req, res);
+					return;
+				}
 				/*************************** 2.開始查詢資料 *****************************************/
 				GoodsOrderService orderSvc = new GoodsOrderService();
 				GoodsOrderVO goodsOrderVO=orderSvc.insertOrders(orderVO, detailsList);
@@ -88,6 +105,7 @@ public class GoodsOrderServlet extends HttpServlet {
 					String url = "/front-end/goodsdetail/Detail.jsp";
 					RequestDispatcher successView = req.getRequestDispatcher(url); 
 					successView.forward(req, res);
+					return;// 程式中斷
 //			catch (Exception e) {
 //				errorMsgs.add("無法取得資料:" + e.getMessage());
 //				RequestDispatcher failureView = req.getRequestDispatcher("/goodsorder/select_page.jsp");
@@ -133,8 +151,7 @@ public class GoodsOrderServlet extends HttpServlet {
 				String url = "/front-end/goodsorder/select_order.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url); // 成功轉交 listOneOrder.jsp
 				successView.forward(req, res);
-
-			
+				return;// 程式中斷
 
 		}
 
@@ -178,6 +195,7 @@ public class GoodsOrderServlet extends HttpServlet {
 				errorMsgs.add("無法取得資料:" + e.getMessage());
 				RequestDispatcher failureView = req.getRequestDispatcher("/front-end/goodsorder/select_page.jsp");
 				failureView.forward(req, res);
+				return;// 程式中斷
 			}
 
 		}
@@ -228,11 +246,13 @@ public class GoodsOrderServlet extends HttpServlet {
 				String url = "/goodsorder/listAllOrder.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url);
 				successView.forward(req, res);
+				return;// 程式中斷
 
 			} catch (Exception e) {
 				errorMsgs.add("無法取得資料:" + e.getMessage());
 				RequestDispatcher failureView = req.getRequestDispatcher("/front-end/goodsorder/select_page.jsp");
 				failureView.forward(req, res);
+				return;// 程式中斷
 			}
 
 		}

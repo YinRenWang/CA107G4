@@ -3,6 +3,8 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ page import="java.util.*"%>
 <%@ page import ="com.goods.model.GoodsVO" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 
 
 <html>
@@ -190,6 +192,18 @@ ul, ol {
 }
 </style>
 
+<c:if test="${not empty errorMsgs}">
+<c:forEach var="message" items="${errorMsgs}">
+<script>
+Swal.fire(
+		 '請檢查內容',
+		  '${message}',
+		  'error'
+)
+</script>
+</c:forEach>
+</c:if>  
+
  
  </head>
 <body>
@@ -207,7 +221,8 @@ ul, ol {
 		<div>
 			<div role="tw-city-selector">收件人地址:</div><input type="text" name="address"  id="address" value="" class="userInput">
 		</div>
-		<div>收件人電話:<input type="text" name="buyerPhone" value="" class="userInput" id="buyerPhone"></div></<center>
+		<div>收件人電話:<input type="text" name="buyerPhone" pattern="[0-9]{2}[0-9]{8}" class="userInput" id="buyerPhone" required></div></<center>
+
 
 		
 <hr><p>
@@ -275,7 +290,12 @@ ul, ol {
 			var y=$("#address").val();
 			var z=$("#buyerPhone").val();
 			if(x==""||x==null||y==""||y==null||z==""||z==null){
-				alert("請輸入資料");
+				Swal.fire(
+						 '請檢查內容',
+						  '請輸入資料',
+						  'error'
+				)
+				
 			}else{
 				$('#form1').submit();
 			}

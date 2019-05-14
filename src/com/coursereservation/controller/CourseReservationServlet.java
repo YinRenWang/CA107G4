@@ -74,11 +74,9 @@ public class CourseReservationServlet extends HttpServlet {
 				String teacherId = crVO.getMemId();
 				TeacherService teacherSvc=new TeacherService();
 				if(teacherSvc.findOneById(teacherId).getMemId().equals(memId)) {
-					System.out.println("錯誤處理請鼎鈞自己處理^o<");
 				}
 				// Web取資料  
-			} else { 
-			
+			} else { 			
 				List<String> errorMsgs = new LinkedList<String>();
 				List<String> errorMsgsAlert = new LinkedList<String>();
 				HttpSession session	=req.getSession();
@@ -86,7 +84,7 @@ public class CourseReservationServlet extends HttpServlet {
 				if(memberVO==null) {
 					errorMsgsAlert.add("請先登入會員");
 					session.setAttribute("errorMsgsAlert", errorMsgsAlert); // 含有輸入格式錯誤的empVO物件,也存入req
-					String location=req.getContextPath()+"/front-end/inscourse/inscourse.do?"+(String) session.getAttribute("userSearch");
+					String location=req.getContextPath()+"/inscourse/inscourse.do?"+(String) session.getAttribute("userSearch");
 					session.setAttribute("location", location);
 					res.sendRedirect(req.getContextPath() + "/front-end/member/loginMember.jsp");
 					return;
@@ -99,7 +97,7 @@ public class CourseReservationServlet extends HttpServlet {
 					errorMsgs.add("您不能訂購自己的課程...");
 					req.setAttribute("errorMsgs", errorMsgs); // 含有輸入格式錯誤的empVO物件,也存入req
 					String userSearch=(String) session.getAttribute("userSearch");
-					RequestDispatcher failureView = req.getRequestDispatcher("/front-end/inscourse/inscourse.do?"+userSearch);
+					RequestDispatcher failureView = req.getRequestDispatcher("/inscourse/inscourse.do?"+userSearch);
 					failureView.forward(req, res);
 					return;
 					
@@ -115,7 +113,7 @@ public class CourseReservationServlet extends HttpServlet {
 					errorMsgs.add("您的餘額不足");
 					req.setAttribute("errorMsgs", errorMsgs); // 含有輸入格式錯誤的empVO物件,也存入req
 					String userSearch=(String) session.getAttribute("userSearch");
-					RequestDispatcher failureView = req.getRequestDispatcher("/front-end/inscourse/inscourse.do?"+userSearch);
+					RequestDispatcher failureView = req.getRequestDispatcher("/inscourse/inscourse.do?"+userSearch);
 					failureView.forward(req, res);
 					return;
 					

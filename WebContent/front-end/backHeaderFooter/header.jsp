@@ -14,7 +14,7 @@
     			<li class="nav-item"> <a class="nav-link" id="openLive" href="<%= request.getContextPath()%>/SimpleWebRTC-master/test/selenium/index.jsp" onclick="sendMessage();">現場直播</a> </li>
            </c:when>
            <c:otherwise>
-           <li class="nav-item active"> <a class="nav-link" href="<%= request.getContextPath()%>/teacher/joinTeacher.jsp">成為老師 <span class="sr-only">(current)</span></a> </li>
+           <li class="nav-item active"> <a class="nav-link" href="<%= request.getContextPath()%>/front-end/teacher/joinTeacher.jsp">成為老師 <span class="sr-only">(current)</span></a> </li>
          
            </c:otherwise>
          </c:choose>  

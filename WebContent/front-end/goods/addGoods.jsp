@@ -7,7 +7,6 @@
 <%
 	GoodsVO goodsVO = (GoodsVO) request.getAttribute("GoodsVO");
 %>
-
 <!doctype html>
 <html lang="en">
 
@@ -20,60 +19,52 @@
 <link rel="stylesheet"
 	href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
 <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/front-end/css/G4.css ">
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/2.0.0/jquery.min.js"></script>
 
-<title>WeShare | 商品資料新增</title>
+<title>WeShare | 最棒的教育共享平台</title>
+<style type="text/css">
+.row {
+	margin-top: 30px;
+}
 
-<style>
-table#table-1 {
-	background-color: #CCCCFF;
-	border: 2px solid black;
+.goodsTitle {
+	margin-top: 100px;
 	text-align: center;
+	margin-left: 30%
 }
 
-table#table-1 h4 {
-	color: red;
-	display: block;
-	margin-bottom: 1px;
+.goodsTitle2 {
+	margin-top: 5px;
+	text-align: center;
+	margin-left: 35%
 }
 
-h4 {
-	color: blue;
-	display: inline;
-}
-
-.title {
-	width: 450px;
-	background-color: #CCCCFF;
-	margin-top: 80px;
+.cart1 {
+	margin-right: 5px;
 	margin-bottom: 10px;
-	border: 3px ridge Gray;
-	height: 80px;
+}
+
+.changepage {
+	margin-left: 35%;
+}
+
+.page {
 	text-align: center;
 }
 </style>
-
-<style>
-table {
-	width: 450px;
-	background-color: white;
-	margin-top: 1px;
-	margin-bottom: 1px;
-}
-
-table, th, td {
-	border: 0px solid #CCCCFF;
-}
-
-th, td {
-	padding: 1px;
-}
-</style>
-
 </head>
+
+
 <body>
 	<!-------------------------------------------------------------------------headerStart------------------------------------------------------------------------->
-<%@ include file="/front-end/backHeaderFooter/header.jsp"%>   
+<%@ include file="/front-end/backHeaderFooter/header.jsp"%> 
 	<!-------------------------------------------------------------------------headerEnd------------------------------------------------------------------------->
+<br>	
+<br>
+<br>
+<br>
+<br>
 
 	<center><table class="title">
 		<tr>
@@ -134,12 +125,7 @@ th, td {
 		</FORM>
 	</div>
 
-
-
-
-
-
-	<!-------------------------------------------------------------------------footerStart-------------------------------------------------------------------------
+	<!-------------------------------------------------------------------------footerStart------------------------------------------------------------------------->
 <%@ include file="/front-end/backHeaderFooter/footer.jsp"%> 
 	<!-------------------------------------------------------------------------footerEnd------------------------------------------------------------------------->
 	<!-- Optional JavaScript -->

@@ -2,9 +2,9 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>    
 <!DOCTYPE html>
-<c:if test="${not empty listEmps_ByCompositeQuery}" >
+      <c:if test="${not empty listEmps_ByCompositeQuery}" >
 <c:remove var="listEmps_ByCompositeQuery" scope="session"/>
-</c:if>
+</c:if>  
 <jsp:useBean id="teacherSvc" scope="page" class="com.teacher.model.TeacherService" />
 <jsp:useBean id="memberSvc" scope="page" class="com.member.model.MemberService" />
 <jsp:useBean id="LiveStreamSvc" scope="page" class="com.livestream.model.LiveStreamService" />
@@ -185,7 +185,8 @@ ul, ol {
 <title>WeShare | 最棒的教育共享平台</title>
 </head>
 <body onLoad="connect();">
-  <%@ include file="/front-end/backHeaderFooter/header.jsp"%>     
+  <%@ include file="/front-end/backHeaderFooter/header.jsp"%>   
+
   
   <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
     <ol class="carousel-indicators">
@@ -205,7 +206,7 @@ ul, ol {
     <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev"> <span class="carousel-control-prev-icon" aria-hidden="true"></span> <span class="sr-only">Previous</span> </a> <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next"> <span class="carousel-control-next-icon" aria-hidden="true"></span> <span class="sr-only">Next</span> </a> </div>
   <div class="search">
     <div class="search-title" align="center">
-      <h5 class="seat">這裡總有一位適合您的老師! </h5>
+      <h5 class="seat">這裡總有一位適合您的老師!</h5>
     </div>
      
       
@@ -388,7 +389,7 @@ $('#${liveStreamVO.lsId}').mouseout(function(e){
 				if(data=='open'){
 					swal({
 						  title: '<span class="title">有一則新的直播開始囉！</span>',
-						  html: '<span class="text"><a href="http://172.20.10.2:8081/CA107G4/SimpleWebRTC-master/test/selenium/onlyWatch.jsp?tc00001">觀看直播</a></span>'
+						  html: '<span class="text"><a href="<%=request.getContextPath()%>/SimpleWebRTC-master/test/selenium/onlyWatch.jsp?tc00001">觀看直播</a></span>'
 						});
 				}
 			};

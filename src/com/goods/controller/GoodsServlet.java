@@ -72,6 +72,7 @@ public class GoodsServlet extends HttpServlet {
 			String url = "/front-end/goods/good_home.jsp";
 			RequestDispatcher rd = req.getRequestDispatcher(url);
 			rd.forward(req, res);
+			return; // 程式中斷
 		}
 		
 // ----------------------更改購物車的數量-------------------------------------------
@@ -90,6 +91,7 @@ public class GoodsServlet extends HttpServlet {
 						String url = "/front-end/goods/shoppingcart.jsp";
 						RequestDispatcher successView = req.getRequestDispatcher(url);
 						successView.forward(req, res);
+						return; // 程式中斷
 						
 					}
 					
@@ -106,10 +108,12 @@ System.out.println("刪除購物車的書籍");
 				String url = "/front-end/goods/shoppingcart.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url);
 				successView.forward(req, res);
+				return; // 程式中斷
 				
 			}
 			
 //---------------------確認訂單，計算購物車總價錢-----------------------------------------
+			try {
 			if ("check_order".equals(action)) {
 System.out.println("結帳");
 				double total = 0;
@@ -122,7 +126,20 @@ System.out.println("結帳");
 				String userBuy = req.getQueryString();
 				String totalPrice = String.valueOf(total);
 				req.getSession().setAttribute("totalPrice", totalPrice);
+				
+				if(goodlist.size()>0) {
 				String url = "/front-end/goods/check_order.jsp";
+				RequestDispatcher rd = req.getRequestDispatcher(url);
+				rd.forward(req, res);
+				return;
+				}else {
+					String url = "/front-end/goods/good_home.jsp";
+					RequestDispatcher rd = req.getRequestDispatcher(url);
+					rd.forward(req, res);
+					return;
+				}
+			}}catch(NullPointerException ne){
+				String url = "/front-end/goods/good_home.jsp";
 				RequestDispatcher rd = req.getRequestDispatcher(url);
 				rd.forward(req, res);
 				return;
@@ -140,16 +157,16 @@ System.out.println("結帳");
 				String goodName = req.getParameter("goodName");
 				String enameReg = "^[(\u4e00-\u9fa5)(a-zA-Z0-9)]{2,10}$";
 				if (goodName == null || goodName.trim().length() == 0) {
-					errorMsgs.add("員工姓名: 請勿空白");
+					errorMsgs.add("商品名稱:請勿空白");
 				} else if (!goodName.trim().matches(enameReg)) { // 以下練習正則(規)表示式(regular-expression)
-					errorMsgs.add("商品名稱: 只能是中、英文字母、數字 , 且長度必需在2到6之間");
+					errorMsgs.add("商品名稱:只能是中、英文字母、數字 , 且長度必需在2到6之間");
 				}
 				Integer goodPrice = null;
 				try {
 					goodPrice = new Integer(req.getParameter("goodPrice").trim());
 				} catch (NumberFormatException e) {
-					goodPrice = null;
-					errorMsgs.add("價格請填數字.");
+					goodPrice = 0;
+					errorMsgs.add("價格請填數字");
 				}
 
 				String goodInfo = req.getParameter("goodInfo");
@@ -173,12 +190,12 @@ System.out.println("結帳");
 				//圖片
 				goodVO.setGoodImg(goodImg);
 				goodVO.setGoodStatus(goodStatus);				
-				System.out.println("Servlet:"+goodVO);
 				
 				if (!errorMsgs.isEmpty()) {
-					req.setAttribute("goodVO", goodVO); // 含有輸入格式錯誤的goodVO物件,也存入req
-					RequestDispatcher failureView = req.getRequestDispatcher("/front-end/member/viewAllMember.jsp");
-					failureView.forward(req, res);
+					String url = "/front-end/member/viewAllMember.jsp";
+					req.setAttribute("inCludeVO", "goods"); // 資料庫取出的memberVO物件,存入req
+					RequestDispatcher successView = req.getRequestDispatcher(url);
+					successView.forward(req, res);
 					return; // 程式中斷
 				}
 				
@@ -191,12 +208,15 @@ System.out.println("結帳");
 				req.setAttribute("inCludeVO", "goods"); // 資料庫取出的memberVO物件,存入req
 				RequestDispatcher successView = req.getRequestDispatcher(url);
 				successView.forward(req, res);
+				return; // 程式中斷
 
 			} catch (Exception e) {
-				System.out.println(e);
 				errorMsgs.add(e.getMessage());
-				RequestDispatcher failureView = req.getRequestDispatcher("/front-end/member/viewAllMember.jsp");
-				failureView.forward(req, res);
+				String url = "/front-end/member/viewAllMember.jsp";
+				req.setAttribute("inCludeVO", "goods"); // 資料庫取出的memberVO物件,存入req
+				RequestDispatcher successView = req.getRequestDispatcher(url);
+				successView.forward(req, res);
+				return; // 程式中斷
 			}
 		}
 			
@@ -247,6 +267,7 @@ System.out.println("結帳");
 				String url = "/front-end/member/viewAllMember.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url); // 成功轉交 loginSuccess.jsp
 				successView.forward(req, res);
+				return; // 程式中斷
 			}
 			
 
@@ -271,6 +292,7 @@ System.out.println("結帳");
 				String url = "/front-end/goods/listAllGoods.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url);
 				successView.forward(req, res);
+				return; // 程式中斷
 
 			}
 
@@ -287,6 +309,7 @@ System.out.println("結帳");
 				String url = "/front-end/goods/listAllGoods.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url);// 成功後,轉交回送出刪除的來源網頁
 				successView.forward(req, res);
+				return; // 程式中斷
 
 			}
 			
@@ -310,6 +333,7 @@ System.out.println("結帳");
 
 				RequestDispatcher successView = req.getRequestDispatcher(url); // 成功轉交 listOneEmp.jsp
 				successView.forward(req, res);
+				return; // 程式中斷
 
 			}
 			
@@ -339,6 +363,7 @@ System.out.println("結帳");
 					RequestDispatcher failureView = req
 							.getRequestDispatcher("/front-end/goods/listAllGoods.jsp");
 					failureView.forward(req, res);
+					return; // 程式中斷
 				}
 			}
 			
