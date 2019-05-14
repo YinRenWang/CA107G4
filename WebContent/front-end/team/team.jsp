@@ -10,7 +10,7 @@
 <%
 	InsCourseService inscourseSvc = new InsCourseService();
 
-	List<InsCourseVO> list = inscourseSvc.getAll("1");
+	List<InsCourseVO> list = inscourseSvc.getAll(1);
 	pageContext.setAttribute("list", list);
 
 	JoinGroupVO joinGroupVO = (JoinGroupVO) request.getAttribute("joinGroupVO");	
@@ -283,14 +283,22 @@
 					</div>
 					<div class="class1">
 						<span class="badge badge-light"> 隊伍型態 </span> <span
-							class="badge badge-info">自主性揪團</span> <span
-							class="badge badge-info">揪團編號${teamSvc.getOneTeam(insCourseVO.inscId).teamId}</span>
-
+							class="badge badge-info">自主性揪團</span> 
+							<c:if test="${not empty teamSvc.getOneTeam(insCourseVO.inscId).teamId}">	
+							<span class="badge badge-info">揪團編號${teamSvc.getOneTeam(insCourseVO.inscId).teamId}</span>
+							</c:if>
 					</div>
 
 				</div>
 				<div class="button-group">
 					<div class="row">
+					<c:if test="${empty teamSvc.getOneTeam(insCourseVO.inscId).teamId}">
+					<FORM METHOD="get" ACTION="<%=request.getContextPath()%>/team/team.do" name="form1" id="${teamSvc.getOneTeam(insCourseVO.inscId).teamId}">
+							<input type="hidden" name="inscID" value="${insCourseVO.inscId}"> 
+							<input type="hidden" name="action" value="addTeam"> 
+								<input type="submit" id="${teamSvc.getOneTeam(insCourseVO.inscId).teamId}" value="創建揪團" class="btn btn-info submit" data-disable-with="find" />
+						</form>
+					</c:if>	
 					
 					<FORM METHOD="get" ACTION="<%=request.getContextPath()%>/team/team.do" name="form1" id="${teamSvc.getOneTeam(insCourseVO.inscId).teamId}">
 							<input type="hidden" name="memId" value="${memberVO.memId}">

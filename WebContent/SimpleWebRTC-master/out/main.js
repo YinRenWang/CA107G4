@@ -56,7 +56,11 @@ downloadButton.addEventListener('click', () => {
 	  xhr.upload.onprogress = function(e) { console.log("uploading..."); };
 	  xhr.setRequestHeader("Content-Type", "video/webm");
 	  xhr.send(blob);
-	  alert("影片入得了資料庫,CA107發大財!!");
+	  swal(
+    		  '你已儲存影片！',
+    		  '可以去直播管理確認',
+    		  'success'
+    		)
 	  
 });
 
@@ -127,7 +131,11 @@ function stopRecording() {
 		 success: function (data){
 			aelrt("成功送資料庫囉");
 	     },
-         error: function(){alert("AJAX-grade發生錯誤囉!")}
+         error: function(){swal(
+        		  '您已完成錄影',
+        		  '記得要按儲存影片哦',
+        		  'success'
+        		)}
      })
      
      function creatQueryString(paramGrade, paramClass){

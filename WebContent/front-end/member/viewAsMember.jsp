@@ -319,15 +319,17 @@ opacity:0.9;
              <div class="bs-callout bs-callout-danger">
         <h4>歷史直播</h4>
         <p>
-      
-<c:forEach var="liveStreamVO" items="${liveStreamSvc.getAll(teacherSvc.findOneById(param.memId).teacherId)}">
+<div class="row">
+<c:forEach var="liveStreamVO" items="${liveStreamSvc.getAllnoNull(teacherSvc.findOneById(param.memId).teacherId)}">
+<div class="col-6">
 <h5>直播日期:<fmt:formatDate value="${liveStreamVO.lsDate}" pattern="yyyy年MM月dd日"/></h5>
 <h5>觀看次數:${liveStreamVO.lsViewNum}次</h5>
-
 <video width="320" height="240"  src="http://localhost:8081/CA107G4/WebmDBServlet?lsId=${liveStreamVO.lsId}" controls="controls">
 您的瀏覽器不支援Video標籤QQ
 </video>
-</c:forEach>      
+</div>
+</c:forEach>  
+</div>         
       
         </p>
       </div>

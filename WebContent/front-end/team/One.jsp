@@ -207,27 +207,24 @@ background-image: url(<%=request.getContextPath()%>/front-end/Images/333.jpg);
 
 
 
-			<div class="form-row">
-				<div class="form-group col-md-4">
+		
+			
 
-					<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/team/team.do">
-						<b>請輸入課程</b> <input type="text" name="str">
+							
+				
+			
+		
 
-						<div class="form-row">
-							<input type="hidden" name="action" value="Search_One"> 
-							<input type="submit" name="commit" value="查詢"
-								class="btn btn-info submit" data-disable-with="find" />
-						</div>
-					</FORM>
-				</div>
-			</div>
 
 			<div class="form-row">
+			
 				<div class="form-group col-md-3">
+				&nbsp;<a href="<%= request.getContextPath()%>/front-end/team/team.jsp"><input type="button"  class="btn btn-info submit"  name="commit" value="返回揪團" ></a>
 					<FORM METHOD="post"
 						ACTION="<%=request.getContextPath()%>/team/team.do">
 						<div class="form-row">
 							<input type="hidden" name="action" value="findOneteam"> 
+							
 							<button class="btn btn-info submit" type="submit" value="${param.memId}" data-disable-with="find" >查看我的揪團</button>
 							
 						</div>

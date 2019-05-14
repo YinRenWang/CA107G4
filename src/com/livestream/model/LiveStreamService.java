@@ -48,7 +48,9 @@ public class LiveStreamService {
 	public List<LiveStreamVO> getAll(String teacherId){
 		return dao.getAll(teacherId);
 	}
-
+	public List<LiveStreamVO> getAllnoNull(String teacherId){
+		return dao.getAllnoNull(teacherId);
+	}
 	public LiveStreamVO getLastVideo(String teacherId){
 		return dao.getLastVideo(teacherId);
 	}

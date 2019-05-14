@@ -61,6 +61,9 @@ public class InsCourseService {
 	public List<InsCourseVO> getAll(){
 		return dao.getAll();
 	}
+	public List<InsCourseVO> getAll(Integer inscType){
+		return dao.getAll(inscType);
+	}
 	public List<InsCourseVO> getAllOn(Integer inscStatus){
 		return dao.getAllOn(inscStatus);
 	}
@@ -79,5 +82,8 @@ public class InsCourseService {
 		InsCourseVO insCourseVO = new InsCourseVO();
 		insCourseVO.setInscStatus(inscStatus);
 		dao.updateStatus(insCourseVO);
+	}
+	public List<InsCourseVO> findClassName(String str){
+		return dao.findClassName(str);
 	}
 }

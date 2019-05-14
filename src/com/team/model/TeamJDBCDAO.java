@@ -11,7 +11,7 @@ import java.util.List;
 
 public class TeamJDBCDAO implements TeamDAO_interface {
 	String driver = "oracle.jdbc.driver.OracleDriver";
-	String url = "jdbc:oracle:thin:@localhost:1521:XE";
+	String url = "jdbc:oracle:thin:@localhost:49161:XE";
 	String userid = "WESHARE";
 	String passwd = "123456";
 
@@ -297,13 +297,13 @@ public class TeamJDBCDAO implements TeamDAO_interface {
 		TeamJDBCDAO dao = new TeamJDBCDAO();
 
 //		// 新增
-//		TeamVO teamVO1 = new TeamVO();
-//		teamVO1.setLeaderID("weshare01");
-//		teamVO1.setInscID("IC00001");
-//		teamVO1.setTemaMFD(java.sql.Date.valueOf("2019-05-19"));
-//		teamVO1.setTeamEXP(java.sql.Date.valueOf("2019-06-19"));
-//		teamVO1.setTeamStatus((1));
-//		dao.insert(teamVO1);
+		TeamVO teamVO1 = new TeamVO();
+		teamVO1.setLeaderID("weshare06");
+		teamVO1.setInscID("IC00003");
+		teamVO1.setTemaMFD(java.sql.Date.valueOf("2019-05-19"));
+		teamVO1.setTeamEXP(java.sql.Date.valueOf("2019-06-19"));
+		teamVO1.setTeamStatus((1));
+		dao.insert(teamVO1);
 //
 //		// 修改
 //		TeamVO teamVO2 = new TeamVO();
@@ -317,15 +317,15 @@ public class TeamJDBCDAO implements TeamDAO_interface {
 //		dao.update(teamVO2);
 //
 //		 查詢
-		 TeamVO TeamVO3 = dao.getOneTeam("IC00001");
-			System.out.print(TeamVO3.getTeamId() + ",");
-			System.out.print(TeamVO3.getLeaderID() + ",");
-			System.out.print(TeamVO3.getInscID() + ",");
-			System.out.print(TeamVO3.getTemaMFD() + ",");
-			System.out.print(TeamVO3.getTeamEXP() + ",");
-			System.out.println(TeamVO3.getTeamStatus());
-			System.out.println("---------------------");
-//		
+//		 TeamVO TeamVO3 = dao.getOneTeam("IC00001");
+//			System.out.print(TeamVO3.getTeamId() + ",");
+//			System.out.print(TeamVO3.getLeaderID() + ",");
+//			System.out.print(TeamVO3.getInscID() + ",");
+//			System.out.print(TeamVO3.getTemaMFD() + ",");
+//			System.out.print(TeamVO3.getTeamEXP() + ",");
+//			System.out.println(TeamVO3.getTeamStatus());
+//			System.out.println("---------------------");
+////		
 		// 查全部
 
 //		List<TeamVO> list = dao.getAll();

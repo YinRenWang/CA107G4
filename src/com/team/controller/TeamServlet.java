@@ -9,6 +9,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 import javax.servlet.*;
+import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.*;
 
 import org.json.JSONArray;
@@ -26,7 +27,7 @@ import com.inscoursetime.model.InsCourseTimeService;
 import com.inscoursetime.model.InsCourseTimeVO;
 import com.joingroup.model.JoinGroupService;
 import com.joingroup.model.JoinGroupVO;
-
+@WebServlet("/TeamServlet")
 public class TeamServlet extends HttpServlet {
 
 	private static final String String = null;
@@ -61,7 +62,7 @@ public class TeamServlet extends HttpServlet {
 				}
 				// Send the use back to the form, if there were errors
 				if (!errorMsgs.isEmpty()) {
-					RequestDispatcher failureView = req.getRequestDispatcher("/team/One.jsp");
+					RequestDispatcher failureView = req.getRequestDispatcher("/front-end/team/One.jsp");
 					failureView.forward(req, res);
 					return;// 程式中斷
 				}
@@ -107,7 +108,7 @@ public class TeamServlet extends HttpServlet {
 					System.out.println("要扣的錢" + wrmoney);
 					System.out.println("預扣款項" + memblance);
 
-					if (blance < memBlock) {
+					if (blance < wrmoney) {
 						RequestDispatcher failureView = req
 								.getRequestDispatcher("/front-end/withdrawalrecord/withdrawalrecord.jsp");
 						failureView.forward(req, res);
@@ -227,7 +228,7 @@ public class TeamServlet extends HttpServlet {
 					errorMsgs.add("課程編號請勿空白");
 				}
 				System.out.println("5");
-				java.sql.Date teamMFD = null;
+				java.sql.Date teamMFD = new java.sql.Date(System.currentTimeMillis());
 
 				java.sql.Date teamEXP = null;
 				try {
@@ -258,8 +259,7 @@ public class TeamServlet extends HttpServlet {
 
 				/*************************** 2.開始新增資料 *****************************************/
 				TeamService teamSvc = new TeamService();
-				teamVO = teamSvc.addTeam(leaderID, inscID, new Date(new GregorianCalendar().getTimeInMillis()), teamEXP,
-						1);
+				teamSvc.addTeam(leaderID, inscID, teamMFD, teamEXP, 1);
 
 				InsCourseService inscourseSvc = new InsCourseService();
 				InsCourseVO incrouseVO = inscourseSvc.findOneById(inscID);
@@ -270,13 +270,7 @@ public class TeamServlet extends HttpServlet {
 				inscourseSvc.updateStatus(inscID, status);
 
 				/*************************** 3.修改完成,準備轉交(Send the Success view) *************/
-
-				req.setAttribute("teamVO", teamVO);
-
-				String url = "/front-end/team/team.jsp";
-
-				RequestDispatcher successView = req.getRequestDispatcher(url); // 新增成功後轉交listAllEmp.jsp
-				successView.forward(req, res);
+				res.sendRedirect(req.getContextPath() +"/front-end/team/team.jsp");
 
 				/*************************** 其他可能的錯誤處理 *************************************/
 			} catch (Exception e) {
@@ -363,7 +357,6 @@ public class TeamServlet extends HttpServlet {
 					e.printStackTrace();
 				}
 			}
-			System.out.println("555");
 
 			System.out.println(array);
 			res.setContentType("text/plain");
@@ -373,11 +366,74 @@ public class TeamServlet extends HttpServlet {
 			out.flush();
 			out.close();
 
-			/*************************** 2.開始查詢資料 ****************************************/
-
-////				/*************************** 3.查詢完成,準備轉交(Send the Success view) *************/	
-
 		}
+		
+		
+
+		if ("joinTeam".equals(action)) {
+		
+			List<String> errorMsgs = new LinkedList<String>();
+			req.setAttribute("errorMsgs", errorMsgs);
+			String requestURL = req.getParameter("requestURL");
+			try {
+				/*************************** 1.接收請求參數 ***************************************/
+				String inscID = new String(req.getParameter("inscID"));
+				MemberVO memberVO = (MemberVO)req.getSession().getAttribute("memberVO");
+				String leaderID =memberVO.getMemId();
+				/*************************** 2.開始刪除資料 ***************************************/
+				TeamService teamSvc = new TeamService();
+		
+					java.sql.Date teamEXP = null;
+					try {
+						teamEXP = java.sql.Date.valueOf(req.getParameter("teamEXP").trim());
+					} catch (IllegalArgumentException e) {
+						teamEXP = new java.sql.Date(System.currentTimeMillis());
+					}
+				teamSvc.addTeam(leaderID, inscID, new Date(new GregorianCalendar().getTimeInMillis()), teamEXP, 1);
+				/*************************** 3.刪除完成,準備轉交(Send the Success view) ***********/
+				String url = "/front-end/team/myTeam.jsp";
+				RequestDispatcher successView = req.getRequestDispatcher(url); // 新增成功後轉交listAllEmp.jsp
+				successView.forward(req, res);
+				/*************************** 其他可能的錯誤處理 **********************************/
+			} catch (Exception e) {
+
+				errorMsgs.add("刪除資料失敗:" + e.getMessage());
+				RequestDispatcher failureView = req.getRequestDispatcher(requestURL);
+				failureView.forward(req, res);
+
+			}
+		}
+		
+		if ("addTeam".equals(action)) {
+			
+			List<String> errorMsgs = new LinkedList<String>();
+			req.setAttribute("errorMsgs", errorMsgs);
+			String requestURL = req.getParameter("requestURL");
+			try {
+				/*************************** 1.接收請求參數 ***************************************/
+				String inscID = new String(req.getParameter("inscID"));
+				/*************************** 3.刪除完成,準備轉交(Send the Success view) ***********/
+				req.setAttribute("inscID", inscID);
+				String url = "/front-end/team/addTeam.jsp";
+				RequestDispatcher successView = req.getRequestDispatcher(url); // 新增成功後轉交listAllEmp.jsp
+				successView.forward(req, res);
+				/*************************** 其他可能的錯誤處理 **********************************/
+			} catch (Exception e) {
+
+				errorMsgs.add("刪除資料失敗:" + e.getMessage());
+				RequestDispatcher failureView = req.getRequestDispatcher(requestURL);
+				failureView.forward(req, res);
+
+			}
+		}
+		
+		
+		
+		
+		
+		
+		
+		
 
 	}
 }

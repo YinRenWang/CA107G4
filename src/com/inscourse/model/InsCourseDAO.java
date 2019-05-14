@@ -29,8 +29,10 @@ public class InsCourseDAO implements InsCourseDAO_interface {
 	final String SEARCH_TEACHERID = "SELECT * FROM INSCOURSE WHERE TEACHERID=?";
 	final String SEARCH_COURSEID = "SELECT * FROM INSCOURSE WHERE COURSEID=?";
 	final String SEARCH_COURSEALL = "SELECT * FROM INSCOURSE";
+	final String SEARCH_ALL_INSCTYPE = "SELECT * FROM INSCOURSE WHERE INSCTYPE=?";
 	final String SEARCH_ALL_INSCSTATUS = "SELECT * FROM INSCOURSE WHERE INSCSTATUS=?";
 	final String SEARCH_TEACHER_INSCID = "SELECT * FROM INSCOURSE WHERE COURSEID=? AND TEACHERID=?";
+	final String SEARCH_COURSETRANSFERALL1 = " SELECT * FROM (INSCOURSE INNER JOIN COURSE ON INSCOURSE.COURSEID= COURSE.COURSEID) INNER JOIN TEAM ON TEAM.INSCID=INSCOURSE.INSCID WHERE INSCTYPE ='1' And COURSENAME LIKE ?";
 	
 	
 	@Override
@@ -705,8 +707,128 @@ public class InsCourseDAO implements InsCourseDAO_interface {
 		
 	}
 
+	@Override
+	public List<InsCourseVO> findClassName(String str) {
+		List<InsCourseVO> list = new ArrayList<InsCourseVO>();
+		InsCourseVO insCourseVO = null;  
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+
+		try {
+
+			con = ds.getConnection();
+			pstmt = con.prepareStatement(SEARCH_COURSETRANSFERALL1);
+			pstmt.setString(1,"%"+str+"%");
+			rs = pstmt.executeQuery();
+
+			while (rs.next()) {
+				insCourseVO = new InsCourseVO();
+				insCourseVO.setInscId(rs.getString("inscId"));
+				insCourseVO.setTeacherId(rs.getString("teacherId"));
+				insCourseVO.setCourseId(rs.getString("courseId"));
+				insCourseVO.setInscLoc(rs.getString("inscLoc"));
+				insCourseVO.setInscType(rs.getInt("inscType"));
+				insCourseVO.setInscPeople(rs.getInt("inscPeople"));
+				insCourseVO.setInscLang(rs.getString("inscLang"));
+				insCourseVO.setInscPrice(rs.getInt("inscPrice"));
+				insCourseVO.setInscCourser(rs.getString("inscCourser"));
+				insCourseVO.setInscStatus(rs.getInt("inscStatus"));
+				list.add(insCourseVO);
+			}
+
+
+		}catch (SQLException se) {
+			throw new RuntimeException("A database error occured. "
+					+ se.getMessage());
+		} finally {
+			if (rs != null) {
+				try {
+					rs.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
+		}
+		return list;
 	
+	}
+
 	
+	@Override
+	public List<InsCourseVO> getAll(Integer inscType) {
+		List<InsCourseVO> list = new ArrayList<InsCourseVO>();
+		InsCourseVO insCourseVO = null;  
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+
+		try {
+		
+
+			con = ds.getConnection();
+			pstmt = con.prepareStatement(SEARCH_ALL_INSCTYPE);
+			pstmt.setInt(1, inscType);
+			rs = pstmt.executeQuery();
+
+			while (rs.next()) {
+				insCourseVO = new InsCourseVO();
+				insCourseVO.setInscId(rs.getString("inscId"));
+				insCourseVO.setTeacherId(rs.getString("teacherId"));
+				insCourseVO.setCourseId(rs.getString("courseId"));
+				insCourseVO.setInscLoc(rs.getString("inscLoc"));
+				insCourseVO.setInscType(rs.getInt("inscType"));
+				insCourseVO.setInscPeople(rs.getInt("inscPeople"));
+				insCourseVO.setInscLang(rs.getString("inscLang"));
+				insCourseVO.setInscPrice(rs.getInt("inscPrice"));
+				insCourseVO.setInscCourser(rs.getString("inscCourser"));
+				insCourseVO.setInscStatus(rs.getInt("inscStatus"));
+				list.add(insCourseVO);
+			}
+
+
+		} catch (SQLException se) {
+			throw new RuntimeException("A database error occured. "
+					+ se.getMessage());
+		} finally {
+			if (rs != null) {
+				try {
+					rs.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
+		}
+		return list;
+	}
 
 
 

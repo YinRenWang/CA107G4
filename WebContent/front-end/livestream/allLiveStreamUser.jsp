@@ -218,7 +218,7 @@ $(document).ready(function () {
 								
 
 								
-					<c:forEach var="liveStreamVO" items="${liveStreamSvc.getAll(teacherVO.teacherId)}">			
+					<c:forEach var="liveStreamVO" items="${liveStreamSvc.getAllnoNull(teacherVO.teacherId)}">			
 									<tr data-status="pagado">
 										<td>
 								<form id="ddl" action="<%= request.getContextPath()%>/LiveStreamServlet" method="GET">

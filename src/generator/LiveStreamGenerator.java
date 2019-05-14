@@ -10,6 +10,8 @@ import org.hibernate.HibernateException;
 import org.hibernate.engine.spi.SharedSessionContractImplementor;
 import org.hibernate.id.IdentifierGenerator;
 
+import com.livestream.model.Key;
+
 public class LiveStreamGenerator implements IdentifierGenerator {
 
 //	public Serializable generate(SessionImplementor session, Object object)
@@ -24,7 +26,7 @@ public class LiveStreamGenerator implements IdentifierGenerator {
 			ResultSet rs = stmt.executeQuery("SELECT LiveStream_seq.NEXTVAL as nextval FROM DUAL");
 			rs.next();
 			int nextval = rs.getInt("nextval");
-			empno = prefix + nextval;
+			empno = Key.key(nextval);
 //			con.close();   //於Hibernate 5 不可關閉連線
 		} catch (SQLException e) {
 			throw new HibernateException("Unable to generate Sequence");

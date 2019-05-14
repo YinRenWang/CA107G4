@@ -1,4 +1,4 @@
-package com.livestream.model;
+package other;
 
 import java.sql.*;
 import java.io.*;
@@ -25,9 +25,9 @@ public class WriteWebmForOracle {
 		String url = "jdbc:oracle:thin:@localhost:49161:XE";
 		String userid = "WESHARE";
 		String passwd = "123456";
-		int    count  = 1;
-		String picName[] = { "david.webm"};
-		String memId[] = {"LV00001"};
+		int    count  = 3;
+		String picName[] = {"aniki.webm","galGadot.webm","david.webm"};
+		String memId[] = {"LV00001","LV00002","LV00003"};
 	
 		try {
 			con = DriverManager.getConnection(url, userid, passwd);

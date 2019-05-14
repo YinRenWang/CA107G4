@@ -175,7 +175,7 @@ textarea {
 
 			<div class="form-group col-md-6">
 				<label for="inputPassword4">請輸入課程編號</label> <input type="text"
-					class="form-control" id="inputPassword4" name="inscID" value=""
+					class="form-control" id="inputPassword4" name="inscID" value="${inscID}" readonly="readonly"
 					placeholder="請輸入課程編號">
 			</div>
 		</div>

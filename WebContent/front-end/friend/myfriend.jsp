@@ -199,7 +199,7 @@ Swal.fire(
 									<div class="card-header border-0">
 										<img
 											src="<%=request.getContextPath()%>/member/DBGifReader.do?memId=${friendNexusVO.friendAcc}"
-											width="100" height="50">
+											width="120" height="60">
 									</div>
 									<FORM METHOD="get"
 										ACTION="<%=request.getContextPath()%>/friendnexus/friendnexus.do"
@@ -232,7 +232,8 @@ Swal.fire(
 									</FORM>
 									<div class="w-10"></div>
 									<div class="card-footer w-100 text-muted ">
-										<a href="yahoo.com.tw">查看個人資料</a>
+									<a href="<%=request.getContextPath()%>/front-end/member/viewAsMember.jsp?memId=${friendNexusVO.friendAcc}">查看個人資料</a>
+										</div>
 										
 									</div>
 								</div>

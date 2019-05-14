@@ -14,8 +14,6 @@ import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.sql.DataSource;
 
-
-
 public class TeamDAO implements TeamDAO_interface {
 	private static DataSource ds = null;
 
@@ -27,7 +25,6 @@ public class TeamDAO implements TeamDAO_interface {
 			e.printStackTrace();
 		}
 	}
-
 	private static final String INSERT_TEAM = "INSERT INTO TEAM (teamId,leaderId,inscId,teamMFD,teamEXP,teamStatus) VALUES (('TM'||LPAD(to_char(Team_seq.NEXTVAL), 5, '0')), ?, ?, ?, ?, ?)";
 	private static final String UPDATE = "UPDATE TEAM set  leaderId=?, inscId=?, teamMFD=?, teamEXP=?, teamStatus=? where teamId = ?";
 	private static final String GET_ONE_STMT = "SELECT * FROM TEAM where inscId=?";
@@ -42,7 +39,6 @@ public class TeamDAO implements TeamDAO_interface {
 		try {
 
 			con = ds.getConnection();
-			con.setAutoCommit(false);
 			pstmt = con.prepareStatement(INSERT_TEAM);
 
 			pstmt.setString(1, teamVO.getLeaderID());
@@ -54,8 +50,7 @@ public class TeamDAO implements TeamDAO_interface {
 			pstmt.executeUpdate();
 
 			// Handle any driver errors
-			// Handle any driver errors
-		}catch (SQLException se) {
+		} catch (SQLException se) {
 			throw new RuntimeException("A database error occured. " + se.getMessage());
 			// Clean up JDBC resources
 		} finally {
@@ -98,7 +93,7 @@ public class TeamDAO implements TeamDAO_interface {
 			pstmt.executeUpdate();
 
 			// Handle any driver errors
-		}catch (SQLException se) {
+		} catch (SQLException se) {
 			throw new RuntimeException("A database error occured. " + se.getMessage());
 			// Clean up JDBC resources
 		} finally {
@@ -146,10 +141,8 @@ public class TeamDAO implements TeamDAO_interface {
 
 			}
 
-		}catch (SQLException se) {
-			throw new RuntimeException("A database error occured. "
-					+ se.getMessage());
-			// Clean up JDBC resourcesred. " + se.getMessage());
+		} catch (Exception se) {
+			throw new RuntimeException("A database error occured. " + se.getMessage());
 
 		} finally {
 			if (rs != null) {
@@ -205,10 +198,10 @@ public class TeamDAO implements TeamDAO_interface {
 
 			}
 
-			
+			// Handle any driver errors
 		}catch (SQLException se) {
 			throw new RuntimeException("A database error occured. " + se.getMessage());
-			
+			// Clean up JDBC resources
 		} finally {
 			if (rs != null) {
 				try {
@@ -245,12 +238,10 @@ public class TeamDAO implements TeamDAO_interface {
 		ResultSet rs = null;
 
 		try {
-			
-
 			con = ds.getConnection();
-			
 			pstmt = con.prepareStatement(GET_ONE_STMT1);
 			pstmt.setString(1, teamId);
+
 			rs = pstmt.executeQuery();
 
 			while (rs.next()) {
@@ -264,9 +255,10 @@ public class TeamDAO implements TeamDAO_interface {
 				teamVO.setTeamStatus(rs.getInt("teamStatus"));
 
 			}
-		}catch (SQLException se) {
+
+		} catch (Exception se) {
 			throw new RuntimeException("A database error occured. " + se.getMessage());
-			// Clean up JDBC resources
+
 		} finally {
 			if (rs != null) {
 				try {
@@ -298,13 +290,13 @@ public class TeamDAO implements TeamDAO_interface {
 		TeamDAO dao = new TeamDAO();
 
 //		// 新增
-//		TeamVO teamVO1 = new TeamVO();
-//		teamVO1.setLeaderID("weshare01");
-//		teamVO1.setInscID("IC00001");
-//		teamVO1.setTemaMFD(java.sql.Date.valueOf("2019-05-19"));
-//		teamVO1.setTeamEXP(java.sql.Date.valueOf("2019-06-19"));
-//		teamVO1.setTeamStatus((1));
-//		dao.insert(teamVO1);
+		TeamVO teamVO1 = new TeamVO();
+		teamVO1.setLeaderID("weshare06");
+		teamVO1.setInscID("IC00003");
+		teamVO1.setTemaMFD(java.sql.Date.valueOf("2019-05-19"));
+		teamVO1.setTeamEXP(java.sql.Date.valueOf("2019-06-19"));
+		teamVO1.setTeamStatus((1));
+		dao.insert(teamVO1);
 //
 //		// 修改
 //		TeamVO teamVO2 = new TeamVO();
@@ -318,15 +310,15 @@ public class TeamDAO implements TeamDAO_interface {
 //		dao.update(teamVO2);
 //
 //		 查詢
-		 TeamVO TeamVO3 = dao.getOneTeam("IC00001");
-			System.out.print(TeamVO3.getTeamId() + ",");
-			System.out.print(TeamVO3.getLeaderID() + ",");
-			System.out.print(TeamVO3.getInscID() + ",");
-			System.out.print(TeamVO3.getTemaMFD() + ",");
-			System.out.print(TeamVO3.getTeamEXP() + ",");
-			System.out.println(TeamVO3.getTeamStatus());
-			System.out.println("---------------------");
-//		
+//		 TeamVO TeamVO3 = dao.getOneTeam("IC00001");
+//			System.out.print(TeamVO3.getTeamId() + ",");
+//			System.out.print(TeamVO3.getLeaderID() + ",");
+//			System.out.print(TeamVO3.getInscID() + ",");
+//			System.out.print(TeamVO3.getTemaMFD() + ",");
+//			System.out.print(TeamVO3.getTeamEXP() + ",");
+//			System.out.println(TeamVO3.getTeamStatus());
+//			System.out.println("---------------------");
+////		
 		// 查全部
 
 //		List<TeamVO> list = dao.getAll();

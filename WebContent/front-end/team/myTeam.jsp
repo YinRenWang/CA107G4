@@ -208,23 +208,10 @@
 
 		<div id="quick_form">
 			<h1>
-				<font face="fantasy" color="#855600">想揪什麼團呢？</font>
+				<font face="fantasy" color="#855600">我的揪團</font>
 			</h1>
 
-			<div class="form-row">
-				<div class="form-group col-md-4">
-
-					<FORM METHOD="get"
-						ACTION="<%=request.getContextPath()%>/team/team.do">
-						<b>請輸入課程</b> <input type="text" name="str">
-
-						<div class="form-row">
-							<input type="hidden" name="action" value="Search_One"> <input type="submit" name="commit" value="查詢"
-								class="btn btn-info submit" data-disable-with="find" />
-						</div>
-					</FORM>
-				</div>
-			</div>
+			
 
 			<div class="form-row">
 				<div class="form-group col-md-3">

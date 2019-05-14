@@ -26,6 +26,16 @@
     <url-pattern>/teacher/addTeacher.jsp</url-pattern>
     <url-pattern>/front-end/coursereservation/allCourseUser.jsp</url-pattern>
     <url-pattern>/SimpleWebRTC-master/test/selenium/index.jsp</url-pattern>
+    <url-pattern>/front-end/friend/chatroom.jsp</url-pattern>
+    <url-pattern>/front-end/withdrawalrecord/withdrawalrecord.jsp</url-pattern>
+    <url-pattern>/front-end/withdrawalrecord/withdrawalrecord_findbykey.jsp</url-pattern>
+    <url-pattern>/front-end/withdrawalrecord/page22.file</url-pattern>
+    <url-pattern>/front-end/team/addTeam.jsp</url-pattern>
+    <url-pattern>/front-end/team/myTeam.jsp</url-pattern>
+    <url-pattern>/front-end/friend/myfriend.jsp</url-pattern>
+    <url-pattern>/front-end/friend/findOne.jsp</url-pattern>	
+    <url-pattern>/front-end/friend/friendCheck.jsp</url-pattern>
+    <url-pattern>/front-end/friend/allfriend.jsp</url-pattern>
     <dispatcher>REQUEST</dispatcher>
     <dispatcher>FORWARD</dispatcher>
     <dispatcher>INCLUDE</dispatcher>
@@ -82,7 +92,40 @@
   </servlet-mapping>
   
   
-  
+  	<servlet>
+		<servlet-name>WithdrawalRecordServlet</servlet-name>
+		<servlet-class>com.withdrawalrecord.contoller.WithdrawalRecordServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>WithdrawalRecordServlet</servlet-name>
+		<url-pattern>/withdrawalrecord/withdrawalrecord.do</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
+		<servlet-name>TeamServlet</servlet-name>
+		<servlet-class>com.team.controller.TeamServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>TeamServlet</servlet-name>
+		<url-pattern>/team/team.do</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
+		<servlet-name>JoinGroupServlet</servlet-name>
+		<servlet-class>com.joingroup.controller.JoinGroupServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>JoinGroupServlet</servlet-name>
+		<url-pattern>/joinGroup/joinGroup.do</url-pattern>
+	</servlet-mapping>
+  <servlet>
+    <servlet-name>FriendNexusServlet</servlet-name>
+    <servlet-class>com.friendnexus.controller.FriendNexusServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>FriendNexusServlet</servlet-name>
+    <url-pattern>/friendnexus/friendnexus.do</url-pattern>
+  </servlet-mapping>
   
   
   

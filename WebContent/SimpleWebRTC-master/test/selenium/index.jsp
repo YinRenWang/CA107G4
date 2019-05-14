@@ -12,7 +12,10 @@
         <link rel="stylesheet" href="<%=request.getContextPath()%>/SimpleWebRTC-master/css/styles.css" type="text/css"/>
  		<link href="<%=request.getContextPath()%>/css/G4.css" rel="stylesheet" type="text/css">
  		<link href="//fonts.googleapis.com/css?family=Roboto:300,400,500,700" rel="stylesheet" type="text/css">
+ 		<link href="https://cdn.bootcss.com/limonte-sweetalert2/7.33.1/sweetalert2.css" rel="stylesheet">
     <link rel="stylesheet" href="<%=request.getContextPath()%>/SimpleWebRTC-master/css/main.css" type="text/css"/>
+    <script src="https://cdn.bootcss.com/limonte-sweetalert2/7.33.1/sweetalert2.all.min.js"></script>
+<script src="https://code.jquery.com/jquery-1.11.1.min.js"></script>
          <style>
          
             .videoContainer {
@@ -165,14 +168,14 @@ background:#f4f9f4}
 <form id="createRoom">
 <input  type="hidden" id="sessionInput" value="${teacherVO.teacherId}"/>
 <input type="hidden" id="errorMsg" value=""/>
-<button type="submit" class="badge badge-primary" id="start">開始直播</button>
+<button type="submit" class="btn btn-primary" id="start">開始直播</button>
 </form>
       
 <div class="bottom mx-auto">
- <video id="recorded" playsinline loop></video>
         <button  class="btn btn-danger" id="record" >開始錄影</button>
-        <button id="play" class="btn btn-success" >播放</button>
-        <button id="download" class="btn btn-secondary">儲存錄影內容</button>
+          <button  class="btn btn-success" id="download" >儲存錄影</button>
+        <button id="play" class="btn btn-success" style="display:none">播放</button>
+        
         
          <div style="display:none">
         <p>Echo cancellation: <input type="checkbox" id="echoCancellation"></p>

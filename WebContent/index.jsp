@@ -194,22 +194,26 @@ ul, ol {
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
           <ul class="navbar-nav mr-auto">
               <li class="nav-item"> <a class="nav-link" href="<%= request.getContextPath()%>/inscourse/inscourse.do?courseId=&inscLoc=&inscStatus=0&action=listEmps_ByCompositeQuery">探索課程</a> </li>
-              <li class="nav-item"> <a class="nav-link" href="<%= request.getContextPath()%>/front-end/member/addMember.jsp">揪團上課</a> </li>
+              <li class="nav-item"> <a class="nav-link" href="<%= request.getContextPath()%>/front-end/team/team.jsp">揪團上課</a> </li>
                <li class="nav-item"> <a class="nav-link" href="<%= request.getContextPath()%>/front-end/goods/good_home.jsp">教材商城</a> </li>
            <c:choose>
     		<c:when test="${!empty teacherVO}">
-    			<li class="nav-item"> <a class="nav-link" id="openLive" href="<%= request.getContextPath()%>//SimpleWebRTC-master/test/selenium/index.jsp" onclick="sendMessage();">現場直播</a> </li>
+    			<li class="nav-item"> <a class="nav-link" id="openLive" href="<%= request.getContextPath()%>/SimpleWebRTC-master/test/selenium/index.jsp" onclick="sendMessage();">現場直播</a> </li>
            </c:when>
            <c:otherwise>
            <li class="nav-item active"> <a class="nav-link" href="<%= request.getContextPath()%>/teacher/joinTeacher.jsp">成為老師 <span class="sr-only">(current)</span></a> </li>
          
            </c:otherwise>
          </c:choose>  
-                     
-                     
+         
+        <c:if test="${!empty memberVO}">
+            <li class="nav-item"> <a class="nav-link" id="openLive" href="<%= request.getContextPath()%>/front-end/friend/chatroom.jsp">聊天室</a> </li>
+        </c:if>
+         
+                    
                 <c:choose>
                 		<c:when test="${!empty teacherVO}">
-			 <li class="nav-item"> <a class="nav-link " href="<%= request.getContextPath()%>/front-end/member/listAllMember.jsp">我的好友</a> </li>		                   
+			      
 			<li class="nav-item dropdown"> <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" >${memberVO.memName}</a>
              <form id="viewAllMember" action="<%= request.getContextPath()%>/MemberServlet" method="get">
             	<input type="hidden" name="inCludeVO"  value="member"> 
@@ -217,6 +221,7 @@ ul, ol {
             </form>	
               <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink"> <a class="dropdown-item" onclick="document.getElementById('viewAllMember').submit();return false;">個人資料</a> 
              
+             	<a class="dropdown-item" href="<%= request.getContextPath()%>/front-end/friend/myfriend.jsp">我的好友</a>
              <form id="form2" action="<%= request.getContextPath()%>/MemberServlet" method="get">
 					<input type="hidden" name="inCludeVO"  value="teacher"> 
 					<input type="hidden" name="action" value="changeValue">
@@ -259,7 +264,7 @@ ul, ol {
             </li>  
    				</c:when>
     			<c:when test="${!empty memberVO}">
-			 <li class="nav-item"> <a class="nav-link " href="<%= request.getContextPath()%>/front-end/member/listAllMember.jsp">我的好友</a> </li>		                   
+			 <li class="nav-item"> <a class="nav-link " href="<%= request.getContextPath()%>/front-end/friend/myfriend.jsp">我的好友</a> </li>		                   
 			<li class="nav-item dropdown"> <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" >${memberVO.memName}</a>
               <form id="viewAllMember" action="<%= request.getContextPath()%>/MemberServlet" method="get">
             	<input type="hidden" name="inCludeVO"  value="member"> 
@@ -442,7 +447,7 @@ ul, ol {
   <c:if test="${not empty LiveStreamSvc.getLastVideo(teacherVO.teacherId)}">
   <c:set var="liveStreamVO" value="${LiveStreamSvc.getLastVideo(teacherVO.teacherId)}" scope="page" />
     <div class="card">
-      <div class="teacherImg" style="background-image:url(<%=request.getContextPath()%>/member/DBGifReader.do?memId=${teacherVO.memId});"></div>
+      <a href="<%=request.getContextPath()%>/front-end/member/viewAsMember.jsp?memId=${teacherVO.memId}"><div class="teacherImg" style="background-image:url(<%=request.getContextPath()%>/member/DBGifReader.do?memId=${teacherVO.memId});"></div></a>
       <div class="card-body">
       <br>
        <br>
