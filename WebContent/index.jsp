@@ -330,18 +330,20 @@ ul, ol {
   <c:if test="${not empty LiveStreamSvc.getLastVideo(teacherVO.teacherId)}">
   <c:set var="liveStreamVO" value="${LiveStreamSvc.getLastVideo(teacherVO.teacherId)}" scope="page" />
     <div class="card">
-      <a href="<%=request.getContextPath()%>/front-end/member/viewAsMember.jsp?memId=${teacherVO.memId}"><div class="teacherImg" style="background-image:url(<%=request.getContextPath()%>/member/DBGifReader.do?memId=${teacherVO.memId});"></div></a>
+      <a href="<%=request.getContextPath()%>/front-end/member/viewAsMember.jsp?memId=${teacherVO.memId}">
+      <div class="teacherImg" style="background-image:url(<%=request.getContextPath()%>/member/DBGifReader.do?memId=${teacherVO.memId});"></div></a>
       <div class="card-body">
       <br>
        <br>
        <br>
         <br>
-        <h4 class="card-title">${memberSvc.getOneMember(teacherVO.memId).memName}</h4>
+        <a href="<%=request.getContextPath()%>/SimpleWebRTC-master/test/selenium/onlyWatch.jsp?${teacherVO.teacherId}">
+        <h4 class="card-title">${memberSvc.getOneMember(teacherVO.memId).memName}</h4></a>
         <p class="card-text">
         
        
 
-<video width="320" height="160" id="${liveStreamVO.lsId}"  src="http://localhost:8081/CA107G4/WebmDBServlet?lsId=${liveStreamVO.lsId}" controls="controls"  muted>
+<video width="320" height="160" id="${liveStreamVO.lsId}"  src="<%= request.getContextPath()%>/WebmDBServlet?lsId=${liveStreamVO.lsId}" controls="controls"  muted>
 您的瀏覽器不支援Video標籤QQ
 </video>
 

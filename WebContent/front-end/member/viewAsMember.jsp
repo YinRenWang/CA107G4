@@ -299,7 +299,7 @@ opacity:0.9;
 <div class="col-6">
 <h5>直播日期:<fmt:formatDate value="${liveStreamVO.lsDate}" pattern="yyyy年MM月dd日"/></h5>
 <h5>觀看次數:${liveStreamVO.lsViewNum}次</h5>
-<video width="320" height="240"  src="http://localhost:8081/CA107G4/WebmDBServlet?lsId=${liveStreamVO.lsId}" controls="controls">
+<video width="320" height="240"  src="<%= request.getContextPath()%>/WebmDBServlet?lsId=${liveStreamVO.lsId}" controls="controls">
 您的瀏覽器不支援Video標籤QQ
 </video>
 </div>

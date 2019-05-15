@@ -28,8 +28,6 @@
     <url-pattern>/SimpleWebRTC-master/test/selenium/index.jsp</url-pattern>
     <url-pattern>/front-end/friend/chatroom.jsp</url-pattern>
     <url-pattern>/front-end/withdrawalrecord/withdrawalrecord.jsp</url-pattern>
-    <url-pattern>/front-end/withdrawalrecord/withdrawalrecord_findbykey.jsp</url-pattern>
-    <url-pattern>/front-end/withdrawalrecord/page22.file</url-pattern>
     <url-pattern>/front-end/team/addTeam.jsp</url-pattern>
     <url-pattern>/front-end/team/myTeam.jsp</url-pattern>
     <url-pattern>/front-end/friend/myfriend.jsp</url-pattern>

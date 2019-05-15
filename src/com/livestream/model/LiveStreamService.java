@@ -45,6 +45,10 @@ public class LiveStreamService {
 		return dao.getAll();
 		
 	}
+	public List<LiveStreamVO> getAllnoNull(){
+		return dao.getAllnoNull();
+		
+	}
 	public List<LiveStreamVO> getAll(String teacherId){
 		return dao.getAll(teacherId);
 	}

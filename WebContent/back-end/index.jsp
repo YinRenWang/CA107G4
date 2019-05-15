@@ -30,17 +30,22 @@
             <ul class="sidebar-menu">
               <li class="header">
 <c:choose> 
-    <c:when test="${inCludeVO=='member'}">
-	會員管理頁面
-    </c:when>
+  <c:when test="${inCludeVO=='member'}">
+	會員資料查詢
+    </c:when> 
+    
     <c:when test="${inCludeVO=='teacher'}">
-	教師審核頁面
+	教師資格審核
     </c:when>
-      <c:when test="${inCludeVO=='inscourse'}">
-
+    
+      <c:when test="${inCludeVO=='liveStream'}">
+	直播影片管理
     </c:when>
+    
       <c:when test="${inCludeVO=='transactionRecord'}">
-    </c:when>
+ 	交易紀錄查詢
+    </c:when> 
+ 
     <c:otherwise>
     </c:otherwise>
 </c:choose> 
@@ -51,126 +56,41 @@
 				<input type="hidden" name="inCludeVO"  value="member"> 
 				<input type="hidden" name="action" value="changeValue">
 				</form>	
-			<a href="#" onclick="document.getElementById('member').submit();return false;">	
+			<a href="" onclick="document.getElementById('member').submit();return false;">	
                 <i class="fa fa-dashboard"></i> <span>會員管理</span> 
                 </a>
               </li>
+              
                <li class="treeview">
                 <form id="teacher" action="<%= request.getContextPath()%>/AdministratorServlet" method="get">
 				<input type="hidden" name="inCludeVO"  value="teacher"> 
 				<input type="hidden" name="action" value="changeValue">
 				</form>	
-			<a href="#" onclick="document.getElementById('teacher').submit();return false;">	
-                <i class="fa fa-dashboard"></i> <span>教師審核</span> 
+			<a href="" onclick="document.getElementById('teacher').submit();return false;">	
+                <i class="fa fa-calendar"></i> <span>教師審核</span> 
                 </a>
               </li>
-              <li>
-                <a href="#">
-                <i class="fa fa-th"></i> <span>Widgets</span>
-                <small class="label pull-right label-info">new</small>
-                </a>
-              </li>
+              
               <li class="treeview">
-                <a href="#">
-                <i class="fa fa-pie-chart"></i>
-                <span>Charts</span>
-                <i class="fa fa-angle-left pull-right"></i>
-                </a>
-                <ul class="treeview-menu">
-                  <li><a href="#"><i class="fa fa-circle-o"></i> ChartJS</a></li>
-                  <li><a href="#"><i class="fa fa-circle-o"></i> Morris</a></li>
-                  <li><a href="#"><i class="fa fa-circle-o"></i> Flot</a></li>
-                  <li><a href="#"><i class="fa fa-circle-o"></i> Inline charts</a></li>
-                </ul>
-              </li>
-              <li class="treeview">
-                <a href="#">
-                <i class="fa fa-laptop"></i>
-                <span>UI Elements</span>
-                <i class="fa fa-angle-left pull-right"></i>
-                </a>
-                <ul class="treeview-menu">
-                  <li><a href="#"><i class="fa fa-circle-o"></i> General</a></li>
-                  <li><a href="#"><i class="fa fa-circle-o"></i> Icons</a></li>
-                  <li><a href="#"><i class="fa fa-circle-o"></i> Buttons</a></li>
-                  <li><a href="#"><i class="fa fa-circle-o"></i> Sliders</a></li>
-                  <li><a href="#"><i class="fa fa-circle-o"></i> Timeline</a></li>
-                  <li><a href="#"><i class="fa fa-circle-o"></i> Modals</a></li>
-                </ul>
-              </li>
-              <li class="treeview">
-                <a href="#">
-                <i class="fa fa-edit"></i> <span>Forms</span>
-                <i class="fa fa-angle-left pull-right"></i>
-                </a>
-                <ul class="treeview-menu">
-                  <li><a href="#"><i class="fa fa-circle-o"></i> General Elements</a></li>
-                  <li><a href="#"><i class="fa fa-circle-o"></i> Advanced Elements</a></li>
-                  <li><a href="#"><i class="fa fa-circle-o"></i> Editors</a></li>
-                </ul>
-              </li>
-              <li class="treeview">
-                <a href="#">
-                <i class="fa fa-table"></i> <span>Tables</span>
-                <i class="fa fa-angle-left pull-right"></i>
-                </a>
-                <ul class="treeview-menu">
-                  <li><a href="#"><i class="fa fa-circle-o"></i> Simple tables</a></li>
-                  <li><a href="#"><i class="fa fa-circle-o"></i> Data tables</a></li>
-                </ul>
-              </li>
-              <li>
-                <a href="#">
-                <i class="fa fa-calendar"></i> <span>Calendar</span>
-                <small class="label pull-right label-danger">3</small>
+                <form id="liveStream" action="<%= request.getContextPath()%>/AdministratorServlet" method="get">
+				<input type="hidden" name="inCludeVO"  value="liveStream"> 
+				<input type="hidden" name="action" value="changeValue">
+				</form>	
+			<a href="" onclick="document.getElementById('liveStream').submit();return false;">	
+                <i class="fa fa-circle-o"></i> <span>直播管理</span> 
                 </a>
               </li>
-              <li>
-                <a href="#">
-                <i class="fa fa-envelope"></i> <span>Mailbox</span>
-                <small class="label pull-right label-warning">12</small>
+              
+             <li class="treeview">
+                <form id="transactionRecord" action="<%= request.getContextPath()%>/AdministratorServlet" method="get">
+				<input type="hidden" name="inCludeVO"  value="transactionRecord"> 
+				<input type="hidden" name="action" value="changeValue">
+				</form>	
+			<a href="" onclick="document.getElementById('transactionRecord').submit();return false;">	
+                <i class="fa fa-pie-chart"></i> <span>交易紀錄</span> 
                 </a>
               </li>
-              <li class="treeview">
-                <a href="#">
-                <i class="fa fa-folder"></i> <span>Examples</span>
-                <i class="fa fa-angle-left pull-right"></i>
-                </a>
-                <ul class="treeview-menu">
-                  <li><a href="#"><i class="fa fa-circle-o"></i> Invoice</a></li>
-                  <li><a href="#"><i class="fa fa-circle-o"></i> Profile</a></li>
-                  <li><a href="#"><i class="fa fa-circle-o"></i> Login</a></li>
-                  <li><a href="#"><i class="fa fa-circle-o"></i> Register</a></li>
-                  <li><a href="#"><i class="fa fa-circle-o"></i> Lockscreen</a></li>
-                  <li><a href="#"><i class="fa fa-circle-o"></i> 404 Error</a></li>
-                  <li><a href="#"><i class="fa fa-circle-o"></i> 500 Error</a></li>
-                  <li><a href="#"><i class="fa fa-circle-o"></i> Blank Page</a></li>
-                  <li><a href="#"><i class="fa fa-circle-o"></i> Pace Page</a></li>
-                </ul>
-              </li>
-              <li class="treeview">
-                <a href="#">
-                <i class="fa fa-share"></i> <span>Multilevel</span>
-                <i class="fa fa-angle-left pull-right"></i>
-                </a>
-                <ul class="treeview-menu">
-                  <li><a href="#"><i class="fa fa-circle-o"></i> Level One</a></li>
-                  <li>
-                    <a href="#"><i class="fa fa-circle-o"></i> Level One <i class="fa fa-angle-left pull-right"></i></a>
-                    <ul class="treeview-menu">
-                      <li><a href="#"><i class="fa fa-circle-o"></i> Level Two</a></li>
-                      <li>
-                        <a href="#"><i class="fa fa-circle-o"></i> Level Two <i class="fa fa-angle-left pull-right"></i></a>
-                        <ul class="treeview-menu">
-                          <li><a href="#"><i class="fa fa-circle-o"></i> Level Three</a></li>
-                          <li><a href="#"><i class="fa fa-circle-o"></i> Level Three</a></li>
-                        </ul>
-                      </li>
-                    </ul>
-                  </li>
-                  <li><a href="#"><i class="fa fa-circle-o"></i> Level One</a></li>
-                </ul>
-              </li>
+            
               <li>
                <form id="loginOut" action="<%= request.getContextPath()%>/AdministratorServlet" method="get">
 				<input type="hidden" name="action" value="logout">
@@ -194,9 +114,14 @@
     <c:when test="${inCludeVO=='teacher'}">
   <%@ include file="/back-end/teacher/allTeacher.jsp"%>
     </c:when>
-      <c:when test="${inCludeVO=='inscourse'}">
+      <c:when test="${inCludeVO=='liveStream'}">
+  <%@ include file="/back-end/livestream/AllLiveStream.jsp"%>
     </c:when>
       <c:when test="${inCludeVO=='transactionRecord'}">
+  <%@ include file="/back-end/withdrawalrecord/listAllWithdrawalRecord.jsp"%>     
+    </c:when> 
+        <c:when test="${inCludeVO=='findOneByKey'}">
+  <%@ include file="/back-end/withdrawalrecord/findOneByKey.jsp"%>     
     </c:when> 
     <c:otherwise>
     </c:otherwise>

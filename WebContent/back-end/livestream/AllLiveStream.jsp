@@ -217,8 +217,8 @@ $(document).ready(function () {
 								<tbody>
 								
 
-								
-					<c:forEach var="liveStreamVO" items="${liveStreamSvc.getAllnoNull(teacherVO.teacherId)}">			
+				<jsp:useBean id="teacherSvc2" scope="page" class="com.teacher.model.TeacherService" />				
+					<c:forEach var="liveStreamVO" items="${liveStreamSvc.getAllnoNull()}">			
 									<tr data-status="pagado">
 										<td>
 								<form id="ddl" action="<%= request.getContextPath()%>/LiveStreamServlet" method="GET">
@@ -244,6 +244,9 @@ $(document).ready(function () {
 													<br>
 												
 													<br>
+														<h5 class="title" class="pull-left">
+													上傳會員：${teacherSvc2.findOneById(liveStreamVO.teacherId).memId}
+													</h5>
 													<h5 class="title" class="pull-left">
 													上傳日期：<fmt:formatDate value="${liveStreamVO.lsDate}" pattern="yyyy年MM月dd日 HH點mm分ss秒"/>
 													</h5>

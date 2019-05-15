@@ -135,9 +135,6 @@ public class WithdrawalRecordServlet extends HttpServlet {
 //					try {
 			/*************************** 1.接收請求參數 ****************************************/
 			String wrnum = new String(req.getParameter("wrnum"));
-
-
-
 			/*************************** 2.開始查詢資料 ****************************************/
 			WithdrawalRecordService withdrawalRecordSvc1 = new WithdrawalRecordService();
 			List<WithdrawalRecordVO> list = (List<WithdrawalRecordVO>) withdrawalRecordSvc1.findByKey(wrnum);
@@ -145,6 +142,35 @@ public class WithdrawalRecordServlet extends HttpServlet {
 			/*************************** 3.查詢完成,準備轉交(Send the Success view) ************/
 			req.setAttribute("list", list); // 資料庫取出的withdrawalRecordVO物件,存入req
 			String url = "/withdrawalrecord/withdrawalrecord_findbykey.jsp";
+			RequestDispatcher successView = req.getRequestDispatcher(url);// 成功轉交 addWithdrawalRecord.jsp
+			successView.forward(req, res);
+
+			/*************************** 其他可能的錯誤處理 **********************************/
+//					} catch (Exception e) {
+//						errorMsgs.add("無法取得要修改的資料:" + e.getMessage());
+//						RequestDispatcher failureView = req.getRequestDispatcher("/withdrawalrecord/findbykey.jsp");
+//						failureView.forward(req, res);
+//					}
+//		}
+}
+		
+		if ("findByKey2".equals(action)) { // 來自listAllEmp.jsp的請求
+
+			List<String> errorMsgs = new LinkedList<String>();
+			// Store this set in the request scope, in case we need to
+			// send the ErrorPage view.
+			req.setAttribute("errorMsgs", errorMsgs);
+
+//					try {
+			/*************************** 1.接收請求參數 ****************************************/
+			String wrnum = new String(req.getParameter("wrnum"));
+			/*************************** 2.開始查詢資料 ****************************************/
+			WithdrawalRecordService withdrawalRecordSvc1 = new WithdrawalRecordService();
+			List<WithdrawalRecordVO> list = (List<WithdrawalRecordVO>) withdrawalRecordSvc1.findByKey(wrnum);
+
+			/*************************** 3.查詢完成,準備轉交(Send the Success view) ************/
+			String url = "/back-end/index.jsp?wrnum="+wrnum;
+		   	req.setAttribute("inCludeVO", "findOneByKey"); // 資料庫取出的memberVO物件,存入req
 			RequestDispatcher successView = req.getRequestDispatcher(url);// 成功轉交 addWithdrawalRecord.jsp
 			successView.forward(req, res);
 

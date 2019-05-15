@@ -98,6 +98,23 @@ public class LiveStreamDAO implements LiveStreamDAO_interface {
 	}
 	
 	@Override
+	public List<LiveStreamVO> getAllnoNull() {
+		List<LiveStreamVO> list = null;
+		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+		try {
+			session.beginTransaction();
+			Query<LiveStreamVO> query = session.createQuery("from LiveStreamVO where LsContent is not null");
+			list = query.getResultList();
+			session.getTransaction().commit();
+		} catch (RuntimeException ex) {
+			session.getTransaction().rollback();
+			throw ex;
+		}
+		return list;
+	}
+
+	
+	@Override
 	public List<LiveStreamVO> getAll(String teacherId) {
 		List<LiveStreamVO> list = null;
 		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
@@ -187,6 +204,7 @@ public class LiveStreamDAO implements LiveStreamDAO_interface {
 		
 
 	}
+
 
 	
 

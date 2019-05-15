@@ -170,6 +170,10 @@ public class AdministratorServlet extends HttpServlet {
 		            	req.setAttribute("inCludeVO", "transactionRecord"); // 資料庫取出的memberVO物件,存入req
 						successView.forward(req, res);
 		                break; 
+		            case "liveStream": 
+		            	req.setAttribute("inCludeVO", "liveStream"); // 資料庫取出的memberVO物件,存入req
+						successView.forward(req, res);
+		                break; 
 		            default: 
 		                System.out.println("include有問題!!"); 
 		        }
