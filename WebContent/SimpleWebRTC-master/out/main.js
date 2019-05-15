@@ -47,8 +47,8 @@ const downloadButton = document.querySelector('button#download');
 downloadButton.addEventListener('click', () => {
   const blob = new Blob(recordedBlobs, {type: 'video/webm'});	 
 	  var xhr = new XMLHttpRequest();
-	  xhr.open('POST', 'http://localhost:8081/CA107G4/UploadWebmServlet', true);
-//	  xhr.open('POST', 'https://ca107g4.tk/CA107G4/UploadWebmServlet', true);
+//	  xhr.open('POST', 'http://localhost:8081/CA107G4/UploadWebmServlet', true);
+	  xhr.open('POST', 'https://ca107g4.ga/CA107G4/UploadWebmServlet', true);
 	  xhr.onload = function(e) { console.log("loaded"); };
 	  xhr.onreadystatechange = function(){
 	      console.log("state: " + xhr.readyState);
@@ -126,8 +126,8 @@ function stopRecording() {
   
 	 $.ajax({
 		 type: "POST",
-		 url: "http://localhost:8081/CA107G4/LiveStreamServlet",
-//		 url: "https://ca107g4.tk/CA107G4/LiveStreamServlet",
+//		 url: "http://localhost:8081/CA107G4/LiveStreamServlet",
+		 url: "https://ca107g4.ga/CA107G4/LiveStreamServlet",
 		 data: creatQueryString($(this).val(), ""),
 		 dataType: "json",
 		 success: function (data){
@@ -153,18 +153,13 @@ function handleSuccess(stream) {
   console.log('getUserMedia() got stream:', stream);
   window.stream = stream;
 
-  const gumVideo = document.querySelector('video#gum');
-  gumVideo.srcObject = stream;
 }
 
 async function init(constraints) {
-  try {
+
     const stream = await navigator.mediaDevices.getUserMedia(constraints);
     handleSuccess(stream);
-  } catch (e) {
-    console.error('navigator.getUserMedia error:', e);
-    errorMsgElement.innerHTML = `navigator.getUserMedia error:${e.toString()}`;
-  }
+
 }
 
 document.querySelector('button#start').addEventListener('click', async () => {

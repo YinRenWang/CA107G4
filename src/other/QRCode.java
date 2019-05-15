@@ -47,9 +47,9 @@ public class QRCode {
 		hints.put(EncodeHintType.CHARACTER_SET, "UTF-8");
 		hints.put(EncodeHintType.ERROR_CORRECTION, ErrorCorrectionLevel.H);
 		// 設置QRCode的存放目錄、檔名與圖片格式
-//		String filePath = "C:\\images\\qrcode";
+		String filePath = "C:\\database\\QRCODE";
 		//Mac用
-		String filePath = "/Users/yinren/Desktop/images/";		
+//		String filePath = "/Users/yinren/Desktop/images/";		
 		String fileName = new SimpleDateFormat("yyyyMMddHHmmss").format(new java.util.Date()) + ".jpg";
 		Path path = FileSystems.getDefault().getPath(filePath, fileName);
 		// 開始產生QRCode

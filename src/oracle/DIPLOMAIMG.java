@@ -1,10 +1,10 @@
-package other;
+package oracle;
 
 import java.sql.*;
 import java.io.*;
 
 
-public class WriteBlobForOracle {
+public class DIPLOMAIMG {
 
 	static {
 		try {
@@ -19,15 +19,15 @@ public class WriteBlobForOracle {
 		PreparedStatement pstmt = null;
 		String driver = "oracle.jdbc.driver.OracleDriver";
 //Windows用	
-//		String url = "jdbc:oracle:thin:@localhost:1521:XE";
+		String url = "jdbc:oracle:thin:@localhost:1521:XE";
 		
 //Mac用
-		String url = "jdbc:oracle:thin:@localhost:49161:XE";
+//		String url = "jdbc:oracle:thin:@localhost:49161:XE";
 		String userid = "WESHARE";
 		String passwd = "123456";
-		int    count  = 7;
-		String picName[] = { "01.jpg", "02.jpg", "03.jpg", "04.jpg","05.jpg","06.jpg","07.jpg" };
-		String memId[] = {"weshare01","weshare02","weshare03","weshare04","weshare05","weshare06","david"};
+		int    count  = 3;
+		String picName[] = { "01.png", "02.png", "03.jpg"};
+		String memId[] = {"TC00001","TC00002","david"};
 	
 		try {
 			con = DriverManager.getConnection(url, userid, passwd);
@@ -37,10 +37,10 @@ public class WriteBlobForOracle {
 				// 絕對路徑- 譬如:
 				
 //Mac用
-				File pic = new File("/Users/yinren/Desktop/images/blob/", picName[i-1]);
+//				File pic = new File("/Users/yinren/Desktop/images/blob/", picName[i-1]);
 				
 //Window用 		
-//				File pic = new File("C:/images/blob/", picName[i-1]);
+				File pic = new File("C:/database/DIPLOMAIMG/", picName[i-1]);
 				long flen = pic.length();
 				String fileName = pic.getName();
 				int dotPos = fileName.indexOf('.');
@@ -49,7 +49,7 @@ public class WriteBlobForOracle {
 				InputStream fin = new FileInputStream(pic);
 
 				System.out.println("Update the database... "+i);
-				pstmt = con.prepareStatement("UPDATE member set memImage=? where memId = ?");
+				pstmt = con.prepareStatement("UPDATE teacher set DIPLOMAIMG=? where teacherId = ?");
 				pstmt.setBinaryStream(1, fin, (int) flen);
 				pstmt.setString(2, memId[i-1]);
 

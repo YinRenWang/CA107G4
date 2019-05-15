@@ -1,10 +1,10 @@
-package other;
+package oracle;
 
 import java.sql.*;
 import java.io.*;
 
-//專題資料庫假資料照片塞入
-public class WriteBookForOracle {
+
+public class MEMIMAGE {
 
 	static {
 		try {
@@ -19,15 +19,15 @@ public class WriteBookForOracle {
 		PreparedStatement pstmt = null;
 		String driver = "oracle.jdbc.driver.OracleDriver";
 //Windows用	
-//		String url = "jdbc:oracle:thin:@localhost:1521:XE";
+		String url = "jdbc:oracle:thin:@localhost:1521:XE";
 		
 //Mac用
-		String url = "jdbc:oracle:thin:@localhost:49161:XE";
+//		String url = "jdbc:oracle:thin:@localhost:49161:XE";
 		String userid = "WESHARE";
 		String passwd = "123456";
-		int    count  = 9;
-		String picName[] = { "01.jpg", "02.jpg", "03.jpg", "04.jpg","05.jpg","06.jpg","07.jpg","08.jpg","09.jpg" };
-		String memId[] = {"GD00001","GD00002","GD00003","GD00004","GD00005","GD00006","GD00007","GD00008","GD00009"};
+		int    count  = 7;
+		String picName[] = { "01.jpg", "02.jpg", "03.jpg", "04.jpg","05.jpg","06.jpg","07.jpg" };
+		String memId[] = {"weshare01","weshare02","weshare03","weshare04","weshare05","weshare06","david"};
 	
 		try {
 			con = DriverManager.getConnection(url, userid, passwd);
@@ -37,10 +37,10 @@ public class WriteBookForOracle {
 				// 絕對路徑- 譬如:
 				
 //Mac用
-				File pic = new File("/Users/yinren/Desktop/images/BookName/", picName[i-1]);
+//				File pic = new File("/Users/yinren/Desktop/images/blob/", picName[i-1]);
 				
 //Window用 		
-//				File pic = new File("C:\\Users\\Java\\Desktop\\BookName", picName[i-1]);
+				File pic = new File("C:/database/MEMIMAGE/", picName[i-1]);
 				long flen = pic.length();
 				String fileName = pic.getName();
 				int dotPos = fileName.indexOf('.');
@@ -49,7 +49,7 @@ public class WriteBookForOracle {
 				InputStream fin = new FileInputStream(pic);
 
 				System.out.println("Update the database... "+i);
-				pstmt = con.prepareStatement("UPDATE GOODS set GOODIMG=? where GOODID = ?");
+				pstmt = con.prepareStatement("UPDATE member set memImage=? where memId = ?");
 				pstmt.setBinaryStream(1, fin, (int) flen);
 				pstmt.setString(2, memId[i-1]);
 
