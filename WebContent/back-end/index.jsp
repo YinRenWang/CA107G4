@@ -9,8 +9,8 @@
     <meta content='IE=edge' http-equiv='X-UA-Compatible'/>
     <meta content='width=device-width, initial-scale=1, maximum-scale=1' name='viewport'/>
     <title>Weshare 教育平台 || 後台管理系統</title>
-    <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
-    <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <link href='<%= request.getContextPath()%>/back-end/css/SidebarNav.min.css' media='all' rel='stylesheet' type='text/css'/>
   </head>
   <body>
@@ -53,7 +53,7 @@
 
 			</li>
               <li class="treeview">
-              	<form id="member" action="<%= request.getContextPath()%>/AdministratorServlet" method="get">
+              	<form id="member" action="<%= request.getContextPath()%>/AdministratorServlet" method="POST">
 				<input type="hidden" name="inCludeVO"  value="member"> 
 				<input type="hidden" name="action" value="changeValue">
 				</form>	
@@ -63,7 +63,7 @@
               </li>
               
                <li class="treeview">
-                <form id="teacher" action="<%= request.getContextPath()%>/AdministratorServlet" method="get">
+                <form id="teacher" action="<%= request.getContextPath()%>/AdministratorServlet" method="POST">
 				<input type="hidden" name="inCludeVO"  value="teacher"> 
 				<input type="hidden" name="action" value="changeValue">
 				</form>	
@@ -73,7 +73,7 @@
               </li>
               
               <li class="treeview">
-                <form id="liveStream" action="<%= request.getContextPath()%>/AdministratorServlet" method="get">
+                <form id="liveStream" action="<%= request.getContextPath()%>/AdministratorServlet" method="POST">
 				<input type="hidden" name="inCludeVO"  value="liveStream"> 
 				<input type="hidden" name="action" value="changeValue">
 				</form>	
@@ -83,7 +83,7 @@
               </li>
               
              <li class="treeview">
-                <form id="transactionRecord" action="<%= request.getContextPath()%>/AdministratorServlet" method="get">
+                <form id="transactionRecord" action="<%= request.getContextPath()%>/AdministratorServlet" method="POST">
 				<input type="hidden" name="inCludeVO"  value="transactionRecord"> 
 				<input type="hidden" name="action" value="changeValue">
 				</form>	
@@ -93,7 +93,7 @@
               </li>
             
               <li>
-               <form id="loginOut" action="<%= request.getContextPath()%>/AdministratorServlet" method="get">
+               <form id="loginOut" action="<%= request.getContextPath()%>/AdministratorServlet" method="POST">
 				<input type="hidden" name="action" value="logout">
 				</form>	
               <a href="#" onclick="document.getElementById('loginOut').submit();return false;">	
@@ -137,8 +137,8 @@
       
       
   
-    <script src="http://code.jquery.com/jquery-1.12.4.min.js"></script>
-    <script src="http://netdna.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="//code.jquery.com/jquery-1.12.4.min.js"></script>
+    <script src="//netdna.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
 
 

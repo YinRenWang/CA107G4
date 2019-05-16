@@ -146,8 +146,7 @@ System.out.println("結帳");
 			}
 					
 //------------------------------------新增商品上架----------------------------------------
-			if ("insert".equals(action)) {
-				System.out.println("進入insert");			
+			if ("insert".equals(action)) {		
 			List<String> errorMsgs = new LinkedList<String>();
 			req.setAttribute("errorMsgs", errorMsgs);
 			try {
@@ -157,16 +156,16 @@ System.out.println("結帳");
 				String goodName = req.getParameter("goodName");
 				String enameReg = "^[(\u4e00-\u9fa5)(a-zA-Z0-9)]{2,10}$";
 				if (goodName == null || goodName.trim().length() == 0) {
-					errorMsgs.add("商品名稱:請勿空白");
+					errorMsgs.add("商品名稱：請勿空白");
 				} else if (!goodName.trim().matches(enameReg)) { // 以下練習正則(規)表示式(regular-expression)
-					errorMsgs.add("商品名稱:只能是中、英文字母、數字 , 且長度必需在2到6之間");
+					errorMsgs.add("商品名稱：只能是中、英文字母、數字 , 且長度必需在2到6之間");
 				}
 				Integer goodPrice = null;
 				try {
 					goodPrice = new Integer(req.getParameter("goodPrice").trim());
 				} catch (NumberFormatException e) {
 					goodPrice = 0;
-					errorMsgs.add("價格請填數字");
+					errorMsgs.add("商品價格：請填數字");
 				}
 
 				String goodInfo = req.getParameter("goodInfo");
@@ -192,7 +191,7 @@ System.out.println("結帳");
 				goodVO.setGoodStatus(goodStatus);				
 				
 				if (!errorMsgs.isEmpty()) {
-					String url = "/front-end/member/viewAllMember.jsp";
+					String url = "/front-end/goods/addGoods.jsp";
 					req.setAttribute("inCludeVO", "goods"); // 資料庫取出的memberVO物件,存入req
 					RequestDispatcher successView = req.getRequestDispatcher(url);
 					successView.forward(req, res);
@@ -204,7 +203,7 @@ System.out.println("結帳");
 				goodVO = goodsSvc.insertGood(teacherId, goodName, goodPrice, goodInfo, goodImg, goodStatus);
 				
 				/*************************** 3.新增完成,準備轉交(Send the Success view) ***********/
-				String url = "/front-end/member/viewAllMember.jsp";
+				String url = "/front-end/goods/addGoods.jsp";
 				req.setAttribute("inCludeVO", "goods"); // 資料庫取出的memberVO物件,存入req
 				RequestDispatcher successView = req.getRequestDispatcher(url);
 				successView.forward(req, res);

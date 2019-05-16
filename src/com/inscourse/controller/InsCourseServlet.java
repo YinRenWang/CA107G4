@@ -144,12 +144,12 @@ public class InsCourseServlet extends HttpServlet {
 					inscPrice = new Integer(req.getParameter("inscPrice").trim());
 				} catch (NumberFormatException e) {
 					inscPrice = 0;
-					errorMsgs.add("價錢請填數字.");
+					errorMsgs.add("授課金額請填數字.");
 				}
 
 				String inscCourser = req.getParameter("inscCourser").trim();
 				if (inscCourser == null || inscCourser.trim().length() == 0) {
-					errorMsgs.add("職位請勿空白");
+					errorMsgs.add("課程大綱請勿空白");
 				}
 
 				Integer inscStatus = new Integer(req.getParameter("inscStatus").trim());
@@ -168,7 +168,7 @@ public class InsCourseServlet extends HttpServlet {
 
 				if (!errorMsgs.isEmpty()) {
 					req.setAttribute("inCludeVO", "teacher");
-					String url = "/front-end/member/viewAllMember.jsp";
+					String url = "/front-end/inscourse/editCourse.jsp?inscId="+inscId;
 					RequestDispatcher successView = req.getRequestDispatcher(url); // 成功轉交 loginSuccess.jsp
 					successView.forward(req, res);
 					return;

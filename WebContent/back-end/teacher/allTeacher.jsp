@@ -20,18 +20,18 @@
 <link rel="stylesheet" type="text/css"
 	href="<%=request.getContextPath()%>/css/G4.css ">
 <link rel="stylesheet" type="text/css"
-	href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+	href="//maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
 <script
-	src="https://ajax.googleapis.com/ajax/libs/jquery/2.0.0/jquery.min.js"></script>
+	src="//ajax.googleapis.com/ajax/libs/jquery/2.0.0/jquery.min.js"></script>
 <script
-	src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+	src="//ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 
 <script 
-	src="http://code.jquery.com/jquery-2.1.4.min.js"></script>
+	src="//code.jquery.com/jquery-2.1.4.min.js"></script>
 
 <script 
-	src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>	
+	src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>	
 <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
 <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
     
@@ -154,7 +154,16 @@ $(document).ready(function () {
 	$('.star').on('click', function () {
       $(this).toggleClass('star-checked');
     });
-
+	$('#select1').change(function(){
+		 $('#status1').submit();
+		  });
+	 $('#select2').change(function(){
+		 $('#status2').submit();
+		  });
+	 $('#select3').change(function(){
+		 $('#status3').submit();
+		  });
+		
     $('.ckbox label').on('click', function () {
       $(this).parents('tr').toggleClass('selected');
     });
@@ -170,16 +179,7 @@ $(document).ready(function () {
     });
     
 
-	 $("#select1").change(function(){
-		 alert("有進來");
-		 $('#form1').submit();
-		  });
-	 $("#select2").change(function(){
-		 $('#form2').submit();
-		  });
-	 $("#select3").change(function(){
-		 $('#form3').submit();
-		  });
+	 
 
  });
 </script>
@@ -212,7 +212,7 @@ $(document).ready(function () {
 					<c:forEach var="teacherVO0" items="${teacherSvc.getAllStatus(1)}">			
 									<tr data-status="pagado">
 										<td>
-								<form id="form1" action="<%= request.getContextPath()%>/TeacherServlet" method="GET">
+								<form id="status1" action="<%= request.getContextPath()%>/TeacherServlet" method="POST">
 								<input type="hidden" name="action"  id="action" value="updateStatus">
 								<input type="hidden" name="teacherId"  value="${teacherVO0.teacherId}">
 								<select size="1" name="teacherStatus" id="select1">
@@ -256,7 +256,7 @@ $(document).ready(function () {
 								
 									<tr data-status="pendiente">
 										<td>
-								<form id="form2" action="<%= request.getContextPath()%>/TeacherServlet" method="GET">
+								<form id="status2" action="<%= request.getContextPath()%>/TeacherServlet" method="POST">
 								<input type="hidden" name="action"  id="action" value="updateStatus">
 								<input type="hidden" name="teacherId"  value="${teacherVO0.teacherId}">		
 										<select size="1" name="teacherStatus" id="select2">
@@ -299,7 +299,7 @@ $(document).ready(function () {
 								<c:forEach var="teacherVO0" items="${teacherSvc.getAllStatus(2)}">			
 									<tr data-status="cancelado">
 										<td>
-								<form id="form3" action="<%= request.getContextPath()%>/TeacherServlet" method="GET">
+								<form id="status3" action="<%= request.getContextPath()%>/TeacherServlet" method="POST">
 								<input type="hidden" name="action"  id="action" value="updateStatus">
 								<input type="hidden" name="teacherId"  value="${teacherVO0.teacherId}">	
 										<select size="1" name="teacherStatus" id="select3">

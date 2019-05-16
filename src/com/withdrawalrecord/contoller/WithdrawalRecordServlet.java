@@ -188,8 +188,8 @@ public class WithdrawalRecordServlet extends HttpServlet {
 			List<String> errorMsgs = new LinkedList<String>();
 
 			req.setAttribute("errorMsgs", errorMsgs);
-//
-//			try {
+
+			try {
 
 				/*************************** 1.接收請求參數 - 輸入格式的錯誤處理 **********************/
 				String memid = req.getParameter("memid");
@@ -251,12 +251,87 @@ public class WithdrawalRecordServlet extends HttpServlet {
 
 				/*************************** 其他可能的錯誤處理 *************************************/
 			}
-//			catch (Exception e) {
-//				errorMsgs.add(e.getMessage());
-//				RequestDispatcher failureView = req.getRequestDispatcher("/front-end/withdrawalrecord/withdrawalrecord.jsp");
-//				failureView.forward(req, res);
-//			}
-//		}
+			catch (Exception e) {
+				errorMsgs.add(e.getMessage());
+				RequestDispatcher failureView = req.getRequestDispatcher("/front-end/withdrawalrecord/withdrawalrecord.jsp");
+				failureView.forward(req, res);
+			}
+		}
+		
+		if ("insert2".equals(action)) { // 來自addEmp.jsp的請求
+
+			List<String> errorMsgs = new LinkedList<String>();
+
+			req.setAttribute("errorMsgs", errorMsgs);
+
+			try {
+
+				/*************************** 1.接收請求參數 - 輸入格式的錯誤處理 **********************/
+				String memid = req.getParameter("memid");
+				Integer wrmoney = null;
+				try {
+					wrmoney = new Integer(req.getParameter("wrmoney").trim());
+				} catch (NumberFormatException e) {
+					wrmoney = 0;
+					errorMsgs.add("交易金額請填數字.");
+				}
+
+//				
+
+				java.sql.Date wrtime = new Date(new GregorianCalendar().getTimeInMillis());
+				
+
+				WithdrawalRecordVO withdrawalRecordVO = new WithdrawalRecordVO();
+
+				withdrawalRecordVO.setMemid(memid);
+				withdrawalRecordVO.setWrmoney(wrmoney);
+
+				if (!errorMsgs.isEmpty()) {
+					req.setAttribute("withdrawalRecordVO", withdrawalRecordVO); // 含有輸入格式錯誤的withdrawalRecordVO物件,也存入req
+					RequestDispatcher failureView = req.getRequestDispatcher("/front-end/withdrawalrecord/withdrawalrecord.jsp");
+					failureView.forward(req, res);
+					return; // 程式中斷
+				}
+
+				/*************************** 2.開始新增資料 *****************************************/
+				WithdrawalRecordService withdrawalRecordSvc = new WithdrawalRecordService();
+				WithdrawalRecordVO	withdrawalRecordVO1 = withdrawalRecordSvc.addWithdrawalRecord(withdrawalRecordVO.getMemid(),
+				withdrawalRecordVO.getWrmoney(),wrtime );
+
+				withdrawalRecordVO.setWrnum(withdrawalRecordVO1.getWrnum());
+				
+				
+				MemberService memberSvc = new MemberService();
+				MemberVO membe = memberSvc.getOneMember(req.getParameter("memid"));
+
+				int blance = membe.getMemBalance();
+  
+				System.out.println("blance");
+				int wrmoney1 = withdrawalRecordVO1.getWrmoney();
+
+				int allmoney = blance + wrmoney1;
+
+//				membe.setMemBalance(allmoney);
+				memberSvc.update1(allmoney, membe.getMemBlock(), membe.getMemId());
+				
+				System.out.println("666:" + withdrawalRecordVO1.getWrnum());
+				System.out.println(allmoney);
+
+				/*************************** 3.修改完成,準備轉交(Send the Success view) *************/
+				
+				req.setAttribute("inCludeVO", "transactionRecord"); // 資料庫取出的memberVO物件,存入req
+				String url = "/front-end/member/viewAllMember.jsp";
+				RequestDispatcher successView = req.getRequestDispatcher(url); // 成功轉交 loginSuccess.jsp
+				successView.forward(req, res);
+
+				/*************************** 其他可能的錯誤處理 *************************************/
+			}
+			catch (Exception e) {
+				errorMsgs.add(e.getMessage());
+				RequestDispatcher failureView = req.getRequestDispatcher("/front-end/withdrawalrecord/withdrawalrecord.jsp");
+				failureView.forward(req, res);
+			}
+		}
 
 		// 刪除
 //		if ("delete".equals(action)) { // 來自listAllEmp.jsp

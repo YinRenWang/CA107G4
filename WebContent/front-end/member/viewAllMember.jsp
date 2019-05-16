@@ -274,15 +274,16 @@ Swal.fire(
 							訂單資訊 </a>
 						</li>
 						
-						<li id="record" >
-						<form id="form6" action="<%= request.getContextPath()%>/MemberServlet" method="get">
-								<input type="hidden" name="inCludeVO"  value="transactionRecord"> 
+						<li id="wallet" >
+						<form id="form8" action="<%= request.getContextPath()%>/MemberServlet" method="get">
+								<input type="hidden" name="inCludeVO"  value="wallet"> 
 								<input type="hidden" name="action" value="changeValue">
 							</form>	
-							<a href="#" onclick="document.getElementById('form6').submit();return false;">	
+							<a href="#" onclick="document.getElementById('form8').submit();return false;">	
 							<i class="glyphicon glyphicon-transactionRecord"></i>
-							交易紀錄 </a>
+							We幣錢包 </a>
 						</li>
+						
 						
 <c:if test="${!empty teacherVO}">						
 							<li id="liveStream" >
@@ -324,8 +325,11 @@ Swal.fire(
      <c:when test="${inCludeVO=='goodsOrder'}">
   <%@ include file="/front-end/goodsorder/select_order.jsp"%>     
     </c:when>
-         <c:when test="${inCludeVO=='liveStream'}">
+    <c:when test="${inCludeVO=='liveStream'}">
   <%@ include file="/front-end/livestream/allLiveStreamUser.jsp"%>     
+    </c:when>
+      <c:when test="${inCludeVO=='wallet'}">
+  <%@ include file="/front-end/withdrawalrecord/withdrawalrecordforInclude.jsp"%>     
     </c:when>
     <c:otherwise>
     <%@ include file="/front-end/member/editMember.jsp"%>
@@ -344,7 +348,6 @@ Swal.fire(
 
 
 </script>	
-	
 	
 	<!-------------------------------------------------------------------------footerStart------------------------------------------------------------------------->
 <%@ include file="/front-end/backHeaderFooter/footer.jsp"%> 

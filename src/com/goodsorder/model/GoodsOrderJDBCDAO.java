@@ -47,7 +47,6 @@ public class GoodsOrderJDBCDAO implements GoodsOrderDAO_interface {
 			pstmt.setString(5, goodOrderVO.getBuyerPhone());
 			pstmt.setInt(6, goodOrderVO.getGoodOrdStatus());
 			pstmt.executeUpdate();
-			System.out.println("已新增");
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
 		} catch (SQLException e) {

@@ -94,12 +94,9 @@ public class TeamServlet extends HttpServlet {
 				String teamId = req.getParameter("teamId").trim();
 				if (joinGroupSvc.findById(memId, teamId).getMemId() == null) {
 					/****** ********************* 2.開始新增資料 ***************************************/
-					JoinGroupVO joinGroupVO = new JoinGroupVO();
-					joinGroupVO = joinGroupSvc.addJoinGroupVO(memId, teamId);
 					MemberService memberSvc = new MemberService();
 					MemberVO membe = memberSvc.getOneMember(req.getParameter("memId"));
-
-					joinGroupSvc.getAll();
+		
 					int memblance = 0;
 					int blance = membe.getMemBalance();
 					Integer wrmoney = new Integer(req.getParameter("inscPrice"));
@@ -129,6 +126,9 @@ public class TeamServlet extends HttpServlet {
 					WithdrawalRecordService wrSvc = new WithdrawalRecordService();
 					wrSvc.addWithdrawalRecord(membe.getMemId(), -wrmoney,
 							new Date(new GregorianCalendar().getTimeInMillis()));
+					
+					JoinGroupVO joinGroupVO = new JoinGroupVO();
+					joinGroupVO = joinGroupSvc.addJoinGroupVO(memId, teamId);
 
 					System.out.println("新增完成");
 

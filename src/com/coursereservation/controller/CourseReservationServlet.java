@@ -156,9 +156,9 @@ public class CourseReservationServlet extends HttpServlet {
 				String buyerTel=buyer.getMemPhone();
 				String buyerName=buyer.getMemName();
 				
-//				String[] tel ={buyerTel};
-//			 	String message = "親愛的 "+buyerName+" 先生/小姐 您好!感謝您在WeShare 訂購課程 訂單編號為"+crVO2.getCrvId()+"祝您能有一個良好的學習體驗!";
-//				crSvc.sendMessage(tel, message);
+				String[] tel ={buyerTel};
+			 	String message = "親愛的 "+buyerName+" 先生/小姐 您好!感謝您在WeShare 訂購課程 訂單編號為"+crVO2.getCrvId()+"祝您能有一個良好的學習體驗!";
+				crSvc.sendMessage(tel, message);
 				// Android處理
 				if ("make_new_reservation".equals(action)) {
 					String success = "";

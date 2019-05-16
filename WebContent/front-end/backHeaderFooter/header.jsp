@@ -61,11 +61,11 @@
               <a class="dropdown-item" onclick="document.getElementById('form5').submit();return false;">訂單資訊</a>
               
               
-              <form id="form6" action="<%= request.getContextPath()%>/MemberServlet" method="get">
-								<input type="hidden" name="inCludeVO"  value="transactionRecord"> 
+              <form id="form8" action="<%= request.getContextPath()%>/MemberServlet" method="get">
+								<input type="hidden" name="inCludeVO"  value="wallet"> 
 								<input type="hidden" name="action" value="changeValue">
 							</form>	
-              <a class="dropdown-item"  onclick="document.getElementById('form6').submit();return false;">交易紀錄</a>
+              <a class="dropdown-item"  onclick="document.getElementById('form8').submit();return false;">We幣錢包</a>
             
 
  			 <form id="form7" action="<%= request.getContextPath()%>/MemberServlet" method="get">

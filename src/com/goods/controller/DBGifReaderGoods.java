@@ -25,7 +25,7 @@ public class DBGifReaderGoods extends HttpServlet {
 			byte[] buf = goodVO.getGoodImg(); // 4K buffer
 			out.write(buf);
 		} catch (Exception e) {
-			InputStream in =getServletContext().getResourceAsStream("/NoData/book.png");
+			InputStream in =getServletContext().getResourceAsStream("images/NoData/book.png");
 			byte[] b =new byte[in.available()];
 			in.read(b);
 			out.write(b);

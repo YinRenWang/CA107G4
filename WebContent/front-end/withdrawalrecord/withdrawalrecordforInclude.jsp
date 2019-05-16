@@ -42,7 +42,6 @@
 </head>
 
 <body>
-	  <%@ include file="/front-end/backHeaderFooter/header.jsp"%>   
 	<!-- ----------------------------------------------------------------- -->
 
 
@@ -69,12 +68,13 @@
 		<div class="row">
 			<div class="col-md-3 order-md-2 mb-4">
 
-				<FORM METHOD="GET" ACTION="withdrawalrecord.do" name="form1">
+				<FORM METHOD="GET" action="<%= request.getContextPath()%>/MemberServlet" name="form1">
 					<h4 class="d-flex justify-content-between align-items-center mb-3">
 						<span class="text-muted">查詢您的訂單</span>
 					</h4>
 					<ul class="list-group mb-1">
-						<input type="hidden" name="action" value="findByKey">
+								<input type="hidden" name="inCludeVO"  value="transactionRecord"> 
+								<input type="hidden" name="action" value="changeValue">
 						<button class="btn btn-primary" type="submit">查看交易紀錄</button>
 					</ul>
 <!-- <--------------------------------------------------sessionID--------------> 
@@ -135,7 +135,7 @@
 
 
 
-					<input type="hidden" name="action" value="insert">
+					<input type="hidden" name="action" value="insert2">
 
 					<input type="hidden" name="wrnum" value="${memberVO.memId}">
                     <input type="submit" id="pay" value="付款" class="btn btn-primary btn-lg btn-block" data-disable-with="find" />
@@ -158,7 +158,7 @@
 
 
 	<!-- -------------------------------------------------------------------------------------------------------------- -->
-	  <%@ include file="/front-end/backHeaderFooter/footer.jsp"%> 
+	
 	<!-- -------------------------------------------------------------------------------------------------------------- -->
 	<script>
 		
