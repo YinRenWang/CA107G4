@@ -16,7 +16,7 @@ import com.friendnexus.model.FriendNexusVO;
 import com.member.model.MemberService;
 import com.member.model.MemberVO;
 import com.team.model.TeamService;
-import com.team.model.TeamVO;  
+import com.team.model.TeamVO;   
 
 public class FriendNexusServlet extends HttpServlet { 
 
