@@ -224,6 +224,16 @@ public class CourseReservationServlet extends HttpServlet {
 							crVO.getCrvTotalPrice(), crVO.getCrvRate(), crVO.getInscTimeId());
 
 					// 新增成功
+					MemberService memberSvc = new MemberService();
+					MemberVO buyer = memberSvc.getOneMember(crVO.getMemId());
+					
+					//買家資訊
+					String buyerTel=buyer.getMemPhone();
+					String buyerName=buyer.getMemName();
+					
+					String[] tel ={buyerTel};
+				 	String message = "親愛的 "+buyerName+" 先生/小姐 您好!感謝您在WeShare 訂購課程 訂單編號為"+crVO.getCrvId()+"祝您能有一個良好的學習體驗!";
+					crSvc.sendMessage(tel, message);
 					// Android處理
 					if ("make_new_reservation".equals(action)) {
 						String success = "";

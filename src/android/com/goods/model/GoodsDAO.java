@@ -20,7 +20,7 @@ import hibernate.util.TransBean2Map;
 public class GoodsDAO implements GoodsDAO_interface {
 
 	//private static final String GET_ALL = "select goodId, teacherId, goodName, goodPrice, goodInfo, goodStatus from Goods";
-	private static final String GET_ALL = "from GoodsVO";
+	private static final String GET_ALL = "from GoodsVO where GOODSTATUS=1";
 
 	@Override
 	public void insert(GoodsVO goodVO) {

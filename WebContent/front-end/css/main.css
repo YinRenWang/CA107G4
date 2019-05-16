@@ -581,8 +581,8 @@ ul.am-dropdown-content>li>a:focus, ul.am-dropdown-content>li>a:hover{
 
 .me img{
 	float: right;
-    height: 40px;
-    width: 40px;
+    max-height: 40px;
+    max-width: 40px;
     border-radius: 50%;
 }
 
@@ -606,17 +606,12 @@ ul.am-dropdown-content>li>a:focus, ul.am-dropdown-content>li>a:hover{
     padding:7px;
     border-radius:4px;
     margin:0 10px;
-    max-width:80%;
+   
     border: 1px solid #9eea6a;
     position: relative;
 }
 
-.me span img {
-    float: right;
-    height: 40px;
-    width: 40px;
-    border-radius: 2px;
-}
+
 
 .me span:before{
     content: " ";
@@ -631,10 +626,7 @@ ul.am-dropdown-content>li>a:focus, ul.am-dropdown-content>li>a:hover{
 
 /*other*/
 .other img{
-	float: right;
-    height: 34px;
-    width: 34px;
-    border-radius: 2px; 
+	
 }
 
 .other span { 
@@ -645,7 +637,7 @@ ul.am-dropdown-content>li>a:focus, ul.am-dropdown-content>li>a:hover{
 .other{
     margin-top: 10px;
     padding-left: 10px;
-    width:80%;
+    
     display: block;
     clear: both;
     overflow: hidden;
@@ -653,7 +645,11 @@ ul.am-dropdown-content>li>a:focus, ul.am-dropdown-content>li>a:hover{
     margin-bottom:5px;
 }
 .other img {
+
     float: left;
+    max-width: 200px;
+    max-height: 200px;
+
 }
 .other span{
     background: #fff;

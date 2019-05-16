@@ -8,6 +8,7 @@ import android.com.inscoursetime.model.InsCourseTimeVO;
 import android.com.member.model.MemberService;
 import android.com.member.model.MemberVO;
 import android.com.withdrawalrecord.model.WithdrawalRecordVO;
+import other.Send;
 
 
 
@@ -109,6 +110,10 @@ public class CourseReservationService {
 	
 	public void ConfirmCourse(String crvId) {
 		dao.updateClassStatus(crvId);
+	}
+	public void sendMessage(String[] tel , String message) {
+		Send send=new Send();
+		send.sendMessage(tel, message);
 	}
 
 }

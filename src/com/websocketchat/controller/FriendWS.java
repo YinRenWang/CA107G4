@@ -98,8 +98,16 @@ public class FriendWS {
 		}
 
 		if ("chat".equals(chatMessage.getType())) {
+			String msg = chatMessage.getMessage();
+			String base64tag="data:image/png;base64,";
+			int start=base64tag.length();
 			
-			JedisHandleMessage.saveChatMessage(sender, receiver, message);
+			if(msg.contains(base64tag)) {
+				msg = msg.substring(start, msg.length());
+				chatMessage.setMessage(msg);
+			}
+			
+			JedisHandleMessage.saveChatMessage(sender, receiver, gson.toJson(chatMessage));
 
 			// send to session which receiver belongs to
 			Session receiverSession = sessionsMap.get(receiver);
@@ -107,10 +115,10 @@ public class FriendWS {
 			
 			if("image".equals(chatMessage.gettOrm())) {
 				if (senderSession != null && senderSession.isOpen()) {
-					senderSession.getAsyncRemote().sendBinary(ByteBuffer.wrap(message.getBytes()));
+					senderSession.getAsyncRemote().sendBinary(ByteBuffer.wrap(gson.toJson(chatMessage).getBytes()));
 				}
 				if (receiverSession != null && receiverSession.isOpen()) {
-					receiverSession.getAsyncRemote().sendBinary(ByteBuffer.wrap(message.getBytes()));
+					receiverSession.getAsyncRemote().sendBinary(ByteBuffer.wrap(gson.toJson(chatMessage).getBytes()));
 				}		
 			}else {
 				if (senderSession != null && senderSession.isOpen()) {
@@ -125,10 +133,10 @@ public class FriendWS {
 		System.out.println("Message received: " + message);
 	}
 
-//	@OnError
-//	public void onError(Session userSession, Throwable e) {
-//		System.out.println("Error: " + e.toString());
-//	}
+	@OnError
+	public void onError(Session userSession, Throwable e) {
+		System.out.println("Error: " + e.toString());
+	}
 
 	@OnClose
 	public void onClose(Session userSession, CloseReason reason) {
