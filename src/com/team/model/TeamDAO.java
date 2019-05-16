@@ -6,6 +6,7 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,6 +14,9 @@ import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.sql.DataSource;
+
+import com.joingroup.model.JoinGroupDAO;
+import com.joingroup.model.JoinGroupVO;
 
 public class TeamDAO implements TeamDAO_interface {
 	private static DataSource ds = null;
@@ -29,26 +33,55 @@ public class TeamDAO implements TeamDAO_interface {
 	private static final String UPDATE = "UPDATE TEAM set  leaderId=?, inscId=?, teamMFD=?, teamEXP=?, teamStatus=? where teamId = ?";
 	private static final String GET_ONE_STMT = "SELECT * FROM TEAM where inscId=?";
 	private static final String GET_ONE_STMT1 = "SELECT * FROM TEAM where teamId=?";
+	private static final String DELETE_team = "DELETE FROM TEAM where teamId =? AND leaderId=? ";
 	private static final String GET_ALL_STMT = "SELECT teamId,leaderId,inscId,teamMFD,teamEXP,teamStatus FROM Team order by teamId";
 
 	@Override
-	public void insert(TeamVO teamVO) {
+	public TeamVO insert(TeamVO teamVO,JoinGroupVO joinGroupVO) {
 		Connection con = null;
 		PreparedStatement pstmt = null;
 
 		try {
 
 			con = ds.getConnection();
-			pstmt = con.prepareStatement(INSERT_TEAM);
-
+			
+			// 1●設定於 pstm.executeUpdate()之前
+    		con.setAutoCommit(false);
+    		//新增揪團
+    		int[] cols = {1};
+			pstmt = con.prepareStatement(INSERT_TEAM,cols);
+			
 			pstmt.setString(1, teamVO.getLeaderID());
 			pstmt.setString(2, teamVO.getInscID());
 			pstmt.setDate(3, teamVO.getTemaMFD());
 			pstmt.setDate(4, teamVO.getTeamEXP());
 			pstmt.setInt(5, teamVO.getTeamStatus());
-
+			
 			pstmt.executeUpdate();
-
+			//掘取對應的自增主鍵值
+			String teamId = null;
+			ResultSet rs = pstmt.getGeneratedKeys();
+			
+			if (rs.next()) {
+			
+				teamId = rs.getString(1);
+				
+				System.out.println("自增主鍵值= " + teamId +"(剛新增成功的主編號");
+			} else {
+				
+				System.out.println("未取得自增主鍵值");
+			}
+			
+			rs.close();
+			//再加入揪團
+			JoinGroupDAO dao1 = new JoinGroupDAO();
+			joinGroupVO.setMemId(teamVO.getLeaderID());
+			joinGroupVO.setTeamId(teamId);
+			dao1.insert(joinGroupVO);
+			con.commit();
+			
+			con.setAutoCommit(true);
+			System.out.println("揪團編號"+teamId+"團主帳號"+teamVO.getLeaderID());
 			// Handle any driver errors
 		} catch (SQLException se) {
 			throw new RuntimeException("A database error occured. " + se.getMessage());
@@ -69,6 +102,8 @@ public class TeamDAO implements TeamDAO_interface {
 				}
 			}
 		}
+		return teamVO;
+		
 
 	}
 
@@ -228,6 +263,52 @@ public class TeamDAO implements TeamDAO_interface {
 		return list;
 
 	}
+	
+	@Override
+	public void deletTeam(String teamId,String leaderID) {
+	
+
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		
+		try {
+			
+			con = ds.getConnection();
+			pstmt = con.prepareStatement(DELETE_team);
+		
+			
+			pstmt.setString(1, teamId);
+            pstmt.setString(2, leaderID);
+			pstmt.executeUpdate();
+			
+			
+	
+			// Handle any driver errors
+		} catch (Exception se) {
+			throw new RuntimeException("A database error occured. " + se.getMessage());
+
+		} finally {
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
+		}
+
+	}
+	
+	
+
+	
 
 	@Override
 	public TeamVO findByPrimaryKey1(String teamId) {
@@ -290,13 +371,13 @@ public class TeamDAO implements TeamDAO_interface {
 		TeamDAO dao = new TeamDAO();
 
 //		// 新增
-		TeamVO teamVO1 = new TeamVO();
-		teamVO1.setLeaderID("weshare06");
-		teamVO1.setInscID("IC00003");
-		teamVO1.setTemaMFD(java.sql.Date.valueOf("2019-05-19"));
-		teamVO1.setTeamEXP(java.sql.Date.valueOf("2019-06-19"));
-		teamVO1.setTeamStatus((1));
-		dao.insert(teamVO1);
+//		TeamVO teamVO1 = new TeamVO();
+//		teamVO1.setLeaderID("weshare06");
+//		teamVO1.setInscID("IC00003");
+//		teamVO1.setTemaMFD(java.sql.Date.valueOf("2019-05-19"));
+//		teamVO1.setTeamEXP(java.sql.Date.valueOf("2019-06-19"));
+//		teamVO1.setTeamStatus((1));
+//		dao.insert(teamVO1);
 //
 //		// 修改
 //		TeamVO teamVO2 = new TeamVO();
@@ -342,6 +423,18 @@ public class TeamDAO implements TeamDAO_interface {
 //		System.out.println(TeamVO4.getTeamStatus());
 //		System.out.println("---------------------");
 	}
+
+	@Override
+	public TeamVO insert(TeamVO teamVO) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+//	@Override
+//	public TeamVO insert(TeamVO teamVO) {
+//		// TODO Auto-generated method stub
+//		return null;
+//	}
 
 	
 

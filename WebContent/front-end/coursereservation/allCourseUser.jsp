@@ -219,7 +219,7 @@ $(document).ready(function () {
 												</div>
 												<div class="media-body" >
 													<h5 class="title">
-													<A href="<%= request.getContextPath()%>/coursereservation/courseOrder.jsp?crvId=${listMember.crvId}">
+													<A href="<%= request.getContextPath()%>/front-end/coursereservation/courseOrder.jsp?crvId=${listMember.crvId}">
 													
 														<span class="pull-right pagado">檢視詳情</span>
 														<span class="pull-right pagado">

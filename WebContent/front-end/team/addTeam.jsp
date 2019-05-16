@@ -127,7 +127,7 @@ textarea {
 		</c:if>
 
 
-	<FORM METHOD="GET" ACTION="/CA107G4/team/team.do" name="form2">
+	<FORM METHOD="get" ACTION="/CA107G4/team/team.do" name="form2">
 		<div class="form-row">
 
 			<div class="form-group col-md-6">
@@ -150,6 +150,7 @@ textarea {
 					type="date" id="teamEXP" name="teamEXP" page[end_date]="">
 			</div>
 		</div>
+		<input type="hidden" name="inscPrice" value="${param.inscPrice}">
          <input type="hidden" name="action" value="insert1">
 		<button type="submit" class="btn btn-primary">送出</button>
 

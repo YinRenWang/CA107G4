@@ -138,6 +138,10 @@
 	margin-top: -120px;
 	margin-left: 250px;
 }
+#btn2 {
+    margin-top: -350px;
+    margin-left: 950px;
+}
 
 
 
@@ -246,15 +250,18 @@
 					</div>
 
 				</div>
-				<div class="button-group">
-					<div class="row">
-					<c:if test="${empty teamSvc.getOneTeam(insCourseVO.inscId).teamId}">
+				<c:if test="${empty teamSvc.getOneTeam(insCourseVO.inscId).teamId}">
 					<FORM METHOD="get" ACTION="<%=request.getContextPath()%>/team/team.do" name="form1" id="${teamSvc.getOneTeam(insCourseVO.inscId).teamId}">
-							<input type="hidden" name="inscID" value="${insCourseVO.inscId}"> 
+							<input type="hidden" name="inscID" value="${insCourseVO.inscId}">
+							 <input type="hidden" name="inscPrice" value="${insCourseVO.inscPrice}">
 							<input type="hidden" name="action" value="addTeam"> 
-								<input type="submit" id="${teamSvc.getOneTeam(insCourseVO.inscId).teamId}" value="創建揪團" class="btn btn-info submit" data-disable-with="find" />
+							<input  id="btn2" type="submit" id="${teamSvc.getOneTeam(insCourseVO.inscId).teamId}" value="創建揪團" class="btn btn-info submit" data-disable-with="find" />
 						</form>
 					</c:if>	
+				
+				<div class="button-group">
+					<div class="row">
+					
 					
 					<FORM METHOD="get" ACTION="<%=request.getContextPath()%>/team/team.do" name="form1" id="${teamSvc.getOneTeam(insCourseVO.inscId).teamId}">
 							<input type="hidden" name="memId" value="${memberVO.memId}">

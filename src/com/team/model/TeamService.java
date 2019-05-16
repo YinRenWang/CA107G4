@@ -3,6 +3,9 @@ package com.team.model;
 import java.sql.Date;
 import java.util.List;
 
+import com.joingroup.model.JoinGroupVO;
+import com.withdrawalrecord.model.WithdrawalRecordVO;
+
 
 
 public class TeamService {
@@ -23,7 +26,11 @@ public class TeamService {
 		teamVO.setTemaMFD(teamMFD);
 		teamVO.setTeamEXP(teamEXP);
 		teamVO.setTeamStatus(teamStatus);
-		dao.insert(teamVO);
+		
+		JoinGroupVO joinGroupVO =new JoinGroupVO();
+		
+		
+		dao.insert(teamVO,joinGroupVO);
 
 		return teamVO;
 
@@ -46,9 +53,10 @@ public class TeamService {
 
 	}
 
-//	public void deleteTeam(String teamId) {
-//		dao.delete(teamId);
-//	}
+	public void deleteTeam(String teamId, String leaderID) {
+		 dao.deletTeam(teamId, leaderID);
+		
+	}
 
 	public TeamVO getOneTeam(String inscID) {
 		return dao.getOneTeam(inscID);

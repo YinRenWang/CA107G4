@@ -203,10 +203,10 @@ Swal.fire(
 					</div>
 						<div class="profile-usertitle-job">
 <c:choose>
-    <c:when test="${memberVO.memStatus==1}">
+    <c:when test="${memberSvc.getOneMemberNoImg(memberVO.memId).memStatus==1}">
 	 會員信箱 已驗證
     </c:when>
-    <c:when test="${memberVO.memStatus==0}">
+    <c:when test="${memberSvc.getOneMemberNoImg(memberVO.memId).memStatus==0}">
  	 會員信箱 待驗證
     </c:when>
     <c:otherwise>
@@ -328,6 +328,7 @@ Swal.fire(
   <%@ include file="/front-end/livestream/allLiveStreamUser.jsp"%>     
     </c:when>
     <c:otherwise>
+    <%@ include file="/front-end/member/editMember.jsp"%>
     </c:otherwise>
 </c:choose>
 

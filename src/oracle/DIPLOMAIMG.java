@@ -26,8 +26,8 @@ public class DIPLOMAIMG {
 		String userid = "WESHARE";
 		String passwd = "123456";
 		int    count  = 3;
-		String picName[] = { "01.png", "02.png", "03.jpg"};
-		String memId[] = {"TC00001","TC00002","david"};
+		String picName[] = { "01.png", "02.png", "03.png"};
+		String memId[] = {"TC00001","TC00002","TC00003"};
 	
 		try {
 			con = DriverManager.getConnection(url, userid, passwd);

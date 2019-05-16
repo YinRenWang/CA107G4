@@ -9,9 +9,11 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.joingroup.model.JoinGroupVO;
+
 public class TeamJDBCDAO implements TeamDAO_interface {
 	String driver = "oracle.jdbc.driver.OracleDriver";
-	String url = "jdbc:oracle:thin:@localhost:49161:XE";
+	String url = "jdbc:oracle:thin:@localhost:1521:XE";
 	String userid = "WESHARE";
 	String passwd = "123456";
 
@@ -19,14 +21,16 @@ public class TeamJDBCDAO implements TeamDAO_interface {
 	private static final String UPDATE = "UPDATE TEAM set  leaderId=?, inscId=?, teamMFD=?, teamEXP=?, teamStatus=? where teamId = ?";
 	private static final String GET_ONE_STMT = "SELECT * FROM TEAM where inscId=?";
 	private static final String GET_ONE_STMT1 = "SELECT * FROM TEAM where teamId=?";
+	private static final String DELETE_team = "DELETE FROM TEAM where teamId =? AND leaderId=?";
 	private static final String GET_ALL_STMT = "SELECT teamId,leaderId,inscId,teamMFD,teamEXP,teamStatus FROM Team order by teamId";
 
 	@Override
-	public void insert(TeamVO teamVO) {
+	public TeamVO insert(TeamVO teamVO) {
 		Connection con = null;
 		PreparedStatement pstmt = null;
 
 		try {
+
 
 			Class.forName(driver);
 			con = DriverManager.getConnection(url, userid, passwd);
@@ -39,6 +43,16 @@ public class TeamJDBCDAO implements TeamDAO_interface {
 			pstmt.setInt(5, teamVO.getTeamStatus());
 
 			pstmt.executeUpdate();
+			//掘取對應的自增主鍵值
+			String teamId = null;
+			ResultSet rs = pstmt.getGeneratedKeys();
+			if (rs.next()) {
+				teamId = rs.getString(1);
+				System.out.println("自增主鍵值= " + teamId +"(剛新增成功的主編號");
+			} else {
+				System.out.println("未取得自增主鍵值");
+			}
+			teamVO.setTeamId(teamId);
 
 			// Handle any driver errors
 		} catch (ClassNotFoundException e) {
@@ -63,8 +77,10 @@ public class TeamJDBCDAO implements TeamDAO_interface {
 				}
 			}
 		}
+		return teamVO;
 
 	}
+
 
 	@Override
 	public void update(TeamVO teamVO) {
@@ -291,19 +307,70 @@ public class TeamJDBCDAO implements TeamDAO_interface {
 		}
 		return teamVO;
 	}
+	@Override
+	public void deletTeam(String teamId,String leaderID) {
+	
 
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		
+		try {
+			
+			Class.forName(driver);
+
+			con = DriverManager.getConnection(url, userid, passwd);
+			con.setAutoCommit(false);
+			pstmt = con.prepareStatement(DELETE_team);
+		
+			
+			pstmt.setString(1, teamId);
+            pstmt.setString(2, leaderID);
+			pstmt.executeUpdate();
+	
+			// Handle any driver errors
+		} catch (ClassNotFoundException e) {
+			throw new RuntimeException("Couldn't load database driver. "
+					+ e.getMessage());
+			// Handle any SQL errors
+		} catch (SQLException se) {
+			throw new RuntimeException("A database error occured. "
+					+ se.getMessage());
+			// Clean up JDBC resources
+		} finally {
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
+		}
+
+	}
+	@Override
+	public TeamVO insert(TeamVO teamVO, JoinGroupVO joinGroupVO) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 //-------------------------------------------------------------------------------------
 	public static void main(String[] args) {
 		TeamJDBCDAO dao = new TeamJDBCDAO();
 
 //		// 新增
-		TeamVO teamVO1 = new TeamVO();
-		teamVO1.setLeaderID("weshare06");
-		teamVO1.setInscID("IC00003");
-		teamVO1.setTemaMFD(java.sql.Date.valueOf("2019-05-19"));
-		teamVO1.setTeamEXP(java.sql.Date.valueOf("2019-06-19"));
-		teamVO1.setTeamStatus((1));
-		dao.insert(teamVO1);
+//		TeamVO teamVO1 = new TeamVO();
+//		teamVO1.setLeaderID("weshare06");
+//		teamVO1.setInscID("IC00003");
+//		teamVO1.setTemaMFD(java.sql.Date.valueOf("2019-05-19"));
+//		teamVO1.setTeamEXP(java.sql.Date.valueOf("2019-06-19"));
+//		teamVO1.setTeamStatus((1));
+//		dao.insert(teamVO1);
 //
 //		// 修改
 //		TeamVO teamVO2 = new TeamVO();
@@ -348,9 +415,12 @@ public class TeamJDBCDAO implements TeamDAO_interface {
 //		System.out.print(TeamVO4.getTeamEXP() + ",");
 //		System.out.println(TeamVO4.getTeamStatus());
 //		System.out.println("---------------------");
-	}
+//	}
+
 
 	
+
+	dao.deletTeam("TM00081","weshare01");
 
 //	TeamVO TeamVO4 = dao.getOneTeam("IC00001");
 //	System.out.print(TeamVO4.getTeamId() + ",");
@@ -362,4 +432,5 @@ public class TeamJDBCDAO implements TeamDAO_interface {
 //	System.out.println("---------------------");
 //}
 
+}
 }

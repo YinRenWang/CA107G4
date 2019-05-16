@@ -63,7 +63,7 @@
 		
 
 
-<FORM method="post" action="member.do" class="form-horizontal" name="form1" id="form1" enctype="multipart/form-data">
+<FORM method="post" action="<%=request.getContextPath()%>/MemberServlet" class="form-horizontal" name="addmemeber" id="addmemeber" enctype="multipart/form-data">
 
 			<div class="container">
 				<div class="row">

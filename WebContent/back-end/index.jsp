@@ -47,6 +47,7 @@
     </c:when> 
  
     <c:otherwise>
+    會員資料查詢
     </c:otherwise>
 </c:choose> 
 
@@ -124,6 +125,7 @@
   <%@ include file="/back-end/withdrawalrecord/findOneByKey.jsp"%>     
     </c:when> 
     <c:otherwise>
+        <%@ include file="/back-end/member/listAllMember.jsp"%>
     </c:otherwise>
 </c:choose> 
 

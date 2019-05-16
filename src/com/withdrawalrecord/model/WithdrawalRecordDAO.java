@@ -51,12 +51,13 @@ public class WithdrawalRecordDAO implements WithdrawalRecordDAO_interface {
 
 			con = ds.getConnection();
 			con.setAutoCommit(false);
-			pstmt = con.prepareStatement(INSERT_2,Statement.RETURN_GENERATED_KEYS);
+			String cols[] = {"wrnum"};//建立對應的主鍵
+			pstmt = con.prepareStatement(INSERT_2,cols);
 			pstmt.setString(1, withdrawalRecordVO.getMemid());
 			pstmt.setInt(2, withdrawalRecordVO.getWrmoney());
-			pstmt.setDate(3, withdrawalRecordVO.getWrtime());
 			pstmt.executeUpdate();
            
+
 	    	//掘取對應的自增主鍵值
 					String wrnum = null;
 					ResultSet rs = pstmt.getGeneratedKeys();

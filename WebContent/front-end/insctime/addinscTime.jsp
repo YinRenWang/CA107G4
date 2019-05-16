@@ -143,7 +143,7 @@ Swal.fire(
 		  
 <div class="container" id="tourpackages-carousel">
       <div class="row">
-        <div class="col-lg-12"><a class="btn icon-btn btn-primary pull-right" href="http://localhost:8081/CA107G4/inscourse/addInsCourse.jsp" target="_self">
+        <div class="col-lg-12"><a class="btn icon-btn btn-primary pull-right" href="<%= request.getContextPath()%>/front-end/inscourse/addInsCourse.jsp" target="_self">
         <span  id="close" class="glyphicon btn-glyphicon glyphicon-plus img-circle" ></span>新增課程</a></div>      
 	<c:forEach var="insCourseVO" items="${insCourseSvc.findByTeacher(teacherVO.teacherId)}">	
         <div class="col-lg-4">
@@ -151,7 +151,7 @@ Swal.fire(
               <div class="caption">
                 <div class='col-lg-12'>
                     <span class="glyphicon glyphicon-credit-card"></span>
-                          <form action="<%= request.getContextPath()%>/InsCourseServlet" method="GET">
+                          <form action="<%= request.getContextPath()%>/InsCourseServlet" method="POST">
                   <input type="hidden" name="inscId"  value="${insCourseVO.inscId}"> 
                 <input type="hidden" name="action"  value="updateStatus">
                  <input type="submit" class="glyphicon glyphicon-trash pull-right text-primary" value="<c:if test="${insCourseVO.inscStatus==0}">上架中</c:if><c:if test="${insCourseVO.inscStatus==1}">下架中</c:if>">
@@ -166,17 +166,16 @@ Swal.fire(
                      <p class="text-muted">售價:$${insCourseVO.inscPrice}</p> 
                 </div>
                 
-                <form id="form1" action="<%= request.getContextPath()%>/InsCourseTimeServlet" method="GET">
+                <form id="form1" action="<%= request.getContextPath()%>/InsCourseTimeServlet" method="POST">
                 <input type="hidden" name="action"  value="getOne_For_Display">
                 <input type="hidden" name="inscId"  value="${insCourseVO.inscId}"> 
                 <input type="submit"class="showTime btn btn-primary btn-xs btn-update btn-add-card" value="上課時間">
                 </form>
                 
-                <form action="<%= request.getContextPath()%>/InsCourseServlet" method="GET">
-                  <input type="hidden" name="inscId"  value="${insCourseVO.inscId}"> 
-                <input type="hidden" name="action"  value="updateStatus">
-                <input type="submit" class="btn btn-danger btn-xs btn-update btn-add-card" value="課程編輯">
-               </form>
+              
+            <a href="<%=request.getContextPath()%>/front-end/inscourse/editCourse.jsp?inscId=${insCourseVO.inscId}">
+                <input type="button" class="btn btn-danger btn-xs btn-update btn-add-card" value="課程編輯"></a>
+            
                
             </div>
           </div>
@@ -272,7 +271,6 @@ $(function(){
 	 $('.start_dateTime').datetimepicker({
 	  format:'Y-m-d H:i',
 	  minDate:'-1970-01-01',
-	  maxDate:'2019-04-30',
 	  timepicker:true,
 	  step: 60,
 	 });
@@ -280,7 +278,6 @@ $(function(){
 	 $('.end_dateTime').datetimepicker({
 	  format:'Y-m-d H:i',
 	  minDate:'-1970-01-01',
-	  maxDate:'2019-04-30',
 	  timepicker:true,
 	  step: 60
 	 });
@@ -291,7 +288,6 @@ $(function(){
 		 $('.start_dateTime').datetimepicker({
 			  format:'Y-m-d H:i',
 			  minDate:'-1970-01-01',
-			  maxDate:'2019-04-30',
 			  timepicker:true,
 			  step: 60,
 			 });
@@ -299,7 +295,6 @@ $(function(){
 		 $('.end_dateTime').datetimepicker({
 			  format:'Y-m-d H:i',
 			  minDate:'-1970-01-01',
-			  maxDate:'2019-04-30',
 			  timepicker:true,
 			  step: 60
 			 });

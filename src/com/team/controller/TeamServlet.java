@@ -72,7 +72,7 @@ public class TeamServlet extends HttpServlet {
 				String url = "/front-end/team/One.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url); // 成功轉交 listOneEmp.jsp
 				successView.forward(req, res);
-				System.out.println("1234");
+				return;
 				/*************************** 其他可能的錯誤處理 *************************************/
 			} catch (Exception e) {
 				System.out.println("HI");
@@ -188,8 +188,19 @@ public class TeamServlet extends HttpServlet {
 				String teamId = new String(req.getParameter("teamId"));
 				/*************************** 2.開始刪除資料 ***************************************/
 				JoinGroupService joinGroupSvc = new JoinGroupService();
-				JoinGroupVO joinGroupVO = joinGroupSvc.deleteJoinGroup(memId, teamId);
 				joinGroupSvc.deleteJoinGroup(memId, teamId);
+				
+				String leaderID = memId;
+				
+				TeamService teamSvc = new TeamService();
+				teamSvc.deleteTeam(teamId, leaderID);
+				
+				
+				System.out.println("leaderID="+leaderID);
+				System.out.println("teamId="+memId);
+				
+				
+				
 				/*************************** 3.刪除完成,準備轉交(Send the Success view) ***********/
 				String url = "/front-end/team/myTeam.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url); // 新增成功後轉交listAllEmp.jsp
@@ -205,7 +216,7 @@ public class TeamServlet extends HttpServlet {
 		}
 
 		if ("insert1".equals(action)) { // 來自addEmp.jsp的請求
-			System.out.println(action);
+			
 			List<String> errorMsgs = new LinkedList<String>();
 
 			req.setAttribute("errorMsgs", errorMsgs);
@@ -214,20 +225,20 @@ public class TeamServlet extends HttpServlet {
 
 				/*************************** 1.接收請求參數 - 輸入格式的錯誤處理 **********************/
 				String leaderID = req.getParameter("leaderID");
-				System.out.println(leaderID);
-				System.out.println("3");
+				
+				
 				String memidReg = "^[(\u4e00-\u9fa5)(a-zA-Z0-9_)]{2,10}$";
 				if (leaderID == null || leaderID.trim().length() == 0) {
 					errorMsgs.add("會員帳號請勿空白");
 				} else if (!leaderID.trim().matches(memidReg)) { // 以下練習正則(規)表示式(regular-expression)
 					errorMsgs.add("會員帳號: 只能是中、英文字母、數字和_ , 且長度必需在2到10之間");
 				}
-				System.out.println("4");
+				
 				String inscID = req.getParameter("inscID");
 				if (inscID == null) {
 					errorMsgs.add("課程編號請勿空白");
 				}
-				System.out.println("5");
+				
 				java.sql.Date teamMFD = new java.sql.Date(System.currentTimeMillis());
 
 				java.sql.Date teamEXP = null;
@@ -246,10 +257,7 @@ public class TeamServlet extends HttpServlet {
 				;
 				teamVO.setTeamEXP(teamEXP);
 
-				System.out.println(leaderID);
-				System.out.println(inscID);
-				System.out.println(teamMFD);
-				System.out.println(teamEXP);
+				
 				if (!errorMsgs.isEmpty()) {
 					req.setAttribute("teamVO", teamVO); // 含有輸入格式錯誤的withdrawalRecordVO物件,也存入req
 					RequestDispatcher failureView = req.getRequestDispatcher("/front-end/team/addTeam.jsp");
@@ -259,8 +267,10 @@ public class TeamServlet extends HttpServlet {
 
 				/*************************** 2.開始新增資料 *****************************************/
 				TeamService teamSvc = new TeamService();
-				teamSvc.addTeam(leaderID, inscID, teamMFD, teamEXP, 1);
+				TeamVO teamVO1=teamSvc.addTeam(leaderID, inscID, teamMFD, teamEXP, 1);
 
+				
+				
 				InsCourseService inscourseSvc = new InsCourseService();
 				InsCourseVO incrouseVO = inscourseSvc.findOneById(inscID);
 
@@ -268,6 +278,58 @@ public class TeamServlet extends HttpServlet {
 
 				status = 1;
 				inscourseSvc.updateStatus(inscID, status);
+				
+				
+				MemberService memberSvc = new MemberService();
+				MemberVO membe = memberSvc.getOneMember(leaderID);
+System.out.println("123456"+leaderID);
+				
+				int memblance = 0;
+				int blance = membe.getMemBalance();
+				
+				
+				Integer wrmoney = new Integer(req.getParameter("inscPrice"));
+				System.out.println(wrmoney);
+				int memBlock = membe.getMemBlock();
+				System.out.println("餘額" + blance);
+				System.out.println("要扣的錢" + wrmoney);
+				System.out.println("預扣款項" + memblance);
+
+				if (blance < wrmoney) {
+					RequestDispatcher failureView = req
+							.getRequestDispatcher("/front-end/withdrawalrecord/withdrawalrecord.jsp");
+					failureView.forward(req, res);
+					return;
+				} else {
+
+					Integer a = (int) (wrmoney * 0.8);
+
+					System.out.println("8折價" + a);
+					memblance = blance - a;
+					memBlock = a + memBlock;
+					System.out.println("memblance=" + memblance);
+					wrmoney = a;
+					System.out.println("到資料庫" + wrmoney);
+				}
+				memberSvc.update1(memblance, memBlock, leaderID);
+				
+				
+				System.out.println("memblance="+memblance);
+				System.out.println("memBlock="+memBlock);
+				System.out.println("leaderID="+leaderID);
+				
+				WithdrawalRecordService wrSvc = new WithdrawalRecordService();
+				java.sql.Date wrtime= new java.sql.Date(System.currentTimeMillis());
+				
+				
+				wrSvc.addWithdrawalRecord(leaderID, wrmoney, teamMFD);
+
+				System.out.println("新增完成");
+
+				
+				
+				
+				
 
 				/*************************** 3.修改完成,準備轉交(Send the Success view) *************/
 				res.sendRedirect(req.getContextPath() +"/front-end/team/team.jsp");

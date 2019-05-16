@@ -784,7 +784,7 @@ Swal.fire(
 										id="del_star" class="del-star"></span>
 								</div>
 								<img
-									src="http://localhost:8081/CA107G4/images/inscourse/connection.png"
+									src="<%=request.getContextPath()%>/images/inscourse/connection.png"
 									width="180" height="45" class="fakeimg" />
 							</div>
 
@@ -1145,7 +1145,7 @@ Swal.fire(
 		 	
 		 	
 		 	 $.ajax({
-		  	 	url: 'http://localhost:8081/CA107G4/InsCourseServlet',
+		  	 	url: '<%=request.getContextPath()%>/InsCourseServlet',
 		 	   	type: 'POST',
 			    data: { "inscTimeId":inscTimeId,
 			    	"inscPrice":inscPrice,

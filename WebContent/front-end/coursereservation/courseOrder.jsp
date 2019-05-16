@@ -103,12 +103,13 @@
 	
 	<div class="container" id="Information">
     <div class="row">
+       
         <div class="col-12">
             <div class="card">
                 <div class="card-body p-0">
                     <div class="row p-5">
                         <div class="col-8">         
-
+<h4 class="font-weight-bold mb-4">訂單編號 ${courseReservationVO.crvId}</h4>
    <p class="font-weight-bold mb-4">上課地點 <p class="mb-1"> ${memberSvc.getOneMember(teacherSvc.findOneById(courseReservationVO.teacherId).memId).memAdd}</p></p>
   <p><input type="hidden" id="addr" value=" ${memberSvc.getOneMember(teacherSvc.findOneById(courseReservationVO.teacherId).memId).memAdd}">
       <div id="map" style="width:700px; height:400px; margin:0px auto;" ></div>

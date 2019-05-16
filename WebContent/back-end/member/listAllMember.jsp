@@ -11,7 +11,6 @@
     List<MemberVO> list = memberSvc.getAll();
     pageContext.setAttribute("list",list);
 %>
-<jsp:useBean id="courseSvc" scope="page" class="com.course.model.CourseService" />
 <html>
 <head>
 <title>所有會員資料 - listAllMember.jsp</title>

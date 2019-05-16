@@ -59,7 +59,7 @@ public class InsCourseServlet extends HttpServlet {
 					errorMsgs.add("請輸入課程編號");
 				}
 				if (!errorMsgs.isEmpty()) {
-					RequestDispatcher failureView = req.getRequestDispatcher("/front-end/Inscourse/select_page.jsp");
+					RequestDispatcher failureView = req.getRequestDispatcher("/front-end/insCourse/select_page.jsp");
 					failureView.forward(req, res);
 					return;
 				}
@@ -67,7 +67,7 @@ public class InsCourseServlet extends HttpServlet {
 					errorMsgs.add("課程編號格式錯誤");
 				}
 				if (!errorMsgs.isEmpty()) {
-					RequestDispatcher failureView = req.getRequestDispatcher("/front-end/Inscourse/select_page.jsp");
+					RequestDispatcher failureView = req.getRequestDispatcher("/front-end/insCourse/select_page.jsp");
 					failureView.forward(req, res);
 					return;
 				}
@@ -78,7 +78,7 @@ public class InsCourseServlet extends HttpServlet {
 					errorMsgs.add("查無資料");
 				}
 				if (!errorMsgs.isEmpty()) {
-					RequestDispatcher failureView = req.getRequestDispatcher("/front-end/Inscourse/select_page.jsp");
+					RequestDispatcher failureView = req.getRequestDispatcher("/front-end/insCourse/select_page.jsp");
 					failureView.forward(req, res);
 				}
 
@@ -89,7 +89,7 @@ public class InsCourseServlet extends HttpServlet {
  
 			} catch (Exception e) {
 				errorMsgs.add("無法取得資料:" + e.getMessage());
-				RequestDispatcher failureView = req.getRequestDispatcher("/front-end/Inscourse/select_page.jsp");
+				RequestDispatcher failureView = req.getRequestDispatcher("/front-end/insCourse/select_page.jsp");
 				failureView.forward(req, res);
 			}
 		}
@@ -105,7 +105,7 @@ public class InsCourseServlet extends HttpServlet {
 				InsCourseVO insCourseVO = insCourseSvc.findOneById(inscId);
 
 				req.setAttribute("insCourseVO", insCourseVO);
-				String url = "/front-end/Inscourse/update_InsCourse_input.jsp";
+				String url = "/front-end/insCourse/editCourse.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url);
 				successView.forward(req, res);
 
@@ -130,17 +130,16 @@ public class InsCourseServlet extends HttpServlet {
 
 				Integer inscType = new Integer(req.getParameter("inscType").trim());
 
-				Integer inscPeople = null;
+				Integer inscPeople = 0;
 				try {
 					inscPeople = new Integer(req.getParameter("inscPeople").trim());
 				} catch (NumberFormatException e) {
-					inscPeople = 0;
-					errorMsgs.add("人數請填數字.");
+					inscPeople = 1;
 				}
 
 				String inscLang = req.getParameter("inscLang").trim();
 
-				Integer inscPrice = null;
+				Integer inscPrice = 0;
 				try {
 					inscPrice = new Integer(req.getParameter("inscPrice").trim());
 				} catch (NumberFormatException e) {
@@ -168,25 +167,31 @@ public class InsCourseServlet extends HttpServlet {
 				insCourseVO.setInscStatus(inscStatus);
 
 				if (!errorMsgs.isEmpty()) {
-					req.setAttribute("insCourseVO", insCourseVO);
-					RequestDispatcher failureView = req.getRequestDispatcher("/front-end/Inscourse/update_insCourse_input.jsp");
-					failureView.forward(req, res);
+					req.setAttribute("inCludeVO", "teacher");
+					String url = "/front-end/member/viewAllMember.jsp";
+					RequestDispatcher successView = req.getRequestDispatcher(url); // 成功轉交 loginSuccess.jsp
+					successView.forward(req, res);
 					return;
 				}
 
 				InsCourseService insCourseSvc = new InsCourseService();
 				insCourseSvc.updateInsCourse(inscId, teacherId, courseId, inscLoc, inscType, inscPeople, inscLang,
 						inscPrice, inscCourser, inscStatus);
-
-				req.setAttribute("insCourseVO", insCourseVO);
-				String url = "/front-end/Inscourse/listOneInsCourse.jsp";
-				RequestDispatcher successView = req.getRequestDispatcher(url);
+				/*************************** 4.新增完成,準備轉交(Send the Success view) ***********/
+				req.setAttribute("inCludeVO", "teacher");
+				String url = "/front-end/member/viewAllMember.jsp";
+				RequestDispatcher successView = req.getRequestDispatcher(url); // 成功轉交 loginSuccess.jsp
 				successView.forward(req, res);
+				return;
 
-			} catch (Exception e) {
+			} 
+			catch (Exception e) {
 				errorMsgs.add("修改資料失敗:" + e.getMessage());
-				RequestDispatcher failureView = req.getRequestDispatcher("/front-end/Inscourse/update_InsCourse_input.jsp");
+				req.setAttribute("inCludeVO", "teacher");
+				String url = "/front-end/member/viewAllMember.jsp";
+				RequestDispatcher failureView = req.getRequestDispatcher(url);
 				failureView.forward(req, res);
+				return;
 			}
 		}
 

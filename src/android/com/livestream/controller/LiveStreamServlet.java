@@ -15,7 +15,7 @@ import javax.servlet.http.HttpServletResponse;
 import android.com.livestream.model.LiveStreamService;
 
 
-@WebServlet("/LiveStreamServlet")
+@WebServlet("/android/LiveStreamServlet")
 public class LiveStreamServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 

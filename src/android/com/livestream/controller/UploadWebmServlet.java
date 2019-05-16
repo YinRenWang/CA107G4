@@ -29,7 +29,7 @@ import javax.servlet.http.HttpSession;
 import android.com.livestream.model.LiveStreamService;
 import android.com.livestream.model.LiveStreamVO;
 
-@WebServlet("/UploadWebmServlet")
+@WebServlet("/android/UploadWebmServlet")
 public class UploadWebmServlet extends HttpServlet {
 
 	protected void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {

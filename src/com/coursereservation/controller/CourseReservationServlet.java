@@ -24,6 +24,7 @@ import com.inscourse.model.InsCourseService;
 import com.inscourse.model.InsCourseVO;
 import com.inscoursetime.model.InsCourseTimeService;
 import com.inscoursetime.model.InsCourseTimeVO;
+import com.member.model.MemberService;
 import com.member.model.MemberVO;
 import com.teacher.model.TeacherService;
 
@@ -146,10 +147,18 @@ public class CourseReservationServlet extends HttpServlet {
 						crVO.getCrvStatus(), crVO.getClassStatus(), crVO.getTranStatus(), crVO.getCrvMFD(),
 						crVO.getCrvEXP(), crVO.getCrvLoc(), crVO.getCrvTotalTime(), crVO.getCrvTotalPrice(),
 						crVO.getCrvRate(),crVO.getInscTimeId());
-				//放入新增的主鍵
-				crVO.setCrvId(crVO2.getCrvId());
-				
+			
 				// 新增成功
+				MemberService memberSvc = new MemberService();
+				MemberVO buyer = memberSvc.getOneMember(crVO2.getMemId());
+				
+				//買家資訊
+				String buyerTel=buyer.getMemPhone();
+				String buyerName=buyer.getMemName();
+				
+//				String[] tel ={buyerTel};
+//			 	String message = "親愛的 "+buyerName+" 先生/小姐 您好!感謝您在WeShare 訂購課程 訂單編號為"+crVO2.getCrvId()+"祝您能有一個良好的學習體驗!";
+//				crSvc.sendMessage(tel, message);
 				// Android處理
 				if ("make_new_reservation".equals(action)) {
 					String success = "";
@@ -158,7 +167,7 @@ public class CourseReservationServlet extends HttpServlet {
 					// Web導向
 				} else {
 					String url = "/front-end/coursereservation/courseOrder.jsp";
-					req.setAttribute("courseReservationVO", crVO);
+					req.setAttribute("courseReservationVO", crVO2);
 					RequestDispatcher successView = req.getRequestDispatcher(url);
 					successView.forward(req, res);
 				}

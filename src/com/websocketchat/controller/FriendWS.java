@@ -1,8 +1,6 @@
 package com.websocketchat.controller;
 
-
 import java.io.IOException;
-import java.nio.ByteBuffer;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
@@ -18,14 +16,14 @@ import javax.websocket.Session;
 import javax.websocket.server.PathParam;
 import javax.websocket.server.ServerEndpoint;
 
-
 import com.google.gson.Gson;
 import com.websocketchat.jedis.JedisHandleMessage;
 import com.websocketchat.model.ChatMessage;
 import com.websocketchat.model.State;
 
 
-@ServerEndpoint("/FriendWS/{userName}")
+
+@ServerEndpoint("/android/FriendWS/{userName}")
 public class FriendWS {
 	private static Map<String, Session> sessionsMap = new ConcurrentHashMap<>();
 	Gson gson = new Gson();
@@ -33,10 +31,9 @@ public class FriendWS {
 	@OnOpen
 	public void onOpen(@PathParam("userName") String userName, Session userSession) throws IOException {
 		/* save the new user in the map */
-
-		int maxBufferSize = 500 * 1024;
-		userSession.setMaxTextMessageBufferSize(maxBufferSize);
-		userSession.setMaxBinaryMessageBufferSize(maxBufferSize);
+		
+		
+		
 		sessionsMap.put(userName, userSession);
 		/* Sends all the connected users to the new user */
 		Set<String> userNames = sessionsMap.keySet();
@@ -44,7 +41,7 @@ public class FriendWS {
 		String stateMessageJson = gson.toJson(stateMessage);
 		Collection<Session> sessions = sessionsMap.values();
 		for (Session session : sessions) {
-			if(session != null && session.isOpen()) {
+			if (session.isOpen()) {
 				session.getAsyncRemote().sendText(stateMessageJson);
 			}
 		}
@@ -59,66 +56,22 @@ public class FriendWS {
 		ChatMessage chatMessage = gson.fromJson(message, ChatMessage.class);
 		String sender = chatMessage.getSender();
 		String receiver = chatMessage.getReceiver();
-		System.out.println("有觸發");
-
 		if ("history".equals(chatMessage.getType())) {
-			System.out.println("拿紀錄");
-			List<String> historyData = JedisHandleMessage.getHistoryMsg(sender, receiver);// get the old info from redis
-
+			System.out.println(": " + message);
+			List<String> historyData = JedisHandleMessage.getHistoryMsg(sender, receiver);
+			String historyMsg = gson.toJson(historyData);
+			ChatMessage cmHistory = new ChatMessage("history", sender, receiver, historyMsg, "");
 			if (userSession != null && userSession.isOpen()) {
-				for(String str : historyData) {
-					try {
-						Thread.sleep(2);
-					} catch (InterruptedException e2) {
-						e2.printStackTrace();
-					};
-					ChatMessage cm = gson.fromJson(str, ChatMessage.class);
-					if("image".equals(cm.gettOrm()))
-						try {
-						System.out.println(str);
-							userSession.getBasicRemote().sendBinary(ByteBuffer.wrap(str.getBytes()));
-						} catch (IOException e1) {
-							e1.printStackTrace();
-						}
-					else
-						try {
-							System.out.println(str);
-							userSession.getBasicRemote().sendText(str);
-						} catch (IOException e) {
-							e.printStackTrace();
-						}
-				
-				}
-
-
+				userSession.getAsyncRemote().sendText(gson.toJson(cmHistory));
 				return;
 			}
 		}
-
-		if ("chat".equals(chatMessage.getType())) {
-			
+		
+		
+		Session receiverSession = sessionsMap.get(receiver);
+		if (receiverSession != null && receiverSession.isOpen()) {
+			receiverSession.getAsyncRemote().sendText(message);
 			JedisHandleMessage.saveChatMessage(sender, receiver, message);
-
-			// send to session which receiver belongs to
-			Session receiverSession = sessionsMap.get(receiver);
-			Session senderSession = sessionsMap.get(sender);
-			
-			if("image".equals(chatMessage.gettOrm())) {
-				if (senderSession != null && senderSession.isOpen()) {
-					senderSession.getAsyncRemote().sendBinary(ByteBuffer.wrap(message.getBytes()));
-				}
-				if (receiverSession != null && receiverSession.isOpen()) {
-					receiverSession.getAsyncRemote().sendBinary(ByteBuffer.wrap(message.getBytes()));
-				}		
-			}else {
-				if (senderSession != null && senderSession.isOpen()) {
-					senderSession.getAsyncRemote().sendText(message);
-				}
-				if (receiverSession != null && receiverSession.isOpen()) {
-					receiverSession.getAsyncRemote().sendText(message);
-				}
-			}
-			
 		}
 		System.out.println("Message received: " + message);
 	}

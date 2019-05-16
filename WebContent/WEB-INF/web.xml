@@ -40,6 +40,27 @@
     <dispatcher>ERROR</dispatcher>
     <dispatcher>ASYNC</dispatcher>
   </filter-mapping>
+  
+    <filter>
+    <filter-name>RootFilter</filter-name>
+    <filter-class>filters.RootFilter</filter-class>
+  </filter>
+  <filter-mapping>
+    <filter-name>RootFilter</filter-name>
+    <url-pattern>/back-end/index.jsp</url-pattern>
+    <url-pattern>/back-end/liveStream/*</url-pattern>
+       <url-pattern>/back-end/memeber/*</url-pattern>
+          <url-pattern>/back-end/teacher/*</url-pattern>
+             <url-pattern>/back-end/withdrawalrecord/*</url-pattern>
+              <url-pattern>/back-end/css/*</url-pattern>
+    <dispatcher>REQUEST</dispatcher>
+    <dispatcher>FORWARD</dispatcher>
+    <dispatcher>INCLUDE</dispatcher>
+    <dispatcher>ERROR</dispatcher>
+    <dispatcher>ASYNC</dispatcher>
+  </filter-mapping>
+  
+  
   <servlet>
     <servlet-name>MemberServlet</servlet-name>
     <servlet-class>com.member.controller.MemberServlet</servlet-class>

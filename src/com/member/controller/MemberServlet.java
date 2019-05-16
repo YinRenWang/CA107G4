@@ -204,7 +204,7 @@ public class MemberServlet extends HttpServlet {
 			req.setAttribute("errorMsgs", errorMsgs);
 			req.setAttribute("successMsgs", successMsgs);
 
-			try { 
+//			try { 
 				/*********************** 1.接收請求參數 - 輸入格式的錯誤處理 *************************/
 				String memId = req.getParameter("memId");
 				String memIdReg = "^[(a-zA-Z0-9_)]{6,12}$";
@@ -382,7 +382,7 @@ public class MemberServlet extends HttpServlet {
 				MailService mailSvc = new MailService();
 			      String subject = "Weshare 註冊會員 確認信件";
 			      String verifyCode = mailSvc.genAuthCode();
-			      String verifyURL="http://localhost:8081/CA107G4/MemberServlet?action=updateStatus&memId="+memId+"&verifyCode="+verifyCode;
+			      String verifyURL="https://ca107g4.ga/CA107G4/MemberServlet?action=updateStatus&memId="+memId+"&verifyCode="+verifyCode;
 			      String messageText="親愛的 "+memName+" 您好：\r\n" + 
 			      		"感謝您註冊WeShare會員，要啟用您的帳戶，請按以下的連結：\r\n" + 
 			      		"\r\n" + 
@@ -392,7 +392,6 @@ public class MemberServlet extends HttpServlet {
 			      mailSvc.sendMail(memEmail, subject, messageText);
 			      memSvc.insertVerifyCode(memId, verifyCode);
 			      successMsgs.add("註冊確認將通過電子郵件寄送給您!");
-
 				/*************************** 4.新增完成,準備轉交(Send the Success view) ***********/
 				req.setAttribute("memberVO", memberVO); // 資料庫取出的memberVO物件,存入req
 				req.setAttribute("successMsgs", successMsgs); // 資料庫取出的memberVO物件,存入req
@@ -400,13 +399,13 @@ public class MemberServlet extends HttpServlet {
 				RequestDispatcher successView = req.getRequestDispatcher(url); // 成功轉交 loginSuccess.jsp
 				successView.forward(req, res);
 				/*************************** 其他可能的錯誤處理 **********************************/
-			} catch (Exception e) {
-				errorMsgs.add(e.getMessage());
-				RequestDispatcher failureView = req.getRequestDispatcher("/front-end/member/addMember.jsp");
-				failureView.forward(req, res);
 			}
-
-		}
+//			catch (Exception e) {
+//				errorMsgs.add(e.getMessage());
+//				RequestDispatcher failureView = req.getRequestDispatcher("/front-end/member/addMember.jsp");
+//				failureView.forward(req, res);
+//			}
+//		}
 
 		
 		if ("reverify".equals(action)) { // 來自listAllMember.jsp的請求

@@ -15,17 +15,12 @@
 	href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
 <link rel="stylesheet" type="text/css"
 	href="<%=request.getContextPath()%>/css/G4.css ">
-<link rel="stylesheet"
-	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 <link rel="stylesheet" type="text/css"
 	href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-<link 
-	href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/2.0.0/jquery.min.js"></script>
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-
 <script 
 	src="http://code.jquery.com/jquery-2.1.4.min.js"></script>
 
@@ -51,17 +46,6 @@
   margin-right: -15px;
 }
 
-
-
-.brand_network {
-    color: #9D9D9D;
-    float: left;
-    position: absolute;
-    left: 70px;
-    top: 30px;
-    font-size: smaller;
-}
-
 .post-content {
     margin-left:58px;
 }
@@ -70,13 +54,6 @@
     margin-top: 3px;
     margin-left: 25px;
     position: absolute;
-}
-.mainbody{
-	margin-bottom:10%;
-}
-#coole{
-	margin-bottom:22%;
-	padding-left:22%;
 }
 
 </style>
@@ -118,12 +95,13 @@ $(function (){
 <%@ include file="/front-end/backHeaderFooter/header.jsp"%>    	
 	<!-------------------------------------------------------------------------headerEnd------------------------------------------------------------------------->
 
-
-
 <div class="mainbody container-fluid" id="coole">
     <div class="row align-items-center">
         <div style="padding-top:50px;"> </div>
-        <div class="col-lg-9 col-md-9 col-sm-12 col-xs-12">
+          <div class="col-12"></div>
+            <div class="col-12"></div>
+                <div class="col-3"></div>
+        <div class="col-6">
             <div class="panel panel-default">
                 <div class="panel-body">
                     <h1 class="panel-title pull-left" style="font-size:30px;">申請成為老師</h1>
@@ -140,7 +118,7 @@ $(function (){
 		</c:if>     
             <div class="panel panel-default">
                 <div class="panel-body">
-                    <h3 class="panel-title pull-left">個人資料</h3>
+                    <h3 class="panel-title pull-left"></h3>
                     <br><br>
                         <label for="First_name">姓名</label>
  <form data-toggle="validator" role="form" method="post" action="<%=request.getContextPath()%>/teacher/teacher.do" enctype="multipart/form-data">
@@ -192,8 +170,7 @@ $(function (){
                   <div class="d-flex justify-content-center"><input type="submit" class="btn btn-secondary" value="送出申請"></div>
                 </div>
             </div>
-     
-         
+                 <div class="col-3"></div>
         </div>
     </div>
 </form>    

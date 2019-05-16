@@ -11,6 +11,8 @@ import com.member.model.MemberService;
 import com.member.model.MemberVO;
 import com.withdrawalrecord.model.WithdrawalRecordVO;
 
+import other.Send;
+
 public class CourseReservationService {
 	
 	private CourseReservationDAO_interface dao;
@@ -114,6 +116,10 @@ public class CourseReservationService {
 	
 	public CourseReservationVO findByPK(String crvId) {
 		return dao.findByPK(crvId);
+	}
+	public void sendMessage(String[] tel , String message) {
+		Send send=new Send();
+		send.sendMessage(tel, message);
 	}
 
 } 

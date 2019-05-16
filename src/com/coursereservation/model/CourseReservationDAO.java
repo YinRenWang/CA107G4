@@ -71,7 +71,8 @@ public class CourseReservationDAO implements CourseReservationDAO_interface {
 
 		try {
 			con = ds.getConnection();
-			pstmt = con.prepareStatement(INSERT_STMT,Statement.RETURN_GENERATED_KEYS);
+			String cols[] = {"crvId"};//建立對應的主鍵
+			pstmt = con.prepareStatement(INSERT_STMT,cols);
 			pstmt.setString(1,courseReservationVO.getTeacherId());
 			pstmt.setString(2,courseReservationVO.getMemId());
 			pstmt.setString(3,courseReservationVO.getInscId());
@@ -88,6 +89,7 @@ public class CourseReservationDAO implements CourseReservationDAO_interface {
 			pstmt.executeUpdate();
 		
 		    	//掘取對應的自增主鍵值
+
 				String crvId = null;
 				ResultSet rs = pstmt.getGeneratedKeys();
 				if (rs.next()) {
@@ -498,7 +500,8 @@ public class CourseReservationDAO implements CourseReservationDAO_interface {
     		con.setAutoCommit(false);
     		
     		//新增訂單
-    		pstmt = con.prepareStatement(INSERT_STMT,Statement.RETURN_GENERATED_KEYS);
+    		String cols[] = {"crvId"};
+    		pstmt = con.prepareStatement(INSERT_STMT , cols);
 			pstmt.setString(1,courseReservationVO.getTeacherId());
 			pstmt.setString(2,courseReservationVO.getMemId());
 			pstmt.setString(3,courseReservationVO.getInscId());
@@ -543,9 +546,8 @@ public class CourseReservationDAO implements CourseReservationDAO_interface {
 				// 2●設定於 pstm.executeUpdate()之後
 				con.commit();
 				con.setAutoCommit(true);
-				courseReservationVO.setCrvId(crvId);
 				System.out.println("訂單編號"+crvId+"購買人"+memberVO.getMemName()+"已扣了"+dollar+"剩餘"+memberVO.getMemBalance());
-				
+				courseReservationVO.setCrvId(crvId);
 
 				// Handle any driver errors
 			}

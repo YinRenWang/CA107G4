@@ -2,7 +2,9 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %> 
-<jsp:useBean id="courseSvc" scope="page" class="com.coursetype.model.CourseTypeService" />
+<jsp:useBean id="CourseTypeSvc" scope="page" class="com.coursetype.model.CourseTypeService" />
+<jsp:useBean id="CourseSvc" scope="page" class="com.course.model.CourseService" />
+<jsp:useBean id="InsCourseSvc" scope="page" class="com.inscourse.model.InsCourseService" />
 <!doctype html>
 <html lang="en">
 <head>
@@ -14,7 +16,7 @@
 <link rel="stylesheet"
 	href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
 <link rel="stylesheet" type="text/css"
-	href="<%=request.getContextPath()%>/css/G4.css ">
+	href="<%=request.getContextPath()%>/front-end/css/G4.css ">
 <link rel="stylesheet" type="text/css"
 	href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
@@ -35,10 +37,10 @@
 
 
 body {
-    background: #fff;
-	font-family: 'Roboto', sans-serif;
-	color:#333;
-	line-height: 22px;	
+margin:auto;
+    padding:0;
+    background: #f4f9f4;
+    width: 100%;
 }
 h1, h2, h3, h4, h5, h6 {
 	font-family: 'Roboto Condensed', sans-serif;
@@ -71,9 +73,6 @@ input.upload {
     color:#333333;
 }
 
-#addCourse{
-	margin-bottom:300px;
-}
 
 #back{
 position: relative;
@@ -122,7 +121,8 @@ $(document).ready(function () {
 </head>
 <body>
 	<!-------------------------------------------------------------------------headerStart------------------------------------------------------------------------->
-<%@ include file="/front-end/backHeaderFooter/header.jsp"%>  
+<%@ include file="/front-end/backHeaderFooter/header.jsp"%>      
+
 	<!-------------------------------------------------------------------------headerEnd------------------------------------------------------------------------->
  <c:if test="${not empty errorMsgs}">
 <c:forEach var="message" items="${errorMsgs}">
@@ -138,48 +138,33 @@ Swal.fire(
 
 
  <div class="container" id="addCourse">
-   <h1 class="entry-title"><span>新增課程-課程資訊</span></h1>
+   <h1 class="entry-title"><span>編輯課程-課程資訊</span></h1>
         <hr>
  <div class="row">
   <div class="col-md-6 mb-3">
   	<label for="validationCustom03">課程分類:</label>
       <select class="form-control form-control-lg" id="courseTypeId" >
-        <option value="" disabled selected>請選擇課程分類</option>
-          <option value="1">音樂</option>
-           <option value="2">語言</option>
-            <option value="3">運動</option>
-             <option value="4">藝術</option>
-              <option value="5">設計</option>
-               <option value="6">人文</option>
-                <option value="7">行銷</option>
-                 <option value="8">程式語言</option>
-                  <option value="9">投資理財</option>
-                   <option value="10">職場技能</option>
-                    <option value="11">手作</option>
-                     <option value="12">烹飪</option>
+        <option value="${CourseSvc.findOneById(InsCourseSvc.findOneById(param.inscId).courseId).courseTypeId}" 
+        disabled selected>${CourseTypeSvc.findOneById(CourseSvc.findOneById(InsCourseSvc.findOneById(param.inscId).courseId).courseTypeId).courseTypeName}</option>
                      
       </select>
-<form id="form1" action="<%= request.getContextPath()%>/CourseTypeServlet" method="GET">
-<input type="hidden" name="action" value="updateCourse">
-<input type="hidden" name="courseTypeId"  id="selectValue" value="">
-</form> 
   </div>
   
   <div class="col-md-6 mb-3">
   	<label for="validationCustom04">課程類型:</label>
      <select class="form-control form-control-lg" id="courseId" >
-    	 <option value=""  disabled selected >請選擇課程類型</option> 
-    	<c:forEach var="courseVO" items="${courseList}" >
-  		 <option value="${courseVO.courseId}">${courseVO.courseName}
-		</c:forEach>
+    	 <option value="${InsCourseSvc.findOneById(param.inscId).courseId}" 
+		 disabled selected >${CourseSvc.findOneById(InsCourseSvc.findOneById(param.inscId).courseId).courseName}</option> 
 		</select>
   </div>
 </div>
 
 <form id="form2" action="<%= request.getContextPath()%>/InsCourseServlet" method="GET">
-<input type="hidden" name="action" value="insert">
+<input type="hidden" name="action" value="update">
+<input type="hidden" name="inscStatus" value="${InsCourseSvc.findOneById(param.inscId).inscStatus}">
+<input type="hidden" name="inscId" value="${param.inscId}">
 <input type="hidden" name="teacherId" value="${teacherVO.teacherId}">
-<input type="hidden" name="courseId" id=formvalue value="">
+<input type="hidden" name="courseId" id=formvalue value="${InsCourseSvc.findOneById(param.inscId).courseId}">
 	<div class="row">
     <div class="col-md-12">
                

@@ -37,10 +37,10 @@
 
 
 body {
-    background: #fff;
-	font-family: 'Roboto', sans-serif;
-	color:#333;
-	line-height: 22px;	
+margin:auto;
+    padding:0;
+    background: #f4f9f4;
+    width: 100%;
 }
 h1, h2, h3, h4, h5, h6 {
 	font-family: 'Roboto Condensed', sans-serif;
@@ -73,9 +73,6 @@ input.upload {
     color:#333333;
 }
 
-#addCourse{
-	margin-bottom:300px;
-}
 
 #back{
 position: relative;

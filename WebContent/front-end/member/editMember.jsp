@@ -1,7 +1,6 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page import="com.member.model.*"%>
-
 <!doctype html>
 <html lang="en">
 
@@ -225,11 +224,10 @@ width:100%;
 								<div class="row">
 									
 									<div class="col-sm-6">
-										<label for="inputEmail3" class="control-label">擅長的課程</label>
-							<jsp:useBean id="courseSvc" scope="page" class="com.course.model.CourseService" />			
+										<label for="inputEmail3" class="control-label">擅長的課程</label>		
 										<div class="">
 											<select class="form-control" id="Skill" name="memSkill" >
-											<c:forEach var="courseVO" items="${courseSvc.all}">
+											<c:forEach var="courseVO" items="${CourseSvc.all}">
 										<option value="${courseVO.courseId}" ${(memberVO.memSkill==courseVO.courseId)?'selected':'' } >${courseVO.courseName}
 											</c:forEach>
 											</select>
@@ -240,7 +238,7 @@ width:100%;
 										<label for="inputEmail3" class="control-label">想學課程</label>
 											<div class="">
 											<select class="form-control" id="memWantSkill" name="memWantSkill" >
-											<c:forEach var="courseVO" items="${courseSvc.all}">
+											<c:forEach var="courseVO" items="${CourseSvc.all}">
 										<option value="${courseVO.courseId}" ${(memberVO.memWantSkill==courseVO.courseId)?'selected':'' } >${courseVO.courseName}
 											</c:forEach>
 											</select>
