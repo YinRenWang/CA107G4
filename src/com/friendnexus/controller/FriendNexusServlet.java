@@ -20,7 +20,7 @@ import com.team.model.TeamVO;
 
 public class FriendNexusServlet extends HttpServlet { 
 
-	private static final String String = null;
+	private static final String String = null; 
 
 	public void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
 		doPost(req, res);
