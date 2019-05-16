@@ -228,12 +228,16 @@ opacity:0.9;
                         <i class="fa fa-google"></i> </a>
                     </div>
                   <div class="col-xs-3 col-md-1 col-lg-1 social-btn-holder">
-          <a class="btn icon-btn btn-warning" href="#" onclick="document.getElementById('addFriend').submit();return false;"> <span class="glyphicon btn-glyphicon glyphicon-plus img-circle text-warning"></span>加入好友</a>
+          <a class="btn icon-btn btn-warning" href="#" onclick="document.getElementById('insert1').submit();return false;"> 
+          <span class="glyphicon btn-glyphicon glyphicon-plus img-circle text-warning"></span>加入好友</a>
                       </div>
                       
-           <form id="addFriend" action="<%= request.getContextPath()%>/MemberServlet" method="get">
-            <input type="hidden" name="inCludeVO"  value="member"> 
-            <input type="hidden" name="action" value="changeValue">
+           <form id="insert1" action="<%=request.getContextPath()%>/friendnexus/friendnexus.do" method="get">
+<!--             <input type="hidden" name="inCludeVO"  value="member">  -->
+<!--             <input type="hidden" name="action" value="changeValue"> -->
+            <input type="hidden" name="action" value="insert1">
+            <input type="hidden" name="memId" value="${memberVO.memId}">
+            <input type="hidden" name="friendAcc" value="${memberSvc.getOneMember(param.memId).memId}">
             </form>	
                 </div>
               </div>

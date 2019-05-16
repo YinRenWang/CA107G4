@@ -7,6 +7,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
+import javax.security.auth.message.callback.PrivateKeyCallback.Request;
 import javax.servlet.*;
 import javax.servlet.http.*;
 
@@ -72,6 +73,7 @@ public class FriendNexusServlet extends HttpServlet {
 					return;
 				}
 				/*************************** 3.新增完成,準備轉交(Send the Success view) ***********/
+				req.setAttribute("success1", "success1");
 				String url = "/front-end/friend/allfriend.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url); // 新增成功後轉交listAllEmp.jsp
 				successView.forward(req, res);

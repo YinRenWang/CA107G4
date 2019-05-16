@@ -266,23 +266,12 @@ public class TeamServlet extends HttpServlet {
 				}
 
 				/*************************** 2.開始新增資料 *****************************************/
-				TeamService teamSvc = new TeamService();
-				TeamVO teamVO1=teamSvc.addTeam(leaderID, inscID, teamMFD, teamEXP, 1);
-
-				
-				
-				InsCourseService inscourseSvc = new InsCourseService();
-				InsCourseVO incrouseVO = inscourseSvc.findOneById(inscID);
-
-				int status = incrouseVO.getInscType();
-
-				status = 1;
-				inscourseSvc.updateStatus(inscID, status);
+			
 				
 				
 				MemberService memberSvc = new MemberService();
 				MemberVO membe = memberSvc.getOneMember(leaderID);
-System.out.println("123456"+leaderID);
+                
 				
 				int memblance = 0;
 				int blance = membe.getMemBalance();
@@ -323,6 +312,21 @@ System.out.println("123456"+leaderID);
 				
 				
 				wrSvc.addWithdrawalRecord(leaderID, wrmoney, teamMFD);
+				
+				
+				
+				TeamService teamSvc = new TeamService();
+				TeamVO teamVO1=teamSvc.addTeam(leaderID, inscID, teamMFD, teamEXP, 1);
+
+				
+				
+				InsCourseService inscourseSvc = new InsCourseService();
+				InsCourseVO incrouseVO = inscourseSvc.findOneById(inscID);
+
+				int status = incrouseVO.getInscType();
+
+				status = 1;
+				inscourseSvc.updateStatus(inscID, status);
 
 				System.out.println("新增完成");
 

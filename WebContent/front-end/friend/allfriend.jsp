@@ -140,7 +140,7 @@ textarea{
 	<div class="container">
 			<div class="row">
 				<div class="col-3">
-			<FORM METHOD="get" ACTION="<%=request.getContextPath()%>/friendnexus/friendnexus.do" name="form1" id="form1">
+			<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/friendnexus/friendnexus.do" name="form1" id="form1">
 				<div class="list-group" id="list-tab" role="tablist">	
 		<!----------------------------------------------------------------------------------需登入帳號	--------------------------------------------------------------------------------------------->		
 						<input type="hidden" name="memId" value="${memberVO.memId}">
@@ -164,16 +164,14 @@ textarea{
 						<div class="row">
 							<div class="col-8">
 								<%@ include file="page1.file"%>
-								<c:forEach var="friendVO" items="${list}" begin="<%=pageIndex%>"
-									end="<%=pageIndex+rowsPerPage-1%>">
+								<c:forEach var="friendVO" items="${list}" begin="<%=pageIndex%>" end="<%=pageIndex+rowsPerPage-1%>">
+								  <c:if test="${friendVO.memId  != memberVO.memId}">
 									<div class="card flex-row flex-wrap">
 										<div class="card-header border-0">
 											<img src="<%=request.getContextPath()%>/member/DBGifReader.do?memId=${friendVO.memId}"
 												width="120" height="60">
 										</div>
-										<FORM METHOD="get"
-											ACTION="<%=request.getContextPath()%>/friendnexus/friendnexus.do"
-											name="form1">
+										<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/friendnexus/friendnexus.do" name="form1">
 											<div class="card-block px-2">
 												<div class="d-flex">
 													<div>
@@ -195,6 +193,7 @@ textarea{
 									<a href="<%=request.getContextPath()%>/front-end/member/viewAsMember.jsp?memId=${friendVO.memId}">查看個人資料</a>
 										</div>
 									</div>
+									</c:if>
 								</c:forEach>
 								<%@ include file="page2.file"%>
 							</div>
@@ -205,7 +204,7 @@ textarea{
 
 									<div class="card p-2">
 										<h6 class="my-1">搜尋好友</h6>
-										<FORM METHOD="get" ACTION="<%=request.getContextPath()%>/friendnexus/friendnexus.do">
+										<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/friendnexus/friendnexus.do">
 									<div class="input-group">
 								<input type="text" class="form-control" name="memName" placeholder="請輸入姓名">
 								<div class="input-group-append">
@@ -218,7 +217,7 @@ textarea{
 									<div>
 									
 <!----------------------------------------------------------------------------------需登入帳號	--------------------------------------------------------------------------------------------->
-									<FORM METHOD="get" ACTION="<%=request.getContextPath()%>/friendnexus/friendnexus.do">
+									<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/friendnexus/friendnexus.do">
 									<input type="hidden" name="action" value="getmyFriendCheck">
 									<input type="hidden" name="friendAcc" value="${memberVO.memId}">
 									<input class="btn btn-info" type="submit" value="確認好友列表"></div>
@@ -250,6 +249,28 @@ textarea{
 		src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
 	<script
 		src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+		
+		<script src="bower_components/sweetalert2/dist/sweetalert2.min.js"></script>
+<link rel="stylesheet" href="bower_components/sweetalert2/dist/sweetalert2.min.css">
 
+<!-- Include a polyfill for ES6 Promises (optional) for IE11 and Android browser -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/core-js/2.4.1/core.js"></script>
+	<script type="text/javascript">
+	  
+	
+	$( document ).ready(function() {
+ 		if ("${success1}"!=""){
+ 			swal(
+ 					  '已送出好友申請！',
+ 					  '你點擊了按鈕！',
+ 					  'success'
+ 					)
+ 		}
+	});
+	
+	
+		
+
+</script>
 </body>
 </html>

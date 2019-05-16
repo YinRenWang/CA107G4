@@ -163,7 +163,7 @@ public class WithdrawalRecordServlet extends HttpServlet {
 
 //					try {
 			/*************************** 1.接收請求參數 ****************************************/
-			String wrnum = new String(req.getParameter("wrnum"));
+			String wrnum = new String(req.getParameter("wrnum").trim());
 			/*************************** 2.開始查詢資料 ****************************************/
 			WithdrawalRecordService withdrawalRecordSvc1 = new WithdrawalRecordService();
 			List<WithdrawalRecordVO> list = (List<WithdrawalRecordVO>) withdrawalRecordSvc1.findByKey(wrnum);
@@ -245,7 +245,7 @@ public class WithdrawalRecordServlet extends HttpServlet {
 				/*************************** 3.修改完成,準備轉交(Send the Success view) *************/
 				
 				req.setAttribute("withdrawalRecordVO",withdrawalRecordVO1);
-				String url = "/front-end/withdrawalrecord/withdrawalrecord_findbykey.jsp";
+				String url = "/front-end/withdrawalrecord/findbykey_haveFooter.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url); // 新增成功後轉交listAllEmp.jsp
 				successView.forward(req, res);
 
