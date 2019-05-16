@@ -71,7 +71,6 @@ public class CourseReservationServlet extends HttpServlet {
 			} else {
 				String state = jcs.checkIfWait(crvId,memId);
 				if ("success".equals(state)) {
-					crvSvc.ConfirmCourse(crvId);
 					out.print(state);
 				} else if("noData".equals(state)){
 					jcs.setNewConfirm(crvId,memId);

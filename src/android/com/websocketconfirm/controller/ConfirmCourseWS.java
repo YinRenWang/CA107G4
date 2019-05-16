@@ -32,7 +32,7 @@ public class ConfirmCourseWS {
 	public void onOpen(@PathParam("userName") String userName, Session userSession) throws IOException {
 		sessionsMap.put(userName, userSession);
 		String text = String.format("Session ID = %s, connected; userName = %s", userSession.getId(), userName);
-		 System.out.println("ConfirmCourseWS "+text);
+		System.out.println("ConfirmCourseWS " + text);
 	}
 
 	@OnMessage
@@ -45,29 +45,46 @@ public class ConfirmCourseWS {
 
 		Long now = Calendar.getInstance().getTimeInMillis();
 		Long courseStart = crVO.getCrvMFD().getTime() - 15 * 60 * 1000;
-		if (now - courseStart < 0) {
-			userSession.getAsyncRemote().sendText("not_yet");
-			studentSess.getAsyncRemote().sendText("not_yet");
-		} else {
-			// 驗證上課
-			if (memId.equals(crVO.getMemId()) || teacherId.equals(crVO.getTeacherId())) {
-				CourseReservationService crvSvc = new CourseReservationService();
-				crvSvc.ConfirmCourse(crVO.getCrvId());
-				userSession.getAsyncRemote().sendText("success");
-				studentSess.getAsyncRemote().sendText("success");
+		try {
+			if (now - courseStart < 0) {
+				userSession.getBasicRemote().sendText("not_yet");
+				studentSess.getBasicRemote().sendText("not_yet");
 			} else {
-				userSession.getAsyncRemote().sendText("fail");
-				studentSess.getAsyncRemote().sendText("fail");
+				// 驗證上課
+				if (memId.equals(crVO.getMemId()) || teacherId.equals(crVO.getTeacherId())) {
+					CourseReservationService crvSvc = new CourseReservationService();
+					try {
+						int classStatus = crvSvc.findByPrimaryKey(crVO.getCrvId()).get(0).getClassStatus();
+						System.out.println(classStatus);
+						if(classStatus == 0) {
+							crvSvc.ConfirmCourse(crVO.getCrvId());
+						}else {
+							userSession.getBasicRemote().sendText("had_success");
+							return;
+						}
+						
+					} catch (Exception e) {
+						userSession.getBasicRemote().sendText("had_success");
+						return;
+					}
+					userSession.getBasicRemote().sendText("successTeach");
+					studentSess.getBasicRemote().sendText("successStu");
+				} else {
+					userSession.getBasicRemote().sendText("fail");
+					studentSess.getBasicRemote().sendText("fail");
+				}
 			}
+		} catch (Exception r) {
+			System.out.println("00" + r);
 		}
 
-		 System.out.println("Message received: " + message);
+		System.out.println("Message received: " + message);
 	}
 
-//	@OnError
-//	public void onError(Session userSession, Throwable e) {
-//		// System.out.println("Error: " + e.toString());
-//	}
+	@OnError
+	public void onError(Session userSession, Throwable e) {
+		// System.out.println("Error: " + e.toString());
+	}
 
 	@OnClose
 	public void onClose(Session userSession, CloseReason reason) {

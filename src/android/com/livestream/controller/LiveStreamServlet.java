@@ -12,7 +12,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import android.com.livestream.model.LiveStreamService;
+import com.livestream.model.LiveStreamService;
 
 
 @WebServlet("/android/LiveStreamServlet")

@@ -232,13 +232,13 @@ CONSTRAINT Member_memId_PK PRIMARY KEY (memId));
 COMMENT ON COLUMN Member.memSex IS '0=男性,1=女性';
 COMMENT ON COLUMN Member.memStatus IS '0=待驗證,1=已驗證';
 
-INSERT INTO MEMBER VALUES ('weshare01', '0005', '0008', NULL, 'S143766692', 'a123456', '123456', '板橋金城武', '0', empty_blob(), 'n1036434@ntub.edu.tw', '0912344580', TO_DATE('1995-11-23', 'YYYY-MM-DD'), '桃園市中壢區中大路300號15樓', 'Java是簡單的', '004116004056492', '10000', '20000', '1');
-INSERT INTO MEMBER VALUES ('weshare02', '0008', '0005', NULL,'Q252488683', 'b123456', '123456', '蓋兒加朵', '1', empty_blob(), 'yinren1123@gmail.com', '0954446347', TO_DATE('1985-04-30', 'YYYY-MM-DD'), '台北市信義區信義路四段415號6樓', '我是神力女超人', '00731350235011', '500', '0', '1');
-INSERT INTO MEMBER VALUES ('weshare03', '0004', '0009', NULL,'B287381891', 'c123456', '123456', '艾瑪華森', '1', empty_blob(), 'EmmaWatson@gmail.com', '0958403685', TO_DATE('1989-06-15', 'YYYY-MM-DD'), '台北市松山區八德路四段520號', '你們這群麻瓜', '08545080687111', '0', '0', '1');
-INSERT INTO MEMBER VALUES ('weshare04', '0006', '0005', NULL,'A167464958', 'd123456', '123456', '克里斯漢斯沃', '0', empty_blob(), 'ChrisHemsworth@gmail.com', '0978254078', TO_DATE('1987-07-12', 'YYYY-MM-DD'), '台北市大安區復興南路一段390號', '我是頭上有閃電', '80885744387461', '1000', '0', '1');
-INSERT INTO MEMBER VALUES ('weshare05', '0001', '0004',NULL, 'A227604096', 'e123456', '123456', '艾蜜莉克拉克', '1', empty_blob(), 'EmiliaClarke@ntub.edu.tw', '0975475932', TO_DATE('1999-12-23', 'YYYY-MM-DD'), '台北市萬華區中華路一段152號3樓 2,3,15樓', 'Every one love me.', '00314637967473', '5000', '20000', '1');
-INSERT INTO MEMBER VALUES ('weshare06', '0002', '0003',NULL,'A278318487', 'f123456', '123456', '史嘉蕾喬韓森', '1', empty_blob(), 'Scarlett@gmail.com', '0936472842', TO_DATE('1989-06-30', 'YYYY-MM-DD'), '桃園市中壢區元化路306號', '黑寡婦有著世界級的運動員水準能力，她能令身體做出許多高難度的複雜動作。她也是一名大師等級的武術高手，精通空手道、柔道、法式拳擊等各式武技。', '007467579675323', '10000', '0', '1');
-INSERT INTO MEMBER VALUES ('david', '0006', '0042',NULL,'A110133151', 'david', 'dddddd', '大衛海鮮', '0', empty_blob(), 'david@gmail.com', '0970537583', TO_DATE('1995-05-23', 'YYYY-MM-DD'), '新北市汐止區新台五路一段162號', '宣告，取值，吃500', '0074634679675323', '100500', '0', '1');
+INSERT INTO MEMBER VALUES ('weshare01', '0005', '0008', NULL, 'S143766692', 'a123456', '123456', '板橋金城武', '0', empty_blob(), 'Aniki@ntub.edu.tw', '0970313604', TO_DATE('1995-11-23', 'YYYY-MM-DD'), '桃園市中壢區中大路300號15樓', 'Java是簡單的', '004116004056492', '10000', '20000', '1');
+INSERT INTO MEMBER VALUES ('weshare02', '0008', '0005', NULL,'Q252488683', 'b123456', '123456', '蓋兒加朵', '1', empty_blob(), 'GalGadot@gmail.com', '0970313604', TO_DATE('1985-04-30', 'YYYY-MM-DD'), '台北市信義區信義路四段415號6樓', '我是神力女超人', '00731350235011', '500', '0', '1');
+INSERT INTO MEMBER VALUES ('weshare03', '0004', '0009', NULL,'B287381891', 'c123456', '123456', '艾瑪華森', '1', empty_blob(), 'EmmaWatson@gmail.com', '0970313604', TO_DATE('1989-06-15', 'YYYY-MM-DD'), '台北市松山區八德路四段520號', '你們這群麻瓜', '08545080687111', '0', '0', '1');
+INSERT INTO MEMBER VALUES ('weshare04', '0006', '0005', NULL,'A167464958', 'd123456', '123456', '克里斯漢斯沃', '0', empty_blob(), 'ChrisHemsworth@gmail.com', '0970313604', TO_DATE('1987-07-12', 'YYYY-MM-DD'), '台北市大安區復興南路一段390號', '我是頭上有閃電', '80885744387461', '1000', '0', '1');
+INSERT INTO MEMBER VALUES ('weshare05', '0001', '0004',NULL, 'A227604096', 'e123456', '123456', '艾蜜莉克拉克', '1', empty_blob(), 'EmiliaClarke@ntub.edu.tw', '0970313604', TO_DATE('1999-12-23', 'YYYY-MM-DD'), '台北市萬華區中華路一段152號3樓 2,3,15樓', 'Every one love me.', '00314637967473', '5000', '20000', '1');
+INSERT INTO MEMBER VALUES ('weshare06', '0002', '0003',NULL,'A278318487', 'f123456', '123456', '史嘉蕾喬韓森', '1', empty_blob(), 'Scarlett@gmail.com', '0970313604', TO_DATE('1989-06-30', 'YYYY-MM-DD'), '桃園市中壢區元化路306號', '黑寡婦有著世界級的運動員水準能力，她能令身體做出許多高難度的複雜動作。她也是一名大師等級的武術高手，精通空手道、柔道、法式拳擊等各式武技。', '007467579675323', '10000', '0', '1');
+INSERT INTO MEMBER VALUES ('david', '0006', '0042',NULL,'A110133151', 'david', 'dddddd', '大衛海鮮', '0', empty_blob(), 'david@gmail.com', '0970313604', TO_DATE('1995-05-23', 'YYYY-MM-DD'), '新北市汐止區新台五路一段162號', '宣告，取值，吃500', '0074634679675323', '100500', '0', '1');
 --老師(做BLOB指令)--
 
 CREATE TABLE Teacher (
@@ -330,6 +330,7 @@ Insert into InsCourseTime values (('TT'||LPAD(to_char(InsCourseTime_seq.NEXTVAL)
 Insert into InsCourseTime values (('TT'||LPAD(to_char(InsCourseTime_seq.NEXTVAL), 5, '0')),'IC00002',TO_DATE('2019-05-24 15:00', 'YYYY-MM-DD HH24:MI'),TO_DATE('2019-05-24 18:00', 'YYYY-MM-DD HH24:MI'));
 Insert into InsCourseTime values (('TT'||LPAD(to_char(InsCourseTime_seq.NEXTVAL), 5, '0')),'IC00002',TO_DATE('2019-05-24 17:00', 'YYYY-MM-DD HH24:MI'),TO_DATE('2019-05-24 19:00', 'YYYY-MM-DD HH24:MI'));
 Insert into InsCourseTime values (('TT'||LPAD(to_char(InsCourseTime_seq.NEXTVAL), 5, '0')),'IC00002',TO_DATE('2019-05-24 19:00', 'YYYY-MM-DD HH24:MI'),TO_DATE('2019-05-24 20:00', 'YYYY-MM-DD HH24:MI'));
+
 
 Insert into InsCourseTime values (('TT'||LPAD(to_char(InsCourseTime_seq.NEXTVAL), 5, '0')),'IC00003',TO_DATE('2019-05-24 11:00', 'YYYY-MM-DD HH24:MI'),TO_DATE('2019-05-24 12:00', 'YYYY-MM-DD HH24:MI'));
 Insert into InsCourseTime values (('TT'||LPAD(to_char(InsCourseTime_seq.NEXTVAL), 5, '0')),'IC00003',TO_DATE('2019-05-24 16:00', 'YYYY-MM-DD HH24:MI'),TO_DATE('2019-05-24 17:00', 'YYYY-MM-DD HH24:MI'));
@@ -767,7 +768,7 @@ COMMENT ON COLUMN GoodsDetails.goodScore IS '0~5分(間距0.5分)';
 --------------------------------------------------------------------------
 INSERT INTO GoodsDetails VALUES ('GO00001','GD00003','25','4.5',null);
 INSERT INTO GoodsDetails VALUES ('GO00001','GD00002','17','3.0',null);
-INSERT INTO GoodsDetails VALUES ('GO00002','GD00006','33','ß4.5',null);
+INSERT INTO GoodsDetails VALUES ('GO00002','GD00006','33','4.5',null);
 INSERT INTO GoodsDetails VALUES ('GO00003','GD00004','10','4.0',null);
 INSERT INTO GoodsDetails VALUES ('GO00004','GD00001','6','3.0',null);
 INSERT INTO GoodsDetails VALUES ('GO00004','GD00007','29','3.0',null);

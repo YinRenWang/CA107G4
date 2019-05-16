@@ -65,8 +65,7 @@ public class CourseReservationDAO implements CourseReservationDAO_interface {
     		con.setAutoCommit(false);
     		
     		//新增訂單
-    		int[] cols = {1};
-    		pstmt = con.prepareStatement(INSERT_STMT,cols);
+    		pstmt = con.prepareStatement(INSERT_STMT,Statement.RETURN_GENERATED_KEYS);
 			pstmt.setString(1,courseReservationVO.getTeacherId());
 			pstmt.setString(2,courseReservationVO.getMemId());
 			pstmt.setString(3,courseReservationVO.getInscId());

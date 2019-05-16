@@ -53,11 +53,11 @@ public class WhoAroundsWS {
 
 		System.out.println("Message received: " + message);
 	}
-//
-//	@OnError
-//	public void onError(Session userSession, Throwable e) {
-//		System.out.println("Error: " + e.toString());
-//	}
+
+	@OnError
+	public void onError(Session userSession, Throwable e) {
+		System.out.println("Error: " + e.toString());
+	}
 
 	@OnClose
 	public void onClose(Session userSession, CloseReason reason) {

@@ -38,6 +38,13 @@
 
 		<!--Java物件與資料庫表格的映射檔 -->
 		<mapping resource="com/livestream/model/LiveStream.hbm.xml" />
+		<mapping class="android.com.goods.model.GoodsVO" />
+		<mapping class="android.com.goodsdetails.model.GoodsDetailsVO" />
+		<mapping class="android.com.goodslike.model.GoodsLikeVO" />
+		<mapping class="android.com.goodsorder.model.GoodsOrderVO" />
+		<mapping class="android.com.teacher.model.TeacherVO" />
+		<mapping class="android.com.member.model.MemberVO" />
+		
 
 	</session-factory>
 	
