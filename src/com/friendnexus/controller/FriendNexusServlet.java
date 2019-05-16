@@ -35,7 +35,7 @@ public class FriendNexusServlet extends HttpServlet {
 		if ("insert1".equals(action)) { // 來自addEmp.jsp的請求
 
 			List<String> errorMsgs = new LinkedList<String>();
-			req.setAttribute("errorMsgs", errorMsgs);
+			req.setAttribute("errorMsgs", errorMsgs); 
 
 			try {
 
