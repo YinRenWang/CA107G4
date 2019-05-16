@@ -18,7 +18,7 @@ import com.member.model.MemberVO;
 import com.team.model.TeamService;
 import com.team.model.TeamVO; 
 
-public class FriendNexusServlet extends HttpServlet {
+public class FriendNexusServlet extends HttpServlet { 
 
 	private static final String String = null;
 
