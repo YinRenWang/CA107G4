@@ -34,10 +34,10 @@ public class FriendNexusServlet extends HttpServlet {
 
 		if ("insert1".equals(action)) { // 來自addEmp.jsp的請求
 
-			List<String> errorMsgs = new LinkedList<String>();
+			List<String> errorMsgs = new LinkedList<String>(); 
 			req.setAttribute("errorMsgs", errorMsgs);  
 
-			try { 
+			try {  
 
 				/*********************** 1.接收請求參數 - 輸入格式的錯誤處理 *************************/
 				String memId = req.getParameter("memId");
