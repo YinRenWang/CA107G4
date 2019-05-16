@@ -19,6 +19,8 @@ import com.member.model.MemberService;
 import com.member.model.MemberVO;
 import com.teacher.model.TeacherService;
 import com.teacher.model.TeacherVO;
+
+import other.MailService;
  
 
 @WebServlet("/TeacherServlet")
@@ -130,7 +132,24 @@ public class TeacherServlet extends HttpServlet {
 				teacherStatus = new Integer(str);
 				/*************************** 2.開始查詢資料 *****************************************/
 				TeacherService teacherSvc = new TeacherService();
+				MemberService memberSvc =new MemberService();
 				teacherSvc.updateStatus(teacherStatus, teacherId);
+				MemberVO memberVO=(MemberVO)memberSvc.getOneMember((teacherSvc.findOneById(teacherId).getMemId()));
+				String memEmail=memberSvc.getOneMemberNoImg(teacherSvc.findOneById(teacherId).getMemId()).getMemEmail();
+				String memId=memberSvc.getOneMemberNoImg(teacherSvc.findOneById(teacherId).getMemId()).getMemId();
+			      String subject = "Weshare 註冊會員 確認信件";
+			      String verifyURL="https://ca107g4.ga/CA107G4/TeacherServlet?action=teacherCheck&teacherId="+teacherId+"memId="+memId;
+			      String messageText="親愛的 "+memberVO.getMemName()+" 您好：\r\n" + 
+			      		"恭喜您已成為WeShare平台的老師，請按以下的連結確認：\r\n" + 
+			      		"\r\n" + 
+			      		verifyURL+ 
+			      		"\r\n" + 
+			      		"如果您沒有在WeSahre申請成為老師，請忽略這封郵件。";
+			     
+				if(teacherStatus.equals(1)) {
+				MailService mailSvc =new MailService();
+				 mailSvc.sendMail(memEmail, subject, messageText);
+				}
 
 				/*************************** 3.查詢完成,準備轉交(Send the Success view) *************/
 				req.setAttribute("inCludeVO", "teacher"); // 資料庫取出的memberVO物件,存入req
@@ -146,6 +165,20 @@ public class TeacherServlet extends HttpServlet {
 //				failureView.forward(req, res);
 //			}
 			
+		if ("teacherCheck".equals(action)) {// 來自loginMember.jsp的請求
+			List<String> errorMsgs = new LinkedList<String>();
+			req.setAttribute("errorMsgs", errorMsgs);
+
+//			try {
+				/*************************** 1.接收請求參數 - 輸入格式的錯誤處理 **********************/
+
+				/*************************** 3.查詢完成,準備轉交(Send the Success view) *************/
+				req.getSession().invalidate();
+				String url = "/front-end/member/loginMember.jsp";
+				RequestDispatcher successView = req.getRequestDispatcher(url); // 成功轉交 loginSuccess.jsp
+				successView.forward(req, res);
+				
+				}
 		
 
 		

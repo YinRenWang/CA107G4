@@ -23,6 +23,8 @@ import com.inscoursetime.model.InsCourseTimeVO;
 import com.member.model.MemberService;
 import com.member.model.MemberVO;
 
+import other.BridgeTest;
+
 @WebServlet("/InsCourseTimeServlet")
 public class InsCourseTimeServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
@@ -107,7 +109,7 @@ public class InsCourseTimeServlet extends HttpServlet {
 				InsCourseTimeService insCourseTimeSvc = new InsCourseTimeService();
 				String inscId = req.getParameter("inscId");
 				if (inscId == null || (inscId.trim()).length() == 0) {
-					errorMsgs.add("請選擇	課程");
+					errorMsgs.add("請選擇課程");
 				}
 				String[] start_dateTime = req.getParameterValues("start_dateTime");
 				String[] end_dateTime = req.getParameterValues("end_dateTime");
@@ -122,6 +124,13 @@ public class InsCourseTimeServlet extends HttpServlet {
 						break;
 
 					}
+					if (BridgeTest.compareToTime(start_dateTime[i], end_dateTime[i])) {
+						errorMsgs.add("開始時間不能小於結束時間");
+						break;
+
+					}
+	
+				
 					if(insCourseTimeSvc.findDateMinute(start_dateTime[i], end_dateTime[i], inscId)!=null) {
 						errorMsgs.add("此日期時段已存在資料庫");				
 						break;
