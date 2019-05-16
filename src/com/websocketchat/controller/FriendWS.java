@@ -45,7 +45,7 @@ public class FriendWS {
 		Collection<Session> sessions = sessionsMap.values();
 		for (Session session : sessions) {
 			if(session != null && session.isOpen()) {
-				session.getAsyncRemote().sendText(stateMessageJson);
+				session.getBasicRemote().sendText(stateMessageJson);
 			}
 		}
 
@@ -55,7 +55,7 @@ public class FriendWS {
 	}
 
 	@OnMessage
-	public void onMessage(Session userSession, String message) {
+	public void onMessage(Session userSession, String message) throws Throwable {
 		ChatMessage chatMessage = gson.fromJson(message, ChatMessage.class);
 		String sender = chatMessage.getSender();
 		String receiver = chatMessage.getReceiver();
@@ -90,7 +90,7 @@ public class FriendWS {
 				
 //				}
 				
-			userSession.getAsyncRemote().sendBinary(ByteBuffer.wrap(gson.toJson(historyData).getBytes()));
+			userSession.getBasicRemote().sendBinary(ByteBuffer.wrap(gson.toJson(historyData).getBytes()));
 			
 			System.out.println(gson.toJson(historyData));
 				return;
@@ -115,17 +115,17 @@ public class FriendWS {
 			
 			if("image".equals(chatMessage.gettOrm())) {
 				if (senderSession != null && senderSession.isOpen()) {
-					senderSession.getAsyncRemote().sendBinary(ByteBuffer.wrap(gson.toJson(chatMessage).getBytes()));
+					senderSession.getBasicRemote().sendBinary(ByteBuffer.wrap(gson.toJson(chatMessage).getBytes()));
 				}
 				if (receiverSession != null && receiverSession.isOpen()) {
-					receiverSession.getAsyncRemote().sendBinary(ByteBuffer.wrap(gson.toJson(chatMessage).getBytes()));
+					receiverSession.getBasicRemote().sendBinary(ByteBuffer.wrap(gson.toJson(chatMessage).getBytes()));
 				}		
 			}else {
 				if (senderSession != null && senderSession.isOpen()) {
-					senderSession.getAsyncRemote().sendText(message);
+					senderSession.getBasicRemote().sendText(message);
 				}
 				if (receiverSession != null && receiverSession.isOpen()) {
-					receiverSession.getAsyncRemote().sendText(message);
+					receiverSession.getBasicRemote().sendText(message);
 				}
 			}
 			
@@ -139,7 +139,7 @@ public class FriendWS {
 	}
 
 	@OnClose
-	public void onClose(Session userSession, CloseReason reason) {
+	public void onClose(Session userSession, CloseReason reason) throws Throwable {
 		String userNameClose = null;
 		Set<String> userNames = sessionsMap.keySet();
 		for (String userName : userNames) {
@@ -155,7 +155,7 @@ public class FriendWS {
 			String stateMessageJson = gson.toJson(stateMessage);
 			Collection<Session> sessions = sessionsMap.values();
 			for (Session session : sessions) {
-				session.getAsyncRemote().sendText(stateMessageJson);
+				session.getBasicRemote().sendText(stateMessageJson);
 			}
 		}
 

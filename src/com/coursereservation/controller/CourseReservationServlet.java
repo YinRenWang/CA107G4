@@ -110,7 +110,8 @@ public class CourseReservationServlet extends HttpServlet {
 				String crvLoc = req.getParameter("crvLoc").trim();
 				Double crvTotalTime = new Double(req.getParameter("crvTotalTime"));
 				Double crvTotalPrice = new Double(req.getParameter("crvTotalPrice"));
-				if(memberVO.getMemBalance()<crvTotalPrice.intValue()) {
+				MemberService memberSvc = new MemberService();
+				if(memberSvc.getOneMemberNoImg(memId).getMemBalance()<crvTotalPrice.intValue()) {
 					errorMsgs.add("您的餘額不足");
 					req.setAttribute("errorMsgs", errorMsgs); // 含有輸入格式錯誤的empVO物件,也存入req
 					String userSearch=(String) session.getAttribute("userSearch");

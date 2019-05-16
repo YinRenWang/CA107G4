@@ -248,15 +248,15 @@
 
 								<script type="text/javascript">
 									function Magic() {
-										document.getElementById("memId").value = "weshare08";
-										document.getElementById("memEmail").value = "zxe841123@gmail.com";
-										document.getElementById("memPsw").value = "a123456";
-										document.getElementById("memPswHint").value = "a987654";
-										document.getElementById("memName").value = "大衛海鮮";
+										document.getElementById("memId").value = "weshare";
+										document.getElementById("memEmail").value = "n1036434@ntub.edu.tw";
+										document.getElementById("memPsw").value = "123456";
+										document.getElementById("memPswHint").value = "123***";
+										document.getElementById("memName").value = "板橋億載金城";
 										document.getElementById("memIdCard").value = "A181313047";
-										document.getElementById("memBirth").value = "2018-05-23";
-										document.getElementById("memPhone").value = "0970548704";
-										document.getElementById("memAdd").value = "桃園市中壢區中大路300號";
+										document.getElementById("memBirth").value = "2019-05-23";
+										document.getElementById("memPhone").value = "0970313604";
+										document.getElementById("memAdd").value = "新北市板橋區西門街9號";
 									}
 								</script>
 

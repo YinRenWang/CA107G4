@@ -203,7 +203,7 @@ System.out.println("結帳");
 				goodVO = goodsSvc.insertGood(teacherId, goodName, goodPrice, goodInfo, goodImg, goodStatus);
 				
 				/*************************** 3.新增完成,準備轉交(Send the Success view) ***********/
-				String url = "/front-end/goods/addGoods.jsp";
+				String url = "/front-end/member/viewAllMember.jsp";
 				req.setAttribute("inCludeVO", "goods"); // 資料庫取出的memberVO物件,存入req
 				RequestDispatcher successView = req.getRequestDispatcher(url);
 				successView.forward(req, res);

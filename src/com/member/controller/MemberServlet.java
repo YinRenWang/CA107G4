@@ -175,12 +175,10 @@ public class MemberServlet extends HttpServlet {
 					failureView.forward(req, res);
 				}else {
 					memSvc.updateStatus(userMemId);
-					MemberVO memberVO=memSvc.getOneMemberNoImg(userMemId);
 					System.out.println("一位會員驗證成功");
 					/*************************** 4.新增完成,準備轉交(Send the Success view) ***********/
-					req.getSession().setAttribute("memberVO", memberVO);
-					req.setAttribute("inCludeVO", "member"); // 要導向的分頁
-					String url = "/front-end/member/viewAllMember.jsp";
+					req.getSession().invalidate();
+					String url = "/front-end/member/loginMember.jsp";
 					RequestDispatcher successView = req.getRequestDispatcher(url); // 成功轉交 loginSuccess.jsp
 					successView.forward(req, res);
 				}
