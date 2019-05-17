@@ -541,7 +541,7 @@ input[type=file] {
 
 		function disconnect() {
 			webSocket.close();
-   commet
+         commet();
 		}
 		
 		

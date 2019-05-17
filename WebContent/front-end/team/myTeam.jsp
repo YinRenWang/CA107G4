@@ -222,12 +222,11 @@
 							class="badge badge-success">預先扣款</span> <span
 							class="badge badge-lisght"> <i class="fas fa-dollar-sign"></i>
 						</span>每次${incourseSvc.findOneById(teamSvc.findByPrimaryKey1(joinGroupVO.teamId).inscID).inscPrice}
-						元$<br>
+						元<br>
 					</div>
 					<div class="class1">
 						<span class="badge badge-light"> 隊伍型態 </span> <span
-							class="badge badge-info">自主性揪團</span> <span
-							class="badge badge-info">揪團編號</span>
+							class="badge badge-info">自主性揪團</span> 
 					</div>
 				</div>
 				<!-- 				按鈕在這--------------------------------------------------------------------- -->
