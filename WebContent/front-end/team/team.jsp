@@ -86,7 +86,7 @@
 }
 
 .plan {
-	padding: 10px;
+	padding: 15px;
 	border: 1px #ccc solid;
 	border-radius: 10px;
 	margin: 10px;
@@ -220,7 +220,7 @@
 			<div class="plan">
 				<div class="plan_iamge">
 					<img src="<%=request.getContextPath()%>/member/DBGifReader.do?memId=${teacherSvc.findOneById(insCourseVO.teacherId).memId}"
-						width="175" height="185">
+						width="175" height="180">
 				</div>
 				<div class="plan_info">
 					<h4>
@@ -262,7 +262,7 @@
 				<div class="button-group">
 					<div class="row">
 					
-					
+					<c:if test="${not empty teamSvc.getOneTeam(insCourseVO.inscId).teamId}">
 					<FORM METHOD="get" ACTION="<%=request.getContextPath()%>/team/team.do" name="form1" id="${teamSvc.getOneTeam(insCourseVO.inscId).teamId}">
 							<input type="hidden" name="memId" value="${memberVO.memId}">
 							<input type="hidden" name="teamId" value="${teamSvc.getOneTeam(insCourseVO.inscId).teamId}">
@@ -271,6 +271,7 @@
 								name="action" value="insert"> 
 								<input type="button" id="${teamSvc.getOneTeam(insCourseVO.inscId).teamId}" value="加入揪團" class="btn btn-info submit" data-disable-with="find" />
 						</form>
+						</c:if>	
 <script type="text/javascript">
 //自訂預設值
 swal.setDefaults({
@@ -308,11 +309,11 @@ $(function () {
 <!-- Button trigger modal -->
 
          
-          
+          <c:if test="${not empty teamSvc.getOneTeam(insCourseVO.inscId).teamId}">
          <button type="button" id="${insCourseVO.inscId}"class="btn btn-info" data-toggle="modal" data-target="#basicModal"> 詳情
         <input type="hidden" value="${insCourseVO.inscId}" class="ha">
           </button>
- 
+ </c:if>
 <!-- Modal -->
 <div class="modal fade" id="basicModal" tabindex="-1" role="dialog" aria-labelledby="basicModal" aria-hidden="true">
   <div class="modal-dialog" role="document">
