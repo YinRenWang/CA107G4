@@ -133,12 +133,12 @@ background:#f4f9f4}
 <form id="createRoom">
 <input  type="hidden" id="sessionInput" value="${teacherVO.teacherId}"/>
 <input type="hidden" id="errorMsg" value=""/>
-<button type="submit" class="btn btn-primary" id="start">開始直播</button>
+<button type="submit" class="btn btn-primary" id="start" onclick="showbutton();">開始直播</button>
 </form>
       
 <div class="bottom mx-auto">
-        <button  class="btn btn-danger" id="record" >開始錄影</button>
-          <button  class="btn btn-success" id="download" >儲存錄影</button>
+        <button  class="btn btn-danger" id="record" style="display:none">開始錄影</button>
+          <button  class="btn btn-success" id="download" style="display:none">儲存錄影</button>
         <button id="play" class="btn btn-success" style="display:none">播放</button>
         
         
@@ -294,6 +294,11 @@ background:#f4f9f4}
     
 <script>
 
+	function showbutton(){
+		$('#record').show();
+		$('#download').show();
+	}
+	
     var MyPoint = "/MyEchoServer/${teacherVO.teacherId}";
     var host = window.location.host;
     var path = window.location.pathname;
@@ -337,7 +342,7 @@ background:#f4f9f4}
 	        alert ("訊息請勿空白!");
 	        inputMessage.focus();	
 	    }else{
-	        var jsonObj = {"userName" : userName, "message" : message};
+	        var jsonObj = {"userName" : "${memberSvc.getOneMember(teacherVO.memId).memName}", "message" : message};
 	        webSocket.send(JSON.stringify(jsonObj));
 	        inputMessage.value = "";
 	        inputMessage.focus();

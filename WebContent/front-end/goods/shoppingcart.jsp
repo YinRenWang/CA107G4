@@ -55,7 +55,7 @@
 				<h1>我的購物車</h1>
 			</div>
 			<div class="cart1">
-				<a  href='good_home.jsp'><img src="<%=request.getContextPath()%>/front-end/goods/images/home-icon.png" width="30" height="30" border="0">回商店</a>
+				<a  href='<%=request.getContextPath()%>/front-end/goods/good_home.jsp'><img src="<%=request.getContextPath()%>/front-end/goods/images/home-icon.png" width="30" height="30" border="0">回商店</a>
 			</div>
 		</div>
 	</div>
