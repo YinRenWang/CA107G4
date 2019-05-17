@@ -204,7 +204,7 @@
 					<h4>
 						${courseSvc.findOneById(incourseSvc.findOneById(teamSvc.findByPrimaryKey1(joinGroupVO.teamId).inscID).courseId).courseName}
 
-						<span class="badge badge-light">團體課程</span>
+						<span class="badge badge-light">團體課程</span> 
 					</h4>
 					<div>
 						<i class="far fa-calendar-alt"></i>
