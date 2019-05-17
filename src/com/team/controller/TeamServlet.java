@@ -311,7 +311,7 @@ public class TeamServlet extends HttpServlet {
 				java.sql.Date wrtime= new java.sql.Date(System.currentTimeMillis());
 				
 				
-				wrSvc.addWithdrawalRecord(leaderID, wrmoney, teamMFD);
+				wrSvc.addWithdrawalRecord(leaderID, -wrmoney, teamMFD);
 				
 				
 				
