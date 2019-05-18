@@ -9,7 +9,7 @@
 <jsp:useBean id="memberSvc" scope="page" class="com.member.model.MemberService" />
 <jsp:useBean id="LiveStreamSvc" scope="page" class="com.livestream.model.LiveStreamService" />
 <html lang="en">
-<head>
+<head> 
 <!-- Required meta tags -->
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
