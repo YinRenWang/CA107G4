@@ -296,9 +296,10 @@ NOMAXVALUE
 NOCYCLE
 NOCACHE;
 
-Insert into INSCOURSE values (('IC'||LPAD(to_char(InsCourse_seq.NEXTVAL), 5, '0')),'TC00001','0005','桃園市中壢區','0',null,'中文','600','Java是簡單的，要什麼給什麼，萬物皆物件','0');
+Insert into INSCOURSE values (('IC'||LPAD(to_char(InsCourse_seq.NEXTVAL), 5, '0')),'TC00001','0005','桃園市中壢區','0','1','中文','600','Java是簡單的，要什麼給什麼，萬物皆物件','0');
 Insert into INSCOURSE values (('IC'||LPAD(to_char(InsCourse_seq.NEXTVAL), 5, '0')),'TC00002','0008','台北市信義區','1','4','英文','300','製作抹茶奶凍捲,學習重點 - 難度較高、舒芙蕾般軟嫩的蛋糕體學習 - 抹茶甘納許的製作 - 日式口味的紅豆奶油餡','0');
 Insert into INSCOURSE values (('IC'||LPAD(to_char(InsCourse_seq.NEXTVAL), 5, '0')),'TC00003','0006','新北市汐止區','1','23','中文','500','來Tibame中壢資策會Android真的好簡單! A piece of cake','0');
+Insert into INSCOURSE values (('IC'||LPAD(to_char(InsCourse_seq.NEXTVAL), 5, '0')),'TC00002','0045','台北市信義區','0','1','法文','600','普羅旺斯燉菜（Ratatouille）源於尼斯（Nice），完整名稱是尼斯燉菜（Ratatouille niçoise），不過環地中海區皆有類似以當地時蔬燉煮的菜色。這道菜冷熱食皆可（隔夜吃滋味尤佳），當主菜、配菜、做醬或拌義大利麵都得宜，可說是煮婦煮夫的百用料理。','0');
 
 --課程時間--
 
@@ -633,8 +634,14 @@ CONSTRAINT FRIENDNEXUS_FRIENDACC_FK FOREIGN KEY(MEMID )REFERENCES MEMBER(MEMID )
 CONSTRAINT FRIENDNEXUS_MEMID_FK FOREIGN KEY(MEMID)REFERENCES MEMBER(MEMID));
 COMMENT ON COLUMN FRIENDNEXUS.FRIENDSTATUS IS '0=申請中 1=已成為好友';
 Insert into FRIENDNEXUS values ('weshare01','weshare02',1);
-Insert into FRIENDNEXUS values ('weshare02','weshare03',1);
-Insert into FRIENDNEXUS values ('weshare03','weshare04',1);
+Insert into FRIENDNEXUS values ('weshare02','weshare01',1);
+Insert into FRIENDNEXUS values ('weshare01','weshare03',1);
+Insert into FRIENDNEXUS values ('weshare03','weshare01',1);
+Insert into FRIENDNEXUS values ('weshare01','weshare04',1);
+Insert into FRIENDNEXUS values ('weshare04','weshare01',1);
+
+Insert into FRIENDNEXUS values ('weshare03','weshare04',0);
+Insert into FRIENDNEXUS values ('weshare04','weshare03',0);
 
 --好友聊天紀錄--
 
@@ -646,9 +653,7 @@ CONSTRAINT FriendChatHistory_PK PRIMARY KEY (FRIENDACC , MEMID ),
 CONSTRAINT FRIENDCHATHISTORY_MEMID_FK FOREIGN KEY(MEMID)REFERENCES MEMBER(MEMID),
 CONSTRAINT FriendChatHistory_accNo_FK FOREIGN KEY(MEMID)REFERENCES MEMBER(MEMID ));
 
-Insert into FRIENDCHATHISTORY values ('weshare02','weshare01','null');
-Insert into FRIENDCHATHISTORY values ('weshare02','weshare03','null');
-Insert into FRIENDCHATHISTORY values ('weshare03','weshare04','null');
+
 
 --參加揪團--
 
