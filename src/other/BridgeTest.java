@@ -33,10 +33,11 @@ public class BridgeTest {
 	}
 
 	public static boolean compareToTime(String start,String End) {
-		DateFormat df = new SimpleDateFormat("yyyyMM");
+		DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm");
 		//获取Calendar实例
 		Calendar currentTime = Calendar.getInstance();
 		Calendar compareTime = Calendar.getInstance();
+
 	    try {
 	    	//把字符串转成日期类型
 			currentTime.setTime(df.parse(start));
@@ -47,10 +48,10 @@ public class BridgeTest {
 		}
 	    //利用Calendar的方法比较大小
 	    if (currentTime.compareTo(compareTime) > 0) {
-	    	return false;
+	    	return true;
 	    	
 		}else{
-			return true;
+			return false;
 		}
 	  
 	}

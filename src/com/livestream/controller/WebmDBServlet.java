@@ -43,10 +43,12 @@ public class WebmDBServlet extends HttpServlet {
 				while ((len = in.read(buf)) != -1) {
 					out.write(buf, 0, len);
 				}
+
 				in.close();
 			} else {
 				res.sendError(HttpServletResponse.SC_NOT_FOUND);
 			}
+			out.close();
 			rs.close();
 			pstmt.close();
 		} catch (Exception e) {

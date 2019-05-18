@@ -44,7 +44,7 @@ public class ConfirmCourseWS {
 		Session studentSess = sessionsMap.get(crVO.getMemId());
 
 		Long now = Calendar.getInstance().getTimeInMillis();
-		Long courseStart = crVO.getCrvMFD().getTime() - 15 * 60 * 1000;
+		Long courseStart = crVO.getCrvMFD().getTime() - 60 * 60 * 1000*24*7;
 		try {
 			if (now - courseStart < 0) {
 				userSession.getBasicRemote().sendText("not_yet");

@@ -11,16 +11,25 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.naming.Context;
+import javax.naming.InitialContext;
+import javax.naming.NamingException;
+import javax.sql.DataSource;
+
 import com.coursereport.model.CourseReportVO;
 
-public class InsCourseTimeJDBCDAO implements InsCourseTimeDAO_interface {
-	static InsCourseTimeJDBCDAO dao=new InsCourseTimeJDBCDAO();
-	String driver = "oracle.jdbc.driver.OracleDriver";
-	String url = "jdbc:oracle:thin:@localhost:1521:XE";
-//	String url = "jdbc:oracle:thin:@localhost:49161:XE";
-	String userid = "WESHARE";
-	String passwd = "123456";
-	
+public class InsCourseTimeDAO implements InsCourseTimeDAO_interface {
+	private static DataSource ds = null;
+
+	static {
+		try {
+			Context ctx = new InitialContext();
+			ds = (DataSource) ctx.lookup("java:comp/env/jdbc/TestDB");
+		} catch (NamingException e) {
+			e.printStackTrace();
+		}
+	}
+
 	//新增
 	private static final String INSERT_STMT = "Insert into InsCourseTime values (('TT'||LPAD(to_char(InsCourseTime_seq.NEXTVAL), 5, '0')),?,?,?)";
 	
@@ -47,8 +56,7 @@ public class InsCourseTimeJDBCDAO implements InsCourseTimeDAO_interface {
 
 		try {
 
-			Class.forName(driver);
-			con = DriverManager.getConnection(url, userid, passwd);
+			con = ds.getConnection();
 			pstmt = con.prepareStatement(INSERT_STMT);
 			pstmt.setString(1,insCourseTimeVO.getInscId());
 			pstmt.setTimestamp(2, insCourseTimeVO.getInscMFD());
@@ -57,10 +65,6 @@ public class InsCourseTimeJDBCDAO implements InsCourseTimeDAO_interface {
 			pstmt.executeUpdate();
 
 			// Handle any driver errors
-		} catch (ClassNotFoundException e) {
-			throw new RuntimeException("Couldn't load database driver. "
-					+ e.getMessage());
-			// Handle any SQL errors
 		} catch (SQLException se) {
 			throw new RuntimeException("A database error occured. "
 					+ se.getMessage());
@@ -92,8 +96,7 @@ public class InsCourseTimeJDBCDAO implements InsCourseTimeDAO_interface {
 
 		try {
 
-			Class.forName(driver);
-			con = DriverManager.getConnection(url, userid, passwd);
+			con = ds.getConnection();
 			pstmt = con.prepareStatement(UPDATE);
 			pstmt.setTimestamp(1, insCourseTimeVO.getInscMFD());
 			pstmt.setTimestamp(2, insCourseTimeVO.getInscEXP());
@@ -102,11 +105,7 @@ public class InsCourseTimeJDBCDAO implements InsCourseTimeDAO_interface {
 			System.out.println("已修改一筆資料");
 
 			// Handle any driver errors
-		} catch (ClassNotFoundException e) {
-			throw new RuntimeException("Couldn't load database driver. "
-					+ e.getMessage());
-			// Handle any SQL errors
-		} catch (SQLException se) {
+		}  catch (SQLException se) {
 			throw new RuntimeException("A database error occured. "
 					+ se.getMessage());
 			// Clean up JDBC resources
@@ -136,18 +135,12 @@ public class InsCourseTimeJDBCDAO implements InsCourseTimeDAO_interface {
 		PreparedStatement pstmt = null;
 
 		try {
-
-			Class.forName(driver);
-			con = DriverManager.getConnection(url, userid, passwd);
+			con = ds.getConnection();
 			pstmt = con.prepareStatement(DELETE);
 			pstmt.setString(1, inscTimeId);
 			pstmt.executeUpdate();
 
 			// Handle any driver errors
-		} catch (ClassNotFoundException e) {
-			throw new RuntimeException("Couldn't load database driver. "
-					+ e.getMessage());
-			// Handle any SQL errors
 		} catch (SQLException se) {
 			throw new RuntimeException("A database error occured. "
 					+ se.getMessage());
@@ -181,8 +174,7 @@ public class InsCourseTimeJDBCDAO implements InsCourseTimeDAO_interface {
 
 		try {
 
-			Class.forName(driver);
-			con = DriverManager.getConnection(url, userid, passwd);
+			con = ds.getConnection();
 			pstmt = con.prepareStatement(GET_ONE_STMT);
 
 			pstmt.setString(1, inscTimeId);
@@ -199,10 +191,6 @@ public class InsCourseTimeJDBCDAO implements InsCourseTimeDAO_interface {
 			}
 
 			// Handle any driver errors
-		} catch (ClassNotFoundException e) {
-			throw new RuntimeException("Couldn't load database driver. "
-					+ e.getMessage());
-			// Handle any SQL errors
 		} catch (SQLException se) {
 			throw new RuntimeException("A database error occured. "
 					+ se.getMessage());
@@ -244,8 +232,7 @@ public class InsCourseTimeJDBCDAO implements InsCourseTimeDAO_interface {
 
 		try {
 
-			Class.forName(driver);
-			con = DriverManager.getConnection(url, userid, passwd);
+			con = ds.getConnection();
 			pstmt = con.prepareStatement(CASE_WHEN_STMT);
 			pstmt.setString(1, xxxId);
 			pstmt.setString(2, xxxId);
@@ -261,10 +248,6 @@ public class InsCourseTimeJDBCDAO implements InsCourseTimeDAO_interface {
 			}
 
 			// Handle any driver errors
-		} catch (ClassNotFoundException e) {
-			throw new RuntimeException("Couldn't load database driver. "
-					+ e.getMessage());
-			// Handle any SQL errors
 		} catch (SQLException se) {
 			throw new RuntimeException("A database error occured. "
 					+ se.getMessage());
@@ -306,8 +289,7 @@ public class InsCourseTimeJDBCDAO implements InsCourseTimeDAO_interface {
 
 		try {
 
-			Class.forName(driver);
-			con = DriverManager.getConnection(url, userid, passwd);
+			con = ds.getConnection();
 			pstmt = con.prepareStatement(GET_ALL_STMT);
 			rs = pstmt.executeQuery();
 			
@@ -324,11 +306,7 @@ public class InsCourseTimeJDBCDAO implements InsCourseTimeDAO_interface {
 			}
 
 			// Handle any driver errors
-		} catch (ClassNotFoundException e) {
-			throw new RuntimeException("Couldn't load database driver. "
-					+ e.getMessage());
-			// Handle any SQL errors
-		} catch (SQLException se) {
+		}catch (SQLException se) {
 			throw new RuntimeException("A database error occured. "
 					+ se.getMessage());
 			// Clean up JDBC resources
@@ -371,8 +349,7 @@ public class InsCourseTimeJDBCDAO implements InsCourseTimeDAO_interface {
 
 		try {
 
-			Class.forName(driver);
-			con = DriverManager.getConnection(url, userid, passwd);
+			con = ds.getConnection();
 			pstmt = con.prepareStatement(GET_DATE_STMT);
 
 			pstmt.setDate(1,startTime);
@@ -391,10 +368,6 @@ public class InsCourseTimeJDBCDAO implements InsCourseTimeDAO_interface {
 			}
 
 			// Handle any driver errors
-		} catch (ClassNotFoundException e) {
-			throw new RuntimeException("Couldn't load database driver. "
-					+ e.getMessage());
-			// Handle any SQL errors
 		} catch (SQLException se) {
 			throw new RuntimeException("A database error occured. "
 					+ se.getMessage());
@@ -437,8 +410,7 @@ public class InsCourseTimeJDBCDAO implements InsCourseTimeDAO_interface {
 
 		try {
 
-			Class.forName(driver);
-			con = DriverManager.getConnection(url, userid, passwd);
+			con = ds.getConnection();
 			pstmt = con.prepareStatement(GET_DATE_STMT);
 
 			pstmt.setString(1,startTime);
@@ -457,10 +429,6 @@ public class InsCourseTimeJDBCDAO implements InsCourseTimeDAO_interface {
 			}
 
 			// Handle any driver errors
-		} catch (ClassNotFoundException e) {
-			throw new RuntimeException("Couldn't load database driver. "
-					+ e.getMessage());
-			// Handle any SQL errors
 		} catch (SQLException se) {
 			throw new RuntimeException("A database error occured. "
 					+ se.getMessage());
@@ -511,12 +479,12 @@ public class InsCourseTimeJDBCDAO implements InsCourseTimeDAO_interface {
 //		dao.delete("TT00007");
 		
 		// 查詢單筆
-		InsCourseTimeVO insCourseTimeVO3 = dao.findByPrimaryKey("TT00001");
-		System.out.print(insCourseTimeVO3.getInscTimeId() + ",");
-		System.out.print(insCourseTimeVO3.getInscId() + ",");
-		System.out.print(insCourseTimeVO3.getInscMFD() + ",");
-		System.out.println(insCourseTimeVO3.getInscEXP() + ",");
-		System.out.println("---------------------");
+//		InsCourseTimeVO insCourseTimeVO3 = dao.findByPrimaryKey("TT00001");
+//		System.out.print(insCourseTimeVO3.getInscTimeId() + ",");
+//		System.out.print(insCourseTimeVO3.getInscId() + ",");
+//		System.out.print(insCourseTimeVO3.getInscMFD() + ",");
+//		System.out.println(insCourseTimeVO3.getInscEXP() + ",");
+//		System.out.println("---------------------");
 	
 		// 查詢全部
 //		List<InsCourseTimeVO> list = dao.getAll();
@@ -559,8 +527,7 @@ public class InsCourseTimeJDBCDAO implements InsCourseTimeDAO_interface {
 
 		try {
 
-			Class.forName(driver);
-			con = DriverManager.getConnection(url, userid, passwd);
+			con = ds.getConnection();
 			pstmt = con.prepareStatement(GET_DATE_MI_STMT);
 
 			pstmt.setString(1, startTime);
@@ -579,10 +546,6 @@ public class InsCourseTimeJDBCDAO implements InsCourseTimeDAO_interface {
 			}
 
 			// Handle any driver errors
-		} catch (ClassNotFoundException e) {
-			throw new RuntimeException("Couldn't load database driver. "
-					+ e.getMessage());
-			// Handle any SQL errors
 		} catch (SQLException se) {
 			throw new RuntimeException("A database error occured. "
 					+ se.getMessage());

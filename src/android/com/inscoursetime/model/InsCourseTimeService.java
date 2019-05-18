@@ -8,7 +8,7 @@ public class InsCourseTimeService {
 	private InsCourseTimeDAO_interface dao;
 	
 	public InsCourseTimeService() {
-		dao=new InsCourseTimeJDBCDAO();
+		dao=new InsCourseTimeDAO();
 	}
 	
 	public void insertInsCourseTime(String inscId, Timestamp inscMFD, Timestamp inscEXP) {
@@ -16,9 +16,9 @@ public class InsCourseTimeService {
 		insCourseTimeVO.setInscId(inscId);
 		insCourseTimeVO.setInscMFD(inscMFD);
 		insCourseTimeVO.setInscEXP(inscEXP);
-		dao.insert(insCourseTimeVO);
-		
+		dao.insert(insCourseTimeVO);	
 	}
+	
 	public void updateInsCourseTime(String inscId, Timestamp inscMFD, Timestamp inscEXP) {
 		InsCourseTimeVO insCourseTimeVO = new InsCourseTimeVO();
 		insCourseTimeVO.setInscId(inscId);
@@ -34,6 +34,11 @@ public class InsCourseTimeService {
 	}
 	public InsCourseTimeVO getOneInsCourseTime(String inscTimeId) {
 		return dao.findByPrimaryKey(inscTimeId);
+		
+	}
+	
+	public InsCourseTimeVO findDateMinute(String startTime,String endTime,String inscId){
+		return dao.findDateMinute(startTime,endTime,inscId);
 		
 	}
 	public List<InsCourseTimeVO> getAll(){

@@ -65,7 +65,7 @@ public class CourseReservationServlet extends HttpServlet {
 			
 			
 			Long now = Calendar.getInstance().getTimeInMillis();
-			Long courseStart = crvSvc.findByPrimaryKey(crvId).get(0).getCrvMFD().getTime() - 15 * 60 * 1000;
+			Long courseStart = crvSvc.findByPrimaryKey(crvId).get(0).getCrvMFD().getTime() - 60 * 60 * 1000*24*7;
 			if (now - courseStart < 0) {
 				out.print("not_yet");
 			} else {
