@@ -8,17 +8,28 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.naming.Context;
+import javax.naming.InitialContext;
+import javax.naming.NamingException;
+import javax.sql.DataSource;
 
 
 
 
 
 
-public class FriendNexusJDBCDAO implements FriendNexusDAO_interface {
-	String driver = "oracle.jdbc.driver.OracleDriver";
-	String url = "jdbc:oracle:thin:@localhost:1521:XE";
-	String userid = "WESHARE";
-	String passwd = "123456";
+
+public class FriendNexusDAO implements FriendNexusDAO_interface {
+	private static DataSource ds = null;
+
+	static {
+		try {
+			Context ctx = new InitialContext();
+			ds = (DataSource) ctx.lookup("java:comp/env/jdbc/TestDB");
+		} catch (NamingException e) {
+			e.printStackTrace();
+		}
+	}
 
 	private static final String INSERT_FriendNexus = "INSERT INTO FRIENDNEXUS (memId,friendAcc,friendstatus) VALUES (?, ?, ?)";
 	private static final String GET_ONE_STMT = "SELECT * FROM FRIENDNEXUS where memId=?";
@@ -35,9 +46,7 @@ public class FriendNexusJDBCDAO implements FriendNexusDAO_interface {
 		PreparedStatement pstmt = null;
 
 		try {
-
-			Class.forName(driver);
-			con = DriverManager.getConnection(url, userid, passwd);
+			con = ds.getConnection();
 			pstmt = con.prepareStatement(INSERT_FriendNexus);
 
 			pstmt.setString(1, scorpionChatRecordVO.getMemId());
@@ -46,10 +55,6 @@ public class FriendNexusJDBCDAO implements FriendNexusDAO_interface {
 
 			pstmt.executeUpdate();
 
-			// Handle any driver errors
-		} catch (ClassNotFoundException e) {
-			throw new RuntimeException("Couldn't load database driver. " + e.getMessage());
-			// Handle any SQL errors
 		} catch (SQLException se) {
 			throw new RuntimeException("A database error occured. " + se.getMessage());
 			// Clean up JDBC resources
@@ -81,9 +86,8 @@ public class FriendNexusJDBCDAO implements FriendNexusDAO_interface {
 		ResultSet rs = null;
 
 		try {
-			Class.forName(driver);
 
-			con = DriverManager.getConnection(url, userid, passwd);
+			con = ds.getConnection();
 			pstmt = con.prepareStatement(GET_ONE_STMT);
 			pstmt.setString(1, memId);
 
@@ -138,9 +142,7 @@ public class FriendNexusJDBCDAO implements FriendNexusDAO_interface {
 		ResultSet rs = null;
 
 		try {
-
-			Class.forName(driver);
-			con = DriverManager.getConnection(url, userid, passwd);
+			con = ds.getConnection();
 			pstmt = con.prepareStatement(GET_ALL_STMT);
 			rs = pstmt.executeQuery();
 
@@ -153,10 +155,6 @@ public class FriendNexusJDBCDAO implements FriendNexusDAO_interface {
 				list.add(friendNexusVO); // Store the row in the list
 			}
 
-			// Handle any driver errors
-		} catch (ClassNotFoundException e) {
-			throw new RuntimeException("Couldn't load database driver. " + e.getMessage());
-			// Handle any SQL errors
 		} catch (SQLException se) {
 			throw new RuntimeException("A database error occured. " + se.getMessage());
 			// Clean up JDBC resources
@@ -197,8 +195,7 @@ public class FriendNexusJDBCDAO implements FriendNexusDAO_interface {
 
 		try {
 
-			Class.forName(driver);
-			con = DriverManager.getConnection(url, userid, passwd);
+			con = ds.getConnection();
 			pstmt = con.prepareStatement(GET_ALL_STMT0);
 			pstmt.setString(1, memId);;
 			rs = pstmt.executeQuery();
@@ -212,10 +209,6 @@ public class FriendNexusJDBCDAO implements FriendNexusDAO_interface {
 				list.add(friendNexusVO);
 			}
 
-			// Handle any driver errors
-		} catch (ClassNotFoundException e) {
-			throw new RuntimeException("Couldn't load database driver. " + e.getMessage());
-			// Handle any SQL errors
 		} catch (SQLException se) {
 			throw new RuntimeException("A database error occured. " + se.getMessage());
 			// Clean up JDBC resources
@@ -256,8 +249,7 @@ public class FriendNexusJDBCDAO implements FriendNexusDAO_interface {
 
 		try {
 
-			Class.forName(driver);
-			con = DriverManager.getConnection(url, userid, passwd);
+			con = ds.getConnection();
 			pstmt = con.prepareStatement(GET_ALL_STMT1);
 			pstmt.setString(1, memId);;
 			rs = pstmt.executeQuery();
@@ -271,10 +263,6 @@ public class FriendNexusJDBCDAO implements FriendNexusDAO_interface {
 				list.add(friendNexusVO);
 			}
 
-			// Handle any driver errors
-		} catch (ClassNotFoundException e) {
-			throw new RuntimeException("Couldn't load database driver. " + e.getMessage());
-			// Handle any SQL errors
 		} catch (SQLException se) {
 			throw new RuntimeException("A database error occured. " + se.getMessage());
 			// Clean up JDBC resources
@@ -311,8 +299,7 @@ public class FriendNexusJDBCDAO implements FriendNexusDAO_interface {
 
 		try {
 
-			Class.forName(driver);
-			con = DriverManager.getConnection(url, userid, passwd);
+			con = ds.getConnection();
 			pstmt = con.prepareStatement(UPDATE);
 
 			pstmt.setString(1, friendNexusVO.getMemId());
@@ -320,11 +307,6 @@ public class FriendNexusJDBCDAO implements FriendNexusDAO_interface {
 
 			pstmt.executeUpdate();
 
-			// Handle any driver errors
-		} catch (ClassNotFoundException e) {
-			throw new RuntimeException("Couldn't load database driver. "
-					+ e.getMessage());
-			// Handle any SQL errors
 		} catch (SQLException se) {
 			throw new RuntimeException("A database error occured. "
 					+ se.getMessage());
@@ -354,7 +336,7 @@ public class FriendNexusJDBCDAO implements FriendNexusDAO_interface {
 
 
 	public static void main(String[] args) {
-		FriendNexusJDBCDAO dao = new FriendNexusJDBCDAO();
+		FriendNexusDAO dao = new FriendNexusDAO();
 
 		// 新增
 //		FriendNexusVO FriendNexusVO1 = new FriendNexusVO();
