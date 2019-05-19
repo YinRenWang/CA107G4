@@ -117,7 +117,7 @@ textarea{
 	src="https://ajax.googleapis.com/ajax/libs/jquery/2.0.0/jquery.min.js"></script>
 <title>WeShare | 最棒的教育共享平台</title>
 </head>
- <body onload="connect();" onunload="disconnect();">
+ <body>
 	<!-------------------------------------------------------------------------headerStart------------------------------------------------------------------------->
 <%@ include file="/front-end/backHeaderFooter/header.jsp"%>   
 	<!-------------------------------------------------------------------------headerEnd------------------------------------------------------------------------->
@@ -166,11 +166,8 @@ textarea{
 											</div>
 										</FORM>
 										<div class="w-10"></div>
-										<div class="card-footer w-100 text-muted ">
-											<a href="yahoo.com.tw">查看個人資料</a>
-											
-
-
+											<div class="card-footer w-100 text-muted ">
+									<a href="<%=request.getContextPath()%>/front-end/member/viewAsMember.jsp?memId=${friendNexusVO.memId}">查看個人資料</a>
 										</div>
 									</div>
 								</c:forEach>
