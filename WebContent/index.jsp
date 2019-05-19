@@ -40,7 +40,7 @@ body {
 }
 .cardPadding-title .img-thumbnail {
     display: inline;
-}  
+}   
 .cardPadding-title h5 {
     display: inline;
 }
