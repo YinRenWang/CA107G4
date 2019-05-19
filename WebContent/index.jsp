@@ -37,7 +37,7 @@ body {
 .cardPadding-title {
     padding-bottom: 3%;
     padding-left: 2%;
-}
+}  
 .cardPadding-title .img-thumbnail {
     display: inline;
 }   
@@ -47,7 +47,7 @@ body {
 .teacherImg {
     width: 120px;
     height: 120px;
-     background-size:cover;
+     background-size:cover;   
     border-radius: 60px;
 	border: 2px #fff solid;
     line-height: 60px;
