@@ -9,7 +9,7 @@ public class WithdrawalRecordService {
 	
 
 	public WithdrawalRecordService() {
-		dao = new WithdrawalRecordJDBCDAO();
+		dao = new WithdrawalRecordDAO();
 	}
 
 	public WithdrawalRecordVO addWithdrawalRecord(String memid, Integer wrmoney, Date wrtime) {

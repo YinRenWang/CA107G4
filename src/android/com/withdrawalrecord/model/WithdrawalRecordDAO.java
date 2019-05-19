@@ -7,15 +7,26 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.*;
 
+import javax.naming.Context;
+import javax.naming.InitialContext;
+import javax.naming.NamingException;
+import javax.sql.DataSource;
 
 
 
 
-public class WithdrawalRecordJDBCDAO implements WithdrawalRecordDAO_interface {
-	String driver = "oracle.jdbc.driver.OracleDriver";
-	String url = "jdbc:oracle:thin:@localhost:1521:XE";
-	String userid = "WESHARE";
-	String passwd = "123456";
+
+public class WithdrawalRecordDAO implements WithdrawalRecordDAO_interface {
+	
+	private static DataSource ds = null;
+	static {
+		try {
+			Context ctx = new InitialContext();
+			ds = (DataSource)ctx.lookup("java:comp/env/jdbc/TestDB");
+		} catch (NamingException e) {
+			e.printStackTrace(); 
+		}
+	}
 
 	private static final String INSERT_WITHDRAWALRECORD = "INSERT INTO WithdrawalRecord (wrnum,memid,wrmoney,wrtime) VALUES (('WI'||LPAD(to_char(WITHDRAWALRECORD_seq.NEXTVAL), 5, '0')), ?, ?, ?)";
 
@@ -37,8 +48,7 @@ public class WithdrawalRecordJDBCDAO implements WithdrawalRecordDAO_interface {
 
 		try {
 
-			Class.forName(driver);
-			con = DriverManager.getConnection(url, userid, passwd);
+			con  = ds.getConnection();
 			pstmt = con.prepareStatement(INSERT_WITHDRAWALRECORD);
 
 			pstmt.setString(1, withdrawalRecordVO.getMemid());
@@ -47,13 +57,8 @@ public class WithdrawalRecordJDBCDAO implements WithdrawalRecordDAO_interface {
 
 			pstmt.executeUpdate();
 
-			// Handle any driver errors
-		} catch (ClassNotFoundException e) {
-			throw new RuntimeException("Couldn't load database driver. " + e.getMessage());
-			// Handle any SQL errors
 		} catch (SQLException se) {
 			throw new RuntimeException("A database error occured. " + se.getMessage());
-			// Clean up JDBC resources
 		} finally {
 			if (pstmt != null) {
 				try {
@@ -80,9 +85,7 @@ public class WithdrawalRecordJDBCDAO implements WithdrawalRecordDAO_interface {
 		PreparedStatement pstmt = null;
 
 		try {
-
-			Class.forName(driver);
-			con = DriverManager.getConnection(url, userid, passwd);
+			con = ds.getConnection();
 			pstmt = con.prepareStatement(UPDATE);
 
 			pstmt.setString(1, withdrawalRecordVO.getMemid());
@@ -91,10 +94,6 @@ public class WithdrawalRecordJDBCDAO implements WithdrawalRecordDAO_interface {
 			pstmt.setString(4, withdrawalRecordVO.getWrnum());
 			pstmt.executeUpdate();
 
-			// Handle any driver errors
-		} catch (ClassNotFoundException e) {
-			throw new RuntimeException("Couldn't load database driver. " + e.getMessage());
-			// Handle any SQL errors
 		} catch (SQLException se) {
 			throw new RuntimeException("A database error occured. " + se.getMessage());
 			// Clean up JDBC resources
@@ -127,9 +126,8 @@ public class WithdrawalRecordJDBCDAO implements WithdrawalRecordDAO_interface {
 		ResultSet rs = null;
 
 		try {
-
-			Class.forName(driver);
-			con = DriverManager.getConnection(url, userid, passwd);
+			
+			con = ds.getConnection();
 			pstmt = con.prepareStatement(GET_ONE_STMT);
 			pstmt.setString(1, Wrnum);
 
@@ -144,12 +142,7 @@ public class WithdrawalRecordJDBCDAO implements WithdrawalRecordDAO_interface {
 				WithdrawalRecordVO.setWrtime(rs.getDate("wrtime"));
 				
 			}
-
-			// Handle any driver errors
-		} catch (ClassNotFoundException e) {
-			throw new RuntimeException("Couldn't load database driver. "
-					+ e.getMessage());
-			// Handle any SQL errors
+			
 		} catch (SQLException se) {
 			throw new RuntimeException("A database error occured. "
 					+ se.getMessage());
@@ -191,9 +184,7 @@ public class WithdrawalRecordJDBCDAO implements WithdrawalRecordDAO_interface {
 		ResultSet rs = null;
 
 		try {
-
-			Class.forName(driver);
-			con = DriverManager.getConnection(url, userid, passwd);
+			con = ds.getConnection();
 			pstmt = con.prepareStatement(GET_ALL_STMT);
 			rs = pstmt.executeQuery();
 
@@ -207,10 +198,6 @@ public class WithdrawalRecordJDBCDAO implements WithdrawalRecordDAO_interface {
 				list.add(withdrawalRecordVO); // Store the row in the list
 			}
 
-			// Handle any driver errors
-		} catch (ClassNotFoundException e) {
-			throw new RuntimeException("Couldn't load database driver. " + e.getMessage());
-			// Handle any SQL errors
 		} catch (SQLException se) {
 			throw new RuntimeException("A database error occured. " + se.getMessage());
 			// Clean up JDBC resources
@@ -318,9 +305,7 @@ public class WithdrawalRecordJDBCDAO implements WithdrawalRecordDAO_interface {
 		ResultSet rs = null;
 
 		try {
-
-			Class.forName(driver);
-			con = DriverManager.getConnection(url, userid, passwd);
+			con = ds.getConnection();
 			pstmt = con.prepareStatement(GET_ALL_STMT1);
 			pstmt.setString(1, memId);
 			pstmt.setString(2, memId);
@@ -336,11 +321,6 @@ public class WithdrawalRecordJDBCDAO implements WithdrawalRecordDAO_interface {
 				list.add(withdrawalRecordVO); // Store the row in the list
 			}
 
-			// Handle any driver errors
-		} catch (ClassNotFoundException e) {
-			throw new RuntimeException("Couldn't load database driver. "
-					+ e.getMessage());
-			// Handle any SQL errors
 		} catch (SQLException se) {
 			throw new RuntimeException("A database error occured. "
 					+ se.getMessage());
@@ -373,7 +353,7 @@ public class WithdrawalRecordJDBCDAO implements WithdrawalRecordDAO_interface {
 //------------------------------------------------------------------------------------------
 	public static void main(String[] args) {
 
-		WithdrawalRecordJDBCDAO dao = new WithdrawalRecordJDBCDAO();
+		WithdrawalRecordDAO dao = new WithdrawalRecordDAO();
 
 //
 
