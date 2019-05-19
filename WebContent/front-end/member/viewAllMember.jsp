@@ -216,7 +216,11 @@ Swal.fire(
 				<div class="profile-usertitle-img" >
 					<img style="display:block; margin:auto;" src="<%=request.getContextPath()%>/member/DBGifReader.do?memId=${memberVO.memId}" alt="Profile Picture" 
 					class="img-responsive"  name="memImage" width="120" height="120">
-					</div>			
+					</div>
+					<br>
+						<div class="profile-usertitle-job">
+						We幣餘額 $${memberSvc.getOneMemberNoImg(memberVO.memId).memBalance}
+						</div>	
 				</div>
 		
 				<div class="profile-usermenu">
@@ -229,6 +233,7 @@ Swal.fire(
 							<a href="#" onclick="document.getElementById('form1').submit();return false;">							
 							<i class="glyphicon glyphicon-member"></i>
 							個人資料 </a>
+						
 						</li>
 		
 <c:if test="${!empty teacherVO}">

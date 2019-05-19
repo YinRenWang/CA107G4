@@ -4,6 +4,8 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %> 
 <!doctype html>
 <html lang="en">
+<jsp:useBean id="memberSvc" scope="page" class="com.member.model.MemberService" />
+<c:set var="memberVO" value="${memberSvc.getOneMember(memberVO.memId)}"  />
 
 <head>
 <!-- Required meta tags -->

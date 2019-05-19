@@ -62,9 +62,7 @@ public class FriendWS {
 		System.out.println("有觸發");
 
 		if ("history".equals(chatMessage.getType())) {
-			System.out.println("拿紀錄");
 			List<String> historyData = JedisHandleMessage.getHistoryMsg(sender, receiver);// get the old info from redis
-
 			if (userSession != null && userSession.isOpen()) {
 //				for(String str : historyData) {
 ////					try {
@@ -90,7 +88,7 @@ public class FriendWS {
 				
 //				}
 				
-			userSession.getBasicRemote().sendBinary(ByteBuffer.wrap(gson.toJson(historyData).getBytes()));
+			userSession.getBasicRemote().sendBinary(ByteBuffer.wrap(gson.toJson(historyData).getBytes("utf-8")));
 			
 			System.out.println(gson.toJson(historyData));
 				return;
@@ -115,10 +113,10 @@ public class FriendWS {
 			
 			if("image".equals(chatMessage.gettOrm())) {
 				if (senderSession != null && senderSession.isOpen()) {
-					senderSession.getBasicRemote().sendBinary(ByteBuffer.wrap(gson.toJson(chatMessage).getBytes()));
+					senderSession.getBasicRemote().sendBinary(ByteBuffer.wrap(gson.toJson(chatMessage).getBytes("utf-8")));
 				}
 				if (receiverSession != null && receiverSession.isOpen()) {
-					receiverSession.getBasicRemote().sendBinary(ByteBuffer.wrap(gson.toJson(chatMessage).getBytes()));
+					receiverSession.getBasicRemote().sendBinary(ByteBuffer.wrap(gson.toJson(chatMessage).getBytes("utf-8")));
 				}		
 			}else {
 				if (senderSession != null && senderSession.isOpen()) {

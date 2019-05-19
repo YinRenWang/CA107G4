@@ -24,7 +24,7 @@ public class DBGifReader_VER2 extends HttpServlet {
 			byte[] buf = memberVO.getMemImage(); // 4K buffer
 			out.write(buf);
 		} catch (Exception e) {
-			InputStream in =getServletContext().getResourceAsStream("/NoData/no.png");
+			InputStream in =getServletContext().getResourceAsStream("/images/NoData/no.png");
 			byte[] b =new byte[in.available()];
 			in.read(b);
 			out.write(b);

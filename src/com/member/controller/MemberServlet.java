@@ -430,7 +430,7 @@ public class MemberServlet extends HttpServlet {
 			      mailSvc.sendMail(memberVO.getMemEmail(), subject, messageText);
 			      memSvc.insertVerifyCode(memId, verifyCode);
 				/*************************** 4.新增完成,準備轉交(Send the Success view) ***********/
-				String url = "/back-end/index.jsp";
+				String url = "/index.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url); // 成功轉交 loginSuccess.jsp
 				successView.forward(req, res);
 				return;
