@@ -139,8 +139,12 @@
 	margin-left: 250px;
 }
 #btn2 {
-    margin-top: -350px;
+    margin-top: -390px;
     margin-left: 950px;
+}
+body {
+  
+    line-height: 25px;
 }
 
 

@@ -287,8 +287,7 @@ input[type=file] {
 	<!-------------------------------------------------------------------------footerEnd------------------------------------------------------------------------->
 	<!-- Optional JavaScript -->
 	<!-- jQuery first, then Popper.js, then Bootstrap JS -->
-	<script
-		src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+	
 	<script
 		src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 
@@ -300,7 +299,7 @@ input[type=file] {
 		var host = window.location.host;
 		var path = window.location.pathname;
 		var webCtx = path.substring(0, path.indexOf('/', 1));
-		var endPointURL = "wss://" + window.location.host + webCtx + MyPoint;
+		var endPointURL = "ws://" + window.location.host + webCtx + MyPoint;
 		var webSocket;
 
 		var memberMap = new Map();
@@ -541,7 +540,7 @@ input[type=file] {
 
 		function disconnect() {
 			webSocket.close();
-         commet();
+        
 		}
 		
 		

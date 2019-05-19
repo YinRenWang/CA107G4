@@ -154,8 +154,8 @@ textarea{
 														<input type="hidden" name="friendAcc" value="${memberVO.memId}">
 														<input type="hidden" name="friendstatus" value="${friendNexusVO.friendstatus}">	
 														<input type="hidden" name="memId" value="${friendNexusVO.memId}">										
-														<a class="user_name">姓名:${memberSvc.getOneMember(friendNexusVO.memId).memName}&nbsp;&nbsp;&nbsp;&nbsp;</a>
-														<a class="user_name">ID:${friendNexusVO.memId}</a><br> 													
+														<a class="user_name">姓名:${memberSvc.getOneMember(friendNexusVO.memId).memName}&nbsp;&nbsp;&nbsp;&nbsp;</a><br>
+																									
 														<a class="user_name">專長:${courseSvc.findOneById(memberSvc.getOneMember(friendNexusVO.memId).memSkill).courseName}&nbsp;</a><br>
 														<a class="user_name">想學的課:${courseSvc.findOneById(memberSvc.getOneMember(friendNexusVO.memId).memWantSkill).courseName}&nbsp;</a>
 													</div>
