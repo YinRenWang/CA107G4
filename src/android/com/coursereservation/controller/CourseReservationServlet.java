@@ -51,12 +51,12 @@ public class CourseReservationServlet extends HttpServlet {
 		String action = req.getParameter("action");
 		System.out.println(action);
 
-		
-
+		     
+  
 		// 搖搖驗證
 
-		if ("confirm_for_course_shake".equals(action)) {
-
+		if ("confirm_for_course_shake".equals(action)) {  
+  
 			String crvId = req.getParameter("crvId");
 			CourseReservationService crvSvc = new CourseReservationService();
 			JedisConfirmShake jcs = new JedisConfirmShake();

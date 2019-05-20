@@ -77,17 +77,12 @@
 		<div class="row">
 			<div class="nameTitle">
 				<h1>  歡迎來到 WeShare 教材商城</h1>
+				<a class="nav-item nav-link" href="<%=request.getContextPath()%>/front-end/goods/shoppingcart.jsp">
+				<img src="<%=request.getContextPath()%>/front-end/goodsdetail/images/shopping-cart.png" width="30" height="30" border="0"></a>
 			</div>
 		</div>
 	</div>
-	<div class="goodsTitle2">
-		<div class="row">
-			<div class="cart1">
-				<a class="nav-item nav-link" href="<%=request.getContextPath()%>/front-end/goods/shoppingcart.jsp">
-				<img src="<%=request.getContextPath()%>/front-end/goodsdetail/images/shopping-cart.png" width="30" height="30" border="0"></a>
-			</div>			
-		</div>
-	</div>
+	
 	<%-- 錯誤表列 --%>
 	<c:if test="${not empty errorMsgs}">
 		<font style="color: red">請修正以下錯誤:</font>
@@ -117,8 +112,8 @@
 								method="get">
 								<a href=""> <img class="card-img-top"
 									src="<%= request.getContextPath()%>/goods/DBGifReaderGoods.do?goodId=${goodVO.goodId}"
-									style="height: 300px";></a>
-								<div class="card-body ">
+									style="height: 300px;"></a>
+								<div class="card-body " style="height: 330px;">
 									<h4 class="card-title">
 										<a href="">${goodVO.goodName}</a>
 									</h4>
@@ -129,8 +124,8 @@
 									<span class="row"> <input type="hidden" name="action"
 										value="add_shoppingcart"> <input type="submit"
 										name="Submit" value="加入購物車" onClick="alert('已加入購物車')" />
-									</span>
-								</div>
+									</span> 
+								</div>   
 								<input type="hidden" name="quantity" value=1> <input
 									type="hidden" name="goodId" value="${goodVO.goodId}"> <input
 									type="hidden" name="goodName" value="${goodVO.goodName}">
