@@ -1,0 +1,207 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://java.sun.com/xml/ns/javaee" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd" metadata-complete="false" version="3.0">
+  <display-name>CA107G4</display-name>
+  <welcome-file-list>
+    <welcome-file>index.html</welcome-file>
+    <welcome-file>index.htm</welcome-file>
+    <welcome-file>index.jsp</welcome-file>
+    <welcome-file>default.html</welcome-file>
+    <welcome-file>default.htm</welcome-file>
+    <welcome-file>default.jsp</welcome-file>
+  </welcome-file-list>
+  <resource-ref>
+    <description>DB Connection</description>
+    <res-ref-name>jdbc/TestDB</res-ref-name>
+    <res-type>javax.sql.DataSource</res-type>
+    <res-auth>Container</res-auth>
+  </resource-ref>
+  <filter>
+    <filter-name>loginFilter</filter-name>
+    <filter-class>filters.LoginFilter</filter-class>
+  </filter>
+  <filter-mapping>
+    <filter-name>loginFilter</filter-name>
+    <url-pattern>/front-end/member/editMember.jsp</url-pattern>
+    <url-pattern>/front-end/member/viewAllMember.jsp</url-pattern>
+    <url-pattern>/teacher/addTeacher.jsp</url-pattern>
+    <url-pattern>/front-end/coursereservation/allCourseUser.jsp</url-pattern>
+    <url-pattern>/SimpleWebRTC-master/test/selenium/index.jsp</url-pattern>
+    <url-pattern>/front-end/friend/chatroom.jsp</url-pattern>
+    <url-pattern>/front-end/withdrawalrecord/withdrawalrecord.jsp</url-pattern>
+    <url-pattern>/front-end/team/addTeam.jsp</url-pattern>
+    <url-pattern>/front-end/team/myTeam.jsp</url-pattern>
+    <url-pattern>/front-end/friend/myfriend.jsp</url-pattern>
+    <url-pattern>/front-end/friend/findOne.jsp</url-pattern>	
+    <url-pattern>/front-end/friend/friendCheck.jsp</url-pattern>
+    <url-pattern>/front-end/friend/allfriend.jsp</url-pattern>
+    <dispatcher>REQUEST</dispatcher>
+    <dispatcher>FORWARD</dispatcher>
+    <dispatcher>INCLUDE</dispatcher>
+    <dispatcher>ERROR</dispatcher>
+    <dispatcher>ASYNC</dispatcher>
+  </filter-mapping>
+  
+    <filter>
+    <filter-name>RootFilter</filter-name>
+    <filter-class>filters.RootFilter</filter-class>
+  </filter>
+  <filter-mapping>
+    <filter-name>RootFilter</filter-name>
+    <url-pattern>/back-end/index.jsp</url-pattern>
+    <url-pattern>/back-end/liveStream/*</url-pattern>
+       <url-pattern>/back-end/memeber/*</url-pattern>
+          <url-pattern>/back-end/teacher/*</url-pattern>
+             <url-pattern>/back-end/withdrawalrecord/*</url-pattern>
+              <url-pattern>/back-end/css/*</url-pattern>
+    <dispatcher>REQUEST</dispatcher>
+    <dispatcher>FORWARD</dispatcher>
+    <dispatcher>INCLUDE</dispatcher>
+    <dispatcher>ERROR</dispatcher>
+    <dispatcher>ASYNC</dispatcher>
+  </filter-mapping>
+  
+  
+  <servlet>
+    <servlet-name>MemberServlet</servlet-name>
+    <servlet-class>com.member.controller.MemberServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>MemberServlet</servlet-name>
+    <url-pattern>/member/member.do</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <servlet-name>DBGifReader</servlet-name>
+    <servlet-class>com.member.controller.DBGifReader</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>DBGifReader</servlet-name>
+    <url-pattern>/member/DBGifReader.do</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <servlet-name>InsCourseServlet</servlet-name>
+    <servlet-class>com.inscourse.controller.InsCourseServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>InsCourseServlet</servlet-name>
+    <url-pattern>/inscourse/inscourse.do</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <servlet-name>CourseReservationServlet</servlet-name>
+    <servlet-class>com.coursereservation.controller.CourseReservationServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>CourseReservationServlet</servlet-name>
+    <url-pattern>/coursereservation/coursereservation.do</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <servlet-name>TeacherServlet</servlet-name>
+    <servlet-class>com.teacher.controller.TeacherServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>TeacherServlet</servlet-name>
+    <url-pattern>/teacher/teacher.do</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <servlet-name>DBGifReader_VER2</servlet-name>
+    <servlet-class>com.teacher.controller.DBGifReader_VER2</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>DBGifReader_VER2</servlet-name>
+    <url-pattern>/teacher/DBGifReader_VER2.do</url-pattern>
+  </servlet-mapping>
+  
+  
+  	<servlet>
+		<servlet-name>WithdrawalRecordServlet</servlet-name>
+		<servlet-class>com.withdrawalrecord.contoller.WithdrawalRecordServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>WithdrawalRecordServlet</servlet-name>
+		<url-pattern>/withdrawalrecord/withdrawalrecord.do</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
+		<servlet-name>TeamServlet</servlet-name>
+		<servlet-class>com.team.controller.TeamServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>TeamServlet</servlet-name>
+		<url-pattern>/team/team.do</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
+		<servlet-name>JoinGroupServlet</servlet-name>
+		<servlet-class>com.joingroup.controller.JoinGroupServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>JoinGroupServlet</servlet-name>
+		<url-pattern>/joinGroup/joinGroup.do</url-pattern>
+	</servlet-mapping>
+  <servlet>
+    <servlet-name>FriendNexusServlet</servlet-name>
+    <servlet-class>com.friendnexus.controller.FriendNexusServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>FriendNexusServlet</servlet-name>
+    <url-pattern>/friendnexus/friendnexus.do</url-pattern>
+  </servlet-mapping>
+  
+  
+  
+  
+  
+  
+  
+  
+    <servlet>
+    <servlet-name>GoodsServlet</servlet-name>
+    <servlet-class>com.goods.controller.GoodsServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>GoodsServlet</servlet-name>
+    <url-pattern>/goods/goods.do</url-pattern>
+  </servlet-mapping>
+  
+  <servlet>
+    <servlet-name>GoodsOrderServlet</servlet-name>
+    <servlet-class>com.goodsorder.controller.GoodsOrderServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>GoodsOrderServlet</servlet-name>
+    <url-pattern>/goodsorder/goodsorder.do</url-pattern>
+  </servlet-mapping>
+    
+	<servlet>
+    <servlet-name>GoodsDetailServlet</servlet-name>
+    <servlet-class>com.goodsdetails.controller.GoodsServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>GoodsDetailServlet</servlet-name>
+    <url-pattern>/goodsdetail/goodsdetail.do</url-pattern>
+  </servlet-mapping> 
+ 
+  <servlet>
+    <servlet-name>DBGifReaderGoods</servlet-name>
+    <servlet-class>com.goods.controller.DBGifReaderGoods</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>DBGifReaderGoods</servlet-name>
+    <url-pattern>/goods/DBGifReaderGoods.do</url-pattern>
+  </servlet-mapping>
+  
+  <servlet>
+    <servlet-name>UpImage</servlet-name>
+    <servlet-class>com.goods.controller.UpImage</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>UpImage</servlet-name>
+    <url-pattern>/goods/UpImage.do</url-pattern>
+  </servlet-mapping>
+  
+  
+  
+  
+  
+  
+  
+</web-app>

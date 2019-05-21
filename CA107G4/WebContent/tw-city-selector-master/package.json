@@ -1,0 +1,46 @@
+{
+  "name": "tw-city-selector",
+  "version": "2.0.2",
+  "main": "dist/tw-city-selector.js",
+  "files": [
+    "dist/",
+    "bower.json",
+    "docs/",
+    "package.json",
+    "README.md"
+  ],
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "webpack",
+    "watch": "webpack --watch",
+    "start": "webpack-dev-server --open --content-base ./docs",
+    "docs:vendor": "webpack --config=webpack.docs.config",
+    "umd:test": "webpack --config=webpack.umd-test.config"
+  },
+  "repository": {
+    "url": "https://github.com/dennykuo/tw-city-selector.git",
+    "type": "git"
+  },
+  "homepage": "https://dennykuo.github.io/tw-city-selector",
+  "bugs": "https://github.com/dennykuo/tw-city-selector/issues",
+  "license": "MIT",
+  "devDependencies": {
+    "babel-core": "^6.26.3",
+    "babel-preset-es2015": "^6.24.1",
+    "bable-loader": "0.0.1-security",
+    "copy": "^0.3.2",
+    "css-loader": "^1.0.1",
+    "node-sass": "^4.9.0",
+    "sass-loader": "^7.0.1",
+    "source-map-loader": "^0.2.3",
+    "style-loader": "^0.23.1",
+    "webpack": "^4.20.2",
+    "webpack-cli": "^3.1.1",
+    "webpack-dev-server": "^3.1.4",
+    "webpack-hot-middleware": "^2.22.2"
+  },
+  "dependencies": {
+    "docsify": "^4.6.10",
+    "vue": "^2.5.16"
+  }
+}
