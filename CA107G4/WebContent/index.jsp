@@ -342,7 +342,6 @@ ul, ol {
         <h4 class="card-title">${memberSvc.getOneMember(teacherVO.memId).memName}</h4></a>
         <p class="card-text">
         
-       
 
 <video width="320" height="160" id="${liveStreamVO.lsId}"  src="<%= request.getContextPath()%>/WebmDBServlet?lsId=${liveStreamVO.lsId}" controls="controls"  muted>
 您的瀏覽器不支援Video標籤QQ
