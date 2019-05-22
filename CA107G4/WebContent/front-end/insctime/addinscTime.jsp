@@ -120,7 +120,7 @@ $(document).ready(function(){
 <c:forEach var="message" items="${errorMsgs}">
 <script>
 Swal.fire(
-		 '請檢查內容',
+		 '老師這樣不行	',
 		  '${message}',
 		  'error'
 )
@@ -207,7 +207,7 @@ Swal.fire(
 				" readonly="readonly"></td>
 				<td>
 				<input type="hidden" name="inscId" id="inscId"  value="${insCourseTimeVO.inscId}" readonly="readonly"> 
-			<form action="<%= request.getContextPath()%>/InsCourseTimeServlet" method="GET">
+			<form action="<%= request.getContextPath()%>/InsCourseTimeServlet" method="POST">
             <input type="hidden" name="action"  value="delete"> 
             <input type="hidden" name="inscTimeId"  id="inscTimeId" value="${insCourseTimeVO.inscTimeId}" readonly="readonly" > 
 			<input type="submit" class="remove" value="刪除"> 
@@ -219,7 +219,7 @@ Swal.fire(
 		  </table>
 		  
 		  
-<form action="<%= request.getContextPath()%>/InsCourseTimeServlet" method="get">
+<form action="<%= request.getContextPath()%>/InsCourseTimeServlet" method="POST">
     <input type="hidden" name="inscId"  id="userId" value="${param.inscId}"> 
 	<table class="table1 table" border="1" cellpadding="1">
 		<caption>新增時間</caption>

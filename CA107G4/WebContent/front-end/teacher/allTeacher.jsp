@@ -212,7 +212,7 @@ $(document).ready(function () {
 					<c:forEach var="teacherVO0" items="${teacherSvc.getAllStatus(1)}">			
 									<tr data-status="pagado">
 										<td>
-								<form id="form1" action="<%= request.getContextPath()%>/TeacherServlet" method="GET">
+								<form id="form1" action="<%= request.getContextPath()%>/TeacherServlet" method="POST">
 								<input type="hidden" name="action"  id="action" value="updateStatus">
 								<input type="hidden" name="teacherId"  value="${teacherVO0.teacherId}">
 								<select size="1" name="teacherStatus" id="select1">
@@ -256,7 +256,7 @@ $(document).ready(function () {
 								
 									<tr data-status="pendiente">
 										<td>
-								<form id="form2" action="<%= request.getContextPath()%>/TeacherServlet" method="GET">
+								<form id="form2" action="<%= request.getContextPath()%>/TeacherServlet" method="POST">
 								<input type="hidden" name="action"  id="action" value="updateStatus">
 								<input type="hidden" name="teacherId"  value="${teacherVO0.teacherId}">		
 										<select size="1" name="teacherStatus" id="select2">
@@ -299,7 +299,7 @@ $(document).ready(function () {
 								<c:forEach var="teacherVO0" items="${teacherSvc.getAllStatus(2)}">			
 									<tr data-status="cancelado">
 										<td>
-								<form id="form3" action="<%= request.getContextPath()%>/TeacherServlet" method="GET">
+								<form id="form3" action="<%= request.getContextPath()%>/TeacherServlet" method="POST">
 								<input type="hidden" name="action"  id="action" value="updateStatus">
 								<input type="hidden" name="teacherId"  value="${teacherVO0.teacherId}">	
 										<select size="1" name="teacherStatus" id="select3">

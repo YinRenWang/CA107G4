@@ -221,7 +221,7 @@ $(document).ready(function () {
 					<c:forEach var="liveStreamVO" items="${liveStreamSvc.getAllnoNull(teacherVO.teacherId)}">			
 									<tr data-status="pagado">
 										<td>
-								<form id="ddl" action="<%= request.getContextPath()%>/LiveStreamServlet" method="GET">
+								<form id="ddl" action="<%= request.getContextPath()%>/LiveStreamServlet" method="POST">
 								<input type="hidden" name="action"  id="action" value="delete">
 								<input type="hidden" name="lsId"  value="${liveStreamVO.lsId}">
 								<button type="button" id="delete" class="btn btn-danger">刪除</button>

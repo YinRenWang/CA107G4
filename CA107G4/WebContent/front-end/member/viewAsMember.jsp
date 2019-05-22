@@ -232,7 +232,7 @@ opacity:0.9;
           <span class="glyphicon btn-glyphicon glyphicon-plus img-circle text-warning"></span>加入好友</a>
                       </div>
                       
-           <form id="insert1" action="<%=request.getContextPath()%>/friendnexus/friendnexus.do" method="get">
+           <form id="insert1" action="<%=request.getContextPath()%>/friendnexus/friendnexus.do" method="POST">
 <!--             <input type="hidden" name="inCludeVO"  value="member">  -->
 <!--             <input type="hidden" name="action" value="changeValue"> -->
             <input type="hidden" name="action" value="insert1">

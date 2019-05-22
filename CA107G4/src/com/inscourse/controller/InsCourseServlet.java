@@ -239,8 +239,8 @@ public class InsCourseServlet extends HttpServlet {
 					if (inscCourser == null || inscCourser.trim().length() == 0) {
 						errorMsgs.add("課程介紹請勿空白");
 					}
-					// 課程預設為上架
-					Integer inscStatus = 0;
+					// 課程預設為下架
+					Integer inscStatus = 1;
 					InsCourseVO insCourseVO = new InsCourseVO();
 					insCourseVO.setTeacherId(teacherId);
 					insCourseVO.setCourseId(courseId);
@@ -458,7 +458,9 @@ public class InsCourseServlet extends HttpServlet {
 					InsCourseService insCourseSvc = new InsCourseService();
 					List<InsCourseVO> list = insCourseSvc.getAll(map);
 					session.setAttribute("listEmps_ByCompositeQuery", list); // 資料庫取出的list物件,存入request
+					System.out.println("------------------------"+list.size()+"--------------------------------------");
 				}
+				
 				RequestDispatcher successView = req.getRequestDispatcher("/front-end/inscourse/listEmps_ByCompositeQuery.jsp"); // 成功轉交listEmps_ByCompositeQuery.jsp
 				successView.forward(req, res);
 				return;

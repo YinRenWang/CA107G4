@@ -164,7 +164,7 @@ Swal.fire(
 											src="<%=request.getContextPath()%>/member/DBGifReader.do?memId=${friendNexusVO.friendAcc}"
 											width="120" height="60">
 									</div>
-									<FORM METHOD="get"
+									<FORM METHOD="post"
 										ACTION="<%=request.getContextPath()%>/friendnexus/friendnexus.do"
 										name="form1">
 										<div class="card-block px-2">
@@ -211,7 +211,7 @@ Swal.fire(
 								<div class="card p-2">
 									<h6 class="my-1">搜尋好友</h6>
 									<div class="input-group">
-									<FORM METHOD="get" ACTION="<%=request.getContextPath()%>/friendnexus/friendnexus.do">
+									<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/friendnexus/friendnexus.do">
 									<div class="input-group">
 								<input type="text" class="form-control" name="memName" placeholder="請輸入姓名">
 								<div class="input-group-append">
@@ -222,7 +222,7 @@ Swal.fire(
 									</div>
 									</ul>
 										<div class="but">
-									<FORM METHOD="get" ACTION="<%=request.getContextPath()%>/friendnexus/friendnexus.do">
+									<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/friendnexus/friendnexus.do">
 									<input type="hidden" name="action" value="getmyFriendCheck">
 									<input type="hidden" name="friendAcc" value="${friendVO.memId}">
 									<input class="btn btn-info" type="submit" value="確認好友列表">

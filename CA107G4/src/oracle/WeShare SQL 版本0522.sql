@@ -1,4 +1,4 @@
---------------------------------------------------------------------------------------------------------
+﻿--------------------------------------------------------------------------------------------------------
 alter session set deferred_segment_creation=false;
 
 DROP TABLE GoodsReport;
@@ -173,7 +173,7 @@ INSERT INTO Course VALUES (LPAD(Course_seq.NEXTVAL,4,'0'),'03','高爾夫球');
 
 INSERT INTO Course VALUES (LPAD(Course_seq.NEXTVAL,4,'0'),'04','芭雷舞');
 INSERT INTO Course VALUES (LPAD(Course_seq.NEXTVAL,4,'0'),'04','魔術表演');
-INSERT INTO Course VALUES (LPAD(Course_seq.NEXTVAL,4,'0'),'04','演戲');
+INSERT INTO Course VALUES (LPAD(Course_seq.NEXTVAL,4,'0'),'04','大象舞');
 INSERT INTO Course VALUES (LPAD(Course_seq.NEXTVAL,4,'0'),'04','舞蹈');
 INSERT INTO Course VALUES (LPAD(Course_seq.NEXTVAL,4,'0'),'04','演說');
 
@@ -235,22 +235,22 @@ COMMENT ON COLUMN Member.memSex IS '0=男性,1=女性';
 COMMENT ON COLUMN Member.memStatus IS '0=待驗證,1=已驗證';
 
 INSERT INTO MEMBER VALUES ('we01', '0005', '0008', NULL, 'S143766692', '1234', 'memPswHint', '肥嘟嘟左衛門', '0', null, 'n1036434@ntub.edu.tw', '0970313604', TO_DATE('1995-11-23', 'YYYY-MM-DD'), '桃園市中壢區中大路300號15樓', '你回來了', '004116004056492', '1000', '0', '1');
-INSERT INTO MEMBER VALUES ('we02', '0008', '0005', NULL,'Q252488683', '1234', 'memPswHint', '野原美冴', '1', null, 'n1036434@ntub.edu.tw', '0970313604', TO_DATE('1985-04-30', 'YYYY-MM-DD'), '台北市信義區信義路四段415號6樓', '今年32歲平胸', '00731350235011', '5000', '0', '1');
-INSERT INTO MEMBER VALUES ('we03', '0004', '0009', NULL,'B287381891', '1234', 'memPswHint', '野原廣志', '0', null, 'n1036434@ntub.edu.tw', '0970313604', TO_DATE('1989-06-15', 'YYYY-MM-DD'), '台北市松山區八德路四段520號', '我家的的房子還有32年的貸款', '08545080687111', '15000', '0', '1');
-INSERT INTO MEMBER VALUES ('we04', '0006', '0005', NULL,'A167464958', '1234', 'memPswHint', '野原向日葵', '0', null, 'n1036434@ntub.edu.tw', '0970313604', TO_DATE('1987-07-12', 'YYYY-MM-DD'), '台北市大安區復興南路一段390號', '我是頭上有閃電', '80885744387461', '1000', '0', '1');
-INSERT INTO MEMBER VALUES ('we05', '0001', '0004',NULL, 'A227604096', '1234', 'memPswHint', '野原小白', '1', null, 'n1036434@ntub.edu.tw', '0970313604', TO_DATE('1999-12-23', 'YYYY-MM-DD'), '台北市萬華區中華路一段152號3樓 2,3,15樓', '旺旺', '00314637967473', '5000', '20000', '1');
+INSERT INTO MEMBER VALUES ('we02', '0008', '0005', NULL,'Q252488683', '1234', 'memPswHint', '野原美冴', '1', null, 'n1036434@ntub.edu.tw', '0970313604', TO_DATE('1985-04-30', 'YYYY-MM-DD'), '台北市信義區信義路四段415號6樓', '今年32歲平胸', '00731350235011', '100000', '0', '1');
+INSERT INTO MEMBER VALUES ('we03', '0004', '0009', NULL,'B287381891', '1234', 'memPswHint', '野原廣志', '0', null, 'n1036434@ntub.edu.tw', '0970313604', TO_DATE('1989-06-15', 'YYYY-MM-DD'), '台北市松山區八德路四段520號', '我家的的房子還有32年的貸款', '08545080687111', '0', '0', '1');
+INSERT INTO MEMBER VALUES ('we04', '0006', '0005', NULL,'A167464958', '1234', 'memPswHint', '野原向日葵', '1', null, 'n1036434@ntub.edu.tw', '0970313604', TO_DATE('1987-07-12', 'YYYY-MM-DD'), '台北市大安區復興南路一段390號', '哇哇哇哇QQ', '80885744387461', '1000', '0', '1');
+INSERT INTO MEMBER VALUES ('we05', '0001', '0004',NULL, 'A227604096', '1234', 'memPswHint', '野原小白', '0', null, 'n1036434@ntub.edu.tw', '0970313604', TO_DATE('1999-12-23', 'YYYY-MM-DD'), '台北市萬華區中華路一段152號3樓', '旺旺', '00314637967473', '5000', '20000', '1');
 INSERT INTO MEMBER VALUES ('we06', '0002', '0003',NULL,'A278318487', '1234', 'memPswHint', '風間徹', '0', null, 'n1036434@ntub.edu.tw', '0970313604', TO_DATE('1989-06-30', 'YYYY-MM-DD'), '桃園市中壢區元化路306號', '呀呀', '007467579675323', '10000', '0', '1');
-INSERT INTO MEMBER VALUES ('we07', '0006', '0043',NULL,'A110133151', '1234', 'memPswHint', '櫻田妮妮', '0', null, 'n1036434@ntub.edu.tw', '0970313604', TO_DATE('1995-05-23', 'YYYY-MM-DD'), '新北市汐止區新台五路一段162號', '想被兔兔揍嗎', '0074634679675323', '100500', '0', '1');
+INSERT INTO MEMBER VALUES ('we07', '0006', '0043',NULL,'A110133151', '1234', 'memPswHint', '櫻田妮妮', '1', null, 'n1036434@ntub.edu.tw', '0970313604', TO_DATE('1995-05-23', 'YYYY-MM-DD'), '新北市板橋區區新台五路一段162號', '想被兔兔揍嗎', '0074634679675323', '100500', '0', '1');
 INSERT INTO MEMBER VALUES ('we08', '0006', '0042',NULL,'A171253918', '1234', 'memPswHint', '佐藤正男', '0', null, 'n1036434@ntub.edu.tw', '0970313604', TO_DATE('1970-04-21', 'YYYY-MM-DD'), '台北市士林區中山北路六段77號', '哦....我不要', '00814587102364', '59170000', '0', '1');
 INSERT INTO MEMBER VALUES ('we09', '0005', '0008', NULL, 'A160539050','1234', 'memPswHint', '阿呆', '0', null, 'n1036434@ntub.edu.tw', '0970313604', TO_DATE('1995-11-23', 'YYYY-MM-DD'), '桃園市中壢區中大路300號15樓', '呆~', '004116004056492', '10000', '20000', '1');
 INSERT INTO MEMBER VALUES ('we10', '0042', '0031',NULL,'A208165369', '1234', 'memPswHint', '園長先生', '0', null, 'n1036434@ntub.edu.tw', '0970313604', TO_DATE('1970-04-21', 'YYYY-MM-DD'), '桃園市中壢區元化路357號', '燒殺擄掠......這樣了不了解??', '80012587430149', '10000', '0', '1');
-INSERT INTO MEMBER VALUES ('we11', '0046', '0004',NULL,'A284110068', '1234', 'memPswHint', '吉永老師', '1', null, 'n1036434@ntub.edu.tw', '0970313604', TO_DATE('1970-04-21', 'YYYY-MM-DD'), '台積電先進封測三廠(龍潭廠) 桃園市龍潭區龍園六路101號', '我已故的奶奶都可以做得比你好:)', '00814587102364', '5000', '0', '1');
-INSERT INTO MEMBER VALUES ('we12', '0021', '0012',NULL,'J299315564', '1234', 'memPswHint', '松坂老師', '1', null, 'n1036434@ntub.edu.tw', '0970313604', TO_DATE('1985-06-15', 'YYYY-MM-DD'), '台北市信義區信義路五段7號台北101大樓', '姆斯什麼都會...教練也會', '00765891234751', '594740', '0', '1');
+INSERT INTO MEMBER VALUES ('we11', '0046', '0004',NULL,'A284110068', '1234', 'memPswHint', '吉永老師', '1', null, 'n1036434@ntub.edu.tw', '0970313604', TO_DATE('1970-04-21', 'YYYY-MM-DD'), '桃園市龍潭區龍園六路101號', '我已故的奶奶都可以做得比你好:)', '00814587102364', '5000', '0', '1');
+INSERT INTO MEMBER VALUES ('we12', '0021', '0012',NULL,'J299315564', '1234', 'memPswHint', '松坂老師', '1', null, 'n1036434@ntub.edu.tw', '0970313604', TO_DATE('1985-06-15', 'YYYY-MM-DD'), '台北市信義區信義路五段7號', '姆斯什麼都會...教練也會', '00765891234751', '594740', '0', '1');
 INSERT INTO MEMBER VALUES ('we13', '0008', '0027',NULL,'J219495269', '1234', 'memPswHint', '動感超人', '0', null,'n1036434@ntub.edu.tw', '0970313604', TO_DATE('1966-06-15', 'YYYY-MM-DD'), '台北市士林區中大路300號', '動感光波~', '00785641239874', '0', '0', '1');
 INSERT INTO MEMBER VALUES ('david', '0011', '0002',NULL,'J219495268', '1234', 'memPswHint', '風間大衛', '0', null,'n1036434@ntub.edu.tw', '0970313604', TO_DATE('1966-06-15', 'YYYY-MM-DD'), '台北市汐止區中大路300號', '同學可以參考一下', '00785643239874', '0', '0', '1');
 INSERT INTO MEMBER VALUES ('peter', '0022', '0042',NULL,'J219495267', '1234', 'memPswHint', '野原大吳', '0', null,'n1036434@ntub.edu.tw', '0970313604', TO_DATE('1966-06-15', 'YYYY-MM-DD'), '桃園市中壢區中大路300號', 'Hibernate是簡單的，講清楚都不難', '00785641239974', '0', '0', '1');
-INSERT INTO MEMBER VALUES ('west', '0011', '0002',NULL,'J219495266', '1234', 'memPswHint', '野原偉斯特', '0', null,'n1036434@ntub.edu.tw', '0970313604', TO_DATE('1966-06-15', 'YYYY-MM-DD'), '桃園市中壢區中大路300號', '感恩SeaFood讚嘆SeaFood', '00785655239874', '1000000', '0', '1');
-INSERT INTO MEMBER VALUES ('gods', '0011', '0002',NULL,'J219495265', '1234', 'memPswHint', '松坂仲儀', '0', null,'n1036434@ntub.edu.tw', '0970313604', TO_DATE('1966-06-15', 'YYYY-MM-DD'), '桃園市中壢區中大路300號', '藤正可不可以搞清楚狀況', '00788841239874', '0', '0', '1');
+INSERT INTO MEMBER VALUES ('west', '0011', '0002',NULL,'J219495266', '1234', 'memPswHint', '野原偉斯特', '0', null,'n1036434@ntub.edu.tw', '0970313604', TO_DATE('1966-06-15', 'YYYY-MM-DD'), '新竹市東區中央路229號', '感恩SeaFood讚嘆SeaFood', '00785655239874', '1000000', '0', '1');
+INSERT INTO MEMBER VALUES ('gods', '0011', '0002',NULL,'J219495265', '1234', 'memPswHint', '松坂仲儀', '0', null,'n1036434@ntub.edu.tw', '0970313604', TO_DATE('1966-06-15', 'YYYY-MM-DD'), '桃園市中壢區中大路300號', '藤政可不可以搞清楚狀況', '00788841239874', '0', '0', '1');
 CREATE TABLE Teacher (
 teacherId       VARCHAR2(7) NOT NULL,
 memId           VARCHAR2(20) NOT NULL, 
@@ -272,14 +272,14 @@ NOMAXVALUE
 NOCYCLE
 NOCACHE;
 
-INSERT INTO Teacher VALUES (('TC'||LPAD(to_char(Teacher_seq.NEXTVAL), 5, '0')),'we10','1','桃園市中壢區','國立臺北商業大學資管系',null,'我黑道ㄟ，想怎樣?');
-INSERT INTO Teacher VALUES (('TC'||LPAD(to_char(Teacher_seq.NEXTVAL), 5, '0')),'we11','1','桃園市龍潭區','國立中央大學‎資訊工程學系',null,'老師人很好的');
-INSERT INTO Teacher VALUES (('TC'||LPAD(to_char(Teacher_seq.NEXTVAL), 5, '0')),'we12','1','台北市信義區','Tibame桃園中壢資策會',null,'感恩SeaFood讚嘆SeaFood');
-INSERT INTO Teacher VALUES (('TC'||LPAD(to_char(Teacher_seq.NEXTVAL), 5, '0')),'we02','1','台北市士林區','Tibame桃園中壢資策會',null,'萬般皆物件');
+INSERT INTO Teacher VALUES (('TC'||LPAD(to_char(Teacher_seq.NEXTVAL), 5, '0')),'we10','1','桃園市中壢區','雙葉幼稚園',null,'我是雙葉幼稚園的園長先生....');
+INSERT INTO Teacher VALUES (('TC'||LPAD(to_char(Teacher_seq.NEXTVAL), 5, '0')),'we11','1','桃園市龍潭區','雙葉幼稚園',null,'老師人很好的');
+INSERT INTO Teacher VALUES (('TC'||LPAD(to_char(Teacher_seq.NEXTVAL), 5, '0')),'we12','1','台北市信義區','雙葉幼稚園',null,'一輩子單身的阿梅...');
+INSERT INTO Teacher VALUES (('TC'||LPAD(to_char(Teacher_seq.NEXTVAL), 5, '0')),'we02','1','台北市士林區','野原家の主婦	',null,'家庭主婦是很厲害的');
 INSERT INTO Teacher VALUES (('TC'||LPAD(to_char(Teacher_seq.NEXTVAL), 5, '0')),'david','1','桃園市中壢區','Tibame桃園中壢資策會',null,'我是海鮮，一個自由的海鮮');
 INSERT INTO Teacher VALUES (('TC'||LPAD(to_char(Teacher_seq.NEXTVAL), 5, '0')),'peter','1','桃園市中壢區','Tibame桃園中壢資策會',null,'紙上得來終覺淺，絕知此事必躬行');
-INSERT INTO Teacher VALUES (('TC'||LPAD(to_char(Teacher_seq.NEXTVAL), 5, '0')),'west','1','桃園市中壢區','北一女中',null,'JavaScript，阿不就是先宣告String');
-INSERT INTO Teacher VALUES (('TC'||LPAD(to_char(Teacher_seq.NEXTVAL), 5, '0')),'gods','1','桃園市中壢區','美國普林斯頓',null,'神愛世人');
+INSERT INTO Teacher VALUES (('TC'||LPAD(to_char(Teacher_seq.NEXTVAL), 5, '0')),'west','1','新竹市東區','國立屏東科技大學',null,'JavaScript，阿不就是先宣告String');
+INSERT INTO Teacher VALUES (('TC'||LPAD(to_char(Teacher_seq.NEXTVAL), 5, '0')),'gods','1','桃園市中壢區','天上俯瞰世人',null,'神愛世人');
 
 --課程--
 
@@ -324,7 +324,7 @@ Insert into INSCOURSE values (('IC'||LPAD(to_char(InsCourse_seq.NEXTVAL), 5, '0'
 Insert into INSCOURSE values (('IC'||LPAD(to_char(InsCourse_seq.NEXTVAL), 5, '0')),'TC00005','0012','桃園市中壢區','1','2','中文','600','叭叭叭叭叭叭叭叭叭叭叭叭','0');
 Insert into INSCOURSE values (('IC'||LPAD(to_char(InsCourse_seq.NEXTVAL), 5, '0')),'TC00006','0005','桃園市中壢區','0','1','中文','100','Java是簡單的，要什麼給什麼，萬物皆物件','0');
 Insert into INSCOURSE values (('IC'||LPAD(to_char(InsCourse_seq.NEXTVAL), 5, '0')),'TC00007','0022','桃園市中壢區','0','1','中文','900','吃我一記，天馬流星拳','0');
-Insert into INSCOURSE values (('IC'||LPAD(to_char(InsCourse_seq.NEXTVAL), 5, '0')),'TC00005','0048','桃園市中壢區','0','1','中文','50','我就是個笑話','0');
+Insert into INSCOURSE values (('IC'||LPAD(to_char(InsCourse_seq.NEXTVAL), 5, '0')),'TC00005','0048','桃園市中壢區','0','1','中文','555','我就是個笑話','0');
 --課程時間--
 
 CREATE TABLE InsCourseTime (
@@ -577,9 +577,9 @@ NOMAXVALUE
 NOCYCLE
 NOCACHE;
 
-Insert into CourseReservation values ('CR'||LPAD(to_char(CourseReservation_seq.NEXTVAL),5,'0'),'TC00001','we04','IC00001',null,'1','1','2',TO_DATE('2019-03-22 14:00', 'YYYY-MM-DD HH24:MI'),TO_DATE('2019-03-22 16:00', 'YYYY-MM-DD HH24:MI'),'台北市大安區','2','600',5,'Java真的是簡單的!!');
-Insert into CourseReservation values ('CR'||LPAD(to_char(CourseReservation_seq.NEXTVAL),5,'0'),'TC00001','we05','IC00001',null,'1','1','0',TO_DATE('2019-03-22 14:00', 'YYYY-MM-DD HH24:MI'),TO_DATE('2019-03-22 16:00', 'YYYY-MM-DD HH24:MI'),'台北市萬華區','2','600',4.5,'建立我正確的Java人生觀!!');
-Insert into CourseReservation values ('CR'||LPAD(to_char(CourseReservation_seq.NEXTVAL),5,'0'),'TC00001','we06','IC00001',null,'1','1','0',TO_DATE('2019-03-22 14:00', 'YYYY-MM-DD HH24:MI'),TO_DATE('2019-03-22 16:00', 'YYYY-MM-DD HH24:MI'),'桃園市中壢區','2','600',4.0,'老師跟金城武一樣帥!!');
+Insert into CourseReservation values ('CR'||LPAD(to_char(CourseReservation_seq.NEXTVAL),5,'0'),'TC00005','we07','IC00016',null,'1','1','2',TO_DATE('2019-03-22 14:00', 'YYYY-MM-DD HH24:MI'),TO_DATE('2019-03-22 16:00', 'YYYY-MM-DD HH24:MI'),'台北市大安區','2','600',5,'這麼幽默的老師百年難得一見!!');
+Insert into CourseReservation values ('CR'||LPAD(to_char(CourseReservation_seq.NEXTVAL),5,'0'),'TC00005','we08','IC00016',null,'1','1','0',TO_DATE('2019-03-22 14:00', 'YYYY-MM-DD HH24:MI'),TO_DATE('2019-03-22 16:00', 'YYYY-MM-DD HH24:MI'),'台北市萬華區','2','600',4.5,'老師的笑話真的很好笑!!');
+Insert into CourseReservation values ('CR'||LPAD(to_char(CourseReservation_seq.NEXTVAL),5,'0'),'TC00005','we09','IC00016',null,'1','1','0',TO_DATE('2019-03-22 14:00', 'YYYY-MM-DD HH24:MI'),TO_DATE('2019-03-22 16:00', 'YYYY-MM-DD HH24:MI'),'桃園市中壢區','2','600',4.0,'笑話本人!!!!');
 Insert into CourseReservation values ('CR'||LPAD(to_char(CourseReservation_seq.NEXTVAL),5,'0'),'TC00002','we01','IC00002',null,'1','1','2',TO_DATE('2019-03-22 14:00', 'YYYY-MM-DD HH24:MI'),TO_DATE('2019-03-22 16:00', 'YYYY-MM-DD HH24:MI'),'桃園市中壢區','2','600',4,'老師比甜點還要甜>/<');
 Insert into CourseReservation values ('CR'||LPAD(to_char(CourseReservation_seq.NEXTVAL),5,'0'),'TC00002','we03','IC00002',null,'1','1','0',TO_DATE('2019-03-22 14:00', 'YYYY-MM-DD HH24:MI'),TO_DATE('2019-03-22 16:00', 'YYYY-MM-DD HH24:MI'),'台北市松山區','2','600',4,'So Sweet!!');
 
@@ -778,7 +778,7 @@ INSERT INTO Goods VALUES (('GD'||LPAD(to_char(Goods_seq.NEXTVAL), 5, '0')),'TC00
 INSERT INTO Goods VALUES (('GD'||LPAD(to_char(Goods_seq.NEXTVAL), 5, '0')),'TC00001','Servlet深入淺出','800','本書不只提供你必須謹記在心的豐富資訊；更將這些寶貴的知識直接烙印在你的大腦裡。藉由大量幫助你快速且深入學習的機制，你將與Servelets和JSP進行最有效率的互動。',NULL,'1');
 INSERT INTO Goods VALUES (('GD'||LPAD(to_char(Goods_seq.NEXTVAL), 5, '0')),'TC00004','jQuery深入淺出','750','本書編寫的目的，市場上JQuery的書籍全部都只寫了基礎的使用，並沒有利用JQuery 開發一套完整的demo 案例，造成新手入門難、熟手不願意看的局面。 本書打破了傳統編寫手法，全部採用真實案例講解，並且保證所有源代碼均能正常運行。',NULL,'1');
 INSERT INTO Goods VALUES (('GD'||LPAD(to_char(Goods_seq.NEXTVAL), 5, '0')),'TC00001','Android深入淺出','480','本書會逐一介紹 Andorid 各組成元件的程式撰寫方法, 包括使用介面、事件處理、多活動 Android 應用程式, 然後帶到資料儲存與檔案交換、資料庫、廣播接收器等。最後使用數十個熱門範例來說明 Android 應用程式的實作技巧。 ',NULL,'1');
-INSERT INTO Goods VALUES (('GD'||LPAD(to_char(Goods_seq.NEXTVAL), 5, '0')),'TC00004','大喇叭','888','我是一支可愛的小喇叭^0^',NULL,'1');
+INSERT INTO Goods VALUES (('GD'||LPAD(to_char(Goods_seq.NEXTVAL), 5, '0')),'TC00002','大喇叭','888','我是一支可愛的大喇叭^0^',NULL,'1');
 -------------------------------------------------------------------------------------------------------------------------------------------
 --教材商品訂單--
 CREATE TABLE GoodsOrder ( 
@@ -809,8 +809,8 @@ NOCACHE;
 ------------------------------------------------------------------------------------------------------------------------------------------------------------------
 INSERT INTO GoodsOrder VALUES (('GO'||LPAD(to_char(GoodsOrder_seq.NEXTVAL), 5, '0')),'we01','3200',TO_DATE('1955-09-09','YYYY-MM-DD'),'肥嘟嘟左衛門','桃園市中壢區中大路300號15樓','0928199890','1');
 INSERT INTO GoodsOrder VALUES (('GO'||LPAD(to_char(GoodsOrder_seq.NEXTVAL), 5, '0')),'we02','1850',TO_DATE('1991-08-03','YYYY-MM-DD'),'野原美冴','台北市信義區信義路四段415號6樓','0936167890','1');
-INSERT INTO GoodsOrder VALUES (('GO'||LPAD(to_char(GoodsOrder_seq.NEXTVAL), 5, '0')),'we03','2450',TO_DATE('1970-01-01','YYYY-MM-DD'),'野原廣志','台北市松山區八德路四段520號','0916167550','1');
-INSERT INTO GoodsOrder VALUES (('GO'||LPAD(to_char(GoodsOrder_seq.NEXTVAL), 5, '0')),'we04','900',TO_DATE('1911-02-21','YYYY-MM-DD'),'野原向日葵','台北市大安區復興南路一段390號','0956115810','0');
+INSERT INTO GoodsOrder VALUES (('GO'||LPAD(to_char(GoodsOrder_seq.NEXTVAL), 5, '0')),'we03','2450',TO_DATE('1970-01-01','YYYY-MM-DD'),'野原廣志','台北市松山區八德路四段520號','0916167550','0');
+INSERT INTO GoodsOrder VALUES (('GO'||LPAD(to_char(GoodsOrder_seq.NEXTVAL), 5, '0')),'we04','900',TO_DATE('1911-02-21','YYYY-MM-DD'),'野原向日葵','台北市大安區復興南路一段390號','0956115810','1');
 INSERT INTO GoodsOrder VALUES (('GO'||LPAD(to_char(GoodsOrder_seq.NEXTVAL), 5, '0')),'we01','1450',TO_DATE('1955-07-29','YYYY-MM-DD'),'肥嘟嘟左衛門','桃園市中壢區中大路300號15樓','0966199890','1');
 INSERT INTO GoodsOrder VALUES (('GO'||LPAD(to_char(GoodsOrder_seq.NEXTVAL), 5, '0')),'we03','900',TO_DATE('1911-02-21','YYYY-MM-DD'),'野原廣志','台北市松山區八德路四段520號','0926955810','0');
 ------------------------------------------------------------------------------------------------------------------------------------------------------------------

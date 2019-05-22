@@ -77,9 +77,9 @@
 		<div class="row">
 			<div class="nameTitle">
 				<h1>  歡迎來到 WeShare 教材商城</h1>
-				<a class="nav-item nav-link" href="<%=request.getContextPath()%>/front-end/goods/shoppingcart.jsp">
-				<img src="<%=request.getContextPath()%>/front-end/goodsdetail/images/shopping-cart.png" width="30" height="30" border="0"></a>
 			</div>
+			<div></div><a class="nav-item nav-link" href="<%=request.getContextPath()%>/front-end/goods/shoppingcart.jsp">
+				<img src="<%=request.getContextPath()%>/front-end/goodsdetail/images/shopping-cart.png" width="30" height="30" border="0"></a></div>
 		</div>
 	</div>
 	

@@ -217,7 +217,7 @@ textarea{
 									<div>
 									
 <!----------------------------------------------------------------------------------需登入帳號	--------------------------------------------------------------------------------------------->
-									<FORM METHOD="get" ACTION="<%=request.getContextPath()%>/friendnexus/friendnexus.do">
+									<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/friendnexus/friendnexus.do">
 									<input type="hidden" name="action" value="getmyFriendCheck">
 									<input type="hidden" name="friendAcc" value="${memberVO.memId}">
 									<input class="btn btn-info" type="submit" value="確認好友列表"></div>

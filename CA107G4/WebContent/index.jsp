@@ -1,14 +1,15 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>    
-<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>	
+
+
 <!DOCTYPE html>
-      <c:if test="${not empty listEmps_ByCompositeQuery}" >
-<c:remove var="listEmps_ByCompositeQuery" scope="session"/>
-</c:if>  
+
 <jsp:useBean id="teacherSvc" scope="page" class="com.teacher.model.TeacherService" />
 <jsp:useBean id="memberSvc" scope="page" class="com.member.model.MemberService" />
 <jsp:useBean id="LiveStreamSvc" scope="page" class="com.livestream.model.LiveStreamService" />
+
 <html lang="en">
 <head> 
 <!-- Required meta tags --> 
@@ -210,7 +211,15 @@ ul, ol {
       <h5 class="seat">這裡總有一位適合您的老師!</h5>
     </div>
      
-      
+<c:if test="${not empty listEmps_ByCompositeQuery}">
+	<c:remove var="listEmps_ByCompositeQuery" scope="session"/>
+</c:if>
+
+<c:if test="${listEmps_ByCompositeQuery.size()==0}">
+	<c:remove var="listEmps_ByCompositeQuery" scope="session"/>
+</c:if>
+
+        
 <FORM METHOD="get" ACTION="<%=request.getContextPath()%>/inscourse/inscourse.do" >
  <div class="row">
       <div class="col-5">

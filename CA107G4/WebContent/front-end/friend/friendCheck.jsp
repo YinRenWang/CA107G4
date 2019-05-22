@@ -145,7 +145,7 @@ textarea{
 												src="<%=request.getContextPath()%>/member/DBGifReader.do?memId=${friendNexusVO.memId}"
 												width="100" height="50">
 										</div>
-										<FORM METHOD="get"
+										<FORM METHOD="post"
 											ACTION="<%=request.getContextPath()%>/friendnexus/friendnexus.do"
 											name="form1">
 											<div class="card-block px-2">
@@ -181,7 +181,7 @@ textarea{
 								<div class="card p-2">
 									<h6 class="my-1">搜尋好友</h6>
 									<div class="input-group">
-									<FORM METHOD="get" ACTION="<%=request.getContextPath()%>/friendnexus/friendnexus.do">
+									<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/friendnexus/friendnexus.do">
 									<div class="input-group">
 								<input type="text" class="form-control" name="memName" placeholder="請輸入姓名">
 								<div class="input-group-append">
@@ -194,7 +194,7 @@ textarea{
 								
 							</ul>
 							<div class="but">
-									<FORM METHOD="get" ACTION="<%=request.getContextPath()%>/friendnexus/friendnexus.do">
+									<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/friendnexus/friendnexus.do">
 									<input type="hidden" name="action" value="getmyFriend">
 									<input type="hidden" name="friendAcc" value="${param.memId}">
 									<input class="btn btn-info" type="submit" value="我的好友列表"></div>

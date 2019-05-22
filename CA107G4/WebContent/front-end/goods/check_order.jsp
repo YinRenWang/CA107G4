@@ -214,10 +214,10 @@ Swal.fire(
 
 <div class="container" id="koko">
 			<div class="row">
-		<center><div><font size="+3"> 訂單確認</font></div>
-		<div><form  id="form1" action="<%=request.getContextPath()%>/GoodsOrderServlet" method="GET"></div>			
+		<center><div><font size="+3"> 訂單確認</font><input id="magic" name="magic" type="button" onclick="Magic()" class="btn btn-link"></div>
+		<div><form  id="form1" action="<%=request.getContextPath()%>/GoodsOrderServlet" method="GET">		
 		<input type="hidden" name="memId" value="${memberVO.memId}" class="userInput" id="g1">
-		<div>收件人姓名:<input type="text" name="buyerName" id="buyerName" value="" class="userInput" id="byerName"></div>		
+		<div>收件人姓名:<input type="text" name="buyerName" id="buyerName" value="" class="userInput" ></div>		
 		<div>
 			<div role="tw-city-selector">收件人地址:</div><input type="text" name="address"  id="address" value="" class="userInput">
 		</div>
@@ -273,10 +273,10 @@ Swal.fire(
 		
        
        <input type="hidden" name="action" value="Detail">
-       <input id="magic" name="magic" type="button" onclick="Magic()" class="btn btn-link">
        <center><input type="button" value="付款結帳" class="button" id="go" ></center>
        </form>
        </div>
+       </div>	
  </div>
  <%@ include file="/front-end/backHeaderFooter/footer.jsp"%>       
 </body>
@@ -286,9 +286,10 @@ Swal.fire(
 <script type="text/javascript">
 
 			$('#go').click(function(){
-			var x=$("#byerName").val();
+			var x=$("#buyerName").val();
 			var y=$("#address").val();
 			var z=$("#buyerPhone").val();
+// 			alert("x="+x+"y"+y+"z"+z);
 			if(x==""||x==null||y==""||y==null||z==""||z==null){
 				Swal.fire(
 						 '請檢查內容',
@@ -308,9 +309,9 @@ Swal.fire(
 <script type="text/javascript">
 		function Magic() {
 			
-			document.getElementById("buyerName").value = "高健甯";
+			document.getElementById("buyerName").value = "野原向日葵";
 			document.getElementById("buyerPhone").value = "0910862121";
-			
+			document.getElementById("address").value = "民享新村16號";
 		}	
 		</script>	
 

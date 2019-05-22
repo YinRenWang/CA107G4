@@ -21,8 +21,9 @@ import javax.websocket.server.ServerEndpoint;
 
 import com.google.gson.Gson;
 import com.websocketchat.jedis.JedisHandleMessage;
-import com.websocketchat.model.ChatMessage;
 import com.websocketchat.model.State;
+
+import com.websocketchat.model.ChatMessage;
 
 
 @ServerEndpoint("/FriendWS/{userName}")

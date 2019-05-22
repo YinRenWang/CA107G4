@@ -142,9 +142,9 @@
 	<script type="text/javascript">
 		function Magic() {
 			
-			document.getElementById("goodName").value = "Python程式設計";
+			document.getElementById("goodName").value = "我的宇宙公主";
 			document.getElementById("goodPrice").value = "5000";
-			document.getElementById("goodInfo").value = "本書由淺入深地詳細講解了Python語言開發的核心技術，並通過實例的實現過程演練各個知識點的具體使用流程。通過實例的實現過程中，介紹Python語言在綜合專案中的使用流程。全書內容循序漸進，引領讀者全面掌握Python語言。";
+			document.getElementById("goodInfo").value = "某天有群奇怪的人來到小新家，指說小葵是向日葵星的公主並抓走小葵。野原一家人到向日葵星去帶小葵回家，還被趕回地球，小新非常想念小葵，經過一番折騰，小新和小葵實現了遠古的傳說，讓太陽系達成新的平衡，悠閒物質不虞匱乏，野原一家人才得以回地球。";
 			
 		}	
 		</script>	

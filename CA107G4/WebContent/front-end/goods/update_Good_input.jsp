@@ -76,7 +76,7 @@
 	</td></tr>
 </table>
 
-<h3>商品資料修改:</h3>
+
 <%-- 錯誤表列 --%>
 <c:if test="${not empty errorMsgs}">
 	<font style="color:red">請修正以下錯誤:</font>
@@ -106,7 +106,7 @@
 	</tr>
 	<tr>
 		<td>商品資訊:</td>
-		<td><input type="TEXT" name="goodInfo" size="45"
+		<td><input type="TEXT" name="goodInfo" size="45" 
 			 value="<%= (goodVO==null)? "缺貨中" : goodVO.getGoodInfo()%>" /></td>
 	</tr>
 	<tr>

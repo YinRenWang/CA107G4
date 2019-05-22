@@ -226,7 +226,7 @@ Swal.fire(
 				<div class="profile-usermenu">
 					<ul class="nav" id="classification">
 						<li>
-							<form id="form1" action="<%= request.getContextPath()%>/MemberServlet" method="get">
+							<form id="form1" action="<%= request.getContextPath()%>/MemberServlet" method="POST">
 								<input type="hidden" name="inCludeVO"  value="member"> 
 								<input type="hidden" name="action" value="changeValue">
 							</form>	
@@ -238,7 +238,7 @@ Swal.fire(
 		
 <c:if test="${!empty teacherVO}">
 							<li id="teacher" >
-							<form id="form2" action="<%= request.getContextPath()%>/MemberServlet" method="get">
+							<form id="form2" action="<%= request.getContextPath()%>/MemberServlet" method="POST">
 								<input type="hidden" name="inCludeVO"  value="teacher"> 
 								<input type="hidden" name="action" value="changeValue">
 							</form>	
@@ -248,7 +248,7 @@ Swal.fire(
 						</li>
 </c:if> 
 						<li id="inscourse" >
-							<form id="form3" action="<%= request.getContextPath()%>/MemberServlet" method="get">
+							<form id="form3" action="<%= request.getContextPath()%>/MemberServlet" method="POST">
 								<input type="hidden" name="inCludeVO"  value="inscourse"> 
 								<input type="hidden" name="action" value="changeValue">
 							</form>	
@@ -259,7 +259,7 @@ Swal.fire(
 
 <c:if test="${!empty teacherVO}">						
 							<li id="goods" >
-						<form id="form4" action="<%= request.getContextPath()%>/MemberServlet" method="get">
+						<form id="form4" action="<%= request.getContextPath()%>/MemberServlet" method="POST">
 								<input type="hidden" name="inCludeVO"  value="goods"> 
 								<input type="hidden" name="action" value="changeValue">
 							</form>	
@@ -270,7 +270,7 @@ Swal.fire(
 </c:if> 
 
 							<li id="goodsOrder" >
-						<form id="form5" action="<%= request.getContextPath()%>/MemberServlet" method="get">
+						<form id="form5" action="<%= request.getContextPath()%>/MemberServlet" method="POST">
 								<input type="hidden" name="inCludeVO"  value="goodsOrder"> 
 								<input type="hidden" name="action" value="changeValue">
 							</form>	
@@ -280,7 +280,7 @@ Swal.fire(
 						</li>
 						
 						<li id="wallet" >
-						<form id="form8" action="<%= request.getContextPath()%>/MemberServlet" method="get">
+						<form id="form8" action="<%= request.getContextPath()%>/MemberServlet" method="POST">
 								<input type="hidden" name="inCludeVO"  value="wallet"> 
 								<input type="hidden" name="action" value="changeValue">
 							</form>	
@@ -292,7 +292,7 @@ Swal.fire(
 						
 <c:if test="${!empty teacherVO}">						
 							<li id="liveStream" >
-						<form id="form7" action="<%= request.getContextPath()%>/MemberServlet" method="get">
+						<form id="form7" action="<%= request.getContextPath()%>/MemberServlet" method="POST">
 								<input type="hidden" name="inCludeVO"  value="liveStream"> 
 								<input type="hidden" name="action" value="changeValue">
 							</form>	
