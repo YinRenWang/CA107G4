@@ -292,7 +292,7 @@ background:#f4f9f4}
       <h1>與直播主聊天</h1>
         <textarea id="messagesArea" class="panel message-area" readonly ></textarea>
         <div class="panel input-area">
-            <input id="userName" class="text-field" type="text" placeholder="暱稱"/>
+            <input id="userName" class="text-field" type="text" placeholder="暱稱" value="來自路邊的觀眾"/>
             <input id="message"  class="text-field" type="text" placeholder="訊息" onkeydown="if (event.keyCode == 13) sendMessage();"/>
             <input type="submit" id="sendMessage" class="btn btn-warning btn-sm" value="📣" onclick="sendMessage();"/>
 	    </div>

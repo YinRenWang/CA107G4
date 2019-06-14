@@ -116,7 +116,7 @@ public class InsCourseTimeServlet extends HttpServlet {
 				for (int i = 0; i < start_dateTime.length; i++) {
 					if (start_dateTime[i] == null || (start_dateTime[i].trim()).length() == 0 || end_dateTime[i] == null
 							|| (end_dateTime[i].trim()).length() == 0) {
-						errorMsgs.add("開始時間與結束時間請勿請勿空白");
+						errorMsgs.add("開始時間與結束時間請勿空白");
 						break;
 					}
 					if (start_dateTime[i].equals(end_dateTime[i])) {
@@ -132,7 +132,7 @@ public class InsCourseTimeServlet extends HttpServlet {
 	
 				
 					if(insCourseTimeSvc.findDateMinute(start_dateTime[i], end_dateTime[i], inscId)!=null) {
-						errorMsgs.add("此日期時段已存在資料庫");				
+						errorMsgs.add("此日期時段已存在於資料庫");				
 						break;
 					} else {
 						

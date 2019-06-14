@@ -256,7 +256,7 @@
 										document.getElementById("memIdCard").value = "A181313047";
 										document.getElementById("memBirth").value = "2019-05-23";
 										document.getElementById("memPhone").value = "0970313604";
-										document.getElementById("memAdd").value = "新北市板橋區西門街9號";
+										document.getElementById("address").value = "漢生西路151巷";
 									}
 								</script>
 
