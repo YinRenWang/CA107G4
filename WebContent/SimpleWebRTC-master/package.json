@@ -13,7 +13,7 @@
     "rtcpeerconnection": "^8.0.0",
     "webrtcsupport": "^2.2.0",
     "wildemitter": "^1.2.0",
-    "socket.io-client": "^1.7.4",
+    "socket.io-client": "^4.5.3",
     "attachmediastream": "^2.0.0",
     "mockconsole": "0.0.1"
   },
